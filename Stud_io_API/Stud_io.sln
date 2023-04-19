@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stud_io", "Stud_io\Stud_io.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stud_io_Payment", "Stud_io_Payment\Stud_io_Payment.csproj", "{F19437EA-EB1B-4956-B0F5-875A068AF08C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stud_io_Dormitory", "Stud_io_Konvikti\Stud_io_Dormitory.csproj", "{FBDC9EDC-367A-419C-AE94-4FE16981D6F7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stud_io_Dormitory", "Stud_io_Konvikti\Stud_io_Dormitory.csproj", "{FBDC9EDC-367A-419C-AE94-4FE16981D6F7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stud_io.Maintenance", "Stud_io.Maintenance\Stud_io.Maintenance.csproj", "{02618566-3656-4455-B0C0-CF169BA3B315}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{FBDC9EDC-367A-419C-AE94-4FE16981D6F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FBDC9EDC-367A-419C-AE94-4FE16981D6F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FBDC9EDC-367A-419C-AE94-4FE16981D6F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{02618566-3656-4455-B0C0-CF169BA3B315}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02618566-3656-4455-B0C0-CF169BA3B315}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02618566-3656-4455-B0C0-CF169BA3B315}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02618566-3656-4455-B0C0-CF169BA3B315}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
