@@ -16,9 +16,9 @@ namespace Stud_io_Notifications.Controllers
         }
 
         [HttpPost("add-announcement")]
-        public async Task AddAnnouncement(AnnouncementDTO announcement)
+        public async Task<ActionResult> AddAnnouncement(AnnouncementDTO announcement)
         {
-            await _announcementService.AddAnnouncement(announcement);
+            return await _announcementService.AddAnnouncement(announcement);
         }
 
         [HttpGet("get-all-announcements")]

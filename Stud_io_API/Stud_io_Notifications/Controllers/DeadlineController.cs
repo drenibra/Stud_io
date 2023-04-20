@@ -16,9 +16,9 @@ namespace Stud_io_Notifications.Controllers
         }
 
         [HttpPost("add-deadline")]
-        public async Task AddDeadline(DeadlineDTO deadline)
+        public async Task<ActionResult> AddDeadline(DeadlineDTO deadline)
         {
-            await _deadlineService.AddDeadline(deadline);
+           return await _deadlineService.AddDeadline(deadline);
         }
 
         [HttpGet("get-all-deadlines")]

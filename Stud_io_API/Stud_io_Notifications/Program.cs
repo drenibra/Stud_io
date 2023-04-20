@@ -28,6 +28,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IAnnouncementService, AnnouncementService>();
 builder.Services.AddScoped<IDeadlineService, DeadlineService>();
+builder.Services.AddScoped<IInformationService, InformationService>();
 
 var app = builder.Build();
 
