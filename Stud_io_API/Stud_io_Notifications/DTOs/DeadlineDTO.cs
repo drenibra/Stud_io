@@ -6,4 +6,11 @@
         public DateTime OpenDate { get; set; }
         public DateTime ClosedDate { get; set; }
     }
+
+    public class UpdateDeadlineDTO
+    {
+        public string? Name { get; set; }
+        public DateTime? OpenDate { get; set; }
+        public DateTime? ClosedDate { get; set; }
+    }
 }

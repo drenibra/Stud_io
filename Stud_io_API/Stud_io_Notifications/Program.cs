@@ -27,7 +27,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IAnnouncementService, AnnouncementService>();
-//builder.Services.AddScoped<IDeadlineService, DeadlineService>();
+builder.Services.AddScoped<IDeadlineService, DeadlineService>();
 
 var app = builder.Build();
 
