@@ -1,4 +1,4 @@
-﻿namespace Stud_io.DTOs
+﻿namespace Stud_io_Notifications.DTOs
 {
     public class InformationDTO
     {

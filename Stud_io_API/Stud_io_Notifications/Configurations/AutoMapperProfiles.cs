@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using Stud_io.Models;
-using Stud_io.DTOs;
+using Stud_io_Notifications.Models;
+using Stud_io_Notifications.DTOs;
 
-namespace Stud_io_Dormitory.Configurations
+namespace Stud_io_Notifications.Configurations
 {
     public class AutoMapperProfiles : Profile
     {

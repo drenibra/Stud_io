@@ -1,4 +1,4 @@
-﻿namespace Stud_io.Models
+﻿namespace Stud_io_Notifications.Models
 {
     public class Information
     {

@@ -1,14 +1,21 @@
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Stud_io_Notifications.Configurations;
+using Stud_io_Notifications.Services.Implementations;
+using Stud_io_Notifications.Services.Interfaces;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
 
-//builder.Services.AddDbContext<ApplicationDbContext>(options =>
-//{
-  //  options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString"));
-//});
+builder.Services.AddDbContext<NotificationDbContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString"));
+});
+
+builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
 builder.Services.AddCors(opt => {
     opt.AddPolicy("CorsPolicy", policy => {
@@ -19,7 +26,7 @@ builder.Services.AddCors(opt => {
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-//builder.Services.AddScoped<IAnnouncementService, AnnouncementService>();
+builder.Services.AddScoped<IAnnouncementService, AnnouncementService>();
 //builder.Services.AddScoped<IDeadlineService, DeadlineService>();
 
 var app = builder.Build();

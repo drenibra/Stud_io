@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stud_io_Dormitory", "Stud_i
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stud_io.Maintenance", "Stud_io.Maintenance\Stud_io.Maintenance.csproj", "{02618566-3656-4455-B0C0-CF169BA3B315}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stud_io_Notifications", "Stud_io_Notifications\Stud_io_Notifications.csproj", "{523C22F5-F336-457C-B415-CF191D59572E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{02618566-3656-4455-B0C0-CF169BA3B315}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{02618566-3656-4455-B0C0-CF169BA3B315}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{02618566-3656-4455-B0C0-CF169BA3B315}.Release|Any CPU.Build.0 = Release|Any CPU
+		{523C22F5-F336-457C-B415-CF191D59572E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{523C22F5-F336-457C-B415-CF191D59572E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{523C22F5-F336-457C-B415-CF191D59572E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{523C22F5-F336-457C-B415-CF191D59572E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

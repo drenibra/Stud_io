@@ -1,8 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Stud_io.Models;
-using System;
+using Stud_io_Notifications.Models;
 
-namespace Stud_io.Data
+
+namespace Stud_io_Notifications.Configurations
+
 {
     public class NotificationDbContext : DbContext
     {
