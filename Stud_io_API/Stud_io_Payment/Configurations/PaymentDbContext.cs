@@ -11,5 +11,6 @@ namespace Stud_io_Payment.Configurations
         }
 
         public DbSet<History> Histories { get; set; } = null!;
+        public DbSet<Payment> Payments { get; set; } = null!;
     }
 }
