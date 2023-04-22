@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Stud_io_Dormitory.Configurations;
 
@@ -10,9 +11,10 @@ using Stud_io_Dormitory.Configurations;
 namespace Stud_io_Dormitory.Migrations
 {
     [DbContext(typeof(DormitoryDbContext))]
-    partial class DormitoryDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230422042447_Room_Table")]
+    partial class Room_Table
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -43,41 +45,6 @@ namespace Stud_io_Dormitory.Migrations
                     b.HasKey("DormNo");
 
                     b.ToTable("Dormitories");
-                });
-
-            modelBuilder.Entity("Stud_io.Dormitory.Models.Questionnaire", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<bool>("havingGuests")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("roomCleanliness")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("shareBelongings")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("sleepingHabits")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("studyPlace")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("studyTime")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Questionnaires");
                 });
 
             modelBuilder.Entity("Stud_io.Dormitory.Models.Room", b =>

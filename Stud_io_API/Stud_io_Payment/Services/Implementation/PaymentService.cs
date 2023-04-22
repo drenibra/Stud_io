@@ -1,5 +1,4 @@
 ﻿using Stripe;
-using Stripe.FinancialConnections;
 using Stud_io_Payment.Models;
 
 namespace Stud_io_Payment.Services.Implementation
@@ -15,7 +14,7 @@ namespace Stud_io_Payment.Services.Implementation
 
         public async Task<PaymentIntent> CreateOrUpdatePaymentIntent(Payment payment)
         {
-            StripeConfiguration.ApiKey = _config["StripeSettings:SecretKey"];
+            //StripeConfiguration.ApiKey = _config["StripeSettings:SecretKey"];
 
             var service = new PaymentIntentService();
 

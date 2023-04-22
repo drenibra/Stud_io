@@ -4,7 +4,7 @@ using Stud_io_Payment.Services.Interfaces;
 
 namespace Stud_io_Payment.Controllers
 {
-    [Route("")]
+    [Route("[controller]")]
     [ApiController]
     public class HistoryController : ControllerBase
     {

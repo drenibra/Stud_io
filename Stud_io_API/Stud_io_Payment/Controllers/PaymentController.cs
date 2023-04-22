@@ -24,7 +24,7 @@ namespace Stud_io_Payment.Controllers
         [HttpPost]
         public async Task<ActionResult> CreateOrUpdatePaymentIntent(double amount)
         {
-            var options = new Stripe.Checkout.SessionCreateOptions
+            var options = new SessionCreateOptions
             {
                 LineItems = new List<SessionLineItemOptions>
                 {
@@ -38,10 +38,12 @@ namespace Stud_io_Payment.Controllers
                         Quantity = 1
                     },
                 },
-                Mode = "payment"
+                Mode = "payment",
+                SuccessUrl = "https://example.com/success",
+                CancelUrl = "https://example.com/cancel",
             };
-            var service = new Stripe.Checkout.SessionService();
-            Stripe.Checkout.Session session = service.Create(options);
+            var service = new SessionService();
+            Session session = service.Create(options);
 
             Response.Headers.Add("Location", session.Url);
             return Ok("Pagesa u krye!");
