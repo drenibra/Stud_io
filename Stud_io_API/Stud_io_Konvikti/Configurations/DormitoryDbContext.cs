@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Stud_io.Dormitory.Models;
 using Stud_io_Dormitory.Models;
 
 namespace Stud_io_Dormitory.Configurations
@@ -11,5 +12,6 @@ namespace Stud_io_Dormitory.Configurations
         }
 
         public DbSet<Dormitory> Dormitories { get; set; } = null!;
+        public DbSet<Room> Rooms { get; set; } = null!;
     }
 }

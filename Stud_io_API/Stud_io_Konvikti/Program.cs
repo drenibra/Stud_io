@@ -1,4 +1,6 @@
 using Microsoft.EntityFrameworkCore;
+using Stud_io.Dormitory.Services.Implementations;
+using Stud_io.Dormitory.Services.Interfaces;
 using Stud_io_Dormitory.Configurations;
 using Stud_io_Dormitory.Services.Implementations;
 using Stud_io_Dormitory.Services.Interfaces;
@@ -16,6 +18,7 @@ builder.Services.AddDbContext<DormitoryDbContext>(options =>
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
 builder.Services.AddScoped<IDormitoryService, DormitoryService>();
+builder.Services.AddScoped<IRoomService, RoomService>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
