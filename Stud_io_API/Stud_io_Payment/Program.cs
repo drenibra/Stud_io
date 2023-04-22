@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Stripe;
 using Stud_io_Payment.Configurations;
 using Stud_io_Payment.Services.Implementation;
 using Stud_io_Payment.Services.Interfaces;
@@ -12,6 +13,7 @@ builder.Services.AddDbContext<PaymentDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+StripeConfiguration.ApiKey = builder.Configuration["StripeSettings:SecretKey"];
 
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
