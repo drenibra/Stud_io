@@ -13,5 +13,6 @@ namespace Stud_io_Dormitory.Configurations
 
         public DbSet<Dormitory> Dormitories { get; set; } = null!;
         public DbSet<Room> Rooms { get; set; } = null!;
+        public DbSet<Questionnaire> Questionnaires { get; set; } = null!;
     }
 }

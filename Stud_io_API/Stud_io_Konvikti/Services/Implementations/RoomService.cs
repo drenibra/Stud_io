@@ -66,5 +66,12 @@ namespace Stud_io.Dormitory.Services.Implementations
             await _context.SaveChangesAsync();
             return new OkObjectResult("Room deleted successfully!");
         }
+
+        /*
+        public bool IsRoomBooked(Room room)
+        {
+            return room.Students.Count >= room.Capacity;
+        }
+        */
     }
 }

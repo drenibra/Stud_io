@@ -12,6 +12,7 @@ namespace Stud_io_Dormitory.Configurations
         {
             CreateMap<Dormitory, DormitoryDto>().ReverseMap();
             CreateMap<Room, RoomDto>().ReverseMap();
+            CreateMap<Questionnaire, QuestionnaireDto>().ReverseMap();
         }
     }
 }
