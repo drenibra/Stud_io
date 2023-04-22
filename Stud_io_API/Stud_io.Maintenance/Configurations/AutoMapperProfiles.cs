@@ -8,7 +8,8 @@ namespace Stud_io.Maintenance.Configurations
     {
         public AutoMapperProfiles()
         {
-            CreateMap<DTask, DTaskDto>().ReverseMap();
+            CreateMap<DTask, GetTaskDto>().ReverseMap();
+            CreateMap<CreateTaskDto, DTask>().ReverseMap();
         }
     }
 }

@@ -18,15 +18,45 @@ namespace Stud_io.Maintenance.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<DTaskDto>> GetTaskById(int id)
+        public async Task<ActionResult<GetTaskDto>> GetTaskById(int id)
         {
             return await _taskService.GetTaskById(id);
         }
 
-        [HttpGet]
-        public async Task<ActionResult<List<DTaskDto>>> GetTasks()
+        [HttpGet("{dormNo}/{pageNumber}")]
+        public async Task<ActionResult<List<GetTaskDto>>> GetDormTasks(int dormNo, int? pageNumber)
         {
-            return await _taskService.GetTasks();
+            return await _taskService.GetDormTasks(dormNo, pageNumber);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> CreateTask(CreateTaskDto taskDto)
+        {
+            if (taskDto == null)
+                return BadRequest("You can't add an empty task.");
+
+            return await _taskService.CreateTask(taskDto);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult> UpdateTask(int id, UpdateTaskDto taskDto)
+        {
+            if (taskDto == null)
+                return BadRequest("You can't add an empty task.");
+
+            return await _taskService.UpdateTask(id, taskDto);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteTask(int id)
+        {
+            return await _taskService.DeleteTask(id);
+        }
+
+        [HttpPatch("{id}/{status}")]
+        public async Task<ActionResult> ChangeTaskStatus(int id, bool status)
+        {
+            return await _taskService.ChangeTaskStatus(id, status);
         }
     }
 }
