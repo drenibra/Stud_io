@@ -39,6 +39,14 @@ namespace Stud_io.Maintenance.Service.Implementation
 
             return new OkObjectResult(dtoTasks);
         }
+        public async Task<ActionResult<List<GetTaskDto>>> GetMaintenantsTasks(string maintenantId, int? pageNumber)
+        {
+            var tasks = _context.Tasks.Where(x => !x.IsDeleted && x.MaintenantId.Equals(maintenantId)).AsQueryable();
+
+            var dtoTasks = _mapper.Map<List<GetTaskDto>>(await PaginatedList<DTask>.Create(tasks, pageNumber ?? 1, 10));
+
+            return new OkObjectResult(dtoTasks);
+        }
 
         public async Task<ActionResult> CreateTask(CreateTaskDto taskDto)
         {
@@ -49,7 +57,7 @@ namespace Stud_io.Maintenance.Service.Implementation
                 Title = taskDto.Title,
                 Description = taskDto.Description,
                 Type = taskDto.Type,
-                FloorNumber = taskDto.FloorNumber,
+                FloorNo = taskDto.FloorNo,
                 DateCreated = taskDto.DateCreated,
                 DueDate = taskDto.DueDate
             };
@@ -59,21 +67,21 @@ namespace Stud_io.Maintenance.Service.Implementation
 
             return new OkObjectResult("Task added succesfully.");
         }
-        public async Task<ActionResult> UpdateTask(int id, UpdateTaskDto taskDto)
+        public async Task<ActionResult> UpdateTask(int id, UpdateTaskDto dto)
         {
             var dbTask = await _context.Tasks.FindAsync(id);
 
             if (dbTask == null)
                 return new BadRequestObjectResult("Task with this id doesn't exist.");
 
-            dbTask.DormNo = taskDto.DormNo;
-            dbTask.MaintenantId = taskDto.MaintenantId;
-            dbTask.Title = taskDto.Title;
-            dbTask.Description = taskDto.Description;
-            dbTask.Type = taskDto.Type;
-            dbTask.FloorNumber = taskDto.FloorNumber;
-            dbTask.DueDate = taskDto.DueDate;
-            dbTask.IsCompleted = taskDto.IsCompleted;
+            dbTask.DormNo = dto.DormNo;
+            dbTask.MaintenantId = dto.MaintenantId;
+            dbTask.Title = dto.Title;
+            dbTask.Description = dto.Description;
+            dbTask.Type = dto.Type;
+            dbTask.FloorNo = dto.FloorNo;
+            dbTask.DueDate = dto.DueDate;
+            dbTask.IsCompleted = dto.IsCompleted;
 
             var result = await _context.SaveChangesAsync();
 

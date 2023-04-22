@@ -7,6 +7,7 @@ namespace Stud_io.Maintenance.Service.Interfaces
     public interface ITaskService
     {
         Task<ActionResult<List<GetTaskDto>>> GetDormTasks(int dormNo, int? pageNumber);
+        Task<ActionResult<List<GetTaskDto>>> GetMaintenantsTasks(string maintenantId, int? pageNumber);
         Task<ActionResult<GetTaskDto>> GetTaskById(int id);
         Task<ActionResult> CreateTask(CreateTaskDto taskDto);
         Task<ActionResult> UpdateTask(int id, UpdateTaskDto taskDto);

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Stud_io.Maintenance.Configurations;
 
@@ -11,9 +12,11 @@ using Stud_io.Maintenance.Configurations;
 namespace Stud_io.Maintenance.Migrations
 {
     [DbContext(typeof(MaintenanceDbContext))]
-    partial class MaintenanceDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230422221939_AddedComplaintModel")]
+    partial class AddedComplaintModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,9 +33,6 @@ namespace Stud_io.Maintenance.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -43,9 +43,6 @@ namespace Stud_io.Maintenance.Migrations
 
                     b.Property<int>("DormNo")
                         .HasColumnType("int");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
 
                     b.Property<bool>("IsResolved")
                         .HasColumnType("bit");
@@ -88,7 +85,7 @@ namespace Stud_io.Maintenance.Migrations
                     b.Property<DateTime>("DueDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("FloorNo")
+                    b.Property<int>("FloorNumber")
                         .HasColumnType("int");
 
                     b.Property<bool>("IsCompleted")

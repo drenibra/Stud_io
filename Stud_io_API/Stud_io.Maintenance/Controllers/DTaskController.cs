@@ -23,10 +23,16 @@ namespace Stud_io.Maintenance.Controllers
             return await _taskService.GetTaskById(id);
         }
 
-        [HttpGet("{dormNo}/{pageNumber}")]
+        [HttpGet("dorm/{dormNo}/{pageNumber}")]
         public async Task<ActionResult<List<GetTaskDto>>> GetDormTasks(int dormNo, int? pageNumber)
         {
             return await _taskService.GetDormTasks(dormNo, pageNumber);
+        }
+
+        [HttpGet("maintenant/{maintenantId}/{pageNumber}")]
+        public async Task<ActionResult<List<GetTaskDto>>> GetMaintenantsTasks(string maintenantId, int? pageNumber)
+        {
+            return await _taskService.GetMaintenantsTasks(maintenantId, pageNumber);
         }
 
         [HttpPost]
