@@ -6,6 +6,10 @@ using Stud_io.Configuration;
 using Stud_io.Extensions;
 using Stud_io.Models;
 using Microsoft.AspNetCore.Authorization;
+using Stud_io.Authentication.Interfaces;
+using Stud_io.Authentication.Services;
+using Stud_io.Controllers;
+using Microsoft.AspNetCore.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,6 +37,9 @@ builder.Services.AddControllersWithViews()
 builder.Services.AddDefaultIdentity<AppUser>().AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddIdentityServices(builder.Configuration);
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<AccountController>();
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build();
 

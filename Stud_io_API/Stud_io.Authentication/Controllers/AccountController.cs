@@ -84,6 +84,12 @@ namespace Stud_io.Controllers
             return CreateUserObject(user);
         }
         [Authorize]
+        [HttpGet("student")]
+        public async Task<ActionResult<Student>> GetCurrentStudent()
+        {
+            return await _userManager.FindByEmailAsync(User.FindFirstValue(ClaimTypes.Email)) as Student;
+        }
+        [Authorize]
         [HttpGet("currentId")]
         public async Task<ActionResult<string>> GetCurrentUserId()
         {
@@ -99,7 +105,7 @@ namespace Stud_io.Controllers
 
             return roles;
         }
-        private UserDto CreateUserObject(AppUser user)
+        public UserDto CreateUserObject(AppUser user)
         {
             return new UserDto
             {
