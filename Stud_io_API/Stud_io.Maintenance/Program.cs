@@ -16,6 +16,9 @@ builder.Services.AddDbContext<MaintenanceDbContext>(options =>
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
 builder.Services.AddScoped<ITaskService, TaskService>();
+builder.Services.AddScoped<IDormComplaintService, DormComplaintService>();
+builder.Services.AddScoped<ISocialComplaintService, SocialComplaintService>();
+builder.Services.AddScoped<IDiscontentComplaintService, DiscontentComplaintService>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
