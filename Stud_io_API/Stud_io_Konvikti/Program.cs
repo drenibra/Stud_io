@@ -19,6 +19,7 @@ builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
 builder.Services.AddScoped<IDormitoryService, DormitoryService>();
 builder.Services.AddScoped<IRoomService, RoomService>();
+builder.Services.AddScoped<IQuestionnaireService, QuestionnaireService>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
