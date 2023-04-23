@@ -31,17 +31,14 @@ namespace Stud_io.Maintenance.Service.Implementation
             return new OkObjectResult(task);
         }
 
-        public async Task<ActionResult<List<GetTaskDto>>> GetDormTasks(int dormNo, int? pageNumber)
+        public async Task<ActionResult<List<GetTaskDto>>> GetDormTasks(FilterTaskDto filter, int? pageNumber)
         {
-            var tasks = _context.Tasks.Where(x => !x.IsDeleted && x.DormNo == dormNo).AsQueryable();
-
-            var dtoTasks = _mapper.Map<List<GetTaskDto>>(await PaginatedList<DTask>.Create(tasks, pageNumber ?? 1, 10));
-
-            return new OkObjectResult(dtoTasks);
-        }
-        public async Task<ActionResult<List<GetTaskDto>>> GetMaintenantsTasks(string maintenantId, int? pageNumber)
-        {
-            var tasks = _context.Tasks.Where(x => !x.IsDeleted && x.MaintenantId.Equals(maintenantId)).AsQueryable();
+            var tasks = _context.Tasks
+                                .Where(x => !x.IsDeleted 
+                                    && x.DormNo == (filter.DormNo ?? x.DormNo)
+                                    && x.MaintenantId == (filter.MaintenantId ?? x.MaintenantId)
+                                    && x.IsCompleted == (filter.IsCompleted ?? x.IsCompleted))
+                                .AsQueryable();
 
             var dtoTasks = _mapper.Map<List<GetTaskDto>>(await PaginatedList<DTask>.Create(tasks, pageNumber ?? 1, 10));
 

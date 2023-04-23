@@ -4,7 +4,7 @@ using Stud_io.Maintenance.Service.Interfaces;
 
 namespace Stud_io.Maintenance.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("studio/[controller]")]
     [ApiController]
     public class DormComplaintController : ControllerBase
     {
@@ -15,16 +15,16 @@ namespace Stud_io.Maintenance.Controllers
             _dormComplaintService = dormComplaintService;
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("Id/{id}")]
         public async Task<ActionResult<GetDormComplaintDto>> GetDormComplaintById(int id)
         {
             return await _dormComplaintService.GetDormComplaintById(id);
         }
 
-        [HttpGet("dorm/{dormNo}/{pageNumber}")]
-        public async Task<ActionResult<List<GetDormComplaintDto>>> GetDormComplaints(int dormNo, int? pageNumber)
+        [HttpGet("Page/{pageNumber}")]
+        public async Task<ActionResult<List<GetDormComplaintDto>>> GetDormComplaints([FromQuery]FilterDormComplaintDto filter, int? pageNumber)
         {
-            return await _dormComplaintService.GetDormComplaints(dormNo, pageNumber);
+            return await _dormComplaintService.GetDormComplaints(filter, pageNumber);
         }
 
         [HttpPost]

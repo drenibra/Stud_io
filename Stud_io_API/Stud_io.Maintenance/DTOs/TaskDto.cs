@@ -38,4 +38,11 @@
         public DateTime DueDate { get; set; }
         public bool IsCompleted { get; set; }
     }
+
+    public class FilterTaskDto
+    {
+        public int? DormNo { get; set; }
+        public string? MaintenantId { get; set; }
+        public bool? IsCompleted { get; set; }
+    }
 }

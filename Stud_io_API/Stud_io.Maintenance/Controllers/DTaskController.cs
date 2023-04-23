@@ -6,7 +6,7 @@ using Stud_io.Maintenance.Service.Interfaces;
 
 namespace Stud_io.Maintenance.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("studio/[controller]")]
     [ApiController]
     public class DTaskController : ControllerBase
     {
@@ -17,22 +17,16 @@ namespace Stud_io.Maintenance.Controllers
             _taskService = taskService;
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("Id/{id}")]
         public async Task<ActionResult<GetTaskDto>> GetTaskById(int id)
         {
             return await _taskService.GetTaskById(id);
         }
 
-        [HttpGet("dorm/{dormNo}/{pageNumber}")]
-        public async Task<ActionResult<List<GetTaskDto>>> GetDormTasks(int dormNo, int? pageNumber)
+        [HttpGet("Page/{pageNumber}")]
+        public async Task<ActionResult<List<GetTaskDto>>> GetDormTasks([FromQuery]FilterTaskDto filter, int? pageNumber)
         {
-            return await _taskService.GetDormTasks(dormNo, pageNumber);
-        }
-
-        [HttpGet("maintenant/{maintenantId}/{pageNumber}")]
-        public async Task<ActionResult<List<GetTaskDto>>> GetMaintenantsTasks(string maintenantId, int? pageNumber)
-        {
-            return await _taskService.GetMaintenantsTasks(maintenantId, pageNumber);
+            return await _taskService.GetDormTasks(filter, pageNumber);
         }
 
         [HttpPost]

@@ -12,6 +12,10 @@ namespace Stud_io.Maintenance.Configurations
             CreateMap<CreateTaskDto, DTask>().ReverseMap();
             CreateMap<DormComplaint, GetDormComplaintDto>().ReverseMap();
             CreateMap<CreateDormComplaintDto, DormComplaint>().ReverseMap();
+            CreateMap<GetSocialComplaintDto, SocialComplaint>().ReverseMap();
+            CreateMap<SocialComplaint, CreateSocialComplaintDto>().ReverseMap();
+            CreateMap<GetDiscontentComplaintDto, DiscontentComplaint>().ReverseMap();
+            CreateMap<DiscontentComplaint, CreateDiscontentComplaintDto>().ReverseMap();
         }
     }
 }
