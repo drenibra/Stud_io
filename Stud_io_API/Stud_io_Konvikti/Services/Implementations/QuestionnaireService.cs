@@ -39,7 +39,25 @@ namespace Stud_io.Dormitory.Services.Implementations
             return new OkObjectResult("Questionnaire added successfully!");
         }
 
-        
+        public async Task<ActionResult> UpdateQuestionnaire(int id, UpdateQuestionnaireDto updateQuestionnaireDTO)
+        {
+            if (updateQuestionnaireDTO == null)
+                return new BadRequestObjectResult("Questionnaire can not be null!!");
+
+            var dbQuestionnaire = await _context.Questionnaires.FindAsync(id);
+            if (dbQuestionnaire == null)
+                return new NotFoundObjectResult("Questionnaire doesn't exist!!");
+
+            dbQuestionnaire.shareBelongings = updateQuestionnaireDTO.shareBelongings ?? dbQuestionnaire.shareBelongings;
+            dbQuestionnaire.sleepingHabits = updateQuestionnaireDTO.sleepingHabits ?? dbQuestionnaire.sleepingHabits;
+            dbQuestionnaire.havingGuests = updateQuestionnaireDTO.havingGuests ?? dbQuestionnaire.havingGuests;
+            dbQuestionnaire.roomCleanliness = updateQuestionnaireDTO.roomCleanliness ?? dbQuestionnaire.roomCleanliness;
+            dbQuestionnaire.studyTime = updateQuestionnaireDTO.studyTime ?? dbQuestionnaire.studyTime;
+            dbQuestionnaire.studyPlace = updateQuestionnaireDTO.studyPlace ?? dbQuestionnaire.studyPlace;
+            await _context.SaveChangesAsync();
+
+            return new OkObjectResult("Questionnaire updated successfully!");
+        }
 
         public async Task<ActionResult> DeleteQuestionnaire(int id)
         {

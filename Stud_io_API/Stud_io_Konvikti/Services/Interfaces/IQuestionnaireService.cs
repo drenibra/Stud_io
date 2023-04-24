@@ -8,6 +8,7 @@ namespace Stud_io.Dormitory.Services.Interfaces
         public Task<ActionResult<List<QuestionnaireDto>>> GetQuestionnaires();
         public Task<ActionResult<QuestionnaireDto>> GetQuestionnaireById(int id);
         public Task<ActionResult> AddQuestionnaire(QuestionnaireDto questionnaireDTO);
+        public Task<ActionResult> UpdateQuestionnaire(int id, UpdateQuestionnaireDto updateQuestionnaireDTO);
         public Task<ActionResult> DeleteQuestionnaire(int id);
     }
 }

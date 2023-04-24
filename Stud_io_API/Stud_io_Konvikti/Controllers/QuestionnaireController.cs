@@ -34,6 +34,12 @@ namespace Stud_io.Dormitory.Controllers
             return await _questionnaireService.AddQuestionnaire(questionnaireDto);
         }
 
+        [HttpPut("UpdateQuestionnaire")]
+        public async Task<ActionResult> UpdateQuestionnaire(int id, UpdateQuestionnaireDto questionnaireDto)
+        {
+            return await _questionnaireService.UpdateQuestionnaire(id, questionnaireDto);
+        }
+
 
         [HttpDelete("DeleteQuestionnaire/{id}")]
         public async Task<ActionResult> DeleteQuestionnaire(int id)
