@@ -69,5 +69,52 @@ namespace Stud_io.Dormitory.Services.Implementations
             await _context.SaveChangesAsync();
             return new OkObjectResult("Questionnaire deleted successfully!");
         }
+
+     
+
+        private static readonly Dictionary<string, int> PropertyWeights = new Dictionary<string, int>
+        {
+            { nameof(Questionnaire.shareBelongings), 10 },
+            { nameof(Questionnaire.sleepingHabits), 10 },
+            { nameof(Questionnaire.havingGuests), 10 },
+            { nameof(Questionnaire.roomCleanliness), 10 },
+            { nameof(Questionnaire.studyTime), 10 },
+            { nameof(Questionnaire.studyPlace), 10 }
+        };
+
+        // calculating compatibility between questionnaires
+        public int CalculateCompatibility(int q1Id, int q2Id)
+        {
+            var q1 = _context.Questionnaires.FirstOrDefault(q => q.Id == q1Id);
+            var q2 = _context.Questionnaires.FirstOrDefault(q => q.Id == q2Id);
+            if (q1 == null || q2 == null)
+            {
+                throw new ArgumentException("Invalid questionnaire id");
+            }
+
+            int score = 0;
+
+            foreach (var property in typeof(Questionnaire).GetProperties())
+            {
+                if (PropertyWeights.TryGetValue(property.Name, out int weight))
+                {
+                    if (property.GetValue(q1) is string && property.GetValue(q2) is string)
+                    {
+                        if (string.Equals(property.GetValue(q1), property.GetValue(q2)))
+                        {
+                            score += weight;
+                        }
+                    }
+                    else if (property.GetValue(q1) == property.GetValue(q2))
+                    {
+                        score += weight;
+                    }
+                }
+            }
+
+            return score;
+        }
+
+
     }
 }
