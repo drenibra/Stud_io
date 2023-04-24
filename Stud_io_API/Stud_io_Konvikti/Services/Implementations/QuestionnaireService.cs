@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Stud_io.Dormitory.DTOs;
+using Stud_io.Dormitory.Models;
 using Stud_io.Dormitory.Services.Interfaces;
 using Stud_io_Dormitory.Configurations;
 
@@ -27,6 +28,28 @@ namespace Stud_io.Dormitory.Services.Implementations
             return mappedQuestionnaire == null
                 ? new NotFoundObjectResult("Questionnaire doesn't exist!!")
                 : new OkObjectResult(mappedQuestionnaire);
+        }
+        public async Task<ActionResult> AddQuestionnaire(QuestionnaireDto questionnaireDTO)
+        {
+            if (questionnaireDTO == null)
+                return new BadRequestObjectResult("Questionnaire can not be null!!");
+            var mappedQuestionnaire = _mapper.Map<Questionnaire>(questionnaireDTO);
+            await _context.Questionnaires.AddAsync(mappedQuestionnaire);
+            await _context.SaveChangesAsync();
+            return new OkObjectResult("Questionnaire added successfully!");
+        }
+
+        
+
+        public async Task<ActionResult> DeleteQuestionnaire(int id)
+        {
+            var dbQuestionnaire = await _context.Questionnaires.FindAsync(id);
+            if (dbQuestionnaire == null)
+                return new NotFoundObjectResult("Questionnaire doesn't exist!!");
+
+            _context.Questionnaires.Remove(dbQuestionnaire);
+            await _context.SaveChangesAsync();
+            return new OkObjectResult("Questionnaire deleted successfully!");
         }
     }
 }
