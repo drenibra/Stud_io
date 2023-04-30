@@ -43,9 +43,15 @@ namespace Stud_io_Notifications.Services.Implementations
             return new OkObjectResult("Announcement deleted successfully");
         }
 
-        public async Task<ActionResult<List<AnnouncementDTO>>> GetAllAnnouncements() {
+        public async Task<ActionResult<List<AnnouncementDTO>>> GetAllAnnouncements(string? searchString) {
 
             var allAnnouncements = _mapper.Map<List<AnnouncementDTO>>(await _context.Announcements.OrderBy(x => x.DeadlineId).ToListAsync());
+
+            if(!string.IsNullOrEmpty(searchString))
+            {
+                allAnnouncements = allAnnouncements.Where(n => n.Title.Contains(searchString, StringComparison.CurrentCultureIgnoreCase)).ToList();
+            }
+
             return allAnnouncements;
         }
         public async Task<ActionResult<AnnouncementDTO>> GetAnnouncementById(int id)

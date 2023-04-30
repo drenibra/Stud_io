@@ -23,9 +23,9 @@ namespace Stud_io_Notifications.Controllers
         }
 
         [HttpGet("get-all-informations")]
-        public async Task<ActionResult<List<InformationDTO>>> GetAll()
+        public async Task<ActionResult<List<InformationDTO>>> GetAll(string? searchString)
         {
-            return await _informationService.GetAllInformations();
+            return await _informationService.GetAllInformations(searchString);
 
         }
 

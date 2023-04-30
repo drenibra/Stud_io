@@ -42,11 +42,15 @@ namespace Stud_io_Notifications.Services.Implementations
             return new OkObjectResult("Information deleted successfully");
         }
 
-        public async Task<ActionResult<List<InformationDTO>>> GetAllInformations()
+        public async Task<ActionResult<List<InformationDTO>>> GetAllInformations(string? searchString)
         {
             // sorting
             var allInformations = _mapper.Map<List<InformationDTO>>( _context.Informations.OrderBy(n => n.Name).ToList());
 
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                allInformations = allInformations.Where(n => n.Name.Contains(searchString, StringComparison.CurrentCultureIgnoreCase)).ToList();
+            }
             return allInformations;
         }
 
