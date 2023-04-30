@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Stripe;
+using Stud_io.Payment.Services.Implementation;
+using Stud_io.Payment.Services.Interfaces;
 using Stud_io_Payment.Configurations;
 using Stud_io_Payment.Services.Implementation;
 using Stud_io_Payment.Services.Interfaces;
@@ -18,6 +20,7 @@ StripeConfiguration.ApiKey = builder.Configuration["StripeSettings:SecretKey"];
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
 builder.Services.AddScoped<IHistoryService, HistoryService>();
+builder.Services.AddScoped<ITypeOfPaymentService, TypeOfPaymentService>();
 builder.Services.AddScoped<PaymentService>();
 
 

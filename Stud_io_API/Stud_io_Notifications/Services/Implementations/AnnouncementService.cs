@@ -65,6 +65,7 @@ namespace Stud_io_Notifications.Services.Implementations
 
             announcement.Title = updateAnnouncementDTO.Title ?? announcement.Title;
             announcement.Description = updateAnnouncementDTO.Description ?? announcement.Description;
+            announcement.DeadlineId = updateAnnouncementDTO.DeadlineId ?? announcement.DeadlineId;
             await _context.SaveChangesAsync();
 
             return new OkObjectResult("Announcement updated successfully");
