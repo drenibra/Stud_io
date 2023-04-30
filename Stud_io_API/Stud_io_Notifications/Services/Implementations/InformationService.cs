@@ -42,8 +42,13 @@ namespace Stud_io_Notifications.Services.Implementations
             return new OkObjectResult("Information deleted successfully");
         }
 
-        public async Task<ActionResult<List<InformationDTO>>> GetAllInformations() =>
-            _mapper.Map<List<InformationDTO>>(await _context.Informations.ToListAsync());
+        public async Task<ActionResult<List<InformationDTO>>> GetAllInformations()
+        {
+            // sorting
+            var allInformations = _mapper.Map<List<InformationDTO>>( _context.Informations.OrderBy(n => n.Name).ToList());
+
+            return allInformations;
+        }
 
 
         public async Task<ActionResult<InformationDTO>> GetInformationById(int id)
