@@ -1,0 +1,49 @@
+* {
+  font-family: Poppins;
+}
+
+body {
+  width: 100%;
+  margin: 0;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  padding: 0;
+  margin: 0;
+}
+
+button {
+  cursor: pointer;
+}
+
+ul,
+li,
+a,
+.button {
+  list-style: none;
+  text-decoration: none;
+  color: #161616;
+  border: none;
+}
+
+.button {
+  background-color: #00176a;
+}
+
+.main-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  margin: auto;
+  padding: 0;
+  text-align: center;
+  max-width: 1200px;
+}
