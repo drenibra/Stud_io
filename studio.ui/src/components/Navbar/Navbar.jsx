@@ -12,6 +12,7 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
+import Logo from "../../assets/logo/icon-stud-io.svg";
 
 const pages = ["Home", "Ankesa", "Konkursi", "Pagesa"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
@@ -36,10 +37,14 @@ function Navbar() {
   };
 
   return (
-    <AppBar position="static" color="primary">
+    <AppBar position="static" color="primary" style={{ borderRadius: " 4px" }}>
       <Container>
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
+          <img
+            src={Logo}
+            alt="Our logo."
+            style={{ width: "50px", padding: "1vw" }}
+          />
           <Typography
             variant="h6"
             noWrap
@@ -55,7 +60,7 @@ function Navbar() {
               textDecoration: "none",
             }}
           >
-            Studio
+            Stud.io
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>

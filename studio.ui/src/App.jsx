@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./App.scss";
-import Navbar from "./components/Navbar";
+import Navbar from "./components/Navbar/Navbar";
 import { ThemeProvider } from "@emotion/react";
 import theme from "./styles/theme";
 
