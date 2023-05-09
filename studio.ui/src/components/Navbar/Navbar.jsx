@@ -13,8 +13,9 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import Logo from "../../assets/logo/icon-stud-io.svg";
+import { Link } from "react-router-dom";
 
-const pages = ["Home", "Ankesa", "Konkursi", "Pagesa"];
+const pages = ["Home", "Ankesa", "Konkursi", "Pagesa", "Mirembajtja"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 function Navbar() {
@@ -94,7 +95,9 @@ function Navbar() {
             >
               {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+                  <Link to={`/${page}`}>
+                    <Typography textAlign="center">{page}</Typography>
+                  </Link>
                 </MenuItem>
               ))}
             </Menu>
@@ -120,13 +123,14 @@ function Navbar() {
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "white", display: "block" }}
-              >
-                {page}
-              </Button>
+              <Link key={page} to={`/${page}`}>
+                <Button
+                  onClick={handleCloseNavMenu}
+                  sx={{ my: 2, color: "white", display: "block" }}
+                >
+                  {page}
+                </Button>
+              </Link>
             ))}
           </Box>
 
