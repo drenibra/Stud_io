@@ -361,11 +361,23 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
-**/appsettings.json*
-Stud_io_API/Stud_io.Maintenance/appsettings.json
-Stud_io_API/Stud_io.Authentication/appsettings.Development.json
-Stud_io_API/Stud_io.Maintenance/appsettings.json
+#**/appsettings.json*
+#Stud_io_API/Stud_io.Maintenance/appsettings.json
+#Stud_io_API/Stud_io.Authentication/appsettings.Development.json
+#Stud_io_API/Stud_io.Maintenance/appsettings.json
+#Stud_io_API/Stud_io_Notifications/appsettings.json
+#Stud_io_API/Stud_io_Notifications/appsettings.Development.json
+#Stud_io_API/Stud_io_Konvikti/appsettings.json
+#Stud_io_API/Stud_io_Konvikti/appsettings.Development.json
+
+Stud_io_API/Stud_io_Payment/appsettings.json
+Stud_io_API/Stud_io_Payment/appsettings.Development.json
 Stud_io_API/Stud_io_Notifications/appsettings.json
 Stud_io_API/Stud_io_Notifications/appsettings.Development.json
 Stud_io_API/Stud_io_Konvikti/appsettings.json
-Stud_io_API/Stud_io_Konvikti/appsettings.Development.json
+Stud_io_API/Stud_io_Konvikti/appsettings.Development .json
+Stud_io_API/Stud_io.StudyGroups/appsettings.Development.json
+Stud_io_API/Stud_io.Maintenance/appsettings.Development .json
+Stud_io_API/Stud_io.Maintenance/appsettings.json
+Stud_io_API/Stud_io.Authentication/appsettings.json
+Stud_io_API/Stud_io.Authentication/appsettings.Development .json

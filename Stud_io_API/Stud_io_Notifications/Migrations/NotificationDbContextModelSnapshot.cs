@@ -30,6 +30,9 @@ namespace Stud_io_Notifications.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int>("DeadlineId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -39,6 +42,8 @@ namespace Stud_io_Notifications.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DeadlineId");
 
                     b.ToTable("Announcements");
                 });
@@ -85,6 +90,17 @@ namespace Stud_io_Notifications.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Informations");
+                });
+
+            modelBuilder.Entity("Stud_io_Notifications.Models.Announcement", b =>
+                {
+                    b.HasOne("Stud_io_Notifications.Models.Deadline", "Deadline")
+                        .WithMany()
+                        .HasForeignKey("DeadlineId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Deadline");
                 });
 #pragma warning restore 612, 618
         }

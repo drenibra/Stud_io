@@ -22,6 +22,51 @@ namespace Stud_io.Maintenance.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Stud_io.Maintenance.Models.Complaint", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("DormNo")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsResolved")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("StudentId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Complaints");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Complaint");
+
+                    b.UseTphMappingStrategy();
+                });
+
             modelBuilder.Entity("Stud_io.Maintenance.Models.DTask", b =>
                 {
                     b.Property<int>("Id")
@@ -43,13 +88,20 @@ namespace Stud_io.Maintenance.Migrations
                     b.Property<DateTime>("DueDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("FloorNumber")
+                    b.Property<int>("FloorNo")
                         .HasColumnType("int");
+
+                    b.Property<bool>("IsCompleted")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<string>("MaintenantId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -60,6 +112,40 @@ namespace Stud_io.Maintenance.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Tasks");
+                });
+
+            modelBuilder.Entity("Stud_io.Maintenance.Models.DiscontentComplaint", b =>
+                {
+                    b.HasBaseType("Stud_io.Maintenance.Models.Complaint");
+
+                    b.Property<int>("ApplicationId")
+                        .HasColumnType("int");
+
+                    b.HasDiscriminator().HasValue("DiscontentComplaint");
+                });
+
+            modelBuilder.Entity("Stud_io.Maintenance.Models.DormComplaint", b =>
+                {
+                    b.HasBaseType("Stud_io.Maintenance.Models.Complaint");
+
+                    b.Property<int>("FloorNo")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasDiscriminator().HasValue("DormComplaint");
+                });
+
+            modelBuilder.Entity("Stud_io.Maintenance.Models.SocialComplaint", b =>
+                {
+                    b.HasBaseType("Stud_io.Maintenance.Models.Complaint");
+
+                    b.Property<int>("ComplainedRoomNo")
+                        .HasColumnType("int");
+
+                    b.HasDiscriminator().HasValue("SocialComplaint");
                 });
 #pragma warning restore 612, 618
         }

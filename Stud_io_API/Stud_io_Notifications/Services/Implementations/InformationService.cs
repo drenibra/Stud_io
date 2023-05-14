@@ -42,8 +42,17 @@ namespace Stud_io_Notifications.Services.Implementations
             return new OkObjectResult("Information deleted successfully");
         }
 
-        public async Task<ActionResult<List<InformationDTO>>> GetAllInformations() =>
-            _mapper.Map<List<InformationDTO>>(await _context.Informations.ToListAsync());
+        public async Task<ActionResult<List<InformationDTO>>> GetAllInformations(string? searchString)
+        {
+            // sorting
+            var allInformations = _mapper.Map<List<InformationDTO>>( _context.Informations.OrderBy(n => n.Name).ToList());
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                allInformations = allInformations.Where(n => n.Name.Contains(searchString, StringComparison.CurrentCultureIgnoreCase)).ToList();
+            }
+            return allInformations;
+        }
 
 
         public async Task<ActionResult<InformationDTO>> GetInformationById(int id)

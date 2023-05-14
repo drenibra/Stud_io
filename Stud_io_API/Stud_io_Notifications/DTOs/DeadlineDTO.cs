@@ -6,6 +6,7 @@ namespace Stud_io_Notifications.DTOs
     {
         public string Name { get; set; }
 
+
         [DataType(DataType.Date)]
         public DateTime OpenDate { get; set; }
 

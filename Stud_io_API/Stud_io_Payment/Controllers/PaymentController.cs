@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Stripe.Checkout;
+using Stud_io.Payment.Models;
 using Stud_io_Payment.Configurations;
+using Stud_io_Payment.Models;
 using Stud_io_Payment.Services.Implementation;
 
 namespace Stud_io_Payment.Controllers
@@ -12,45 +14,24 @@ namespace Stud_io_Payment.Controllers
     public class PaymentController : ControllerBase
     {
         private readonly PaymentService _paymentService;
-        private readonly PaymentDbContext _context;
 
-        public PaymentController(PaymentService paymentService, PaymentDbContext context)
+        public PaymentController(PaymentService paymentService)
         {
             _paymentService = paymentService;
-            _context = context;
         }
 
         //[Authorize]
         [HttpPost("payment")]
         public async Task<ActionResult> CreateOrUpdatePaymentIntent(double amount, string type)
         {
-            var options = new Stripe.Checkout.SessionCreateOptions
+            Payment p = new Payment()
             {
-<<<<<<< Updated upstream
-                LineItems = new List<SessionLineItemOptions>
-                {
-                    new SessionLineItemOptions
-                    {
-                        PriceData = new SessionLineItemPriceDataOptions
-                        {
-                            UnitAmount = (long?)Convert.ToDouble(amount),
-                            Currency = "eur"
-                        },
-                        Quantity = 1
-                    },
-                },
-                Mode = "payment"
-=======
                 TypeOfPayment = type,
                 DateOfPayment = DateTime.Now,
                 PaymentAmount = Convert.ToDouble(amount),
-
->>>>>>> Stashed changes
             };
-            var service = new Stripe.Checkout.SessionService();
-            Stripe.Checkout.Session session = service.Create(options);
 
-            Response.Headers.Add("Location", session.Url);
+            await _paymentService.CreateOrUpdatePaymentIntent(p);
             return Ok("Pagesa u krye!");
         }
     }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Stud_io_Notifications.DTOs;
+using Stud_io_Notifications.Models;
 using Stud_io_Notifications.Services.Interfaces;
 
 namespace Stud_io_Notifications.Controllers
@@ -22,9 +23,9 @@ namespace Stud_io_Notifications.Controllers
         }
 
         [HttpGet("get-all-informations")]
-        public async Task<ActionResult<List<InformationDTO>>> GetAll()
+        public async Task<ActionResult<List<InformationDTO>>> GetAll(string? searchString)
         {
-            return await _informationService.GetAllInformations();
+            return await _informationService.GetAllInformations(searchString);
 
         }
 

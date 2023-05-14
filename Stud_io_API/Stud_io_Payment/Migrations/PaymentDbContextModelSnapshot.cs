@@ -73,6 +73,26 @@ namespace Stud_io_Payment.Migrations
 
                     b.ToTable("Payments");
                 });
+
+            modelBuilder.Entity("Stud_io.Payment.Models.TypeOfPayment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TypeOfPayments");
+                });
 #pragma warning restore 612, 618
         }
     }

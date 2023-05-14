@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33122.133
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stud_io_Dormitory", "Stud_io_Konvikti\Stud_io_Dormitory.csproj", "{FBDC9EDC-367A-419C-AE94-4FE16981D6F7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stud_io.Dormitory", "Stud_io_Konvikti\Stud_io.Dormitory.csproj", "{D7116CEE-54E6-4A9F-9D16-D1F41C6E84B0}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stud_io.Maintenance", "Stud_io.Maintenance\Stud_io.Maintenance.csproj", "{02618566-3656-4455-B0C0-CF169BA3B315}"
 EndProject
@@ -21,10 +21,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{FBDC9EDC-367A-419C-AE94-4FE16981D6F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FBDC9EDC-367A-419C-AE94-4FE16981D6F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FBDC9EDC-367A-419C-AE94-4FE16981D6F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FBDC9EDC-367A-419C-AE94-4FE16981D6F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7116CEE-54E6-4A9F-9D16-D1F41C6E84B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7116CEE-54E6-4A9F-9D16-D1F41C6E84B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7116CEE-54E6-4A9F-9D16-D1F41C6E84B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7116CEE-54E6-4A9F-9D16-D1F41C6E84B0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{02618566-3656-4455-B0C0-CF169BA3B315}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{02618566-3656-4455-B0C0-CF169BA3B315}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{02618566-3656-4455-B0C0-CF169BA3B315}.Release|Any CPU.ActiveCfg = Release|Any CPU

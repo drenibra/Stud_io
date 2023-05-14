@@ -44,6 +44,60 @@ namespace Stud_io_Dormitory.Migrations
 
                     b.ToTable("Dormitories");
                 });
+
+            modelBuilder.Entity("Stud_io.Dormitory.Models.Questionnaire", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<bool>("havingGuests")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("roomCleanliness")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("shareBelongings")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("sleepingHabits")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("studyPlace")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("studyTime")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Questionnaires");
+                });
+
+            modelBuilder.Entity("Stud_io.Dormitory.Models.Room", b =>
+                {
+                    b.Property<int>("RoomNo")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RoomNo"), 1L, 1);
+
+                    b.Property<int>("Capacity")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Floor")
+                        .HasColumnType("int");
+
+                    b.HasKey("RoomNo");
+
+                    b.ToTable("Rooms");
+                });
 #pragma warning restore 612, 618
         }
     }

@@ -43,9 +43,17 @@ namespace Stud_io_Notifications.Services.Implementations
             return new OkObjectResult("Announcement deleted successfully");
         }
 
-        public async Task<ActionResult<List<AnnouncementDTO>>> GetAllAnnouncements() =>
-            _mapper.Map<List<AnnouncementDTO>>(await _context.Announcements.ToListAsync());
+        public async Task<ActionResult<List<AnnouncementDTO>>> GetAllAnnouncements(string? searchString) {
 
+            var allAnnouncements = _mapper.Map<List<AnnouncementDTO>>(await _context.Announcements.OrderBy(x => x.DeadlineId).ToListAsync());
+
+            if(!string.IsNullOrEmpty(searchString))
+            {
+                allAnnouncements = allAnnouncements.Where(n => n.Title.Contains(searchString, StringComparison.CurrentCultureIgnoreCase)).ToList();
+            }
+
+            return allAnnouncements;
+        }
         public async Task<ActionResult<AnnouncementDTO>> GetAnnouncementById(int id)
         {
             var mappedAnnouncement = _mapper.Map<AnnouncementDTO>(await _context.Announcements.FindAsync(id));
@@ -65,6 +73,7 @@ namespace Stud_io_Notifications.Services.Implementations
 
             announcement.Title = updateAnnouncementDTO.Title ?? announcement.Title;
             announcement.Description = updateAnnouncementDTO.Description ?? announcement.Description;
+            announcement.DeadlineId = updateAnnouncementDTO.DeadlineId ?? announcement.DeadlineId;
             await _context.SaveChangesAsync();
 
             return new OkObjectResult("Announcement updated successfully");

@@ -1,5 +1,4 @@
 ﻿using Stripe;
-using Stripe.FinancialConnections;
 using Stud_io_Payment.Models;
 
 namespace Stud_io_Payment.Services.Implementation
@@ -15,21 +14,23 @@ namespace Stud_io_Payment.Services.Implementation
 
         public async Task<PaymentIntent> CreateOrUpdatePaymentIntent(Payment payment)
         {
-            StripeConfiguration.ApiKey = _config["StripeSettings:SecretKey"];
-
             var service = new PaymentIntentService();
 
             var intent = new PaymentIntent();
+            var subtotal = payment.PaymentAmount;
+
 
             if (string.IsNullOrEmpty(payment.PaymentIntentId))
             {
                 var options = new PaymentIntentCreateOptions
                 {
-                    Amount = (long)payment.PaymentAmount,
-                    Currency = "usd",
+                    Amount = (long)subtotal*100,
+                    Currency = "eur",
                     PaymentMethodTypes = new List<string> { "card" }
                 };
                 intent = await service.CreateAsync(options);
+                payment.PaymentIntentId = intent.Id;
+                payment.ClientSecret = intent.ClientSecret;
             }
             else
             {

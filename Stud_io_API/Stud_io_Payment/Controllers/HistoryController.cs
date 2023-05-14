@@ -4,11 +4,7 @@ using Stud_io_Payment.Services.Interfaces;
 
 namespace Stud_io_Payment.Controllers
 {
-<<<<<<< Updated upstream
-    [Route("")]
-=======
     [Route("api/[controller]")]
->>>>>>> Stashed changes
     [ApiController]
     public class HistoryController : ControllerBase
     {
