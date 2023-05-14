@@ -102,6 +102,9 @@ namespace Stud_io.Maintenance.Service.Implementation
 
             return new OkObjectResult("Discontent complaint deleted succesfully.");
         }
+
+        //TODO: shtoja ni reason, edhe ni boolean a ju ka pranu a jo
+        //nese po shtoje ne listen e te pranuarve/waiting list..
         public async Task<ActionResult> ResolveDiscontentComplaint(int id, bool status)
         {
             var dbComplaint = await _context.DiscontentComplaints.FindAsync(id);
