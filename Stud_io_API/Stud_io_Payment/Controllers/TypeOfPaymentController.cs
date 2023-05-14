@@ -5,7 +5,7 @@ using Stud_io.Payment.Services.Interfaces;
 
 namespace Stud_io.Payment.Controllers
 {
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class TypeOfPaymentController : ControllerBase
     {
@@ -16,31 +16,31 @@ namespace Stud_io.Payment.Controllers
             _typeOfPaymentService = typeOfPaymentService;
         }
 
-        [HttpGet("TypeOfPayments")]
+        [HttpGet("type-of-payments")]
         public async Task<ActionResult<List<TypeOfPaymentDto>>> GetTypeOfPayments(string? sortBy, string? searchString)
         {
             return await _typeOfPaymentService.GetTypeOfPayments(sortBy, searchString);
         }
 
-        [HttpGet("TypeOfPayment/{id}")]
+        [HttpGet("type-of-payment/{id}")]
         public async Task<ActionResult<TypeOfPaymentDto>> GetTypeOfPaymentById(int id)
         {
             return await _typeOfPaymentService.GetTypeOfPaymentById(id);
         }
 
-        [HttpPost("TypeOfPayment")]
+        [HttpPost("type-of-payment")]
         public async Task<ActionResult> AddTypeOfPayment(TypeOfPaymentDto typeOfPaymentDto)
         {
             return await _typeOfPaymentService.AddTypeOfPayment(typeOfPaymentDto);
         }
 
-        [HttpPut("TypeOfPayment")]
+        [HttpPut("type-of-payment")]
         public async Task<ActionResult> UpdateTypeOfPayment(int id, UpdateTypeOfPaymentDto updateTypeOfPaymentDto)
         {
             return await _typeOfPaymentService.UpdateTypeOfPayment(id, updateTypeOfPaymentDto);
         }
 
-        [HttpDelete("TypeOfPayment/{id}")]
+        [HttpDelete("type-of-payment/{id}")]
         public async Task<ActionResult> DeleteTypeOfPayment(int id)
         {
             return await _typeOfPaymentService.DeleteTypeOfPayment(id);

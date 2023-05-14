@@ -4,7 +4,7 @@ using Stud_io_Payment.Services.Interfaces;
 
 namespace Stud_io_Payment.Controllers
 {
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class HistoryController : ControllerBase
     {
@@ -15,31 +15,31 @@ namespace Stud_io_Payment.Controllers
             _historyService = historyService;
         }
 
-        [HttpGet("Histories")]
+        [HttpGet("histories")]
         public async Task<ActionResult<List<HistoryDto>>> GetHistories()
         {
             return await _historyService.GetHistories();
         }
 
-        [HttpGet("History/{id}")]
+        [HttpGet("history/{id}")]
         public async Task<ActionResult<HistoryDto>> GetHistoryById(int id)
         {
             return await _historyService.GetHistoryById(id);
         }
 
-        [HttpPost("History")]
+        [HttpPost("history")]
         public async Task<ActionResult> AddHistory(HistoryDto historyDto)
         {
             return await _historyService.AddHistory(historyDto);
         }
 
-        [HttpPut("History")]
+        [HttpPut("history")]
         public async Task<ActionResult> UpdateHistory(int id, UpdateHistoryDto historyDto)
         {
             return await _historyService.UpdateHistory(id, historyDto);
         }
 
-        [HttpDelete("History/{id}")]
+        [HttpDelete("history/{id}")]
         public async Task<ActionResult> DeleteHistory(int id)
         {
             return await _historyService.DeleteHistory(id);

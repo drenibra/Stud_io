@@ -9,7 +9,7 @@ using Stud_io_Payment.Services.Implementation;
 
 namespace Stud_io_Payment.Controllers
 {
-    [Route("")]
+    [Route("api/[controller]")]
     [ApiController]
     public class PaymentController : ControllerBase
     {
@@ -20,16 +20,15 @@ namespace Stud_io_Payment.Controllers
             _paymentService = paymentService;
         }
 
-        /*[Authorize]*/
-        [HttpPost]
-        public async Task<ActionResult> CreateOrUpdatePaymentIntent(double amount)
+        //[Authorize]
+        [HttpPost("payment")]
+        public async Task<ActionResult> CreateOrUpdatePaymentIntent(double amount, string type)
         {
             Payment p = new Payment()
             {
-                TypeOfPayment = "Strehim",
+                TypeOfPayment = type,
                 DateOfPayment = DateTime.Now,
                 PaymentAmount = Convert.ToDouble(amount),
-
             };
 
             await _paymentService.CreateOrUpdatePaymentIntent(p);
