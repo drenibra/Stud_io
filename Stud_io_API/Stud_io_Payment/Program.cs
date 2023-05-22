@@ -15,6 +15,13 @@ builder.Services.AddDbContext<PaymentDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+
+builder.Services.AddCors(opt => {
+    opt.AddPolicy("CorsPolicy", policy => {
+        policy.AllowAnyMethod().AllowCredentials().AllowAnyHeader().WithOrigins("http://localhost:5173");
+    });
+});
+
 StripeConfiguration.ApiKey = builder.Configuration["StripeSettings:SecretKey"];
 
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
@@ -38,6 +45,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors("CorsPolicy");
 
 app.UseAuthorization();
 
