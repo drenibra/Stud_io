@@ -9,6 +9,7 @@ namespace Stud_io.Application.Configurations
         public AutoMapperProfiles()
         {
             CreateMap<Student, StudentDto>().ReverseMap();
+            CreateMap<Faculty, FacultyDto>().ReverseMap();
            
         }
     }
