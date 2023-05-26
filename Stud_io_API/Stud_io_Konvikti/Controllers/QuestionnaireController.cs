@@ -54,6 +54,12 @@ namespace Stud_io.Dormitory.Controllers
             var compatibility = _questionnaireService.CalculateCompatibility(q1Id, q2Id);
             return Ok(compatibility);
         }
+        [HttpGet("FindBestMatch")]
+        public IActionResult FindBestMatch(int qId)
+        {
+            var bestmatch = _questionnaireService.FindBestMatch(qId);
+            return Ok(bestmatch);
+        }
 
     }
 }

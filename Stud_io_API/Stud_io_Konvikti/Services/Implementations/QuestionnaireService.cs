@@ -70,7 +70,7 @@ namespace Stud_io.Dormitory.Services.Implementations
             return new OkObjectResult("Questionnaire deleted successfully!");
         }
 
-     
+
 
         private static readonly Dictionary<string, int> PropertyWeights = new Dictionary<string, int>
         {
@@ -98,22 +98,54 @@ namespace Stud_io.Dormitory.Services.Implementations
             {
                 if (PropertyWeights.TryGetValue(property.Name, out int weight))
                 {
-                    if (property.GetValue(q1) is string && property.GetValue(q2) is string)
+                    if (property.GetValue(q1) is string q1Value && property.GetValue(q2) is string q2Value)
                     {
-                        if (string.Equals(property.GetValue(q1), property.GetValue(q2)))
+                        if (string.Equals(q1Value, q2Value))
                         {
                             score += weight;
                         }
                     }
-                    else if (property.GetValue(q1) == property.GetValue(q2))
+                    else if (property.GetValue(q1) is bool q1BoolValue && property.GetValue(q2) is bool q2BoolValue)
                     {
-                        score += weight;
+                        if (q1BoolValue == q2BoolValue)
+                        {
+                            score += weight;
+                        }
                     }
                 }
             }
 
             return score;
         }
+
+        public int FindBestMatch(int studentQuestionnaireId)
+        {
+            var studentQuestionnaire = _context.Questionnaires.FirstOrDefault(q => q.Id == studentQuestionnaireId);
+            if (studentQuestionnaire == null)
+            {
+                throw new ArgumentException("Invalid questionnaire id");
+            }
+
+            int bestMatchScore = 0;
+            int bestMatchId = -1;
+
+            foreach (var otherQuestionnaire in _context.Questionnaires)
+            {
+                if (studentQuestionnaire.Id == otherQuestionnaire.Id)
+                    continue; // Skip comparing with itself
+
+                int compatibilityScore = CalculateCompatibility(studentQuestionnaire.Id, otherQuestionnaire.Id);
+
+                if (compatibilityScore > bestMatchScore)
+                {
+                    bestMatchScore = compatibilityScore;
+                    bestMatchId = otherQuestionnaire.Id;
+                }
+            }
+
+            return bestMatchId;
+        }
+
 
 
     }
