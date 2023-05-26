@@ -47,7 +47,7 @@ namespace Stud_io.Application.Services.Implementations
 
             var dbFaculty = await _context.Faculties.FindAsync(id);
             if (dbFaculty == null)
-                return new NotFoundObjectResult("Student doesn't exist!!");
+                return new NotFoundObjectResult("Faculty doesn't exist!!");
 
             dbFaculty.FacultyName = updateFacultyDto.FacultyName ?? dbFaculty.FacultyName;
             dbFaculty.Major = updateFacultyDto.Major ?? dbFaculty.Major;

@@ -10,6 +10,7 @@ namespace Stud_io.Application.Configurations
         {
             CreateMap<Student, StudentDto>().ReverseMap();
             CreateMap<Faculty, FacultyDto>().ReverseMap();
+            CreateMap<ApplicationForm, ApplicationDto>().ReverseMap();
            
         }
     }

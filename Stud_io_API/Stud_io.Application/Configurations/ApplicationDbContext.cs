@@ -15,5 +15,6 @@ namespace Stud_io.Application.Configurations
         public DbSet<PDF> Pdf { get; set; }
         public DbSet<PNG> Png { get; set; }
         public DbSet<Faculty> Faculties { get; set; }
+        public DbSet<ApplicationForm> Applications { get; set; }
     }
 }
