@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Payment.Models.Stripe;
 using Stud_io.Payment.Models;
-using Stud_io_Payment.Models;
 
 namespace Stud_io_Payment.Configurations
 {
@@ -11,8 +11,8 @@ namespace Stud_io_Payment.Configurations
 
         }
 
-        public DbSet<History> Histories { get; set; } = null!;
-        public DbSet<Payment> Payments { get; set; } = null!;
         public DbSet<TypeOfPayment> TypeOfPayments { get; set; } = null!;
+        public DbSet<StripeCustomer> StripeCustomers { get; set; } = null!;
+        public DbSet<StripePayment> StripePayments { get; set; } = null!;
     }
 }
