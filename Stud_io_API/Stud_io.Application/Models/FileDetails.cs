@@ -6,6 +6,6 @@
         public string FileName { get; set; } = null!;
         public byte[] FileData { get; set; } = null!;
 
-
+        public virtual void Modify(IFormFile file) { }
     }
 }
