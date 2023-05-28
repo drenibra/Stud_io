@@ -13,5 +13,6 @@ namespace Stud_io.Application.Services.Interfaces
         public Task<List<ProfileMatch>> CalculateTotalPointsForAllStudents();
         public Task<List<ProfileMatch>> SortByTotalPoints();
         public Task<List<ProfileMatch>> GetTopProfileMatches();
+        public Task<List<ProfileMatch>> GetLastProfileMatches();
     }
 }

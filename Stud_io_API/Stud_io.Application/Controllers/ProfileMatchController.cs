@@ -63,5 +63,11 @@ namespace Stud_io.Application.Controllers
             return await _profileMatchService.GetTopProfileMatches();
         }
 
+        [HttpGet("lastMatches")]
+        public async Task<ActionResult<List<ProfileMatch>>> GetLastMatches()
+        {
+            return await _profileMatchService.GetLastProfileMatches();
+        }
+
     }
 }

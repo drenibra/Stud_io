@@ -179,5 +179,11 @@ namespace Stud_io.Application.Services.Implementations
             return sortedProfileMatches.Take(10).ToList();
         }
 
+        public async Task<List<ProfileMatch>> GetLastProfileMatches()
+        {
+            var sortedProfileMatches = await SortByTotalPoints();
+            return sortedProfileMatches.Skip(10).ToList();
+        }
+
     }
 }
