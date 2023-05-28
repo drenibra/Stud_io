@@ -37,8 +37,6 @@ namespace Stud_io.Application.Services.Implementations
             return existingApplication != null;
         }
 
-       
-
         public async Task<ActionResult> AddApplication(ApplicationDto applicationDto)
         {
             if (applicationDto == null)

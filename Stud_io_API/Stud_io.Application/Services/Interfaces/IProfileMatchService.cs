@@ -10,5 +10,6 @@ namespace Stud_io.Application.Services.Interfaces
         public Task<ActionResult<int>> CalculateAverageGradePoints(double averageGrade);
         public Task<ActionResult<int>> CalculateExtraPoints(string category);
         public Task<ActionResult<List<ProfileMatch>>> GetLastProfileMatches();
+     
     }
 }
