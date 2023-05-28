@@ -5,5 +5,6 @@
         string ReceiptEmail,
         string Description,
         string Currency,
-        long Amount);
+        long Amount,
+        string Month);
 }

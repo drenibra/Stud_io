@@ -15,5 +15,7 @@
         public string Currency { get; set; } = null!;
         public long Amount { get; set; }
         public string PaymentId { get; set; } = null!;
+        public DateTime DateOfPayment { get; set; }
+        public string Month { get; set; } = null!;
     }
 }

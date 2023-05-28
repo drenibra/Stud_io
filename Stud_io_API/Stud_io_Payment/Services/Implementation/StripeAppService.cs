@@ -72,7 +72,7 @@ namespace Payment.Application
             return new StripeCustomer(createdCustomer.Name, createdCustomer.Email, createdCustomer.Id);
         }
 
-        private static StripePayment MapStripePayment(Charge charge)
+        private static StripePayment MapStripePayment(Charge charge, string month)
         {
             return new StripePayment(
                 charge.CustomerId,
@@ -80,7 +80,9 @@ namespace Payment.Application
                 charge.Description,
                 charge.Currency,
                 charge.Amount,
-                charge.Id);
+                charge.Id,
+                charge.Created,
+                month);
         }
 
         public async Task<StripePayment> AddStripePaymentAsync(AddStripePayment payment, CancellationToken ct)
@@ -97,7 +99,7 @@ namespace Payment.Application
 
             // Create the payment
             var createdPayment = await _chargeService.CreateAsync(paymentOptions, null, ct);
-            StripePayment mappedPayment = MapStripePayment(createdPayment);
+            StripePayment mappedPayment = MapStripePayment(createdPayment, payment.Month);
             await _context.StripePayments.AddAsync(mappedPayment, ct);
             await _context.SaveChangesAsync(ct);
 
@@ -108,7 +110,9 @@ namespace Payment.Application
               createdPayment.Description,
               createdPayment.Currency,
               createdPayment.Amount,
-              createdPayment.Id);
+              createdPayment.Id, 
+              createdPayment.Created,
+              payment.Month);
         }
 
         public async Task<ActionResult<List<PaymentDto>>> GetPayments()
