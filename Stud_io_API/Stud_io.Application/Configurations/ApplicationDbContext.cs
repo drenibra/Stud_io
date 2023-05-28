@@ -16,5 +16,6 @@ namespace Stud_io.Application.Configurations
         public DbSet<PNG> Png { get; set; }
         public DbSet<Faculty> Faculties { get; set; }
         public DbSet<ApplicationForm> Applications { get; set; }
+        public DbSet<ProfileMatch> ProfileMatches { get; set; }
     }
 }
