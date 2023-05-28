@@ -28,6 +28,11 @@ namespace Stud_io.Application.Controllers
             return await _studentService.GetStudentById(id);
         }
 
+        [HttpGet("GetStudentByPersonalNo/{PersonalNo}")]
+        public async Task<ActionResult<StudentDto>> GetStudentByPersonalNo(string PersonalNo)
+        {
+            return await _studentService.GetStudentByPersonalNo(PersonalNo);
+        }
 
         [HttpPost("AddStudent")]
         public async Task<ActionResult> AddDormitory(StudentDto studentDto)

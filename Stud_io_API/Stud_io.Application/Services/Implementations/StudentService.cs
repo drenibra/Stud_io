@@ -30,6 +30,17 @@ namespace Stud_io.Application.Services.Implementations
                 : new OkObjectResult(mappedStudent);
         }
 
+        public async Task<ActionResult<StudentDto>> GetStudentByPersonalNo(string personalNo)
+        {
+            var student = await _context.Students.FirstOrDefaultAsync(s => s.PersonalNo == personalNo);
+            var mappedStudent = _mapper.Map<StudentDto>(student);
+
+            return student == null
+                ? new NotFoundObjectResult("Student doesn't exist!")
+                : new OkObjectResult(mappedStudent);
+        }
+
+
         public async Task<ActionResult> AddStudent(StudentDto studentDTO)
         {
             if (studentDTO == null)

@@ -30,15 +30,32 @@ namespace Stud_io.Application.Services.Implementations
                 : new OkObjectResult(mappedApplication);
         }
 
+        // check if the student has already applied
+        public async Task<bool> HasStudentAlreadyApplied(string personalNumber)
+        {
+            var existingApplication = await _context.Applications.FirstOrDefaultAsync(a => a.PersonalNo == personalNumber);
+            return existingApplication != null;
+        }
+
+       
+
         public async Task<ActionResult> AddApplication(ApplicationDto applicationDto)
         {
             if (applicationDto == null)
                 return new BadRequestObjectResult("Application can not be null!!");
+
+            bool hasAlreadyApplied = await HasStudentAlreadyApplied(applicationDto.PersonalNo);
+            if (hasAlreadyApplied)
+            {
+                return new BadRequestObjectResult("You have already applied!");
+            }
+
             var mappedApplication = _mapper.Map<ApplicationForm>(applicationDto);
             await _context.Applications.AddAsync(mappedApplication);
             await _context.SaveChangesAsync();
             return new OkObjectResult("Application added successfully!");
         }
+
 
         public async Task<ActionResult> UpdateApplication(int id, UpdateApplicationDto updateApplicationDto)
         {
