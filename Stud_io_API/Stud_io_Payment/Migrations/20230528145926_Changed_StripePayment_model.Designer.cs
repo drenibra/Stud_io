@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Stud_io_Payment.Configurations;
 
@@ -11,9 +12,10 @@ using Stud_io_Payment.Configurations;
 namespace Stud_io_Payment.Migrations
 {
     [DbContext(typeof(PaymentDbContext))]
-    partial class PaymentDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230528145926_Changed_StripePayment_model")]
+    partial class Changed_StripePayment_model
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,7 +24,7 @@ namespace Stud_io_Payment.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("Stud_io_Payment.Models.History", b =>
+            modelBuilder.Entity("Payment.Models.Stripe.StripeCustomer", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -30,20 +32,24 @@ namespace Stud_io_Payment.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("Payment")
+                    b.Property<string>("CustomerId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("StdPersonalNo")
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Histories");
+                    b.ToTable("StripeCustomers");
                 });
 
-            modelBuilder.Entity("Stud_io_Payment.Models.Payment", b =>
+            modelBuilder.Entity("Payment.Models.Stripe.StripePayment", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -51,31 +57,21 @@ namespace Stud_io_Payment.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("ClientSecret")
+                    b.Property<long>("Amount")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Currency")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("DateOfPayment")
-                        .HasColumnType("datetime2");
-
-                    b.Property<double>("PaymentAmount")
-                        .HasColumnType("float");
-
-                    b.Property<string>("PaymentIntentId")
+                    b.Property<string>("CustomerId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-<<<<<<< Updated upstream
-                    b.Property<string>("TypeOfPayment")
-=======
-                    b.Property<DateTime>("DateOfPayment")
+                    b.Property<DateTime>("DateTime")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Month")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -84,13 +80,12 @@ namespace Stud_io_Payment.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ReceiptEmail")
->>>>>>> Stashed changes
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Payments");
+                    b.ToTable("StripePayments");
                 });
 
             modelBuilder.Entity("Stud_io.Payment.Models.TypeOfPayment", b =>
