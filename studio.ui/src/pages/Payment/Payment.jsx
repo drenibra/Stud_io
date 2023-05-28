@@ -1,5 +1,6 @@
 import React, { Children, useEffect, useState } from "react";
 import "./Payment.scss";
+import Button from "../../components/Button/Button";
 import agent from "../../api/payment_agents";
 
 const Payment = () => {
@@ -9,7 +10,7 @@ const Payment = () => {
     description: "",
     currency: "eur",
     amount: "",
-    month: ""
+    month: "",
   });
 
   const handleChange = (e) => {
@@ -25,7 +26,9 @@ const Payment = () => {
         return {
           ...prev,
           [name]: value,
-          amount: typeOfPayments.find((payment) => payment.type === value)?.price || "",
+          amount:
+            typeOfPayments.find((payment) => payment.type === value)?.price ||
+            "",
         };
       }
     });
@@ -52,13 +55,15 @@ const Payment = () => {
   const isMonthDisabled = (monthIndex) => {
     const currentMonthIndex = currentDate.getMonth();
     const currentDay = currentDate.getDate();
-  
+
     const minSelectableDay = 27;
     const maxSelectableDay = 31;
-  
+
     // Check if the current date falls within the range
     const isWithinRange =
-      (currentMonthIndex === monthIndex - 1 && currentDay >= minSelectableDay && currentDay <= maxSelectableDay);
+      currentMonthIndex === monthIndex - 1 &&
+      currentDay >= minSelectableDay &&
+      currentDay <= maxSelectableDay;
     return !isWithinRange;
   };
 
@@ -91,7 +96,11 @@ const Payment = () => {
             type="text"
             name="amount"
             placeholder="Shuma për pagesë"
-            value={pagesa.amount !== "" ? `${(pagesa.amount / 100).toFixed(2)} €` : ""}
+            value={
+              pagesa.amount !== ""
+                ? `${(pagesa.amount / 100).toFixed(2)} €`
+                : ""
+            }
             disabled
           />
           <div className="box">
@@ -110,14 +119,13 @@ const Payment = () => {
               <option disabled={isMonthDisabled(8)}>Dhjetor</option>
             </select>
           </div>
-          <button
+
+          <Button
             type="submit"
             value="Submit"
-            className="payment-btn"
             onClick={handleSubmit}
-          >
-            Paguaj
-          </button>
+            text="Paguaj"
+          />
         </form>
       </div>
     </>

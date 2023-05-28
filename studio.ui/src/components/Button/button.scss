@@ -1,0 +1,19 @@
+.button {
+  width: 70%;
+  min-width: 10em;
+  margin-top: 6px;
+  height: 50px;
+  padding: 0px 10px;
+  font-size: 16px;
+  font-weight: 500;
+  border: 0;
+  border-radius: 10px;
+  color: #f3f3f3;
+  background-color: #c62828;
+  transition: width 250ms ease-in-out, transform 150ms ease;
+
+  &:hover {
+    cursor: pointer;
+    width: 80%;
+  }
+}

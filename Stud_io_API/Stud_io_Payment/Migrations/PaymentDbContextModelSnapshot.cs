@@ -73,7 +73,7 @@ namespace Stud_io_Payment.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("TypeOfPayment")
+                    b.Property<string>("TypeOfPayment");
 
                     b.Property<DateTime>("DateOfPayment")
                         .HasColumnType("datetime2");
