@@ -11,12 +11,28 @@ const requests = {
   del: (url) => axios.delete(url).then(responseBody),
 };
 
+const TypeOfPayments = {
+  get: (sortBy, searchString) =>
+    requests.get("TypeOfPayment/type-of-payments", { sortBy, searchString }),
+};
+
+const Payment = {
+  create: (values) => requests.post("Stripe/payment/add", values),
+};
+
 const Payments = {
-  create: (values) => requests.post(`Payment/AddPayment`, values),
+  get: () => requests.get("Stripe/payments"),
+};
+
+const Customers = {
+  get: () => requests.get("Stripe/customers"),
 };
 
 const agent = {
+  TypeOfPayments,
+  Payment,
   Payments,
+  Customers,
 };
 
 export default agent;

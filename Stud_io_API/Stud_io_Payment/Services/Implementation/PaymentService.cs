@@ -1,4 +1,4 @@
-﻿using Stripe;
+﻿/*using Stripe;
 using Stud_io_Payment.Models;
 
 namespace Stud_io_Payment.Services.Implementation
@@ -45,3 +45,4 @@ namespace Stud_io_Payment.Services.Implementation
         }
     }
 }
+*/

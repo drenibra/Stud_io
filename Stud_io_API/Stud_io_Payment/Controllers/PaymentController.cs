@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿/*using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Stripe.Checkout;
@@ -35,4 +35,4 @@ namespace Stud_io_Payment.Controllers
             return Ok("Pagesa u krye!");
         }
     }
-}
+}*/

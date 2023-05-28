@@ -1,9 +1,8 @@
-import React from "react";
+import React, { Children, useEffect, useState } from "react";
+import "./Payment.scss";
+import agent from "../../api/payment_agents";
 
 const Payment = () => {
-<<<<<<< Updated upstream
-  return <div>Payment</div>;
-=======
   const [pagesa, setPagesa] = useState({
     customerId: "",
     receiptEmail: "fs51701@ubt-uni.net",
@@ -47,7 +46,6 @@ const Payment = () => {
       setTypeOfPayments(response);
     });
   }, []);
-
 
   const currentDate = new Date();
 
@@ -124,7 +122,6 @@ const Payment = () => {
       </div>
     </>
   );
->>>>>>> Stashed changes
 };
 
 export default Payment;

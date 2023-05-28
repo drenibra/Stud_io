@@ -12,5 +12,6 @@ namespace Stud_io.Dormitory.Services.Interfaces
         public Task<ActionResult> UpdateQuestionnaire(int id, UpdateQuestionnaireDto updateQuestionnaireDTO);
         public Task<ActionResult> DeleteQuestionnaire(int id);
         public int CalculateCompatibility(int q1Id, int q2Id);
+        public int FindBestMatch(int studentQuestionnaireId);
     }
 }

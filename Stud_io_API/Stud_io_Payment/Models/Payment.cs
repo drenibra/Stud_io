@@ -1,4 +1,4 @@
-﻿namespace Stud_io_Payment.Models
+﻿/*namespace Stud_io_Payment.Models
 {
     public class Payment
     {
@@ -10,3 +10,4 @@
         public string ClientSecret { get; set; } = null!;
     }
 }
+*/
