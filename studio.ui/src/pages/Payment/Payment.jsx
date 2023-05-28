@@ -3,6 +3,34 @@ import "./Payment.scss";
 import agent from "../../api/payment_agents";
 
 const Payment = () => {
+  const [pagesa, setPagesa] = useState({
+    customerId: "",
+    receiptEmail: "fs51701@ubt-uni.net",
+    description: "",
+    currency: "eur",
+    amount: "",
+  });
+
+  const handleChange = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    setPagesa((prev) => {
+      return {
+        ...prev,
+        [name]: value,
+        amount: typeOfPayments.find((payment) => payment.type === value)?.price || "",
+      };
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    agent.Payment.create(pagesa).catch(function (error) {
+      console.log(error.response.data);
+    });
+  };
+
   const [typeOfPayments, setTypeOfPayments] = useState([]);
 
   useEffect(() => {
@@ -16,7 +44,12 @@ const Payment = () => {
       <div className="payment-form">
         <h1>Kryej pagesën</h1>
         <form className="payment-form-group">
-          <input type="text" name="PersonalNo" placeholder="Numri personal" />
+          <input
+            type="text"
+            name="customerId"
+            placeholder="Numri personal"
+            onChange={handleChange}
+          />
           {/* <div className="box">
             <select required>
               <option value="Zgjedh muajin" disabled>
@@ -34,8 +67,8 @@ const Payment = () => {
             </select>
           </div> */}
           <div className="box">
-            <select required>
-              <option value="Tipi i pagesës" disabled>
+            <select required onChange={handleChange} name="description">
+              <option value="Tipi i pagesës" disabled selected>
                 Tipi i pagesës
               </option>
               {React.Children.toArray(
@@ -47,8 +80,20 @@ const Payment = () => {
               )}
             </select>
           </div>
-          <button type="submit" value="Submit" className="payment-btn">
-            Gjenero faturën
+          <input
+            type="number"
+            name="amount"
+            placeholder="Shuma për pagesë"
+            value={pagesa.amount}
+            disabled
+          />
+          <button
+            type="submit"
+            value="Submit"
+            className="payment-btn"
+            onClick={handleSubmit}
+          >
+            Paguaj
           </button>
         </form>
       </div>

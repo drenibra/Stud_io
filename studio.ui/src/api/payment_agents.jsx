@@ -17,7 +17,7 @@ const TypeOfPayments = {
 };
 
 const Payment = {
-  post: (values) => requests.post("Payment/payment", values),
+  create: (values) => requests.post("Stripe/payment/add", values),
 };
 
 const Payments = {
