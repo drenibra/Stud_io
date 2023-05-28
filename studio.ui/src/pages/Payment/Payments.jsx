@@ -8,7 +8,8 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { red } from "@mui/material/colors";
-import agent from "../../api/agents";
+import agent from "../../api/payment_agents";
+import Button from "@mui/material/Button";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -32,7 +33,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 export default function CustomizedTables() {
   const [payments, setPayments] = useState([]);
-  const [customers, setCustomers] = useState([]);
   const [customerNames, setCustomerNames] = useState({});
 
   useEffect(() => {
@@ -52,27 +52,34 @@ export default function CustomizedTables() {
   }, []);
 
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 700 }} aria-label="customized table">
-        <TableHead>
-          <TableRow>
-            <StyledTableCell>Studenti</StyledTableCell>
-            <StyledTableCell>Përshkrimi</StyledTableCell>
-            <StyledTableCell>Shuma</StyledTableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {React.Children.toArray(
-            payments.map((row) => (
-              <StyledTableRow key={row.id}>
-                <StyledTableCell>{customerNames[row.customerId]}</StyledTableCell>
-                <StyledTableCell>{row.description}</StyledTableCell>
-                <StyledTableCell>{(row.amount * 0.01).toFixed(2)} €</StyledTableCell>
-              </StyledTableRow>
-            ))
-          )}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <>
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 700 }} aria-label="customized table">
+          <TableHead>
+            <TableRow>
+              <StyledTableCell>Studenti</StyledTableCell>
+              <StyledTableCell>Përshkrimi</StyledTableCell>
+              <StyledTableCell>Shuma</StyledTableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {React.Children.toArray(
+              payments.map((row) => (
+                <StyledTableRow key={row.id}>
+                  <StyledTableCell>
+                    {customerNames[row.customerId]}
+                  </StyledTableCell>
+                  <StyledTableCell>{row.description}</StyledTableCell>
+                  <StyledTableCell>
+                    {(row.amount * 0.01).toFixed(2)} €
+                  </StyledTableCell>
+                </StyledTableRow>
+              ))
+            )}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <Button variant="contained">Kryej pagesë</Button>
+    </>
   );
 }

@@ -1,7 +1,6 @@
 import React, { Children, useEffect, useState } from "react";
 import "./Payment.scss";
-import agent from "../../api/agents";
-// import { Payments } from "./Payments";
+import agent from "../../api/payment_agents";
 
 const Payment = () => {
   const [typeOfPayments, setTypeOfPayments] = useState([]);
@@ -18,7 +17,7 @@ const Payment = () => {
         <h1>Kryej pagesën</h1>
         <form className="payment-form-group">
           <input type="text" name="PersonalNo" placeholder="Numri personal" />
-          <div className="box">
+          {/* <div className="box">
             <select required>
               <option value="Zgjedh muajin" disabled>
                 Zgjedh muajin
@@ -33,7 +32,7 @@ const Payment = () => {
               <option>Nëntor</option>
               <option>Dhjetor</option>
             </select>
-          </div>
+          </div> */}
           <div className="box">
             <select required>
               <option value="Tipi i pagesës" disabled>
@@ -53,7 +52,6 @@ const Payment = () => {
           </button>
         </form>
       </div>
-      {/* <Payments /> */}
     </>
   );
 };
