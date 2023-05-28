@@ -1,4 +1,6 @@
-﻿using Payment.Models.Stripe;
+﻿using Microsoft.AspNetCore.Mvc;
+using Payment.Models.Stripe;
+using Stud_io.Payment.DTOs;
 
 namespace Payment.Contracts
 {
@@ -6,5 +8,7 @@ namespace Payment.Contracts
     {
         Task<StripeCustomer> AddStripeCustomerAsync(AddStripeCustomer customer, CancellationToken ct);
         Task<StripePayment> AddStripePaymentAsync(AddStripePayment payment, CancellationToken ct);
+        Task<ActionResult<List<PaymentDto>>> GetPayments();
+        Task<ActionResult<List<CustomerDto>>> GetCustomers();
     }
 }

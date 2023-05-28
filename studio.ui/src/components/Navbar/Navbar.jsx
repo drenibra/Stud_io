@@ -15,7 +15,7 @@ import AdbIcon from "@mui/icons-material/Adb";
 import Logo from "../../assets/logo/icon-stud-io.svg";
 import { Link } from "react-router-dom";
 
-const pages = ["Home", "Ankesa", "Konkursi", "Pagesa", "Mirembajtja"];
+const pages = ["Home", "Ankesa", "Konkursi", "Pagesa", "Pagesat", "Mirembajtja"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 function Navbar() {

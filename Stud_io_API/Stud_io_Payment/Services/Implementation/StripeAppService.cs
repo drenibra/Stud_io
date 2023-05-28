@@ -1,6 +1,10 @@
-﻿using Payment.Contracts;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Payment.Contracts;
 using Payment.Models.Stripe;
 using Stripe;
+using Stud_io.Payment.DTOs;
 using Stud_io_Payment.Configurations;
 
 namespace Payment.Application
@@ -11,20 +15,23 @@ namespace Payment.Application
         private readonly CustomerService _customerService;
         private readonly TokenService _tokenService;
         private readonly PaymentDbContext _context;
+        private readonly IMapper _mapper;
 
         public StripeAppService(
             ChargeService chargeService,
             CustomerService customerService,
             TokenService tokenService, 
-            PaymentDbContext context)
+            PaymentDbContext context, 
+            IMapper mapper)
         {
             _chargeService = chargeService;
             _customerService = customerService;
             _tokenService = tokenService;
             _context = context;
+            _mapper = mapper;
         }
 
-        private StripeCustomer MapStripeCustomer(Customer customer)
+        private static StripeCustomer MapStripeCustomer(Customer customer)
         {
             return new StripeCustomer(customer.Name, customer.Email, customer.Id);
         }
@@ -65,7 +72,7 @@ namespace Payment.Application
             return new StripeCustomer(createdCustomer.Name, createdCustomer.Email, createdCustomer.Id);
         }
 
-        private StripePayment MapStripePayment(Charge charge)
+        private static StripePayment MapStripePayment(Charge charge)
         {
             return new StripePayment(
                 charge.CustomerId,
@@ -79,7 +86,7 @@ namespace Payment.Application
         public async Task<StripePayment> AddStripePaymentAsync(AddStripePayment payment, CancellationToken ct)
         {
             // Set the options for the payment we would like to create at Stripe
-            ChargeCreateOptions paymentOptions = new ChargeCreateOptions
+            ChargeCreateOptions paymentOptions = new()
             {
                 Customer = payment.CustomerId,
                 ReceiptEmail = payment.ReceiptEmail,
@@ -91,7 +98,7 @@ namespace Payment.Application
             // Create the payment
             var createdPayment = await _chargeService.CreateAsync(paymentOptions, null, ct);
             StripePayment mappedPayment = MapStripePayment(createdPayment);
-            await _context.StripePayments.AddAsync(mappedPayment);
+            await _context.StripePayments.AddAsync(mappedPayment, ct);
             await _context.SaveChangesAsync(ct);
 
             // Return the payment to requesting method
@@ -102,6 +109,16 @@ namespace Payment.Application
               createdPayment.Currency,
               createdPayment.Amount,
               createdPayment.Id);
+        }
+
+        public async Task<ActionResult<List<PaymentDto>>> GetPayments()
+        {
+            return _mapper.Map<List<PaymentDto>>(await _context.StripePayments.ToListAsync());
+        }
+
+        public async Task<ActionResult<List<CustomerDto>>> GetCustomers()
+        {
+            return _mapper.Map<List<CustomerDto>>(await _context.StripeCustomers.ToListAsync());
         }
     }
 }

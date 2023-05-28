@@ -4,7 +4,7 @@ import Navbar from "./components/Navbar/Navbar";
 import { ThemeProvider } from "@emotion/react";
 import theme from "./styles/theme";
 import { Routes, Route } from "react-router-dom";
-import { LandingPage, Maintenance, Payment } from "./pages";
+import { LandingPage, Maintenance, Payment, Payments } from "./pages";
 
 function App() {
   return (
@@ -15,6 +15,7 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/Mirembajtja" element={<Maintenance />} />
           <Route path="/Pagesa" element={<Payment />} />
+          <Route path="/Pagesat" element={<Payments />} />
         </Routes>
       </div>
     </ThemeProvider>

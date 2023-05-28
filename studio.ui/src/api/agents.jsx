@@ -20,9 +20,19 @@ const Payment = {
   post: (values) => requests.post("Payment/payment", values),
 };
 
+const Payments = {
+  get: () => requests.get("Stripe/payments"),
+};
+
+const Customers = {
+  get: () => requests.get("Stripe/customers"),
+};
+
 const agent = {
   TypeOfPayments,
   Payment,
+  Payments,
+  Customers,
 };
 
 export default agent;

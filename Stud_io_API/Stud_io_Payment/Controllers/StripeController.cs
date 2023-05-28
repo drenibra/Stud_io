@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Payment.Contracts;
 using Payment.Models.Stripe;
+using Stud_io.Payment.DTOs;
 
 namespace Payment.Controllers
 {
@@ -36,6 +37,18 @@ namespace Payment.Controllers
                 ct);
 
             return StatusCode(StatusCodes.Status200OK, createdPayment);
+        }
+
+        [HttpGet("payments")]
+        public async Task<ActionResult<List<PaymentDto>>> GetPayments()
+        {
+            return await _stripeService.GetPayments();
+        }
+
+        [HttpGet("customers")]
+        public async Task<ActionResult<List<CustomerDto>>> GetCustomers()
+        {
+            return await _stripeService.GetCustomers();
         }
     }
 }
