@@ -19,10 +19,8 @@ namespace Stud_io.Application.Models
         public string Status { get; set; } = null!;
         public string ProfilePicUrl { get; set; } = null!;
 
-        //Fakulteti 
-
-        /*  public int FakultetiId { get; set; }
-          public Fakulteti Fakulteti { get; set; }
-        */
+        [ForeignKey("Faculty")]
+        public int FacultyId { get; set; }
+        public Faculty Faculty { get; set; }
     }
 }

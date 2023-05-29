@@ -14,6 +14,7 @@
         public int AcademicYear { get; set; }
         public string Status { get; set; } = null!;
         public string ProfilePicUrl { get; set; } = null!;
+        public int FacultyId { get; set; }
     }
     public class UpdateStudentDto
     {
@@ -29,5 +30,6 @@
         public int? AcademicYear { get; set; }
         public string? Status { get; set; }
         public string? ProfilePicUrl { get; set; }
+        public int? FacultyId { get; set; }
     }
 }

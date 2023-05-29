@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Stud_io.Application.Configurations;
+using Stud_io.Application.Models;
 using Stud_io.Application.Services.Interfaces;
 using System;
 
@@ -21,28 +22,46 @@ namespace Stud_io.Application.Controllers
 
         [HttpGet("getAverageGradePoints/{grade}")]
 
-        public async Task<int> CalculateAGPoints(float grade)
+        public IActionResult CalculateAGPoints(float grade)
         {
-            return await _profileMatchService.CalculateAverageGradePoints(grade);
-            
+            var points = _profileMatchService.CalculateAverageGradePoints(grade);
+            return Ok(points);
+
         }
 
         [HttpGet("getExtraPoints/{category}")]
 
-        public async Task<int> CalculateExtraPoints(string category)
+        public IActionResult CalculateExtraPoints(string category)
         {
-            return await _profileMatchService.CalculateExtraPoints(category);   
+            var points = _profileMatchService.CalculateExtraPoints(category);
+            return Ok(points);
         }
 
         [HttpGet("getCityPoints/{city}")]
-        public async Task<int> KalkuloPiket(string city)
+        public IActionResult CalculateCityPoints(string city)
         {
-            return await _profileMatchService.CalculateCityPoints(city);
+            var points = _profileMatchService.CalculateCityPoints(city);
+            return Ok(points);
+        }
+
+        [HttpGet("profilematches")]
+        public async Task<ActionResult<IEnumerable<ProfileMatch>>> GetProfileMatches()
+        {
+           return await _profileMatchService.CalculateTotalPointsForAllStudents();
 
         }
 
+        [HttpGet("sortByTotalPoints")]
+        public async Task<ActionResult<List<ProfileMatch>>> GetSortedProfileMatches()
+        {
+            return await _profileMatchService.SortByTotalPoints();
+        }
 
-
+        [HttpGet("topMatches")]
+        public async Task<ActionResult<List<ProfileMatch>>> GetTopMatches()
+        {
+            return await _profileMatchService.GetTopProfileMatches();
+        }
 
     }
 }

@@ -72,6 +72,7 @@ namespace Stud_io.Application.Services.Implementations
             dbStudent.AcademicYear = updateStudentDTO.AcademicYear ?? dbStudent.AcademicYear;
             dbStudent.Status = updateStudentDTO.Status ?? dbStudent.Status;
             dbStudent.ProfilePicUrl = updateStudentDTO.ProfilePicUrl ?? dbStudent.ProfilePicUrl;
+            dbStudent.FacultyId = updateStudentDTO.FacultyId ?? dbStudent.FacultyId;
 
 
             await _context.SaveChangesAsync();

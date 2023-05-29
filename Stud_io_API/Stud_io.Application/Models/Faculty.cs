@@ -5,6 +5,5 @@
         public string FacultyName { get; set; }
         public string Major { get; set; }
 
-
     }
 

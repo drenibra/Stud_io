@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Stud_io.Application.Configurations;
 using Stud_io.Application.Models;
 using Stud_io.Application.Services.Interfaces;
@@ -16,7 +17,7 @@ namespace Stud_io.Application.Services.Implementations
             _context = context;
             _mapper = mapper;
         }
-        public async Task<int> CalculateAverageGradePoints(double averageGrade)
+        public int CalculateAverageGradePoints(double averageGrade)
         {
             int averageGradePoints;
             if (averageGrade >= 6.00 && averageGrade <= 6.99)
@@ -43,7 +44,7 @@ namespace Stud_io.Application.Services.Implementations
             return averageGradePoints;
         }
 
-        public async Task<int> CalculateExtraPoints(string category)
+        public int CalculateExtraPoints(string category)
         {
             int extraPoints = 0;
             if (!string.IsNullOrEmpty(category))
@@ -79,7 +80,7 @@ namespace Stud_io.Application.Services.Implementations
             return extraPoints;
         }
 
-        public async Task<int> CalculateCityPoints(string city)
+        public int CalculateCityPoints(string city)
         {
             int cityPoints = 0;
 
@@ -127,6 +128,55 @@ namespace Stud_io.Application.Services.Implementations
             }
 
             return cityPoints;
+        }
+
+        public async Task<List<ProfileMatch>> CalculateTotalPointsForAllStudents()
+        {
+            var applications = await _context.Applications
+                                         .Include(s => s.Student)
+                                         .Include(f => f.Student.Faculty)
+                                         .ToListAsync();
+
+            foreach (var application in applications)
+            {
+                var profileMatch = await _context.ProfileMatches
+                    .FirstOrDefaultAsync(p => p.ApplicationId == application.Id);
+
+                if (profileMatch == null)
+                {
+                    profileMatch = new ProfileMatch()
+                    {
+                        ApplicationId = application.Id,
+                        PointsForGPA = CalculateAverageGradePoints(application.Student.GPA),
+                        PointsForCity = CalculateCityPoints(application.Student.City),
+                        ExtraPoints = CalculateExtraPoints(application.SpecialCategoryReason)
+                    };
+
+                    profileMatch.TotalPoints = profileMatch.PointsForCity + profileMatch.PointsForGPA + profileMatch.ExtraPoints;
+
+                    _context.ProfileMatches.Add(profileMatch);
+                }
+
+                await _context.SaveChangesAsync();
+            }
+
+            return await _context.ProfileMatches.ToListAsync();
+        }
+
+        public async Task<List<ProfileMatch>> SortByTotalPoints()
+        {
+            return await _context.ProfileMatches
+                .Include(a => a.Application)
+                .Include(s => s.Application.Student)
+                .Include(f => f.Application.Student.Faculty)
+                .OrderByDescending(p => p.TotalPoints)
+                .ToListAsync();
+        }
+
+        public async Task<List<ProfileMatch>> GetTopProfileMatches()
+        {
+            var sortedProfileMatches = await SortByTotalPoints();
+            return sortedProfileMatches.Take(10).ToList();
         }
 
     }
