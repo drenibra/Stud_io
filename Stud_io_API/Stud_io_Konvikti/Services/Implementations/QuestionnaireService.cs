@@ -126,27 +126,26 @@ namespace Stud_io.Dormitory.Services.Implementations
                 throw new ArgumentException("Invalid questionnaire id");
             }
 
-            int bestMatchScore = 0;
             int bestMatchId = -1;
+            int highestCompatibilityScore = -1;
 
-            foreach (var otherQuestionnaire in _context.Questionnaires)
+            var otherQuestionnaires = _context.Questionnaires
+                .Where(q => q.Id != studentQuestionnaireId) // Exclude the student's own questionnaire
+                .AsNoTracking()
+                .ToList();
+
+            foreach (var otherQuestionnaire in otherQuestionnaires)
             {
-                if (studentQuestionnaire.Id == otherQuestionnaire.Id)
-                    continue; // Skip comparing with itself
+                int compatibilityScore = CalculateCompatibility(studentQuestionnaireId, otherQuestionnaire.Id);
 
-                int compatibilityScore = CalculateCompatibility(studentQuestionnaire.Id, otherQuestionnaire.Id);
-
-                if (compatibilityScore > bestMatchScore)
+                if (compatibilityScore > highestCompatibilityScore)
                 {
-                    bestMatchScore = compatibilityScore;
+                    highestCompatibilityScore = compatibilityScore;
                     bestMatchId = otherQuestionnaire.Id;
                 }
             }
 
             return bestMatchId;
         }
-
-
-
     }
 }
