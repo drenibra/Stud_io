@@ -1,7 +1,17 @@
-import React from "react";
+import React from 'react';
+import './styles.css'
+import { Link } from 'react-router-dom';
 
-const LandingPage = () => {
-  return <div>LandingPage</div>;
-};
+export default function HomePage()
+{
+  return (
 
-export default LandingPage;
+    <div className='base-container'>
+
+      <div className='main-div'>
+        <div className='ballina-title'>MIRE SE VINI NE STUD.IO</div>
+      </div>
+
+    </div>
+  )
+}
