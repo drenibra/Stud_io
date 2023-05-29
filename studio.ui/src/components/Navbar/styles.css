@@ -1,0 +1,71 @@
+* {
+    width: 100%;
+}
+
+.navbar {
+    height: 80px;
+    width: 99.9vw;
+    background-color: #BF1A2F;
+    color: white;
+    font-size: 18px;
+    border: 1px solid #BF1A2F;
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    flex: content;
+    margin-right: 35%;
+}
+
+.navbar-links {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 30px;
+}
+
+.navbar-links,
+p {
+    margin-right: 30px;
+    color: rgb(0, 0, 0);
+    text-decoration-line: none;
+    color: white;
+    margin-top: 10px;
+}
+
+.navbar-links,
+p:hover {
+    color: #161616;
+    -webkit-appearance: none;
+    -ms-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    box-shadow: #777777;
+}
+
+.sign-in-btn {
+    border: none;
+    -webkit-appearance: none;
+    -ms-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    padding: 0.5rem;
+    background-color: #161616;
+    border-radius: 30px;
+    margin-right: 20px;
+    color: #ffffff;
+    font-size: 0.85rem;
+    width: 100px;
+    height: 40px;
+    transition: all 0.2s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.sign-in-btn:hover {
+    background-color: #777777;
+    cursor: pointer;
+
+}
