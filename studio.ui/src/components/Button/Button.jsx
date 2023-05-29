@@ -10,6 +10,7 @@ const Button = ({
   type = "button",
   value,
   onClick,
+  disabled = false,
 }) => {
   const buttonStyle = {
     backgroundColor: color,
@@ -23,6 +24,7 @@ const Button = ({
       type={type}
       value={value}
       onClick={onClick}
+      disabled={disabled}
     >
       {text}
     </button>

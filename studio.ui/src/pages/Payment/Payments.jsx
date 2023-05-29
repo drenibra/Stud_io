@@ -1,39 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { styled } from "@mui/material/styles";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell, { tableCellClasses } from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import { red } from "@mui/material/colors";
 import agent from "../../api/payment_agents";
-import Button from "@mui/material/Button";
+import "./payments.scss";
+import Button from "../../components/Button/Button";
 
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
-    backgroundColor: red[800],
-    color: theme.palette.common.white,
-  },
-  [`&.${tableCellClasses.body}`]: {
-    fontSize: 14,
-  },
-}));
-
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  "&:nth-of-type(odd)": {
-    backgroundColor: theme.palette.action.hover,
-  },
-  // hide last border
-  "&:last-child td, &:last-child th": {
-    border: 0,
-  },
-}));
-
-export default function CustomizedTables() {
+export default function PaymentsTable() {
   const [payments, setPayments] = useState([]);
   const [customerNames, setCustomerNames] = useState({});
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(10);
+  const [nameFilter, setNameFilter] = useState("");
+  const [descriptionFilter, setDescriptionFilter] = useState("");
+  const [monthFilter, setMonthFilter] = useState("");
 
   useEffect(() => {
     agent.Payments.get().then((response) => {
@@ -41,7 +18,6 @@ export default function CustomizedTables() {
     });
 
     agent.Customers.get().then((response) => {
-      // Create a dictionary of customer IDs to customer names
       const customerNamesMap = response.reduce((map, customer) => {
         map[customer.customerId] = customer.name;
         return map;
@@ -51,48 +27,117 @@ export default function CustomizedTables() {
     });
   }, []);
 
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
+  const handleNameFilterChange = (event) => {
+    setNameFilter(event.target.value);
+    setCurrentPage(1); // Reset to the first page when changing the filter
+  };
+
+  const handleDescriptionFilterChange = (event) => {
+    setDescriptionFilter(event.target.value);
+    setCurrentPage(1); // Reset to the first page when changing the filter
+  };
+
+  const handleMonthFilterChange = (event) => {
+    setMonthFilter(event.target.value);
+    setCurrentPage(1); // Reset to the first page when changing the filter
+  };
+
+  const filteredPayments = payments.filter((row) => {
+    const customerName = customerNames[row.customerId] || "";
+    const description = row.description || "";
+    const month = row.month || "";
+
+    return (
+      customerName.toLowerCase().includes(nameFilter.toLowerCase()) &&
+      description.toLowerCase().includes(descriptionFilter.toLowerCase()) &&
+      month.toLowerCase().includes(monthFilter.toLowerCase())
+    );
+  });
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredPayments.slice(indexOfFirstItem, indexOfLastItem);
+
+  const totalPages = Math.ceil(filteredPayments.length / itemsPerPage);
+
   return (
-    <>
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 700 }} aria-label="customized table">
-          <TableHead>
-            <TableRow>
-              <StyledTableCell>Studenti</StyledTableCell>
-              <StyledTableCell>Përshkrimi</StyledTableCell>
-              <StyledTableCell>Shuma</StyledTableCell>
-              <StyledTableCell>Muaji</StyledTableCell>
-              <StyledTableCell>Data e pagesës</StyledTableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {React.Children.toArray(
-              payments.map((row) => (
-                <StyledTableRow key={row.id}>
-                  <StyledTableCell>
-                    {customerNames[row.customerId]}
-                  </StyledTableCell>
-                  <StyledTableCell>{row.description}</StyledTableCell>
-                  <StyledTableCell>
-                    {(row.amount * 0.01).toFixed(2)} €
-                  </StyledTableCell>
-                  <StyledTableCell>{row.month}</StyledTableCell>
-                  <StyledTableCell>
-                    {new Date(row.dateOfPayment).toLocaleString("en-GB", {
-                      year: "numeric",
-                      month: "2-digit",
-                      day: "2-digit",
-                      hour: "2-digit",
-                      minute: "2-digit",
-                      second: "2-digit",
-                    })}
-                  </StyledTableCell>
-                </StyledTableRow>
-              ))
-            )}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <Button variant="contained">Kryej pagesë</Button>
-    </>
+    <div className="payments-show">
+      <h1>Historia e pagesave</h1>
+
+      <div className="filter-container">
+        <input
+          type="text"
+          placeholder="Name"
+          value={nameFilter}
+          onChange={handleNameFilterChange}
+        />
+        <input
+          type="text"
+          placeholder="Description"
+          value={descriptionFilter}
+          onChange={handleDescriptionFilterChange}
+        />
+        <input
+          type="text"
+          placeholder="Month"
+          value={monthFilter}
+          onChange={handleMonthFilterChange}
+        />
+      </div>
+
+
+      <div className="styled-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Studenti</th>
+              <th>Përshkrimi</th>
+              <th>Shuma</th>
+              <th>Muaji</th>
+              <th>Data e pagesës</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {currentItems.map((row) => (
+              <tr key={row.id}>
+                <th>{customerNames[row.customerId]}</th>
+                <th>{row.description}</th>
+                <th>{(row.amount * 0.01).toFixed(2)} €</th>
+                <th>{row.month}</th>
+                <th>
+                  {new Date(row.dateOfPayment).toLocaleString("en-GB", {
+                    year: "numeric",
+                    month: "2-digit",
+                    day: "2-digit",
+                    hour: "2-digit",
+                    minute: "2-digit",
+                    second: "2-digit",
+                  })}
+                </th>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      {/* Pagination controls */}
+      <div className="pagination">
+        <Button
+          onClick={() => handlePageChange(currentPage - 1)}
+          disabled={currentPage === 1}
+          text="Previous"
+        />
+        <span>{currentPage} / {totalPages}</span>
+        <Button
+          onClick={() => handlePageChange(currentPage + 1)}
+          disabled={currentPage === totalPages}
+          text="Next"
+        />
+      </div>
+    </div>
   );
 }

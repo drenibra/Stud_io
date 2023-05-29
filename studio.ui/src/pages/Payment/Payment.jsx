@@ -2,6 +2,8 @@ import React, { Children, useEffect, useState } from "react";
 import "./Payment.scss";
 import Button from "../../components/Button/Button";
 import agent from "../../api/payment_agents";
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 const Payment = () => {
   const [pagesa, setPagesa] = useState({
@@ -37,9 +39,13 @@ const Payment = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    agent.Payment.create(pagesa).catch(function (error) {
-      console.log(error.response.data);
-    });
+    agent.Payment.create(pagesa)
+      .then(() => {
+        toast.success("Pagesa u krye me sukses");
+      })
+      .catch(function (error) {
+        toast.error(error.response.data);
+      });
   };
 
   const [typeOfPayments, setTypeOfPayments] = useState([]);
@@ -114,9 +120,12 @@ const Payment = () => {
               <option disabled={isMonthDisabled(3)}>Prill</option>
               <option disabled={isMonthDisabled(4)}>Maj</option>
               <option disabled={isMonthDisabled(5)}>Qershor</option>
-              <option disabled={isMonthDisabled(6)}>Tetor</option>
-              <option disabled={isMonthDisabled(7)}>Nëntor</option>
-              <option disabled={isMonthDisabled(8)}>Dhjetor</option>
+              <option disabled={isMonthDisabled(6)}>Korrik</option>
+              <option disabled={isMonthDisabled(7)}>Gusht</option>
+              <option disabled={isMonthDisabled(8)}>Shtator</option>
+              <option disabled={isMonthDisabled(9)}>Tetor</option>
+              <option disabled={isMonthDisabled(10)}>Nëntor</option>
+              <option disabled={isMonthDisabled(11)}>Dhjetor</option>
             </select>
           </div>
 
@@ -126,6 +135,7 @@ const Payment = () => {
             onClick={handleSubmit}
             text="Paguaj"
           />
+          <ToastContainer />
         </form>
       </div>
     </>
