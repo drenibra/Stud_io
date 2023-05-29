@@ -9,17 +9,25 @@ const Payment = () => {
     description: "",
     currency: "eur",
     amount: "",
+    month: ""
   });
 
   const handleChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
     setPagesa((prev) => {
-      return {
-        ...prev,
-        [name]: value,
-        amount: typeOfPayments.find((payment) => payment.type === value)?.price || "",
-      };
+      if (name === "month") {
+        return {
+          ...prev,
+          [name]: value,
+        };
+      } else {
+        return {
+          ...prev,
+          [name]: value,
+          amount: typeOfPayments.find((payment) => payment.type === value)?.price || "",
+        };
+      }
     });
   };
 
@@ -39,6 +47,21 @@ const Payment = () => {
     });
   }, []);
 
+  const currentDate = new Date();
+
+  const isMonthDisabled = (monthIndex) => {
+    const currentMonthIndex = currentDate.getMonth();
+    const currentDay = currentDate.getDate();
+  
+    const minSelectableDay = 27;
+    const maxSelectableDay = 31;
+  
+    // Check if the current date falls within the range
+    const isWithinRange =
+      (currentMonthIndex === monthIndex - 1 && currentDay >= minSelectableDay && currentDay <= maxSelectableDay);
+    return !isWithinRange;
+  };
+
   return (
     <>
       <div className="payment-form">
@@ -50,22 +73,6 @@ const Payment = () => {
             placeholder="Numri personal"
             onChange={handleChange}
           />
-          {/* <div className="box">
-            <select required>
-              <option value="Zgjedh muajin" disabled>
-                Zgjedh muajin
-              </option>
-              <option>Janar</option>
-              <option>Shkurt</option>
-              <option>Mars</option>
-              <option>Prill</option>
-              <option>Maj</option>
-              <option>Qershor</option>
-              <option>Tetor</option>
-              <option>Nëntor</option>
-              <option>Dhjetor</option>
-            </select>
-          </div> */}
           <div className="box">
             <select required onChange={handleChange} name="description">
               <option value="Tipi i pagesës" disabled selected>
@@ -81,12 +88,28 @@ const Payment = () => {
             </select>
           </div>
           <input
-            type="number"
+            type="text"
             name="amount"
             placeholder="Shuma për pagesë"
-            value={pagesa.amount}
+            value={pagesa.amount !== "" ? `${(pagesa.amount / 100).toFixed(2)} €` : ""}
             disabled
           />
+          <div className="box">
+            <select required onChange={handleChange} name="month">
+              <option value="Zgjedh muajin" disabled selected>
+                Zgjedh muajin
+              </option>
+              <option disabled={isMonthDisabled(0)}>Janar</option>
+              <option disabled={isMonthDisabled(1)}>Shkurt</option>
+              <option disabled={isMonthDisabled(2)}>Mars</option>
+              <option disabled={isMonthDisabled(3)}>Prill</option>
+              <option disabled={isMonthDisabled(4)}>Maj</option>
+              <option disabled={isMonthDisabled(5)}>Qershor</option>
+              <option disabled={isMonthDisabled(6)}>Tetor</option>
+              <option disabled={isMonthDisabled(7)}>Nëntor</option>
+              <option disabled={isMonthDisabled(8)}>Dhjetor</option>
+            </select>
+          </div>
           <button
             type="submit"
             value="Submit"

@@ -60,6 +60,8 @@ export default function CustomizedTables() {
               <StyledTableCell>Studenti</StyledTableCell>
               <StyledTableCell>Përshkrimi</StyledTableCell>
               <StyledTableCell>Shuma</StyledTableCell>
+              <StyledTableCell>Muaji</StyledTableCell>
+              <StyledTableCell>Data e pagesës</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -72,6 +74,17 @@ export default function CustomizedTables() {
                   <StyledTableCell>{row.description}</StyledTableCell>
                   <StyledTableCell>
                     {(row.amount * 0.01).toFixed(2)} €
+                  </StyledTableCell>
+                  <StyledTableCell>{row.month}</StyledTableCell>
+                  <StyledTableCell>
+                    {new Date(row.dateOfPayment).toLocaleString("en-GB", {
+                      year: "numeric",
+                      month: "2-digit",
+                      day: "2-digit",
+                      hour: "2-digit",
+                      minute: "2-digit",
+                      second: "2-digit",
+                    })}
                   </StyledTableCell>
                 </StyledTableRow>
               ))

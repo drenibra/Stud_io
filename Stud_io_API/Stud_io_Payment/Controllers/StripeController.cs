@@ -33,8 +33,7 @@ namespace Payment.Controllers
             CancellationToken ct)
         {
             StripePayment createdPayment = await _stripeService.AddStripePaymentAsync(
-                payment,
-                ct);
+                payment, ct);
 
             return StatusCode(StatusCodes.Status200OK, createdPayment);
         }
