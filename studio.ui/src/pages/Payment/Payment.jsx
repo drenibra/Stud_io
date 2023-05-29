@@ -3,7 +3,7 @@ import "./Payment.scss";
 import Button from "../../components/Button/Button";
 import agent from "../../api/payment_agents";
 import { ToastContainer, toast } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 
 const Payment = () => {
   const [pagesa, setPagesa] = useState({
@@ -44,7 +44,7 @@ const Payment = () => {
         toast.success("Pagesa u krye me sukses");
       })
       .catch(function (error) {
-        toast.error(error.response.data);
+        toast.error("Pagesa nuk u realizua!");
       });
   };
 
