@@ -34,8 +34,13 @@ namespace Stud_io.Application.Controllers
             return await _profileMatchService.CalculateExtraPoints(category);   
         }
 
+        [HttpGet("getCityPoints/{city}")]
+        public async Task<int> KalkuloPiket(string city)
+        {
+            return await _profileMatchService.CalculateCityPoints(city);
 
-       
+        }
+
 
 
 
