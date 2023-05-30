@@ -1,10 +1,20 @@
 import Logo from "../../assets/logo/icon-stud-io.svg";
 import { Link } from "react-router-dom";
 import "./styles.css"
+import React, { useState } from 'react';
 
 
-export default function Navbar()
+const Navbar = () =>
 {
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleDropdown = () =>
+  {
+    setIsOpen(!isOpen);
+  }
+
+
   return (
     <div className="navbar">
 
@@ -23,10 +33,10 @@ export default function Navbar()
         <Link to="./Mirembajtja">
           <p>Mirembajtja</p>
         </Link>
-        <Link to="">
+        <Link to="#">
           <p>Ankesa</p>
         </Link>
-        <Link to="">
+        <Link to="#">
           <p>Konkursi</p>
         </Link>
         <Link to="./Apply">
@@ -39,7 +49,6 @@ export default function Navbar()
           <p>Pagesat</p>
         </Link>
 
-
         <div className="butoni-signUp">
           <Link to="/">
             <button type="button" className="sign-in-btn">Sign in</button>
@@ -50,6 +59,9 @@ export default function Navbar()
     </div>
   )
 }
+
+
+export default Navbar;
 
 
 
