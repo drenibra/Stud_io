@@ -15,21 +15,12 @@ table {
       font-size:16px;
       color: #161616;
     }
-
-    thead th{
-        border-right:1px solid #E3F1D5 ;
-    }
     
     tbody tr{
         background-color: #f3f3f3;
         height:45px; 
-        border-bottom:3px solid #ffffff ;
+        border-bottom:4px solid #ffffff ;
         color: #161616;
-    }
-    
-    tbody th{
-        font-weight: normal;
-        border-right:1px solid #E3F1D5 ;
     }
     
     td,th { text-align:left;}
@@ -63,32 +54,4 @@ table {
     tbody tr:last-of-type {
         border-bottom: 3px solid #c62828;
     }
-}
-
-.filter-container{
-    display: flex;
-    justify-content: space-evenly;
-    width: 100%;
-    margin-top: 2em;
-    label {
-      font-size: 20px;
-    }
-
-    input {
-        width: 100%;
-        min-width: 19em;
-        height: 50px;
-        padding: 0px 10px;
-        font-size: 16px;
-        background-color: #f3f3f3;
-        border: 0;
-        border-radius: 10px;
-        margin-bottom: 1em;
-        margin: 10px;
-        transition: all 250ms ease-in-out;
-        &:focus {
-          outline: none;
-          box-shadow: 0px 0px 12px 0.8px #da244b;
-        }
-      }
 }
