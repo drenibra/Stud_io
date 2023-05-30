@@ -13,7 +13,6 @@ const Dropzone = ({ onChange }) => {
   const { getRootProps, getInputProps, isDragActive, isDragReject } =
     useDropzone({
       onDrop,
-      accept: ".pdf,.doc,.docx",
       maxSize: 25 * 1024 * 1024, // Limit file size to 25MB
     });
 
