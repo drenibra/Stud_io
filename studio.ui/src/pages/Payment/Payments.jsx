@@ -131,7 +131,7 @@ export default function PaymentsTable() {
           disabled={currentPage === 1}
           text="Previous"
         />
-        <span>{currentPage} / {totalPages}</span>
+        <span>{currentPage} / {(totalPages === 0)? 1: totalPages}</span>
         <Button
           onClick={() => handlePageChange(currentPage + 1)}
           disabled={currentPage === totalPages}
