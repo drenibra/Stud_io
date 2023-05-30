@@ -87,6 +87,10 @@ namespace Payment.Application
 
         public async Task<StripePayment> AddStripePaymentAsync(AddStripePayment payment, CancellationToken ct)
         {
+            bool hasPaid = await HasPaid(payment);
+            if (hasPaid)
+                throw new Exception("Pages u kry ma heret!");
+
             // Set the options for the payment we would like to create at Stripe
             ChargeCreateOptions paymentOptions = new()
             {
@@ -113,6 +117,31 @@ namespace Payment.Application
               createdPayment.Id, 
               createdPayment.Created,
               payment.Month);
+        }
+
+        private async Task<bool> HasPaid(AddStripePayment payment)
+        {
+            var mappedPayment = await _context.StripePayments.Where(c => c.CustomerId == payment.CustomerId).ToListAsync();
+
+            foreach (var c in mappedPayment)
+            {
+                if(c.Month == payment.Month)
+                {
+                    if(c.Description == payment.Description)
+                    {
+                        return true;
+                    }
+                    string prefix = "Pagesë për ";
+                    string strippedString1 = c.Description.Replace(prefix, "").Trim();
+                    string strippedString2 = payment.Description.Replace(prefix, "").Trim();
+
+                    if (strippedString1.Contains(strippedString2) || strippedString2.Contains(strippedString1))
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
 
         public async Task<ActionResult<List<PaymentDto>>> GetPayments()
