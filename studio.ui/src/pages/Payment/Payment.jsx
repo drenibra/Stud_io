@@ -1,9 +1,16 @@
-import React, { Children, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Payment.scss";
 import Button from "../../components/Button/Button";
 import agent from "../../api/payment_agents";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import {
+  Table,
+  TableHead,
+  TableBody,
+  TableRow,
+  TableCell,
+} from "@mui/material";
 
 const Payment = () => {
   const [pagesa, setPagesa] = useState({
@@ -14,6 +21,8 @@ const Payment = () => {
     amount: "",
     month: "",
   });
+
+  const [latestPayment, setLatestPayment] = useState(null);
 
   const handleChange = (e) => {
     const name = e.target.name;
@@ -40,7 +49,8 @@ const Payment = () => {
     e.preventDefault();
 
     agent.Payment.create(pagesa)
-      .then(() => {
+      .then((newPayment) => {
+        setLatestPayment(newPayment);
         toast.success("Pagesa u krye me sukses");
       })
       .catch(function (error) {
@@ -75,6 +85,7 @@ const Payment = () => {
 
   return (
     <>
+      <></>
       <div className="payment-form">
         <h1>Kryej pagesën</h1>
         <form className="payment-form-group">
@@ -89,13 +100,11 @@ const Payment = () => {
               <option value="Tipi i pagesës" disabled selected>
                 Tipi i pagesës
               </option>
-              {React.Children.toArray(
-                typeOfPayments.map((typeOfPayment) => (
-                  <option value={typeOfPayment.type}>
-                    {typeOfPayment.type}
-                  </option>
-                ))
-              )}
+              {typeOfPayments.map((typeOfPayment) => (
+                <option value={typeOfPayment.type} key={typeOfPayment.type}>
+                  {typeOfPayment.type}
+                </option>
+              ))}
             </select>
           </div>
           <input
@@ -138,6 +147,50 @@ const Payment = () => {
           <ToastContainer />
         </form>
       </div>
+
+      {latestPayment && (
+        <Table>
+          <TableHead>
+            <TableRow sx={{ background: "#c62828" }}>
+              <TableCell sx={{ color: "white", fontWeight: "bold" }}>
+                Studenti
+              </TableCell>
+              <TableCell sx={{ color: "white", fontWeight: "bold" }}>
+                Përshkrimi
+              </TableCell>
+              <TableCell sx={{ color: "white", fontWeight: "bold" }}>
+                Shuma
+              </TableCell>
+              <TableCell sx={{ color: "white", fontWeight: "bold" }}>
+                Muaji
+              </TableCell>
+              <TableCell sx={{ color: "white", fontWeight: "bold" }}>
+                Data e pagesës
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            <TableRow key={latestPayment.id}>
+              <TableCell>{latestPayment.customerId}</TableCell>
+              <TableCell>{latestPayment.description}</TableCell>
+              <TableCell>
+                {(latestPayment.amount * 0.01).toFixed(2)} €
+              </TableCell>
+              <TableCell>{latestPayment.month}</TableCell>
+              <TableCell>
+                {new Date(latestPayment.dateOfPayment).toLocaleString("en-GB", {
+                  year: "numeric",
+                  month: "2-digit",
+                  day: "2-digit",
+                  hour: "2-digit",
+                  minute: "2-digit",
+                  second: "2-digit",
+                })}
+              </TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      )}
     </>
   );
 };
