@@ -1,18 +1,21 @@
 import React, { useState } from "react";
+import agent from "../../api/application_agents";
 import "./Apply.scss";
 import { FormControlLabel, Checkbox, Button } from "@mui/material";
 import TextField from "@mui/material/TextField";
-import { Upload } from "@mui/icons-material";
+import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import Dropzone from "../../components/Dropzone/Dropzone";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Apply = () => {
   const [formData, setFormData] = useState({
     isSpecialCategory: false,
-    specialCategoryReason: "",
-    applyDate: null,
+    specialCategory: "",
+    applyDate: "2023-03-03 ",
     personalNo: "",
-    studentId: "",
-    files: [],
+    studentId: "11",
+    fileId: "",
   });
 
   const handleChange = (e) => {
@@ -33,8 +36,14 @@ const Apply = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission
-    console.log(formData);
+
+    agent.Apply.apply(formData)
+      .then(() => {
+        toast.success("Pagesa u krye me sukses");
+      })
+      .catch(function (error) {
+        toast.error(error.response.data);
+      });
   };
 
   return (
@@ -49,6 +58,7 @@ const Apply = () => {
           variant="outlined"
           fullWidth
           margin="normal"
+          sx={{ marginBottom: "8px" }}
         />
         <TextField
           label="Student ID"
@@ -59,18 +69,33 @@ const Apply = () => {
           variant="outlined"
           fullWidth
           margin="normal"
+          sx={{ marginBottom: "8px" }}
         />
-        {formData.isSpecialCategory && (
-          <TextField
-            label="Special Category Reason"
-            name="specialCategoryReason"
-            value={formData.specialCategoryReason}
+        <FormControl fullWidth sx={{ marginBottom: "8px" }}>
+          <InputLabel id="specialCategory-label">
+            Special Category Reason
+          </InputLabel>
+          <Select
+            labelId="specialCategory-label"
+            id="specialCategory"
+            name="specialCategory"
+            value={formData.specialCategory}
             onChange={handleChange}
-            variant="outlined"
-            fullWidth
-            margin="normal"
-          />
-        )}
+            label="Special Category Reason"
+            disabled={!formData.isSpecialCategory} // Disable the Select when checkbox is not checked
+          >
+            <MenuItem value="">Select Special Category Reason</MenuItem>
+            <MenuItem value="Femije i deshmorit">Femije i deshmorit</MenuItem>
+            <MenuItem value="Femije jetim">Femije jetim</MenuItem>
+            <MenuItem value="Me shume se nje student nga nje familje">
+              Me shume se nje student nga nje familje
+            </MenuItem>
+            <MenuItem value="Femije i invalidit">Femije i invalidit</MenuItem>
+            <MenuItem value="Femije i te pagjeturi">
+              Femije i te pagjeturi
+            </MenuItem>
+          </Select>
+        </FormControl>
         <FormControlLabel
           control={
             <Checkbox
@@ -83,6 +108,7 @@ const Apply = () => {
           label="Is Special Category"
         />
         <Dropzone
+          marginBottom={4}
           onChange={(files) =>
             setFormData((prevFormData) => ({ ...prevFormData, files }))
           }
@@ -91,6 +117,7 @@ const Apply = () => {
           Submit
         </Button>
       </form>
+      <ToastContainer />
     </div>
   );
 };

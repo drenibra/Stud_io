@@ -1,7 +1,6 @@
 import "./styles.css";
 
 export default function Footer() {
-
     return (
         <section className="footer">
             <div className="container">
