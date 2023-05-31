@@ -18,7 +18,7 @@
   margin-right: 35%;
 }
 
-.navbar-links {
+/* .navbar-links {
   display: flex;
   justify-content: flex-end;
   margin-right: 30px;
@@ -41,7 +41,7 @@ p:hover {
   -moz-appearance: none;
   appearance: none;
   box-shadow: #777777;
-}
+} */
 
 .sign-in-btn {
   border: none;
