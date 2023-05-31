@@ -73,3 +73,15 @@ p:hover {
   background-color: #777777;
   cursor: pointer;
 }
+
+.my-profile-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 10px;
+}
+
+.my-profile-icon {
+  color: white;
+  margin-right: 5px;
+}
