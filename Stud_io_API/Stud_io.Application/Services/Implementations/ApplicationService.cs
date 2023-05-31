@@ -48,6 +48,7 @@ namespace Stud_io.Application.Services.Implementations
                 return new BadRequestObjectResult("You have already applied!");
             }
 
+            applicationDto.ApplyDate = DateTime.Now;
             var mappedApplication = _mapper.Map<ApplicationForm>(applicationDto);
             await _context.Applications.AddAsync(mappedApplication);
             await _context.SaveChangesAsync();
