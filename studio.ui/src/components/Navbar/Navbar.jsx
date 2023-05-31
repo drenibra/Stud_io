@@ -1,15 +1,15 @@
 import Logo from "../../assets/logo/icon-stud-io.svg";
 import { Link } from "react-router-dom";
 import "./styles.css";
-import React, { useState } from 'react';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import React, { useState } from "react";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
-  }
+  };
 
   return (
     <div className="navbar">
@@ -46,15 +46,20 @@ const Navbar = () => {
         <Link to="./MyProfile" className="my-profile-link">
           <AccountCircleIcon className="my-profile-icon" />
         </Link>
+        <Link to="./RegisterCustomer">
+          <p>Register</p>
+        </Link>
 
         <div className="butoni-signUp">
           <Link to="/">
-            <button type="button" className="sign-in-btn">Sign in</button>
+            <button type="button" className="sign-in-btn">
+              Sign in
+            </button>
           </Link>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default Navbar;
