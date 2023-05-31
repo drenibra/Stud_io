@@ -20,6 +20,7 @@
   margin-right: 30px;
 }
 
+
 .navbar-links,
 p {
   margin-right: 30px;
@@ -27,16 +28,25 @@ p {
   text-decoration-line: none;
   color: white;
   margin-top: 10px;
+  background: linear-gradient(to right, rgb(0, 0, 0), rgb(91, 83, 83) 50%, rgb(169, 169, 169) 20%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  background-size: 200% 100%;
+  background-position: 100%;
+  transition: background-position 700ms ease;
+  font-size: large;
 }
+
 
 .navbar-links,
 p:hover {
+
   color: #161616;
   -webkit-appearance: none;
   -ms-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  box-shadow: #777777;
+  background-position: 0 100%;
 }
 
 .sign-in-btn {
