@@ -1,0 +1,65 @@
+.my-profile {
+    display: flex;
+  }
+  
+  .menu {
+    position: absolute;
+    left: 10px;
+    max-width: 250px;
+    margin-top: 1em;
+  }
+  
+.studentData {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 25px;
+    margin-left: 15em;
+    background-color: #f3f3f3;
+    border-radius: 10px;
+
+    .titulli{
+        margin-top: 1em;
+        width: 100%;
+        border-bottom: 3px solid white;
+    }
+  }
+
+.styledContainer{
+    display: "flex";
+    background-color: '#f3f3f3';
+    width: '90%';
+}
+
+.stdPhotoData{
+    display: flex;
+    margin-top: 1em;
+}
+.studentPhoto p{
+  margin-right: 5em;
+  margin-left: 1.8em;
+  margin-top: 1em;
+  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-size: large;
+  color: #000000;
+  margin-top: 1em;
+}
+
+.studentPhoto img{
+    width: 180px;
+    margin-right: 5em;
+    margin-left: 1em;
+    margin-top: 1em;
+}
+
+.studentDataRows{
+    width: 300px;
+    margin-right: 1em;
+
+    p{
+      font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+      font-size: large;
+      color: #000000;
+    }
+}

@@ -20,9 +20,7 @@ const StyledListItem = styled(ListItem)({
   backgroundColor: '#f3f3f3',
   border: '2px solid #ffff',
   borderRadius: '10px',
-  maxWidth: '250px',
-  marginLeft: '2em'
-  
+  width: '250px',
 });
 
 const StyledLink = styled(Link)`
@@ -34,52 +32,52 @@ const StyledListItemText = styled(ListItemText)(({ theme }) => ({
   fontWeight: 'bold',
 }));
 
-const Menu =() => {
+const Menu = () => {
   return (
-      <ThemeProvider theme={theme}>
-        <List className="menu">
-          <StyledListItem className="menu-item">
-            <ListItemIcon>
-              <HomeIcon />
-            </ListItemIcon>
-            <StyledLink to="/">
-              <StyledListItemText primary="Home" />
-            </StyledLink>
-          </StyledListItem>
-          <StyledListItem className="menu-item">
-            <ListItemIcon>
-              <AccountCircleIcon />
-            </ListItemIcon>
-            <StyledLink to="/profile">
-              <StyledListItemText primary="My Profile" />
-            </StyledLink>
-          </StyledListItem>
-          <StyledListItem className="menu-item">
-            <ListItemIcon>
-              <HotelIcon />
-            </ListItemIcon>
-            <StyledLink to="/dormitory">
-              <StyledListItemText primary="Dormitory" />
-            </StyledLink>
-          </StyledListItem>
-          <StyledListItem className="menu-item">
-            <ListItemIcon>
-              <PeopleIcon />
-            </ListItemIcon>
-            <StyledLink to="/roommate">
-              <StyledListItemText primary="Roommate" />
-            </StyledLink>
-          </StyledListItem>
-          <StyledListItem className="menu-item">
-            <ListItemIcon>
-              <PaymentIcon />
-            </ListItemIcon>
-            <StyledLink to="/payments">
-              <StyledListItemText primary="Payments" />
-            </StyledLink>
-          </StyledListItem>
-        </List>
-      </ThemeProvider>
+    <ThemeProvider theme={theme}>
+      <List className="menu">
+        <StyledListItem className="menu-item">
+          <ListItemIcon>
+            <HomeIcon />
+          </ListItemIcon>
+          <StyledLink to="/">
+            <StyledListItemText primary="Home" />
+          </StyledLink>
+        </StyledListItem>
+        <StyledListItem className="menu-item">
+          <ListItemIcon>
+            <AccountCircleIcon />
+          </ListItemIcon>
+          <StyledLink to="/MyProfile">
+            <StyledListItemText primary="My Profile" />
+          </StyledLink>
+        </StyledListItem>
+        <StyledListItem className="menu-item">
+          <ListItemIcon>
+            <HotelIcon />
+          </ListItemIcon>
+          <StyledLink to="/dormitory">
+            <StyledListItemText primary="Dormitory" />
+          </StyledLink>
+        </StyledListItem>
+        <StyledListItem className="menu-item">
+          <ListItemIcon>
+            <PeopleIcon />
+          </ListItemIcon>
+          <StyledLink to="/roommate">
+            <StyledListItemText primary="Roommate" />
+          </StyledLink>
+        </StyledListItem>
+        <StyledListItem className="menu-item">
+          <ListItemIcon>
+            <PaymentIcon />
+          </ListItemIcon>
+          <StyledLink to="/payments">
+            <StyledListItemText primary="Payments" />
+          </StyledLink>
+        </StyledListItem>
+      </List>
+    </ThemeProvider>
   );
 }
 
