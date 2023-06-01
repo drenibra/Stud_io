@@ -5,22 +5,21 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { useStore } from '../../stores/store';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
+import Logo from "../../assets/logo/icon-stud-io.svg";
 import { observer } from 'mobx-react-lite';
 import "../../styles/navbar.css";
 
 const pages = [
   {
     name: 'Home',
-    path: '/home',
+    path: '/',
   },
   {
     name: 'Mirembajtja',
@@ -47,25 +46,16 @@ const pages = [
     path: '/about',
   },
 ];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-export default observer(function ResponsiveAppBar() {
+const ResponsiveAppBar = observer(function ResponsiveAppBar() {
   const navigate = useNavigate();
 
   const { userStore } = useStore();
 
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
-  };
-
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
   };
 
   const handleCloseUserMenu = () => {
@@ -75,61 +65,14 @@ export default observer(function ResponsiveAppBar() {
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
-        <Toolbar disableGutters>
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="/"
-            sx={{
-              mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            GjejPune
-          </Typography>
-
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: 'block', md: 'none' },
-              }}
-            >
-              {/*               {pages.map((page) => (
-                <MenuItem key={page.name} onClick={handleCloseNavMenu}>
-                  <NavLink to={page.path}>{page.name}</NavLink>
-                </MenuItem>
-              ))} */}
-            </Menu>
-          </Box>
+        <Toolbar disableGutters style={{padding: "1vh 0"}}>
+            <Link to="/" className="logo">
+              <img
+                src={Logo}
+                alt="Our logo."
+                style={{ width: "50px" }}
+                />
+            </Link>
           <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
           <Typography
             variant="h5"
@@ -164,6 +107,7 @@ export default observer(function ResponsiveAppBar() {
                 </IconButton>
               </Tooltip>
               <Menu
+                class="menu"
                 sx={{ mt: '45px' }}
                 id="menu-appbar"
                 anchorEl={anchorElUser}
@@ -180,12 +124,12 @@ export default observer(function ResponsiveAppBar() {
                 onClose={handleCloseUserMenu}
               >
                 <MenuItem onClick={handleCloseUserMenu}>
-                  <Link id="profileButton" to="profile">
-                    <Typography textAlign="center">Profile</Typography>
+                  <Link id="profileButton" to="/MyProfile">
+                    <Typography color="common.black" textAlign="center">Profile</Typography>
                   </Link>
                 </MenuItem>
                 <MenuItem onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center" onClick={() => navigate('/pagesat')}>
+                  <Typography color="common.black" textAlign="center" onClick={() => navigate('/pagesat')}>
                     Pagesat
                   </Typography>
                 </MenuItem>
@@ -195,7 +139,7 @@ export default observer(function ResponsiveAppBar() {
                     userStore.logout();
                   }}
                 >
-                  <Typography textAlign="center">Log Out</Typography>
+                  <Typography color="common.black" textAlign="center">Log Out</Typography>
                 </MenuItem>
               </Menu>
             </Box>
@@ -205,3 +149,5 @@ export default observer(function ResponsiveAppBar() {
     </AppBar>
   );
 });
+
+export default ResponsiveAppBar
