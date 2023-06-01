@@ -382,3 +382,4 @@ Stud_io_API/Stud_io.Maintenance/appsettings.json
 Stud_io_API/Stud_io.Authentication/appsettings.json
 Stud_io_API/Stud_io.Authentication/appsettings.Development .json
 Stud_io_API/Stud_io.Application/appsettings.json
+studio.ui/.env

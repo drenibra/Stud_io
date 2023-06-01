@@ -1,5 +1,5 @@
-import axios from 'axios';
-import { store } from '../stores/store';
+import axios from "axios";
+import { store } from "../stores/store";
 
 const sleep = (delay) => {
   return new Promise((resolve) => {
@@ -8,8 +8,8 @@ const sleep = (delay) => {
 };
 
 const service1Axios = axios.create({
-    baseURL: "https://localhost:7120/api/v1",
-  });
+  baseURL: import.meta.env.VITE_API_AUTH_URL,
+});
 
 axios.interceptors.request.use(
   (config) => {
@@ -42,12 +42,12 @@ const requests = {
 };
 
 const Account = {
-  current: () => requests.get('/account'),
-  student: () => requests.get('/account/student'),
-  login: (user) => requests.post('/Account/login', user),
-  register: (user) => requests.post('/Account/register', user),
-  currentId: () => requests.get('/account/currentId'),
-  roles: () => requests.get('/account/roles'),
+  current: () => requests.get("/account"),
+  student: () => requests.get("/account/student"),
+  login: (user) => requests.post("/Account/login", user),
+  register: (user) => requests.post("/Account/register", user),
+  currentId: () => requests.get("/account/currentId"),
+  roles: () => requests.get("/account/roles"),
 };
 
 const agent = {

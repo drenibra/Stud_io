@@ -1,17 +1,16 @@
 import { useState } from "react";
 import "./App.scss";
 import ResponsiveAppBar from "./components/Navbar/ResponsiveAppBar";
-import Navbar from "./components/Navbar/Navbar"
+import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/footer";
 import { ThemeProvider } from "@emotion/react";
 import theme from "./styles/theme";
 import { Routes, Route } from "react-router-dom";
-import { observer } from 'mobx-react-lite';
-import { useStore } from './stores/store';
+import { observer } from "mobx-react-lite";
+import { useStore } from "./stores/store";
 import LoginForm from "./pages/Login/LoginForm";
 
-import
-{
+import {
   LandingPage,
   Maintenance,
   Payment,
@@ -42,8 +41,11 @@ const App = observer(function App() {
       <Footer />
     </ThemeProvider>
   ) : (
-    <LoginForm />
-  )
+    <>
+      {console.log(import.meta.env.VITE_REACT_APP_API_AUTH_URL)}
+      <LoginForm />
+    </>
+  );
 });
 
 export default App;

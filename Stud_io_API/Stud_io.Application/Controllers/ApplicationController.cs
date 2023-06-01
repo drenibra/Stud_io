@@ -4,7 +4,7 @@ using Stud_io.Application.Services.Interfaces;
 
 namespace Stud_io.Application.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("studio/[controller]")]
     [ApiController]
     public class ApplicationController : ControllerBase
     {

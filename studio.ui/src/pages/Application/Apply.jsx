@@ -15,16 +15,17 @@ const Apply = () => {
     applyDate: "2023-03-03 ",
     personalNo: "",
     studentId: "11",
-    fileId: "",
+    document: null,
   });
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
 
     if (type === "file") {
+      const file = e.target.files[0];
       setFormData((prevFormData) => ({
         ...prevFormData,
-        [name]: Array.from(e.target.files),
+        [name]: file,
       }));
     } else {
       setFormData((prevFormData) => ({
@@ -37,7 +38,14 @@ const Apply = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    agent.Apply.apply(formData)
+    const formDataToSend = new FormData();
+    formDataToSend.append("personalNo", formData.personalNo);
+    formDataToSend.append("studentId", formData.studentId);
+    formDataToSend.append("specialCategory", formData.specialCategory);
+    formDataToSend.append("isSpecialCategory", formData.isSpecialCategory);
+    formDataToSend.append("document", formData.document);
+
+    agent.Apply.apply(formDataToSend)
       .then(() => {
         toast.success("Pagesa u krye me sukses");
       })
@@ -82,7 +90,7 @@ const Apply = () => {
             value={formData.specialCategory}
             onChange={handleChange}
             label="Special Category Reason"
-            disabled={!formData.isSpecialCategory} // Disable the Select when checkbox is not checked
+            disabled={!formData.isSpecialCategory}
           >
             <MenuItem value="">Select Special Category Reason</MenuItem>
             <MenuItem value="Femije i deshmorit">Femije i deshmorit</MenuItem>
@@ -109,8 +117,8 @@ const Apply = () => {
         />
         <Dropzone
           marginBottom={4}
-          onChange={(files) =>
-            setFormData((prevFormData) => ({ ...prevFormData, files }))
+          onChange={(document) =>
+            setFormData((prevFormData) => ({ ...prevFormData, document }))
           }
         />
         <Button variant="contained" color="primary" type="submit">

@@ -14,8 +14,6 @@ namespace Stud_io.Application.Models
         public int StudentId { get; set; }
         public Student Student { get; set; }
 
-        [ForeignKey("FileDetails")]
-        public int? FileId { get; set; }
-        public FileDetails FileDetails { get; set; }
+        public string FileUrl { get; set; }
     }
 }
