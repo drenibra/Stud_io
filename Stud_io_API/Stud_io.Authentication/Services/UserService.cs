@@ -1,26 +1,21 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Stud_io.Authentication.Interfaces;
-using Stud_io.Configuration;
 using Stud_io.Controllers;
 using Stud_io.DTOs;
 using Stud_io.Models;
-using System.Security.Claims;
 
 namespace Stud_io.Authentication.Services
 {
     public class UserService : ControllerBase, IUserService
     {
         private readonly UserManager<AppUser> _userManager;
-        private readonly AccountController _accountController;
         private readonly IMapper _mapper;
-        public UserService(UserManager<AppUser> userManager, AccountController accountController, IMapper mapper)
+        public UserService(UserManager<AppUser> userManager, IMapper mapper)
         {
             _userManager = userManager;
-            _accountController = accountController;
             _mapper = mapper;
         }
         public async Task<ActionResult<IEnumerable<UserDto>>> GetUsers()
@@ -38,7 +33,12 @@ namespace Stud_io.Authentication.Services
             {
                 return NotFound();
             }
-            return _accountController.CreateUserObject(user);
+            return new UserDto
+            {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Username = user.UserName
+            };
         }
         public async Task<IActionResult> DeleteUser(string id)
         {

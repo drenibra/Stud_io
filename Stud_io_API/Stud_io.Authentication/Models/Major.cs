@@ -1,4 +1,4 @@
-﻿namespace Stud_io.Models
+﻿namespace Stud_io.Authentication.Models
 {
     public class Major
     {

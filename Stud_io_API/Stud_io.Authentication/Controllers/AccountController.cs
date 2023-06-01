@@ -105,7 +105,7 @@ namespace Stud_io.Controllers
 
             return roles;
         }
-        public UserDto CreateUserObject(AppUser user)
+        private UserDto CreateUserObject(AppUser user)
         {
             return new UserDto
             {
