@@ -1,4 +1,4 @@
-﻿using Stud_io.Models;
+﻿using Stud_io.Authentication.Models;
 
 namespace Stud_io.Authentication.DTOs
 {
