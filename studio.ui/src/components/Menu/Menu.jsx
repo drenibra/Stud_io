@@ -7,6 +7,8 @@ import HotelIcon from '@mui/icons-material/Hotel';
 import PeopleIcon from '@mui/icons-material/People';
 import PaymentIcon from '@mui/icons-material/Payment';
 import { createTheme } from '@mui/material/styles';
+import { AddCard } from '@mui/icons-material';
+//import "./menu.scss";
 
 const theme = createTheme({
   palette: {
@@ -70,10 +72,18 @@ const Menu = () => {
         </StyledListItem>
         <StyledListItem className="menu-item">
           <ListItemIcon>
+            <AddCard />
+          </ListItemIcon>
+          <StyledLink to="./RegisterCustomer">
+            <StyledListItemText primary="Shto kartelë" />
+          </StyledLink>
+        </StyledListItem>
+        <StyledListItem className="menu-item">
+          <ListItemIcon>
             <PaymentIcon />
           </ListItemIcon>
-          <StyledLink to="/payments">
-            <StyledListItemText primary="Payments" />
+          <StyledLink to="./pagesa">
+            <StyledListItemText primary="Pagesa" />
           </StyledLink>
         </StyledListItem>
       </List>
