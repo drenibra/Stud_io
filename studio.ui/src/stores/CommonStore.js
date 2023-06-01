@@ -1,7 +1,7 @@
-import { makeAutoObservable, reaction } from 'mobx';
+import { makeAutoObservable, reaction } from "mobx";
 
 export default class CommonStore {
-  token: string | null = window.localStorage.getItem('jwt');
+  token = window.localStorage.getItem("jwt");
   appLoaded = false;
 
   constructor() {
@@ -11,15 +11,15 @@ export default class CommonStore {
       () => this.token,
       (token) => {
         if (token) {
-          window.localStorage.setItem('jwt', token);
+          window.localStorage.setItem("jwt", token);
         } else {
-          window.localStorage.removeItem('jwt');
+          window.localStorage.removeItem("jwt");
         }
       }
     );
   }
 
-  setToken = (token: string | null) => {
+  setToken = (token) => {
     this.token = token;
   };
   setAppLoaded = () => {

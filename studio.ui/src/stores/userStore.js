@@ -1,21 +1,20 @@
-import { makeAutoObservable, runInAction } from 'mobx';
-import { makePersistable } from 'mobx-persist-store';
-import agent from '../api/account_agent.jsx';
-import { Student, User, UserFormValues, UserRegister } from '../models/User';
-import { store } from './store';
+import { makeAutoObservable, runInAction } from "mobx";
+import { makePersistable } from "mobx-persist-store";
+import agent from "../api/account_agent.jsx";
+import { store } from "./store.js";
 
 export default class UserStore {
-  isApplicant: boolean = false;
-  user: User | null = null;
-  error: boolean = false;
-  student: Student | null = null;
+  isApplicant = false;
+  user = null;
+  error = false;
+  student = null;
 
   constructor() {
     makeAutoObservable(this);
 
     makePersistable(this, {
-      name: 'UserStore',
-      properties: ['user'],
+      name: "UserStore",
+      properties: ["user"],
       storage: window.localStorage,
     });
   }
@@ -24,20 +23,20 @@ export default class UserStore {
     return this.user ? true : false;
   }
 
-  login = async (creds: UserFormValues) => {
+  login = async (creds) => {
     try {
       const user = await agent.Account.login(creds);
       store.commonStore.setToken(user.token);
       runInAction(() => (this.user = user));
       this.removeError();
     } catch (error) {
-      console.log('Invalid credentials');
+      console.log("Invalid credentials");
       this.triggerError();
       throw error;
     }
   };
 
-  register = async (creds: UserRegister): Promise<boolean> => {
+  register = async (creds) => {
     try {
       const user = await agent.Account.register(creds);
       store.commonStore.setToken(user.token);
@@ -50,9 +49,9 @@ export default class UserStore {
 
   logout = () => {
     store.commonStore.setToken(null);
-    window.localStorage.removeItem('jwt');
+    window.localStorage.removeItem("jwt");
     this.user = null;
-    window.location.replace('/login');
+    window.location.replace("/login");
   };
 
   getUser = async () => {
@@ -71,19 +70,19 @@ export default class UserStore {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
-  getCurrentUserId = async (): Promise<string> => {
+  getCurrentUserId = async () => {
     try {
       const userId = await agent.Account.currentId();
       return userId;
     } catch (error) {
       console.log(error);
-      return '';
+      return "";
     }
   };
 
-  getRoles = async (): Promise<Array<string>> => {
+  getRoles = async () => {
     try {
       const roles = agent.Account.roles();
       return roles;
@@ -96,7 +95,7 @@ export default class UserStore {
   async fetchIsApplicant() {
     try {
       const roles = await agent.Account.roles();
-      this.isApplicant = roles.includes('Applicant');
+      this.isApplicant = roles.includes("Applicant");
     } catch (error) {
       console.log(error);
     }
