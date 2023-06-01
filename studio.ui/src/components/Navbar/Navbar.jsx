@@ -4,10 +4,12 @@ import "./styles.css";
 import React, { useState } from "react";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
-const Navbar = () => {
+const Navbar = () =>
+{
   const [isOpen, setIsOpen] = useState(false);
 
-  const toggleDropdown = () => {
+  const toggleDropdown = () =>
+  {
     setIsOpen(!isOpen);
   };
 
@@ -31,7 +33,7 @@ const Navbar = () => {
         <Link to="#">
           <p>Ankesa</p>
         </Link>
-        <Link to="#">
+        <Link to="./Announcements">
           <p>Konkursi</p>
         </Link>
         <Link to="./Apply">
