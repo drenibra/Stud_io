@@ -37,17 +37,11 @@ const Navbar = () => {
         <Link to="./Apply">
           <p>Apliko</p>
         </Link>
-        <Link to="./Pagesa">
-          <p>Pagesa</p>
-        </Link>
         <Link to="./Pagesat">
           <p>Pagesat</p>
         </Link>
         <Link to="./MyProfile" className="my-profile-link">
           <AccountCircleIcon className="my-profile-icon" />
-        </Link>
-        <Link to="./RegisterCustomer">
-          <p>Register</p>
         </Link>
 
         <div className="butoni-signUp">
