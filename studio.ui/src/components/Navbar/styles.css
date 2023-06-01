@@ -1,10 +1,6 @@
-/* * {
-    width: 100%;
-} */
-
 .navbar {
   height: 80px;
-  width: 99.9vw;
+  width: 98.6vw;
   background-color: #bf1a2f;
   color: white;
   font-size: 18px;
@@ -24,6 +20,7 @@
   margin-right: 30px;
 }
 
+
 .navbar-links,
 p {
   margin-right: 30px;
@@ -31,10 +28,19 @@ p {
   text-decoration-line: none;
   color: white;
   margin-top: 10px;
+  background: linear-gradient(to right, rgb(0, 0, 0), rgb(91, 83, 83) 50%, rgb(169, 169, 169) 20%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  background-size: 200% 100%;
+  background-position: 100%;
+  transition: background-position 700ms ease;
+  font-size: large;
 }
+
 
 .navbar-links,
 p:hover {
+
   color: #161616;
   -webkit-appearance: none;
   -ms-appearance: none;
@@ -66,4 +72,16 @@ p:hover {
 .sign-in-btn:hover {
   background-color: #777777;
   cursor: pointer;
+}
+
+.my-profile-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 10px;
+}
+
+.my-profile-icon {
+  color: white;
+  margin-right: 5px;
 }

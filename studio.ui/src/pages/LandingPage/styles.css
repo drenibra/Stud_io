@@ -2,10 +2,10 @@
     width: 100%;
 } */
 
-.main-div {
+.main-div-landing-page {
   background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
     url(./qs.jpg);
-  width: 99.8vw;
+  width: 98.7vw;
   height: 81vh;
   margin-left: 0;
   margin-top: 0px;
@@ -32,4 +32,40 @@
   padding: 20px;
   text-align: center;
   font-size: 30px;
+}
+
+.njoftimet {
+  border: 1px solid #E3E3E3;
+  margin-top: 80px;
+  background-color: #E3E3E3;
+  padding-left: 110px;
+  height: 250px;
+
+}
+
+.njoftimet-div {
+  margin-top: 15px;
+}
+
+.njoftimet img {
+  margin-right: 150px;
+  width: 120px;
+}
+
+.njoftimet-p {
+  display: flex;
+  margin-left: 10px;
+}
+
+.njoftimet-p p {
+  color: #BF1A2F;
+  font-weight: bold;
+  padding-right: 78px;
+}
+
+.njoftimet-e-reja-title {
+  color: black;
+  text-align: center;
+  font-weight: bold;
+  font-size: 18px;
 }

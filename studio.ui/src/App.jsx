@@ -5,7 +5,14 @@ import Footer from "./components/Footer/footer";
 import { ThemeProvider } from "@emotion/react";
 import theme from "./styles/theme";
 import { Routes, Route } from "react-router-dom";
-import { LandingPage, Maintenance, Payment, Payments } from "./pages";
+import {
+  LandingPage,
+  Maintenance,
+  Payment,
+  Payments,
+  MyProfile,
+  RegisterCustomer,
+} from "./pages";
 import Apply from "./pages/Application/Apply";
 import { observer } from 'mobx-react-lite';
 import { useStore } from './stores/store';
@@ -24,6 +31,8 @@ const App = observer(function App() {
           <Route path="/Pagesa" element={<Payment />} />
           <Route path="/Pagesat" element={<Payments />} />
           <Route path="/Apply" element={<Apply />} />
+          <Route path="/MyProfile" element={<MyProfile />} />
+          <Route path="/RegisterCustomer" element={<RegisterCustomer />} />
         </Routes>
       </div>
       <Footer />
