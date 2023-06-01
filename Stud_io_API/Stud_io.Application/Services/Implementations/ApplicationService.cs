@@ -39,6 +39,7 @@ namespace Stud_io.Application.Services.Implementations
 
         public async Task<ActionResult> AddApplication(ApplicationDto applicationDto)
         {
+            StudentService _studentService = new(_context, _mapper);
             if (applicationDto == null)
                 return new BadRequestObjectResult("Application can not be null!!");
 

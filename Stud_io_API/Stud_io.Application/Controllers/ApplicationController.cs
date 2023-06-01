@@ -4,6 +4,8 @@ using Stud_io.Application.Services.Interfaces;
 
 namespace Stud_io.Application.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class ApplicationController : ControllerBase
     {
         private readonly IApplicationService _applicationService;
