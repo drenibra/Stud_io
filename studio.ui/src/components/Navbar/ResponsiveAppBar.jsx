@@ -38,8 +38,8 @@ const pages = [
     path: '/apliko',
   },
   {
-    name: 'Pagesa',
-    path: '/pagesa',
+    name: 'Pagesat',
+    path: '/pagesat',
   },
   {
     name: 'About Us',
