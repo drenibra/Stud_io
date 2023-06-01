@@ -1,4 +1,3 @@
-import React from "react";
 import "./MyProfile.scss";
 import Menu from "../../components/Menu/Menu";
 import { Container, Typography, Grid, TextField } from "@mui/material";
@@ -12,7 +11,6 @@ const StyledContent = styled(Grid)({
   alignItems: "center",
   justifyContent: "center",
   gap: "20px",
-  
 });
 
 const StyledTitle = styled(Typography)({
@@ -40,43 +38,38 @@ export default function MyProfile() {
                 <div className="studentDataRows">
                     <p>Të dhënat personale</p>
                     <Grid item xs={12} md={6}>
-                        <TextField label="Name" value="John" disabled fullWidth sx={{ mb: 2, mt: 3.5}} />
-                        <TextField label="Surname" value="Doe" disabled fullWidth sx={{ mb: 2 }} />
+                        <TextField label="First Name" value="John" fullWidth sx={{ mb: 2, mt: 3.5}} />
+                        <TextField label="Last Name" value="Doe" fullWidth sx={{ mb: 2 }} />
                         <TextField
                             label="Personal Number"
                             value="1234567890"
-                            disabled
                             fullWidth
                             sx={{ mb: 2 }} 
                         />
                         <TextField
                             label="Email"
                             value="johndoe@example.com"
-                            disabled
                             fullWidth
                             sx={{ mb: 2 }} 
                         />
                         <TextField
                             label="Phone Number"
                             value="123-456-7890"
-                            disabled
                             fullWidth
                             sx={{ mb: 2 }} 
                         />
-                        <TextField label="City" value="New York" disabled fullWidth sx={{ mb: 2 }} />
+                        <TextField label="City" value="New York" fullWidth sx={{ mb: 2 }} />
                         <TextField
-                        label="Faculty"
-                        value="Computer Science"
-                        disabled
-                        fullWidth
-                        sx={{ mb: 2 }} 
+                            label="Faculty"
+                            value="Computer Science"
+                            fullWidth
+                            sx={{ mb: 2 }} 
                         />
                         <TextField
-                        label="Department"
-                        value="Software Engineering"
-                        disabled
-                        fullWidth
-                        sx={{mb: 2}}
+                            label="Department"
+                            value="Software Engineering"
+                            fullWidth
+                            sx={{mb: 2}}
                         />
                     </Grid>
                 </div>
