@@ -1,4 +1,6 @@
-﻿namespace Stud_io.Models
+﻿using Stud_io.Authentication.Models;
+
+namespace Stud_io.Models
 {
     public class Student : AppUser
     {
