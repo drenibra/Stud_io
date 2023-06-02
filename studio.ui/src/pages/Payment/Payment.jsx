@@ -79,15 +79,17 @@ const Payment = () => {
     const currentMonthIndex = currentDate.getMonth();
     const currentDay = currentDate.getDate();
 
-    const minSelectableDay = 27;
-    const maxSelectableDay = 31;
+    const previousMonthIndex = (currentMonthIndex + 11) % 12; // Calculate the previous month index
 
-    // Check if the current date falls within the range
-    const isWithinRange =
-      currentMonthIndex === monthIndex - 1 &&
-      currentDay >= minSelectableDay &&
-      currentDay <= maxSelectableDay;
-    return !isWithinRange;
+    const isWithinPreviousRange =
+      (currentMonthIndex === monthIndex &&
+        currentDay >= 27 &&
+        currentDay <= 31) ||
+      (previousMonthIndex + 1 === monthIndex &&
+        currentDay >= 1 &&
+        currentDay <= 7);
+
+    return !isWithinPreviousRange;
   };
 
   return (
@@ -178,7 +180,9 @@ const Payment = () => {
                     <MenuItem disabled={isMonthDisabled(4)} value="Maj">
                       Maj
                     </MenuItem>
-                    <MenuItem value="Qershor">Qershor</MenuItem>
+                    <MenuItem disabled={isMonthDisabled(5)} value="Qershor">
+                      Qershor
+                    </MenuItem>
                     <MenuItem disabled={isMonthDisabled(6)} value="Korrik">
                       Korrik
                     </MenuItem>
@@ -200,7 +204,11 @@ const Payment = () => {
                   </Select>
                 </FormControl>
               </Grid>
-              <Grid item xs={6} sx={{ marginLeft: "auto", marginRight: "auto" }}>
+              <Grid
+                item
+                xs={6}
+                sx={{ marginLeft: "auto", marginRight: "auto" }}
+              >
                 <Button
                   type="submit"
                   variant="contained"
