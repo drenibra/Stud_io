@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Stud_io.Payment.DTOs;
-using Stud_io.Payment.Services.Implementation;
 using Stud_io.Payment.Services.Interfaces;
 
 namespace Stud_io.Payment.Controllers

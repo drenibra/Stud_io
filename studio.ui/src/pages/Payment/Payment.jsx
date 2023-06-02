@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import "./Payment.scss";
-import Button from "../../components/Button/Button";
 import agent from "../../api/payment_agents";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -10,7 +9,15 @@ import {
   TableBody,
   TableRow,
   TableCell,
+  TextField,
+  FormControl,
+  Select,
+  MenuItem,
+  Box,
+  Grid,
+  Button,
 } from "@mui/material";
+import Menu from "../../components/Menu/Menu";
 
 const Payment = () => {
   const [pagesa, setPagesa] = useState({
@@ -84,114 +91,178 @@ const Payment = () => {
   };
 
   return (
-    <>
-      <></>
-      <div className="payment-form">
-        <h1>Kryej pagesën</h1>
-        <form className="payment-form-group">
-          <input
-            type="text"
-            name="customerId"
-            placeholder="Numri personal"
-            onChange={handleChange}
-          />
-          <div className="box">
-            <select required onChange={handleChange} name="description">
-              <option value="Tipi i pagesës" disabled selected>
-                Tipi i pagesës
-              </option>
-              {typeOfPayments.map((typeOfPayment) => (
-                <option value={typeOfPayment.type} key={typeOfPayment.type}>
-                  {typeOfPayment.type}
-                </option>
-              ))}
-            </select>
-          </div>
-          <input
-            type="text"
-            name="amount"
-            placeholder="Shuma për pagesë"
-            value={
-              pagesa.amount !== ""
-                ? `${(pagesa.amount / 100).toFixed(2)} €`
-                : ""
-            }
-            disabled
-          />
-          <div className="box">
-            <select required onChange={handleChange} name="month">
-              <option value="Zgjedh muajin" disabled selected>
-                Zgjedh muajin
-              </option>
-              <option disabled={isMonthDisabled(0)}>Janar</option>
-              <option disabled={isMonthDisabled(1)}>Shkurt</option>
-              <option disabled={isMonthDisabled(2)}>Mars</option>
-              <option disabled={isMonthDisabled(3)}>Prill</option>
-              <option disabled={isMonthDisabled(4)}>Maj</option>
-              <option disabled={isMonthDisabled(5)}>Qershor</option>
-              <option disabled={isMonthDisabled(6)}>Korrik</option>
-              <option disabled={isMonthDisabled(7)}>Gusht</option>
-              <option disabled={isMonthDisabled(8)}>Shtator</option>
-              <option disabled={isMonthDisabled(9)}>Tetor</option>
-              <option disabled={isMonthDisabled(10)}>Nëntor</option>
-              <option disabled={isMonthDisabled(11)}>Dhjetor</option>
-            </select>
-          </div>
-
-          <Button
-            type="submit"
-            value="Submit"
-            onClick={handleSubmit}
-            text="Paguaj"
-          />
-          <ToastContainer />
-        </form>
+    <div className="paymentPay">
+      <div className="menu">
+        <Menu />
       </div>
+      <div className="payment-container">
+        <div className="payment-form">
+          <h1>Kryej pagesën</h1>
+          <form className="payment-form-group" onSubmit={handleSubmit}>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextField
+                  type="text"
+                  name="customerId"
+                  label="Numri personal"
+                  variant="outlined"
+                  onChange={handleChange}
+                  fullWidth
+                  size="small"
+                  required
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <FormControl variant="outlined" fullWidth required>
+                  <Select
+                    name="description"
+                    value={pagesa.description}
+                    onChange={handleChange}
+                    displayEmpty
+                    size="small"
+                  >
+                    <MenuItem disabled value="">
+                      <em>Tipi i pagesës</em>
+                    </MenuItem>
+                    {typeOfPayments.map((typeOfPayment) => (
+                      <MenuItem
+                        key={typeOfPayment.type}
+                        value={typeOfPayment.type}
+                      >
+                        {typeOfPayment.type}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  type="text"
+                  name="amount"
+                  label="Shuma për pagesë"
+                  variant="outlined"
+                  size="small"
+                  value={
+                    pagesa.amount !== ""
+                      ? `${(pagesa.amount / 100).toFixed(2)} €`
+                      : ""
+                  }
+                  disabled
+                  fullWidth
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <FormControl variant="outlined" fullWidth required>
+                  <Select
+                    name="month"
+                    value={pagesa.month}
+                    onChange={handleChange}
+                    size="small"
+                    displayEmpty
+                  >
+                    <MenuItem disabled value="">
+                      <em>Zgjedh muajin</em>
+                    </MenuItem>
+                    <MenuItem disabled={isMonthDisabled(0)} value="Janar">
+                      Janar
+                    </MenuItem>
+                    <MenuItem disabled={isMonthDisabled(1)} value="Shkurt">
+                      Shkurt
+                    </MenuItem>
+                    <MenuItem disabled={isMonthDisabled(2)} value="Mars">
+                      Mars
+                    </MenuItem>
+                    <MenuItem disabled={isMonthDisabled(3)} value="Prill">
+                      Prill
+                    </MenuItem>
+                    <MenuItem disabled={isMonthDisabled(4)} value="Maj">
+                      Maj
+                    </MenuItem>
+                    <MenuItem value="Qershor">Qershor</MenuItem>
+                    <MenuItem disabled={isMonthDisabled(6)} value="Korrik">
+                      Korrik
+                    </MenuItem>
+                    <MenuItem disabled={isMonthDisabled(7)} value="Gusht">
+                      Gusht
+                    </MenuItem>
+                    <MenuItem disabled={isMonthDisabled(8)} value="Shtator">
+                      Shtator
+                    </MenuItem>
+                    <MenuItem disabled={isMonthDisabled(9)} value="Tetor">
+                      Tetor
+                    </MenuItem>
+                    <MenuItem disabled={isMonthDisabled(10)} value="Nëntor">
+                      Nëntor
+                    </MenuItem>
+                    <MenuItem disabled={isMonthDisabled(11)} value="Dhjetor">
+                      Dhjetor
+                    </MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={6} sx={{ marginLeft: "auto", marginRight: "auto" }}>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  fullWidth
+                >
+                  Paguaj
+                </Button>
+              </Grid>
+            </Grid>
+            <ToastContainer />
+          </form>
+        </div>
 
-      {latestPayment && (
-        <Table>
-          <TableHead>
-            <TableRow sx={{ background: "#c62828" }}>
-              <TableCell sx={{ color: "white", fontWeight: "bold" }}>
-                Studenti
-              </TableCell>
-              <TableCell sx={{ color: "white", fontWeight: "bold" }}>
-                Përshkrimi
-              </TableCell>
-              <TableCell sx={{ color: "white", fontWeight: "bold" }}>
-                Shuma
-              </TableCell>
-              <TableCell sx={{ color: "white", fontWeight: "bold" }}>
-                Muaji
-              </TableCell>
-              <TableCell sx={{ color: "white", fontWeight: "bold" }}>
-                Data e pagesës
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            <TableRow key={latestPayment.id}>
-              <TableCell>{latestPayment.customerId}</TableCell>
-              <TableCell>{latestPayment.description}</TableCell>
-              <TableCell>
-                {(latestPayment.amount * 0.01).toFixed(2)} €
-              </TableCell>
-              <TableCell>{latestPayment.month}</TableCell>
-              <TableCell>
-                {new Date(latestPayment.dateOfPayment).toLocaleString("en-GB", {
-                  year: "numeric",
-                  month: "2-digit",
-                  day: "2-digit",
-                  hour: "2-digit",
-                  minute: "2-digit",
-                  second: "2-digit",
-                })}
-              </TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
-      )}
-    </>
+        {latestPayment && (
+          <Table sx={{ marginTop: "2rem" }}>
+            <TableHead>
+              <TableRow sx={{ background: "#c62828" }}>
+                <TableCell sx={{ color: "white", fontWeight: "bold" }}>
+                  Studenti
+                </TableCell>
+                <TableCell sx={{ color: "white", fontWeight: "bold" }}>
+                  Përshkrimi
+                </TableCell>
+                <TableCell sx={{ color: "white", fontWeight: "bold" }}>
+                  Shuma
+                </TableCell>
+                <TableCell sx={{ color: "white", fontWeight: "bold" }}>
+                  Muaji
+                </TableCell>
+                <TableCell sx={{ color: "white", fontWeight: "bold" }}>
+                  Data e pagesës
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              <TableRow key={latestPayment.id}>
+                <TableCell>{latestPayment.customerId}</TableCell>
+                <TableCell>{latestPayment.description}</TableCell>
+                <TableCell>
+                  {(latestPayment.amount * 0.01).toFixed(2)} €
+                </TableCell>
+                <TableCell>{latestPayment.month}</TableCell>
+                <TableCell>
+                  {new Date(latestPayment.dateOfPayment).toLocaleString(
+                    "en-GB",
+                    {
+                      year: "numeric",
+                      month: "2-digit",
+                      day: "2-digit",
+                      hour: "2-digit",
+                      minute: "2-digit",
+                      second: "2-digit",
+                    }
+                  )}
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        )}
+      </div>
+    </div>
   );
 };
 

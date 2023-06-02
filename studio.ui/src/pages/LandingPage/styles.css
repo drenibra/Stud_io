@@ -35,12 +35,11 @@
 }
 
 .njoftimet {
-  border: 1px solid #E3E3E3;
+  border: 1px solid #e3e3e3;
   margin-top: 80px;
-  background-color: #E3E3E3;
+  background-color: #e3e3e3;
   padding-left: 110px;
   height: 250px;
-
 }
 
 .njoftimet-div {
@@ -58,7 +57,7 @@
 }
 
 .njoftimet-p p {
-  color: #BF1A2F;
+  color: #bf1a2f;
   font-weight: bold;
   padding-right: 78px;
 }

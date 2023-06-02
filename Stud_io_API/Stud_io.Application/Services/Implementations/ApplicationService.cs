@@ -1,10 +1,13 @@
 ﻿using AutoMapper;
+using CloudinaryDotNet;
+using CloudinaryDotNet.Actions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Stud_io.Application.Configurations;
 using Stud_io.Application.DTOs;
 using Stud_io.Application.Models;
 using Stud_io.Application.Services.Interfaces;
+using System.Runtime.InteropServices;
 
 namespace Stud_io.Application.Services.Implementations
 {
@@ -12,11 +15,13 @@ namespace Stud_io.Application.Services.Implementations
     {
         private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
+        private readonly IConfiguration _configuration;
 
-        public ApplicationService(ApplicationDbContext context, IMapper mapper)
+        public ApplicationService(ApplicationDbContext context, IMapper mapper, IConfiguration configuration)
         {
             _context = context;
             _mapper = mapper;
+            _configuration = configuration;
         }
 
         public async Task<ActionResult<List<ApplicationDto>>> GetApplications() =>
@@ -49,9 +54,41 @@ namespace Stud_io.Application.Services.Implementations
                 return new BadRequestObjectResult("You have already applied!");
             }
 
-            applicationDto.ApplyDate = DateTime.Now;
-            var mappedApplication = _mapper.Map<ApplicationForm>(applicationDto);
-            await _context.Applications.AddAsync(mappedApplication);
+            var imageUrl = "";
+
+            if (applicationDto.Document != null)
+            {
+                var cloudinaryConfig = new Account(
+                    _configuration["CloudinarySettings:CloudName"],
+                    _configuration["CloudinarySettings:ApiKey"],
+                    _configuration["CloudinarySettings:ApiSecret"]
+                );
+                var cloudinary = new Cloudinary(cloudinaryConfig);
+
+                var uploadParams = new ImageUploadParams
+                {
+                    File = new FileDescription(applicationDto.Document.FileName, applicationDto.Document.OpenReadStream())
+                };
+
+                var uploadResult = await cloudinary.UploadAsync(uploadParams);
+                if (uploadResult.Error != null)
+                    return new BadRequestObjectResult(uploadResult.Error.Message);
+
+                imageUrl = uploadResult.SecureUrl.ToString();
+
+            };
+
+            var application = new ApplicationForm()
+            {
+                ApplyDate = DateTime.Now,
+                PersonalNo = applicationDto.PersonalNo,
+                isSpecialCategory = applicationDto.IsSpecialCategory,
+                SpecialCategoryReason = applicationDto.SpecialCategoryReason,
+                StudentId = applicationDto.StudentId,
+                FileUrl = imageUrl,
+            };
+
+            await _context.Applications.AddAsync(application);
             await _context.SaveChangesAsync();
             return new OkObjectResult("Application added successfully!");
         }
@@ -71,7 +108,7 @@ namespace Stud_io.Application.Services.Implementations
             dbApplication.ApplyDate = updateApplicationDto.ApplyDate ?? dbApplication.ApplyDate;
             dbApplication.PersonalNo = updateApplicationDto.PersonalNo ?? dbApplication.PersonalNo;
             dbApplication.StudentId = updateApplicationDto.StudentId ?? dbApplication.StudentId;
-            dbApplication.FileId = updateApplicationDto.FileId ?? dbApplication.FileId;
+            //dbApplication.FileUrl = updateApplicationDto.FileUrl ?? dbApplication.FileUrl;
 
             await _context.SaveChangesAsync();
 

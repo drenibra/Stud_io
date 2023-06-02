@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const service2Axios = axios.create({
-  baseURL: "https://localhost:7007/",
+  baseURL: import.meta.env.VITE_API_APPLICATION_URL,
 });
 
 const responseBody = (response) => response.data;

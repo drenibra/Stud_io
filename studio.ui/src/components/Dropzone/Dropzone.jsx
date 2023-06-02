@@ -3,11 +3,13 @@ import { Box, Typography } from "@mui/material";
 import { useDropzone } from "react-dropzone";
 
 const Dropzone = ({ onChange }) => {
-  const [files, setFiles] = useState([]);
+  const [selectedFile, setSelectedFile] = useState(null);
 
   const onDrop = (acceptedFiles) => {
-    setFiles(acceptedFiles);
-    onChange(acceptedFiles);
+    const file = acceptedFiles[0];
+    setSelectedFile(file);
+    const formFile = new File([file], file.name, { type: file.type });
+    onChange(formFile);
   };
 
   const { getRootProps, getInputProps, isDragActive, isDragReject } =
@@ -34,13 +36,11 @@ const Dropzone = ({ onChange }) => {
           Drag and drop files here or click to select files.
         </Typography>
       </Box>
-      {files.length > 0 && (
+      {selectedFile && (
         <Box sx={{ mt: 2 }}>
-          <Typography variant="body2">Selected files:</Typography>
+          <Typography variant="body2">Selected file:</Typography>
           <ul>
-            {files.map((file, index) => (
-              <li key={index}>{file.name}</li>
-            ))}
+            <li>{selectedFile.name}</li>
           </ul>
         </Box>
       )}

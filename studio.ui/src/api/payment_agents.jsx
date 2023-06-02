@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const service1Axios = axios.create({
-  baseURL: "https://localhost:7163/api/",
+  baseURL: import.meta.env.VITE_API_PAYMENT_URL,
 });
 
 const responseBody = (response) => response.data;

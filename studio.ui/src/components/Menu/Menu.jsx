@@ -74,7 +74,7 @@ const Menu = () => {
           <ListItemIcon>
             <AddCard />
           </ListItemIcon>
-          <StyledLink to="./RegisterCustomer">
+          <StyledLink to="/RegisterCustomer">
             <StyledListItemText primary="Shto kartelë" />
           </StyledLink>
         </StyledListItem>
@@ -82,7 +82,7 @@ const Menu = () => {
           <ListItemIcon>
             <PaymentIcon />
           </ListItemIcon>
-          <StyledLink to="./pagesa">
+          <StyledLink to="/Pagesa">
             <StyledListItemText primary="Pagesa" />
           </StyledLink>
         </StyledListItem>
