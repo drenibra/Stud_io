@@ -66,7 +66,7 @@ const Menu = () => {
           <ListItemIcon>
             <PeopleIcon />
           </ListItemIcon>
-          <StyledLink to="/roommate">
+          <StyledLink to="/Roommate">
             <StyledListItemText primary="Roommate" />
           </StyledLink>
         </StyledListItem>

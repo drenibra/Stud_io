@@ -18,8 +18,10 @@ import {
   MyProfile,
   RegisterCustomer,
   Announcement,
+  Roommate,
 } from "./pages";
 import Apply from "./pages/Application/Apply";
+
 
 const App = observer(function App() {
   const { userStore } = useStore();
@@ -36,6 +38,7 @@ const App = observer(function App() {
           <Route path="/Apply" element={<Apply />} />
           <Route path="/MyProfile" element={<MyProfile />} />
           <Route path="/RegisterCustomer" element={<RegisterCustomer />} />
+          <Route path="/Roommate" element={<Roommate />} />
         </Routes>
       </div>
       <Footer />
