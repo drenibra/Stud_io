@@ -10,21 +10,23 @@ import { observer } from "mobx-react-lite";
 import { useStore } from "./stores/store";
 import LoginForm from "./pages/Login/LoginForm";
 
-import {
-  LandingPage,
-  Maintenance,
-  Payment,
-  Payments,
-  MyProfile,
-  RegisterCustomer,
-  Announcement,
-  Roommate,
-  Questionnaire
-} from "./pages";
+import
+  {
+    LandingPage,
+    Maintenance,
+    Payment,
+    Payments,
+    MyProfile,
+    RegisterCustomer,
+    Announcement,
+    Roommate,
+    Questionnaire
+  } from "./pages";
 import Apply from "./pages/Application/Apply";
 
 
-const App = observer(function App() {
+const App = observer(function App()
+{
   const { userStore } = useStore();
 
   return userStore.isLoggedIn ? (
@@ -39,6 +41,7 @@ const App = observer(function App() {
           <Route path="/Apply" element={<Apply />} />
           <Route path="/MyProfile" element={<MyProfile />} />
           <Route path="/RegisterCustomer" element={<RegisterCustomer />} />
+          <Route path="/Announcements" element={<Announcement />}></Route>
           <Route path="/Roommate" element={<Roommate />} />
           <Route path="/Questionnaire" element={<Questionnaire />} />
         </Routes>

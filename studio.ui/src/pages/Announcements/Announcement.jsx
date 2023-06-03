@@ -1,8 +1,11 @@
 import React, { useState } from "react";
-import agent from "../../api/announcement_agent";
 import { ToastContainer, toast } from "react-toastify";
 import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material";
+import axios from "axios";
+import './styles.scss';
+import Deadline from "./Deadline";
+
 
 
 const Announcement = () =>
@@ -15,67 +18,95 @@ const Announcement = () =>
 
     const handleChange = (e) =>
     {
-        setAnnouncement({ ...announcement, [e.target.name]: e.target.value });
+        const newData = { ...announcement }
+        newData[e.target.id] = e.target.value
+        setAnnouncement(newData)
+
     }
 
 
-    const handleSubmit = (e) =>
+    const handleSubmit = async (e) =>
     {
-        e.preventDeafult();
-        
-        agent.AddAnnouncement.create(announcement)
-            .then(() =>
-            {
-                toast.success("Shpallja u shtua me sukses!");
-            })
-            .catch(function (error)
-            {
-                toast.error(error.response.data);
-            });
+        e.preventDefault();
+        try
+        {
+            const response = await axios.post('https://localhost:7137/api/Announcement/add-announcement', announcement);
+            console.log(response.data);
+            toast.success("Shpallja u shtua me sukses!");
+        } catch (error)
+        {
+            console.log(error);
+            toast.error(error.response.data);
+        }
+        // const addAnnouncement = new FormData();
+        // addAnnouncement.append("title", announcement.title);
+        // addAnnouncement.append("description", announcement.description);
+        // addAnnouncement.append("deadlineId", announcement.deadlineId);
+
+        // agent.AddAnnouncement.create(addAnnouncement)
+        //     .then(() =>
+        //     {
+        //         toast.success("Shpallja u shtua me sukses!");
+        //     })
+        //     .catch(function (error)
+        //     {
+        //         toast.error(error.response.data);
+        //     });
     };
 
     return (
         <div>
-            <h2>Hapja e Konkursit</h2>
-            <form onSubmit={handleSubmit}>
-                <TextField
-                    label="Title"
-                    name="title"
-                    value={announcement.title}
-                    onChange={handleChange}
-                    variant="outlined"
-                    fullWidth
-                    margin="normal"
-                    sx={{ marginBottom: "8px" }}
-                />
-                <TextField
-                    label="Description"
-                    name="description"
-                    value={announcement.description}
-                    onChange={handleChange}
-                    variant="outlined"
-                    fullWidth
-                    margin="normal"
-                    sx={{ marginBottom: "8px" }}
-                />
-                <TextField
-                    label="DeadlineId"
-                    name="deadlineId"
-                    value={announcement.deadlineId}
-                    onChange={handleChange}
-                    type="number"
-                    variant="outlined"
-                    fullWidth
-                    margin="normal"
-                    sx={{ marginBottom: "8px" }}
-                />
 
-                <Button variant="contained" color="primary" type="submit">
-                    Submit
-                </Button>
-            </form>
-            <ToastContainer />
-        </div>
+            <div className="hapja-konkursit">
+                <h2 className="title-hapja-konkursit">Hapja e Konkursit</h2>
+                <form onSubmit={(e) => handleSubmit(e)} className="form-konkursi">
+                    <TextField
+                        label="Title"
+                        name="title"
+                        id="title"
+                        value={announcement.title}
+                        onChange={handleChange}
+                        variant="outlined"
+                        fullWidth
+                        required
+                        margin="normal"
+                        sx={{ marginBottom: "8px" }}
+                    />
+                    <TextField
+                        label="Description"
+                        name="description"
+                        id="description"
+                        value={announcement.description}
+                        onChange={handleChange}
+                        variant="outlined"
+                        fullWidth
+                        required
+                        margin="normal"
+                        sx={{ marginBottom: "8px" }}
+                    />
+                    <TextField
+                        label="DeadlineId"
+                        name="deadlineId"
+                        id="deadlineId"
+                        value={announcement.deadlineId}
+                        onChange={handleChange}
+                        type="number"
+                        required
+                        variant="outlined"
+                        fullWidth
+                        margin="normal"
+                        sx={{ marginBottom: "8px" }}
+                    />
+
+                    <Button variant="contained" color="primary" type="submit" className="butoni-konkursi">
+                        Submit
+                    </Button>
+                </form>
+                <ToastContainer />
+
+
+            </div>
+        </div >
     )
 };
 

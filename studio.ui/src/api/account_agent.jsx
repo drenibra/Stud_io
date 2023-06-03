@@ -1,32 +1,39 @@
 import axios from "axios";
 import { store } from "../stores/store";
 
-const sleep = (delay) => {
-  return new Promise((resolve) => {
+const sleep = (delay) =>
+{
+  return new Promise((resolve) =>
+  {
     setTimeout(resolve, delay);
   });
 };
 
 const service1Axios = axios.create({
-  baseURL: import.meta.env.VITE_API_AUTH_URL,
+  baseURL: "http://localhost:5274/api/v1" //import.meta.env.VITE_API_AUTH_URL,
 });
 
 axios.interceptors.request.use(
-  (config) => {
+  (config) =>
+  {
     const token = store.commonStore.token;
     if (token) config.headers.Authorization = `Bearer ${token}`;
     return config;
   },
-  (error) => {
+  (error) =>
+  {
     return Promise.reject(error);
   }
 );
 
-axios.interceptors.response.use(async (response) => {
-  try {
+axios.interceptors.response.use(async (response) =>
+{
+  try
+  {
     await sleep(400);
     return response;
-  } catch (error) {
+  } catch (error)
+  {
     console.log(error);
     return Promise.reject(error);
   }

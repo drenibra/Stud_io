@@ -31,11 +31,11 @@ const pages = [
   },
   {
     name: 'Konkursi',
-    path: '/konkursi',
+    path: '/Announcements',
   },
   {
     name: 'Apliko',
-    path: '/apliko',
+    path: '/Apply',
   },
   {
     name: 'Pagesat',
@@ -47,32 +47,35 @@ const pages = [
   },
 ];
 
-const ResponsiveAppBar = observer(function ResponsiveAppBar() {
+const ResponsiveAppBar = observer(function ResponsiveAppBar()
+{
   const navigate = useNavigate();
 
   const { userStore } = useStore();
 
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
-  const handleOpenUserMenu = (event) => {
+  const handleOpenUserMenu = (event) =>
+  {
     setAnchorElUser(event.currentTarget);
   };
 
-  const handleCloseUserMenu = () => {
+  const handleCloseUserMenu = () =>
+  {
     setAnchorElUser(null);
   };
 
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
-        <Toolbar disableGutters style={{padding: "1vh 0"}}>
-            <Link to="/" className="logo">
-              <img
-                src={Logo}
-                alt="Our logo."
-                style={{ width: "50px" }}
-                />
-            </Link>
+        <Toolbar disableGutters style={{ padding: "1vh 0" }}>
+          <Link to="/" className="logo">
+            <img
+              src={Logo}
+              alt="Our logo."
+              style={{ width: "50px" }}
+            />
+          </Link>
           <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
           <Typography
             variant="h5"
@@ -134,7 +137,8 @@ const ResponsiveAppBar = observer(function ResponsiveAppBar() {
                   </Typography>
                 </MenuItem>
                 <MenuItem
-                  onClick={() => {
+                  onClick={() =>
+                  {
                     handleCloseUserMenu();
                     userStore.logout();
                   }}
