@@ -6,3 +6,4 @@ export { default as MyProfile } from './StudentProfile/MyProfile';
 export { default as RegisterCustomer } from './Payment/RegisterCustomer';
 export { default as Announcement } from './Announcements/Announcement';
 export { default as Roommate } from './StudentProfile/Roommate';
+export { default as Questionnaire } from './StudentProfile/Questionnaire';

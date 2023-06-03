@@ -19,6 +19,7 @@ import {
   RegisterCustomer,
   Announcement,
   Roommate,
+  Questionnaire
 } from "./pages";
 import Apply from "./pages/Application/Apply";
 
@@ -39,6 +40,7 @@ const App = observer(function App() {
           <Route path="/MyProfile" element={<MyProfile />} />
           <Route path="/RegisterCustomer" element={<RegisterCustomer />} />
           <Route path="/Roommate" element={<Roommate />} />
+          <Route path="/Questionnaire" element={<Questionnaire />} />
         </Routes>
       </div>
       <Footer />

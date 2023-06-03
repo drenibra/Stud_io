@@ -1,4 +1,4 @@
-import "./MyProfile.scss";
+import "./myProfile.scss";
 import Menu from "../../components/Menu/Menu";
 import { Container, Typography, Grid, TextField } from "@mui/material";
 import { styled } from "@mui/system";
