@@ -16,6 +16,7 @@ namespace Stud_io.Application.Services.Implementations
         private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
         private readonly IConfiguration _configuration;
+        private readonly IMailKitEmailService _mailService;
 
         public ApplicationService(ApplicationDbContext context, IMapper mapper, IConfiguration configuration)
         {
@@ -87,6 +88,8 @@ namespace Stud_io.Application.Services.Implementations
                 StudentId = applicationDto.StudentId,
                 FileUrl = imageUrl,
             };
+
+            _mailService.SendEmail("rh52741@ubt-uni.net", "Test", "", "studio.qendrastudentore@gmail.com");
 
             await _context.Applications.AddAsync(application);
             await _context.SaveChangesAsync();

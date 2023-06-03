@@ -6,27 +6,22 @@ import Footer from "./components/Footer/footer";
 import { ThemeProvider } from "@emotion/react";
 import theme from "./styles/theme";
 import { Routes, Route } from "react-router-dom";
-import { observer } from "mobx-react-lite";
-import { useStore } from "./stores/store";
-import LoginForm from "./pages/Login/LoginForm";
+import { LandingPage, Maintenance, Payment } from "./pages";
 
-import
-  {
-    LandingPage,
-    Maintenance,
-    Payment,
-    Payments,
-    MyProfile,
-    RegisterCustomer,
-    Announcement,
-    Roommate,
-    Questionnaire
-  } from "./pages";
-import Apply from "./pages/Application/Apply";
+import {
+  LandingPage,
+  Maintenance,
+  Payment,
+  Payments,
+  MyProfile,
+  RegisterCustomer,
+  Announcement,
+  Roommate,
+  Questionnaire,
+  Apply,
+} from "./pages";
 
-
-const App = observer(function App()
-{
+const App = observer(function App() {
   const { userStore } = useStore();
 
   return userStore.isLoggedIn ? (
@@ -38,7 +33,7 @@ const App = observer(function App()
           <Route path="/Mirembajtja" element={<Maintenance />} />
           <Route path="/Pagesa" element={<Payment />} />
           <Route path="/Pagesat" element={<Payments />} />
-          <Route path="/Apply" element={<Apply />} />
+          <Route path="/apliko" element={<Apply />} />
           <Route path="/MyProfile" element={<MyProfile />} />
           <Route path="/RegisterCustomer" element={<RegisterCustomer />} />
           <Route path="/Announcements" element={<Announcement />}></Route>
