@@ -35,6 +35,7 @@ namespace Stud_io.Authentication.Services
             }
             return new UserDto
             {
+                Id = user.Id,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Username = user.UserName
@@ -60,13 +61,13 @@ namespace Stud_io.Authentication.Services
         //    var recruiters = await _userManager.Users.ToListAsync();
         //    return recruiters.OfType<Student>().ToList();
         //}
-        //public async Task<Student> GetStudentById(string id)
-        //{
-        //    var student = await _userManager.Users
-        //        .OfType<Student>()
-        //        .FirstOrDefaultAsync(user => user.Id.Equals(id));
+        public async Task<Student> GetStudentById(string id)
+        {
+            var student = await _userManager.Users
+                .OfType<Student>()
+                .FirstOrDefaultAsync(user => user.Id.Equals(id));
 
-        //    return student;
-        //}
+            return student;
+        }
     }
 }

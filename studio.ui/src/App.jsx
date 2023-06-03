@@ -6,7 +6,9 @@ import Footer from "./components/Footer/footer";
 import { ThemeProvider } from "@emotion/react";
 import theme from "./styles/theme";
 import { Routes, Route } from "react-router-dom";
-import { LandingPage, Maintenance, Payment } from "./pages";
+import { observer } from "mobx-react-lite";
+import { useStore } from "./stores/store";
+import LoginForm from "./pages/Login/LoginForm";
 
 import {
   LandingPage,

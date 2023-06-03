@@ -1,67 +1,64 @@
-import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
-import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
-import Tooltip from '@mui/material/Tooltip';
-import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
-import { useStore } from '../../stores/store';
-import { Link, NavLink, useNavigate } from 'react-router-dom';
+import * as React from "react";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
+import Menu from "@mui/material/Menu";
+import Container from "@mui/material/Container";
+import Avatar from "@mui/material/Avatar";
+import Tooltip from "@mui/material/Tooltip";
+import MenuItem from "@mui/material/MenuItem";
+import AdbIcon from "@mui/icons-material/Adb";
+import { useStore } from "../../stores/store";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import Logo from "../../assets/logo/icon-stud-io.svg";
-import { observer } from 'mobx-react-lite';
+import { observer } from "mobx-react-lite";
 import "../../styles/navbar.css";
 
 const pages = [
   {
-    name: 'Home',
-    path: '/',
+    name: "Home",
+    path: "/",
   },
   {
-    name: 'Mirembajtja',
-    path: '/mirembajtja',
+    name: "Mirembajtja",
+    path: "/mirembajtja",
   },
   {
-    name: 'Ankesa',
-    path: '/ankesa',
+    name: "Ankesa",
+    path: "/ankesa",
   },
   {
-    name: 'Konkursi',
-    path: '/Announcements',
+    name: "Konkursi",
+    path: "/Announcements",
   },
   {
-    name: 'Apliko',
-    path: '/Apply',
+    name: "Apliko",
+    path: "/apliko",
   },
   {
-    name: 'Pagesat',
-    path: '/pagesat',
+    name: "Pagesat",
+    path: "/pagesat",
   },
   {
-    name: 'About Us',
-    path: '/about',
+    name: "About Us",
+    path: "/about",
   },
 ];
 
-const ResponsiveAppBar = observer(function ResponsiveAppBar()
-{
+const ResponsiveAppBar = observer(function ResponsiveAppBar() {
   const navigate = useNavigate();
 
   const { userStore } = useStore();
 
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
-  const handleOpenUserMenu = (event) =>
-  {
+  const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
 
-  const handleCloseUserMenu = () =>
-  {
+  const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
 
@@ -70,13 +67,9 @@ const ResponsiveAppBar = observer(function ResponsiveAppBar()
       <Container maxWidth="xl">
         <Toolbar disableGutters style={{ padding: "1vh 0" }}>
           <Link to="/" className="logo">
-            <img
-              src={Logo}
-              alt="Our logo."
-              style={{ width: "50px" }}
-            />
+            <img src={Logo} alt="Our logo." style={{ width: "50px" }} />
           </Link>
-          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+          <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
           <Typography
             variant="h5"
             noWrap
@@ -84,18 +77,18 @@ const ResponsiveAppBar = observer(function ResponsiveAppBar()
             href=""
             sx={{
               mr: 2,
-              display: { xs: 'flex', md: 'none' },
+              display: { xs: "flex", md: "none" },
               flexGrow: 1,
-              fontFamily: 'monospace',
+              fontFamily: "monospace",
               fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
+              letterSpacing: ".3rem",
+              color: "inherit",
+              textDecoration: "none",
             }}
           >
             LOGO
           </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
               <NavLink key={page.name} to={page.path} className="navlink">
                 {page.name}
@@ -105,45 +98,56 @@ const ResponsiveAppBar = observer(function ResponsiveAppBar()
           {userStore.isLoggedIn && (
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
-                <IconButton id="openSettings" onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                <IconButton
+                  id="openSettings"
+                  onClick={handleOpenUserMenu}
+                  sx={{ p: 0 }}
+                >
                   <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
                 </IconButton>
               </Tooltip>
               <Menu
                 class="menu"
-                sx={{ mt: '45px' }}
+                sx={{ mt: "45px" }}
                 id="menu-appbar"
                 anchorEl={anchorElUser}
                 anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
+                  vertical: "top",
+                  horizontal: "right",
                 }}
                 keepMounted
                 transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
+                  vertical: "top",
+                  horizontal: "right",
                 }}
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
                 <MenuItem onClick={handleCloseUserMenu}>
                   <Link id="profileButton" to="/MyProfile">
-                    <Typography color="common.black" textAlign="center">Profile</Typography>
+                    <Typography color="common.black" textAlign="center">
+                      Profile
+                    </Typography>
                   </Link>
                 </MenuItem>
                 <MenuItem onClick={handleCloseUserMenu}>
-                  <Typography color="common.black" textAlign="center" onClick={() => navigate('/pagesat')}>
+                  <Typography
+                    color="common.black"
+                    textAlign="center"
+                    onClick={() => navigate("/pagesat")}
+                  >
                     Pagesat
                   </Typography>
                 </MenuItem>
                 <MenuItem
-                  onClick={() =>
-                  {
+                  onClick={() => {
                     handleCloseUserMenu();
                     userStore.logout();
                   }}
                 >
-                  <Typography color="common.black" textAlign="center">Log Out</Typography>
+                  <Typography color="common.black" textAlign="center">
+                    Log Out
+                  </Typography>
                 </MenuItem>
               </Menu>
             </Box>
@@ -154,4 +158,4 @@ const ResponsiveAppBar = observer(function ResponsiveAppBar()
   );
 });
 
-export default ResponsiveAppBar
+export default ResponsiveAppBar;
