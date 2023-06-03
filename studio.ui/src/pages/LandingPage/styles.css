@@ -53,13 +53,14 @@
 
 .njoftimet-p {
   display: flex;
-  margin-left: 10px;
+  margin-left: 8px;
 }
 
 .njoftimet-p p {
   color: #bf1a2f;
   font-weight: bold;
   padding-right: 78px;
+  font-size: 14px;
 }
 
 .njoftimet-e-reja-title {

@@ -11,17 +11,18 @@ import { useStore } from "./stores/store";
 import LoginForm from "./pages/Login/LoginForm";
 
 import
-  {
-    LandingPage,
-    Maintenance,
-    Payment,
-    Payments,
-    MyProfile,
-    RegisterCustomer,
-    Announcement,
-    Roommate,
-    Questionnaire
-  } from "./pages";
+{
+  LandingPage,
+  Maintenance,
+  Payment,
+  Payments,
+  MyProfile,
+  RegisterCustomer,
+  Announcement,
+  Roommate,
+  Questionnaire,
+  Deadline
+} from "./pages";
 import Apply from "./pages/Application/Apply";
 
 
@@ -41,7 +42,8 @@ const App = observer(function App()
           <Route path="/Apply" element={<Apply />} />
           <Route path="/MyProfile" element={<MyProfile />} />
           <Route path="/RegisterCustomer" element={<RegisterCustomer />} />
-          <Route path="/Announcements" element={<Announcement />}></Route>
+          <Route path="/Announcements" element={<Announcement />} />
+          <Route path="/Deadline" element={<Deadline />} />
           <Route path="/Roommate" element={<Roommate />} />
           <Route path="/Questionnaire" element={<Questionnaire />} />
         </Routes>

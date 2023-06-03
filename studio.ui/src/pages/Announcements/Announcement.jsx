@@ -38,27 +38,15 @@ const Announcement = () =>
             console.log(error);
             toast.error(error.response.data);
         }
-        // const addAnnouncement = new FormData();
-        // addAnnouncement.append("title", announcement.title);
-        // addAnnouncement.append("description", announcement.description);
-        // addAnnouncement.append("deadlineId", announcement.deadlineId);
 
-        // agent.AddAnnouncement.create(addAnnouncement)
-        //     .then(() =>
-        //     {
-        //         toast.success("Shpallja u shtua me sukses!");
-        //     })
-        //     .catch(function (error)
-        //     {
-        //         toast.error(error.response.data);
-        //     });
     };
 
     return (
         <div>
-
+            <h2 className="title-hapja-konkursit">Hapja e Konkursit</h2>
             <div className="hapja-konkursit">
-                <h2 className="title-hapja-konkursit">Hapja e Konkursit</h2>
+
+                <Deadline className="deadline-konkursi" />
                 <form onSubmit={(e) => handleSubmit(e)} className="form-konkursi">
                     <TextField
                         label="Title"
