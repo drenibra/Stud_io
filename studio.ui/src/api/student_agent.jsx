@@ -1,5 +1,5 @@
-import axios from "axios";
-import { store } from "../stores/store";
+import axios from 'axios';
+import { store } from '../stores/store';
 
 const sleep = (delay) => {
   return new Promise((resolve) => {
@@ -8,10 +8,10 @@ const sleep = (delay) => {
 };
 
 const service1Axios = axios.create({
-  baseURL: "http://localhost:5274/api/v1",
-});
+    baseURL: "https://localhost:7120/api/v1",
+  });
 
-service1Axios.interceptors.request.use(
+axios.interceptors.request.use(
   (config) => {
     const token = store.commonStore.token;
     if (token) config.headers.Authorization = `Bearer ${token}`;
@@ -22,7 +22,7 @@ service1Axios.interceptors.request.use(
   }
 );
 
-service1Axios.interceptors.response.use(async (response) => {
+axios.interceptors.response.use(async (response) => {
   try {
     await sleep(400);
     return response;
@@ -42,12 +42,12 @@ const requests = {
 };
 
 const Account = {
-  current: () => requests.get("/account"),
-  student: () => requests.get("/account/student"),
-  login: (user) => requests.post("/Account/login", user),
-  register: (user) => requests.post("/Account/register", user),
-  currentId: () => requests.get("/account/currentId"),
-  roles: () => requests.get("/account/roles"),
+  current: () => requests.get('/account'),
+  student: () => requests.get('/account/student'),
+  login: (user) => requests.post('/Account/login', user),
+  register: (user) => requests.post('/Account/register', user),
+  currentId: () => requests.get('/account/currentId'),
+  roles: () => requests.get('/account/roles'),
 };
 
 const agent = {
