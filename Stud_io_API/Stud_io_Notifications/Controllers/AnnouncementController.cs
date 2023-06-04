@@ -1,52 +1,88 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Stud_io_Notifications.DTOs;
-using Stud_io_Notifications.Models;
+using Notifications.Models;
 using Stud_io_Notifications.Services.Interfaces;
 
-namespace Stud_io_Notifications.Controllers
+namespace Notifications.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class AnnouncementController : ControllerBase
     {
         private readonly IAnnouncementService _announcementService;
+        private readonly IDeadlineService _deadlineService;
 
-        public AnnouncementController(IAnnouncementService announcementService)
+        public AnnouncementController(IAnnouncementService announcementService, IDeadlineService deadlineService)
         {
             _announcementService = announcementService;
-        }
-
-        [HttpPost("add-announcement")]
-        public async Task<ActionResult> AddAnnouncement(AnnouncementDTO announcement)
-        {
-            return await _announcementService.AddAnnouncement(announcement);
+            _deadlineService = deadlineService;
         }
 
         [HttpGet("get-all-announcements")]
-        public async Task<ActionResult<List<AnnouncementDTO>>> GetAll(string? search)
-        {
-            return await _announcementService.GetAllAnnouncements(search);
-
-        }
+        public ActionResult<List<Announcement>> GetAnnouncements() => _announcementService.GetAnnouncements();
 
         [HttpGet("get-announcement-by-id /{id}")]
-        public async Task<ActionResult<AnnouncementDTO>> GetAnnouncementById(int id)
+        public ActionResult<Announcement> GetAnnouncement(string id)
         {
-            return await _announcementService.GetAnnouncementById(id);
+            var announcement = _announcementService.GetAnnouncement(id);
 
+            if (announcement == null)
+                return NotFound($"Announcement with Id = {id} not found");
+
+            // Retrieve the associated deadline
+            var deadline = _deadlineService.GetDeadline(announcement.DeadlineId);
+
+            if (deadline == null)
+                return NotFound($"Deadline associated with the announcement not found");
+
+            // Assign the retrieved deadline to the announcement
+            announcement.Deadline = deadline;
+
+            return announcement;
         }
 
-        [HttpPut("update-by-id/{id}")]
-        public async Task<ActionResult> UpdateAnnouncement(int id, UpdateAnnouncementDTO announcement)
+        [HttpPost("add-announcement")]
+        public IActionResult CreateAnnouncement([FromBody] Announcement announcement)
         {
-            return await _announcementService.UpdateAnnouncement(id, announcement);
+            var deadline = _deadlineService.GetDeadline(announcement.DeadlineId);
 
+            if (deadline == null)
+            {
+                return NotFound("Deadline not found");
+            }
+
+            // Assign the retrieved deadline to the announcement
+            announcement.Deadline = deadline;
+
+            // Create the announcement
+            var createdAnnouncement = _announcementService.CreateAnnouncement(announcement);
+
+            return CreatedAtAction(nameof(GetAnnouncements), new { id = createdAnnouncement.Id }, createdAnnouncement);
+        }
+
+        [HttpPut("update-announcement-by-id/{id}")]
+        public ActionResult PutAnnouncement(string id, [FromBody] Announcement announcement)
+        {
+            var existingAnnouncement = _announcementService.GetAnnouncement(id);
+
+            if (existingAnnouncement == null)
+                return NotFound($"Announcement with Id = {id} not found");
+
+            _announcementService.UpdateAnnouncement(id, announcement);
+
+            return NoContent();
         }
 
         [HttpDelete("delete-announcement/{id}")]
-        public async Task<ActionResult> DeleteAnnouncement(int id)
+        public ActionResult DeleteAnnouncement(string id)
         {
-            return await _announcementService.DeleteAnnouncement(id);
+            var existingAnnouncement = _announcementService.GetAnnouncement(id);
+
+            if (existingAnnouncement == null)
+                return NotFound($"Deadline with Id = {id} not found");
+
+            _announcementService.RemoveAnnouncement(existingAnnouncement.Id);
+
+            return Ok($"Announcement with Id = {id} deleted");
         }
     }
 }

@@ -1,14 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Notifications.Models;
 using Stud_io_Notifications.DTOs;
 
 namespace Stud_io_Notifications.Services.Interfaces
 {
     public interface IDeadlineService
     {
-        public Task<ActionResult<List<DeadlineDTO>>> GetAllDeadlines();
-        public Task<ActionResult<DeadlineDTO>> GetDeadlineById(int id);
-        public Task<ActionResult> AddDeadline(DeadlineDTO deadlineDto);
-        public Task<ActionResult> UpdateDeadline(int id, UpdateDeadlineDTO updateDeadlineDto);
-        public Task<ActionResult> DeleteDeadline(int id);
+        List<Deadline> GetDeadlines();
+        Deadline GetDeadline(string id);
+        Deadline CreateDeadline(Deadline deadline);
+        void UpdateDeadline(string id, Deadline deadline);
+        void RemoveDeadline(string id);
     }
 }

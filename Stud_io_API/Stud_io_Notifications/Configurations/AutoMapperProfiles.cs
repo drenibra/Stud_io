@@ -8,8 +8,6 @@ namespace Stud_io_Notifications.Configurations
     {
         public AutoMapperProfiles()
         {
-            CreateMap<Announcement, AnnouncementDTO>().ReverseMap();
-            CreateMap<Deadline, DeadlineDTO>().ReverseMap();
             CreateMap<Information, InformationDTO>().ReverseMap();
         }
     }

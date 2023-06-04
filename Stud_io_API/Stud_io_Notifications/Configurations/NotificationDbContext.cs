@@ -12,10 +12,6 @@ namespace Stud_io_Notifications.Configurations
 
         }
 
-        public DbSet<Announcement> Announcements { get; set; }
-        public DbSet<Deadline> Deadlines { get; set; }
         public DbSet<Information> Informations { get; set; }
-
-
     }
 }

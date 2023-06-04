@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Notifications.Models;
 using Stud_io_Notifications.DTOs;
 using Stud_io_Notifications.Services.Interfaces;
 
@@ -15,37 +16,53 @@ namespace Stud_io_Notifications.Controllers
             _deadlineService = deadlineService;
         }
 
-        [HttpPost("add-deadline")]
-        public async Task<ActionResult> AddDeadline(DeadlineDTO deadline)
-        {
-           return await _deadlineService.AddDeadline(deadline);
-        }
-
         [HttpGet("get-all-deadlines")]
-        public async Task<ActionResult<List<DeadlineDTO>>> GetAll()
-        {
-            return await _deadlineService.GetAllDeadlines();
-
-        }
+        public ActionResult<List<Deadline>> GetDeadlines() => _deadlineService.GetDeadlines();
 
         [HttpGet("get-deadline-by-id /{id}")]
-        public async Task<ActionResult<DeadlineDTO>> GetDeadlineById(int id)
+        public ActionResult<Deadline> GetDeadline(string id)
         {
-            return await _deadlineService.GetDeadlineById(id);
+            var deadline = _deadlineService.GetDeadline(id);
 
+            if (deadline == null)
+                return NotFound($"Deadline with Id = {id} not found");
+
+            return deadline;
         }
 
-        [HttpPut("update-deadline-by-id/{id}")]
-        public async Task<ActionResult> UpdateDeadline(int id, UpdateDeadlineDTO deadline)
+        [HttpPost("add-deadline")]
+        public ActionResult<Deadline> PostDeadline([FromBody] Deadline deadline)
         {
-            return await _deadlineService.UpdateDeadline(id, deadline);
+            _deadlineService.CreateDeadline(deadline);
 
+            return CreatedAtAction(nameof(GetDeadlines), new { id = deadline.Id }, deadline);
+        }
+
+
+        [HttpPut("update-deadline-by-id/{id}")]
+        public ActionResult PutDeadline(string id, [FromBody] Deadline deadline)
+        {
+            var existingDeadline = _deadlineService.GetDeadline(id);
+
+            if (existingDeadline == null)
+                return NotFound($"Deadline with Id = {id} not found");
+
+            _deadlineService.UpdateDeadline(id, deadline);
+
+            return NoContent();
         }
 
         [HttpDelete("delete-deadline/{id}")]
-        public async Task<ActionResult> DeleteDeadline(int id)
+        public ActionResult DeleteDeadline(string id)
         {
-            return await _deadlineService.DeleteDeadline(id);
+            var existingDeadline = _deadlineService.GetDeadline(id);
+
+            if (existingDeadline == null)
+                return NotFound($"Deadline with Id = {id} not found");
+
+            _deadlineService.RemoveDeadline(existingDeadline.Id);
+
+            return Ok($"Deadline with Id = {id} deleted");
         }
     }
 }
