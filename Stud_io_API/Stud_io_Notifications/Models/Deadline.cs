@@ -1,16 +1,21 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
-namespace Stud_io_Notifications.Models
+namespace Notifications.Models
 {
     public class Deadline
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string Id { get; set; } = String.Empty;
 
-        [DataType(DataType.Date)]
+        [BsonElement("name")]
+        public string Name { get; set; } = String.Empty;
+
+        [BsonElement("openDate")]
         public DateTime OpenDate { get; set; }
 
-        [DataType(DataType.Date)]
+        [BsonElement("closedDate")]
         public DateTime ClosedDate { get; set; }
     }
 }

@@ -62,14 +62,6 @@ const App = observer(function App() {
     <ThemeProvider theme={theme}>
       <ResponsiveAppBar />
       <Routes>
-        {/*         <Route
-          path="/myprofile"
-          element={
-            <ProtectedRoute loggedIn={userStore.isLoggedIn}>
-              <MyProfile />
-            </ProtectedRoute>
-          }
-        /> */}
         {routes.map((route) => (
           <Route
             path={route.path}

@@ -9,6 +9,11 @@ import reject from "../StudentProfile/img/reject.svg";
 import profilep from "../StudentProfile/img/profilep.svg";
 import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
 import Questionnaire from './Questionnaire';
+import CloseIcon from '@mui/icons-material/Close';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
 
 export default function Roommate() {
     const [open, setOpen] = useState(false);
@@ -73,7 +78,6 @@ export default function Roommate() {
           <Button
             variant="contained"
             color="primary"
-            small
             style={{ borderRadius: '30px', textTransform: 'none' }}
           >
             Kërko
@@ -113,20 +117,36 @@ export default function Roommate() {
           </div>
         </div>
       </div>
+      <ToastContainer />
       <Modal
-        open={open}
-        onClose={handleClose}
-        closeAfterTransition
-        BackdropComponent={Backdrop}
-        BackdropProps={{
-            timeout: 500,
-        }}
-        >
-        <Fade in={open}>
-            <div className="modalContent">
-            <Questionnaire handleClose={handleClose} />
-            </div>
-        </Fade>
+      open={open}
+      onClose={handleClose}
+      closeAfterTransition
+    >
+      <Fade in={open}>
+        <div className="modalContent">
+         <div className="modalHeader">
+          <IconButton
+            className="closeButton"
+            onClick={handleClose}
+            style={{
+              backgroundColor: "#f3f3f3",
+              color: "#999",
+              marginLeft: "1010px",
+              marginTop:"40px",
+              padding: "4px",
+              border: "none",
+              outline: "none",
+              cursor: "pointer",
+              borderRadius: "50%",
+            }}
+          >
+            <CloseIcon style={{ color: "#999" }} />
+          </IconButton>
+         </div>
+          <Questionnaire handleClose={handleClose} />
+        </div>
+      </Fade>
     </Modal>
 
     </div>

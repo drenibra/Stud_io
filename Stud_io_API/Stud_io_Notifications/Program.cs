@@ -1,5 +1,8 @@
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using MongoDB.Driver;
+using Notifications.Services.Implementations;
 using Stud_io_Notifications.Configurations;
 using Stud_io_Notifications.Services.Implementations;
 using Stud_io_Notifications.Services.Interfaces;
@@ -7,6 +10,18 @@ using Stud_io_Notifications.Services.Interfaces;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.Configure<NotificationsDatabaseSettings>(
+    builder.Configuration.GetSection(nameof(NotificationsDatabaseSettings)));
+
+builder.Services.AddSingleton<INotificationsDatabaseSettings>(sp =>
+    sp.GetRequiredService<IOptions<NotificationsDatabaseSettings>>().Value);
+
+builder.Services.AddSingleton<IMongoClient>(s =>
+    new MongoClient(builder.Configuration.GetValue<string>("NotificationsDatabaseSettings:ConnectionString")));
+
+builder.Services.AddScoped<IDeadlineService, DeadlineService>();
+builder.Services.AddScoped<IAnnouncementService, AnnouncementService>();
+
 
 builder.Services.AddControllers();
 
@@ -26,8 +41,6 @@ builder.Services.AddCors(opt => {
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<IAnnouncementService, AnnouncementService>();
-builder.Services.AddScoped<IDeadlineService, DeadlineService>();
 builder.Services.AddScoped<IInformationService, InformationService>();
 
 var app = builder.Build();

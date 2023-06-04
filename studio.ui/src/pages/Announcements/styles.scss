@@ -1,11 +1,17 @@
 .form-konkursi {
     display: flex;
     flex-direction: column;
-    margin-left: 480px;
     width: 30vw;
-    margin-top: 20px;
+    margin-right: 120px;
 }
 
 .title-hapja-konkursit {
-    margin-top: 20px;
+    margin-top: 40px;
+}
+
+.hapja-konkursit {
+    display: flex;
+    flex-direction: row;
+    margin-top: 50px;
+    margin-left: 70px;
 }

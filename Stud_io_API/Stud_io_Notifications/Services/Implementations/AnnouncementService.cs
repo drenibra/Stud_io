@@ -1,82 +1,54 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using MongoDB.Driver;
+using Notifications.Models;
 using Stud_io_Notifications.Configurations;
-using Stud_io_Notifications.DTOs;
-using Stud_io_Notifications.Models;
 using Stud_io_Notifications.Services.Interfaces;
 
-namespace Stud_io_Notifications.Services.Implementations
+namespace Notifications.Services.Implementations
 {
     public class AnnouncementService : IAnnouncementService
     {
-        private readonly NotificationDbContext _context;
-        private readonly IMapper _mapper;
+        private readonly IMongoCollection<Announcement> _announcement;
+        private readonly IMongoCollection<Deadline> _deadline;
 
-        public AnnouncementService(NotificationDbContext context, IMapper mapper)
+        public AnnouncementService(INotificationsDatabaseSettings settings, IMongoClient mongoClient)
         {
-            _context = context;
-            _mapper = mapper;
+            var database = mongoClient.GetDatabase(settings.DatabaseName);
+            _announcement = database.GetCollection<Announcement>(settings.AnnouncementsCollectionName);
+            _deadline = database.GetCollection<Deadline>(settings.DeadlinesCollectionName);
         }
 
-        public async Task<ActionResult> AddAnnouncement(AnnouncementDTO announcementDto)
+        public Announcement CreateAnnouncement(Announcement announcement)
         {
-            if(announcementDto == null)
-            {
-                return new BadRequestObjectResult("Announcement can not be null");
-            }
-            var mappedAnnouncement = _mapper.Map<Announcement>(announcementDto);
-            await _context.Announcements.AddAsync(mappedAnnouncement);
-            await _context.SaveChangesAsync();
-            return new OkObjectResult("Announcement added successfully");
+            _announcement.InsertOne(announcement);
+            return announcement;
         }
 
-        public async Task<ActionResult> DeleteAnnouncement(int id)
+        public List<Announcement> GetAnnouncements()
         {
-            var announcement = await _context.Announcements.FindAsync(id);
-            if(announcement == null)
+            var announcements = _announcement.Find(announcement => true).ToList();
+
+            foreach (var announcement in announcements)
             {
-                return new NotFoundObjectResult("Announcement doesn't exist");
-            }
-            _context.Announcements.Remove(announcement);
-            await _context.SaveChangesAsync();
-            return new OkObjectResult("Announcement deleted successfully");
-        }
-
-        public async Task<ActionResult<List<AnnouncementDTO>>> GetAllAnnouncements(string? searchString) {
-
-            var allAnnouncements = _mapper.Map<List<AnnouncementDTO>>(await _context.Announcements.OrderBy(x => x.DeadlineId).ToListAsync());
-
-            if(!string.IsNullOrEmpty(searchString))
-            {
-                allAnnouncements = allAnnouncements.Where(n => n.Title.Contains(searchString, StringComparison.CurrentCultureIgnoreCase)).ToList();
+                var deadline = _deadline.Find(d => d.Id == announcement.DeadlineId).FirstOrDefault();
+                announcement.Deadline = deadline;
             }
 
-            return allAnnouncements;
-        }
-        public async Task<ActionResult<AnnouncementDTO>> GetAnnouncementById(int id)
-        {
-            var mappedAnnouncement = _mapper.Map<AnnouncementDTO>(await _context.Announcements.FindAsync(id));
-            return mappedAnnouncement == null
-                ? new NotFoundObjectResult("Announcement doesn't exist")
-                : new OkObjectResult(mappedAnnouncement);
+            return announcements;
         }
 
-        public async Task<ActionResult> UpdateAnnouncement(int id, UpdateAnnouncementDTO updateAnnouncementDTO)
+        public Announcement GetAnnouncement(string id)
         {
-            if (updateAnnouncementDTO == null)
-                return new BadRequestObjectResult("Announcement can't be null");
+            return _announcement.Find(announcement => announcement.Id == id).FirstOrDefault();
+        }
 
-            var announcement = await _context.Announcements.FindAsync(id);
-            if (announcement == null)
-                return new NotFoundObjectResult("Announcement doesn't exist");
+        public void RemoveAnnouncement(string id)
+        {
+            _announcement.DeleteOne(announcement => announcement.Id == id);
+        }
 
-            announcement.Title = updateAnnouncementDTO.Title ?? announcement.Title;
-            announcement.Description = updateAnnouncementDTO.Description ?? announcement.Description;
-            announcement.DeadlineId = updateAnnouncementDTO.DeadlineId ?? announcement.DeadlineId;
-            await _context.SaveChangesAsync();
-
-            return new OkObjectResult("Announcement updated successfully");
+        public void UpdateAnnouncement(string id, Announcement announcement)
+        {
+            _announcement.ReplaceOne(announcement => announcement.Id == id, announcement);
         }
     }
 }
