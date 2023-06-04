@@ -2,8 +2,6 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -135,11 +133,11 @@ const LoginForm = observer(function LoginForm(props) {
               </Grid>
               <Grid item>
                 <Link
-                  href="#"
                   id="signUpLink"
                   style={{ color: "#BF1A2F" }}
                   variant="body2"
-                  onClick={() => props.setPage("register")}
+                  to="/register"
+                  href="register"
                 >
                   {"Don't have an account? Sign Up"}
                 </Link>
