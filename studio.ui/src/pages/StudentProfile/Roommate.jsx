@@ -73,7 +73,6 @@ export default function Roommate() {
           <Button
             variant="contained"
             color="primary"
-            small
             style={{ borderRadius: '30px', textTransform: 'none' }}
           >
             Kërko
@@ -117,10 +116,7 @@ export default function Roommate() {
         open={open}
         onClose={handleClose}
         closeAfterTransition
-        BackdropComponent={Backdrop}
-        BackdropProps={{
-            timeout: 500,
-        }}
+        
         >
         <Fade in={open}>
             <div className="modalContent">

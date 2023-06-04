@@ -19,7 +19,7 @@ export default function Questionnaire() {
       ...prevResponses,
       [question]: value,
     }));
-  };
+  };  
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -208,13 +208,14 @@ export default function Questionnaire() {
 
         <div style={{ display: 'flex', justifyContent: 'center' }}>
         <Button
-            variant="contained"
-            color="primary"
-            small
-            style={{ borderRadius: '30px', textTransform: 'none' }}
-        >
-            Submit
-        </Button>
+        type="submit"
+        variant="contained"
+        color="primary"
+        style={{ borderRadius: '30px', textTransform: 'none' }}
+      >
+        Submit
+      </Button>
+
         </div>
       </form>
     </>

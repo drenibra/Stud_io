@@ -17,7 +17,7 @@ builder.Services.AddDbContext<DormitoryDbContext>(options =>
 
 builder.Services.AddCors(opt => {
     opt.AddPolicy("CorsPolicy", policy => {
-        policy.AllowAnyMethod().AllowCredentials().AllowAnyHeader().WithOrigins("http://localhost:3000");
+        policy.AllowAnyMethod().AllowCredentials().AllowAnyHeader().WithOrigins("http://127.0.0.1:5173");
     });
 });
 
