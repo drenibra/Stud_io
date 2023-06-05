@@ -13,7 +13,6 @@ namespace Stud_io.StudyGroups.Models
         public List<PostLike>? Likes { get; set; }
         [ForeignKey("Author")]
         public string AuthorId { get; set; }
-        public Student Author { get; set; }
         [ForeignKey("StudyGroup")]
         public int StudyGroupId { get; set; }
         public StudyGroup StudyGroup { get; set; }

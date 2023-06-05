@@ -10,6 +10,5 @@ namespace Stud_io.StudyGroups.Models
         public StudyGroup StudyGroup { get; set; }
         public bool RequireApproval { get; set; }
         public string AdminId { get; set; }
-        public Student Admin { get; set; }
     }
 }

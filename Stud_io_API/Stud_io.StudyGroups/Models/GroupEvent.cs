@@ -8,7 +8,7 @@
         public string Location { get; set; }
         public DateTime DateTime { get; set; }
         public int Duration { get; set; }
-        public List<Student>? Attendees { get; set; }
+        public List<GroupEventStudents> Attendees { get; set; }
         public int Capacity { get; set; }
     }
 }
