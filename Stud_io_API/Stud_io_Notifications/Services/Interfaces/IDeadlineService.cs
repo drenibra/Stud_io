@@ -1,5 +1,4 @@
 ﻿using Notifications.Models;
-using Stud_io_Notifications.DTOs;
 
 namespace Stud_io_Notifications.Services.Interfaces
 {

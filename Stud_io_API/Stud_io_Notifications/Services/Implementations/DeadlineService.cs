@@ -1,9 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using MongoDB.Driver;
+﻿using MongoDB.Driver;
 using Notifications.Models;
 using Stud_io_Notifications.Configurations;
-using Stud_io_Notifications.DTOs;
 using Stud_io_Notifications.Services.Interfaces;
 
 namespace Stud_io_Notifications.Services.Implementations
