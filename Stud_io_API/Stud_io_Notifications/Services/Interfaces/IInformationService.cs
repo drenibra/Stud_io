@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿/*using Microsoft.AspNetCore.Mvc;
 using Stud_io_Notifications.DTOs;
 using Stud_io_Notifications.Models;
 
@@ -13,3 +13,4 @@ namespace Stud_io_Notifications.Services.Interfaces
         public Task<ActionResult> DeleteInformation(int id);
     }
 }
+*/

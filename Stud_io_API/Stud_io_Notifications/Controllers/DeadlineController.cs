@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Notifications.Models;
-using Stud_io_Notifications.DTOs;
 using Stud_io_Notifications.Services.Interfaces;
 
 namespace Stud_io_Notifications.Controllers
