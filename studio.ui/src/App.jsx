@@ -8,6 +8,7 @@ import theme from "./styles/theme";
 import { Routes, Route } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 import { useStore } from "./stores/store";
+<<<<<<< HEAD
 import LoginForm from "./pages/Authentication/Loginform";
 import Apply from "./pages/Application/Apply";
 import RegisterForm from "./pages/Authentication/RegisterForm";
@@ -35,6 +36,25 @@ const routes = [
   { path: "/roomate", element: Roommate },
   { path: "/questionnaire", element: Questionnaire },
 ];
+=======
+import LoginForm from "./pages/Login/LoginForm";
+
+import {
+  LandingPage,
+  Maintenance,
+  Payment,
+  Payments,
+  MyProfile,
+  RegisterCustomer,
+  Announcement,
+  Roommate,
+  Questionnaire,
+  Apply,
+} from "./pages";
+
+const App = observer(function App() {
+  const { userStore } = useStore();
+>>>>>>> maintenance
 
 const App = observer(function App() {
   const { commonStore, userStore } = useStore();
@@ -61,6 +81,7 @@ const App = observer(function App() {
   return (
     <ThemeProvider theme={theme}>
       <ResponsiveAppBar />
+<<<<<<< HEAD
       <Routes>
         {routes.map((route) => (
           <Route
@@ -78,6 +99,22 @@ const App = observer(function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="*" element={<LandingPage />} />
       </Routes>
+=======
+      <div className="main-container">
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/Mirembajtja" element={<Maintenance />} />
+          <Route path="/Pagesa" element={<Payment />} />
+          <Route path="/Pagesat" element={<Payments />} />
+          <Route path="/apliko" element={<Apply />} />
+          <Route path="/MyProfile" element={<MyProfile />} />
+          <Route path="/RegisterCustomer" element={<RegisterCustomer />} />
+          <Route path="/Announcements" element={<Announcement />}></Route>
+          <Route path="/Roommate" element={<Roommate />} />
+          <Route path="/Questionnaire" element={<Questionnaire />} />
+        </Routes>
+      </div>
+>>>>>>> maintenance
       <Footer />
     </ThemeProvider>
   );

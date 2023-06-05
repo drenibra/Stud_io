@@ -1,7 +1,6 @@
 import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
@@ -36,7 +35,7 @@ const pages = [
   },
   {
     name: "Apliko",
-    path: "/Apply",
+    path: "/apliko",
   },
   {
     name: "Pagesat",
@@ -108,7 +107,7 @@ const ResponsiveAppBar = observer(function ResponsiveAppBar() {
                 </IconButton>
               </Tooltip>
               <Menu
-                className="menu"
+                class="menu"
                 sx={{ mt: "45px" }}
                 id="menu-appbar"
                 anchorEl={anchorElUser}

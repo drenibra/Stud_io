@@ -23,18 +23,21 @@ namespace Stud_io.Authentication.Controllers
             _contract = contract;
             _userManager = userManager;
         }
+
         [HttpGet]
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult<IEnumerable<UserDto>>> GetUsers()
         {
             return Ok(await _contract.GetUsers());
         }
+
         [HttpGet("{id}")]
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult<AppUser>> GetUserById(string id)
         {
             return Ok(await _contract.GetUserById(id));
         }
+
         [HttpPut]
         [Authorize(Roles = "Admin,Student")]
         public async Task<ActionResult<Student>> UpdateStudent(Student student)
@@ -67,6 +70,7 @@ namespace Stud_io.Authentication.Controllers
 
             return Ok("Student successfuly updated");
         }
+        
         [HttpDelete("{id}")]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteUser(string id)

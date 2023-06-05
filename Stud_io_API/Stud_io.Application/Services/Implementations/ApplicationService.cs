@@ -6,7 +6,11 @@ using Microsoft.EntityFrameworkCore;
 using Stud_io.Application.Configurations;
 using Stud_io.Application.DTOs;
 using Stud_io.Application.Models;
+using Stud_io.Application.Models.ServiceCommunication.Authentication;
 using Stud_io.Application.Services.Interfaces;
+using System;
+using System.Net.Http.Headers;
+using System.Text.Json;
 
 namespace Stud_io.Application.Services.Implementations
 {
@@ -15,23 +19,60 @@ namespace Stud_io.Application.Services.Implementations
         private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
         private readonly IConfiguration _configuration;
+        private readonly IMailKitEmailService _mailService;
+        private readonly IHttpClientFactory _httpClientFactory;
 
-        public ApplicationService(ApplicationDbContext context, IMapper mapper, IConfiguration configuration)
+        public ApplicationService(ApplicationDbContext context, IMapper mapper, IConfiguration configuration, IMailKitEmailService mailService, IHttpClientFactory httpClientFactory)
         {
             _context = context;
             _mapper = mapper;
             _configuration = configuration;
+            _mailService = mailService;
+            _httpClientFactory = httpClientFactory;
         }
 
         public async Task<ActionResult<List<ApplicationDto>>> GetApplications() =>
             _mapper.Map<List<ApplicationDto>>(await _context.Applications.ToListAsync());
 
-        public async Task<ActionResult<ApplicationDto>> GetApplicationById(int id)
+        public async Task<ActionResult<ApplicationDetailsDto>> GetApplicationById(int id)
         {
-            var mappedApplication = _mapper.Map<ApplicationDto>(await _context.Applications.FindAsync(id));
-            return mappedApplication == null
-                ? new NotFoundObjectResult("Application doesn't exist!!")
-                : new OkObjectResult(mappedApplication);
+
+            var application = await _context.Applications.FindAsync(id);
+            if (application == null)
+            {
+                return new NotFoundObjectResult("Application doesn't exist!!");
+            }
+
+            var applicationDto = new ApplicationDetailsDto()
+            {
+                SpecialCategoryReason = application.SpecialCategoryReason,
+                IsSpecialCategory = application.isSpecialCategory,
+                PersonalNo = application.PersonalNo,
+                DocumentUrl = application.FileUrl,
+                StudentId = application.StudentsId
+            };
+
+            var httpClient = _httpClientFactory.CreateClient();
+
+            var authentication = new AuthenticationHeaderValue("Bearer", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJkZTI4ODI4My1lZTI5LTRiNzMtYjk1Ny1iZjIwNmNmMWE0YjQiLCJ1bmlxdWVfbmFtZSI6InJyZXppIiwiZW1haWwiOiJyaDUyNzQxQHVidC11bmkubmV0Iiwicm9sZSI6IkFkbWluIiwibmJmIjoxNjg1ODI4Njc0LCJleHAiOjE2ODY0MzM0NzQsImlhdCI6MTY4NTgyODY3NH0.45JHMBXwjfQcxAuWr1BYCZLogzmgFB2oVFdi6ThArKY");
+            httpClient.DefaultRequestHeaders.Authorization = authentication;
+
+            var uri = "http://localhost:5274/api/v1/User/4906282a-5fbc-458b-ab41-eb49ff732084";
+
+            var response = await httpClient.GetAsync(uri);
+            var responseAsString = await response.Content.ReadAsStringAsync();
+
+            var studentApi = JsonSerializer.Deserialize<StudentByIdDto>(responseAsString);
+
+            var studentDto = new StudentDetailsDto()
+            {
+                FirstName = studentApi.value.firstName,
+                LastName = studentApi.value.lastName
+            };
+
+            applicationDto.StudentDetails = studentDto;
+
+            return new OkObjectResult(applicationDto);
         }
 
         // check if the student has already applied
@@ -84,8 +125,11 @@ namespace Stud_io.Application.Services.Implementations
                 isSpecialCategory = applicationDto.IsSpecialCategory,
                 SpecialCategoryReason = applicationDto.SpecialCategoryReason,
                 StudentId = applicationDto.StudentId,
+                StudentsId = "4906282a-5fbc-458b-ab41-eb49ff732084",
                 FileUrl = imageUrl,
             };
+
+            //_mailService.SendEmail("rrezart.hetemi@outlook.com", "Email nga Studio - Qendra Studentore", "", "studio.qendrastudentore@gmail.com");
 
             await _context.Applications.AddAsync(application);
             await _context.SaveChangesAsync();

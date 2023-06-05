@@ -18,4 +18,14 @@
         public int? StudentId { get; set; }
         public int? FileId { get; set; }
     }
+
+    public class ApplicationDetailsDto
+    {
+        public bool IsSpecialCategory { get; set; }
+        public string? SpecialCategoryReason { get; set; }
+        public string PersonalNo { get; set; } = null!;
+        public string? DocumentUrl { get; set; }
+        public string StudentId { get; set; } = null!;
+        public StudentDetailsDto StudentDetails { get; set; } = null!;
+    }
 }
