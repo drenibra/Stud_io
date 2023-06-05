@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Hosting;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Stud_io.StudyGroups.Models
 {
@@ -10,6 +11,7 @@ namespace Stud_io.StudyGroups.Models
         public int LikesAmount { get; set; }
         public List<CommentLikes> CommentLikes { get; set; }
         public string AuthorId { get; set; }
+        [ForeignKey("PostId")]
         public int PostId { get; set; }
         public Post Post { get; set; }
     }

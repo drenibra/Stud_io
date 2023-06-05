@@ -7,12 +7,12 @@ namespace Stud_io.StudyGroups.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public string Description { get; set; }
+
         public List<Post>? Posts { get; set; }
         public List<Resource>? Resources { get; set; }
-        public int GroupSettingsId { get; set; }
         public GroupSettings GroupSettings { get; set; }
         public List<GroupEvent>? GroupEvents { get; set; }
-        public int MajorId { get; set; }
         public Major Major { get; set; }
         public List<StudyGroupMember> Members { get; set; }
     }

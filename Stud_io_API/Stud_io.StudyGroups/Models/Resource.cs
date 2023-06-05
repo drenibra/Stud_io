@@ -9,6 +9,7 @@ namespace Stud_io.StudyGroups.Models
         public string FileType { get; set; }
         public string FileUrl { get; set; }
         public string AuthorId { get; set; }
+        [ForeignKey("StudyGroupId")]
         public int StudyGroupId { get; set; }
         public StudyGroup StudyGroup { get; set; }
     }

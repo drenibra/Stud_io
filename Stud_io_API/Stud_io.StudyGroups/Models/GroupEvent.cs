@@ -1,4 +1,6 @@
-﻿namespace Stud_io.StudyGroups.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Stud_io.StudyGroups.Models
 {
     public class GroupEvent
     {
@@ -6,9 +8,13 @@
         public string Title { get; set; }
         public string Description { get; set; }
         public string Location { get; set; }
+        public int Capacity { get; set; }
         public DateTime DateTime { get; set; }
         public int Duration { get; set; }
         public List<GroupEventStudents> Attendees { get; set; }
-        public int Capacity { get; set; }
+
+        [ForeignKey("StudyGroupId")]
+        public int StudyGroupId { get; set; }
+        public StudyGroup StudyGroup { get; set; }
     }
 }
