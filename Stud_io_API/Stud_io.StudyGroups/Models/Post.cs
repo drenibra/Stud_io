@@ -17,4 +17,5 @@ namespace Stud_io.StudyGroups.Models
         public int StudyGroupId { get; set; }
         public StudyGroup StudyGroup { get; set; }
     }
+
 }

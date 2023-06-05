@@ -7,6 +7,8 @@ using Stud_io.StudyGroups.Controllers;
 using Stud_io.StudyGroups.Interfaces;
 using Stud_io.StudyGroups.Models;
 using Stud_io.StudyGroups.Services;
+using Stud_io.StudyGroups.Services.Implementation;
+using Stud_io.StudyGroups.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -49,6 +51,11 @@ builder.Services.AddControllersWithViews()
 //builder.Services.AddScoped<IUserService, UserService>();
 //builder.Services.AddScoped<AccountController>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.AddScoped<IPostService, PostService>();
+builder.Services.AddScoped<IStudyGroupService, StudyGroupService>();
+builder.Services.AddScoped<IFacultyService, FacultyService>();
+builder.Services.AddScoped<IMajorService, MajorService>();
+
 
 
 var app = builder.Build();
