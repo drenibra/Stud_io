@@ -21,15 +21,9 @@ builder.Services.AddSingleton<IMongoClient>(s =>
 
 builder.Services.AddScoped<IDeadlineService, DeadlineService>();
 builder.Services.AddScoped<IAnnouncementService, AnnouncementService>();
-
+builder.Services.AddScoped<IInformationService, InformationService>();
 
 builder.Services.AddControllers();
-
-builder.Services.AddDbContext<NotificationDbContext>(options =>
-{
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString"));
-});
-
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
 builder.Services.AddCors(opt => {
