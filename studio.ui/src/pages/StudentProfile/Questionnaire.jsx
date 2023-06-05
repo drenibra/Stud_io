@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './questionnaire.scss';
 import axios from 'axios';
 import Button from "@mui/material/Button";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-
-export default function Questionnaire() {
+export default function Questionnaire({handleClose})  {
   const [responses, setResponses] = useState({
     shareBelongings: null,
     sleepingHabits: null,
@@ -25,13 +26,15 @@ export default function Questionnaire() {
     event.preventDefault();
     try {
       const response = await axios.post('https://localhost:7023/AddQuestionnaire', responses);
-      console.log(response.data);      
-      alert('Questionnaire submitted successfully!');
+      console.log(response.data);
+      toast.success('Pyetësori u ruajt me sukses!');
+      handleClose();
     } catch (error) {
       console.error(error);
-      alert('An error occurred while submitting the questionnaire. Please try again later.');
+      toast.error('Pyetësori nuk u ruajt!');
     }
   };
+
   
 
   return (
@@ -211,11 +214,9 @@ export default function Questionnaire() {
         type="submit"
         variant="contained"
         color="primary"
-        style={{ borderRadius: '30px', textTransform: 'none' }}
-      >
+        style={{ borderRadius: '30px', textTransform: 'none' }} >
         Submit
-      </Button>
-
+        </Button>
         </div>
       </form>
     </>
