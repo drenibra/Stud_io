@@ -35,8 +35,6 @@ builder.Services.AddCors(opt => {
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-//builder.Services.AddScoped<IInformationService, InformationService>();
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

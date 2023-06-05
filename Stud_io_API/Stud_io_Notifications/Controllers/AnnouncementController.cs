@@ -20,7 +20,7 @@ namespace Notifications.Controllers
         [HttpGet("get-all-announcements")]
         public ActionResult<List<Announcement>> GetAnnouncements() => _announcementService.GetAnnouncements();
 
-        [HttpGet("get-announcement-by-id /{id}")]
+        /*[HttpGet("get-announcement-by-id /{id}")]
         public ActionResult<Announcement> GetAnnouncement(string id)
         {
             var announcement = _announcementService.GetAnnouncement(id);
@@ -38,9 +38,9 @@ namespace Notifications.Controllers
             announcement.Deadline = deadline;
 
             return announcement;
-        }
+        }*/
 
-        [HttpPost("add-announcement")]
+        /*[HttpPost("add-announcement")]
         public IActionResult CreateAnnouncement([FromBody] Announcement announcement)
         {
             var deadline = _deadlineService.GetDeadline(announcement.DeadlineId);
@@ -57,7 +57,7 @@ namespace Notifications.Controllers
             var createdAnnouncement = _announcementService.CreateAnnouncement(announcement);
 
             return CreatedAtAction(nameof(GetAnnouncements), new { id = createdAnnouncement.Id }, createdAnnouncement);
-        }
+        }*/
 
         [HttpPut("update-announcement-by-id/{id}")]
         public ActionResult PutAnnouncement(string id, [FromBody] Announcement announcement)
