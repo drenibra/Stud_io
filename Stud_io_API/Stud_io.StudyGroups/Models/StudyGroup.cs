@@ -14,5 +14,6 @@ namespace Stud_io.StudyGroups.Models
         public List<GroupEvent>? GroupEvents { get; set; }
         public int FacultyId { get; set; }
         public Faculty Faculty { get; set; }
+        public Major Major { get; set; }
     }
 }

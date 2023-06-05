@@ -8,10 +8,7 @@ namespace Stud_io.StudyGroups.Models
         [ForeignKey("StudyGroup")]
         public int StudyGroupId { get; set; }
         public StudyGroup StudyGroup { get; set; }
-        public Boolean RequireApproval { get; set; }
-        public Boolean CanInviteMembers { get; set; }
-        public int AccessControlId { get; set; }
-        public GroupAccessControl AccessControl { get; set; }
+        public bool RequireApproval { get; set; }
         public string AdminId { get; set; }
         public Student Admin { get; set; }
     }
