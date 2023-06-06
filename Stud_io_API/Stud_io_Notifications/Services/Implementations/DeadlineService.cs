@@ -11,6 +11,7 @@ namespace Stud_io_Notifications.Services.Implementations
     {
         private readonly IMongoCollection<Deadline> _deadline;
         private readonly IMapper _mapper;
+
         public DeadlineService(INotificationsDatabaseSettings settings, IMongoClient mongoClient, IMapper mapper)
         {
             var database = mongoClient.GetDatabase(settings.DatabaseName);
@@ -28,25 +29,27 @@ namespace Stud_io_Notifications.Services.Implementations
             return _mapper.Map<DeadlineDto>(_deadline.Find(deadline => deadline.Id == id).FirstOrDefault());
         }
 
-        public Deadline CreateDeadline(DeadlineDto deadline)
+        public DeadlineDto CreateDeadline(DeadlineDto deadline)
         {
             var mappedDeadline = _mapper.Map<Deadline>(deadline);
 
             _deadline.InsertOne(mappedDeadline);
-            return mappedDeadline;
+            return deadline;
         }
 
         public void UpdateDeadline(string id, UpdateDeadlineDto updateDeadlineDto)
         {
             var filter = Builders<Deadline>.Filter.Eq(d => d.Id, id);
+
+            var existingDeadline = _deadline.Find(filter).FirstOrDefault();
+
             var update = Builders<Deadline>.Update
-                .Set(d => d.Name, updateDeadlineDto.Name)
-                .Set(d => d.OpenDate, updateDeadlineDto.OpenDate)
-                .Set(d => d.ClosedDate, updateDeadlineDto.ClosedDate);
+                .Set(d => d.Name, updateDeadlineDto.Name ?? existingDeadline.Name)
+                .Set(d => d.OpenDate, updateDeadlineDto.OpenDate ?? existingDeadline.OpenDate)
+                .Set(d => d.ClosedDate, updateDeadlineDto.ClosedDate ?? existingDeadline.ClosedDate);
 
             _deadline.UpdateOne(filter, update);
         }
-
 
         public void RemoveDeadline(string id)
         {

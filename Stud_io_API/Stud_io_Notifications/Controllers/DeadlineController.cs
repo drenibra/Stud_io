@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Notifications.Models;
 using Stud_io_Notifications.DTOs;
 using Stud_io_Notifications.Services.Interfaces;
 
@@ -31,7 +30,7 @@ namespace Stud_io_Notifications.Controllers
         }
 
         [HttpPost("add-deadline")]
-        public ActionResult<DeadlineDto> PostDeadline([FromBody] DeadlineDto deadline)
+        public ActionResult<DeadlineDto> PostDeadline(DeadlineDto deadline)
         {
             if(deadline == null)
                 return BadRequest("Deadline can't be null!");
@@ -43,7 +42,7 @@ namespace Stud_io_Notifications.Controllers
 
 
         [HttpPut("update-deadline-by-id/{id}")]
-        public ActionResult PutDeadline(string id, [FromBody] UpdateDeadlineDto deadline)
+        public ActionResult PutDeadline(string id, UpdateDeadlineDto deadline)
         {
             var existingDeadline = _deadlineService.GetDeadline(id);
 

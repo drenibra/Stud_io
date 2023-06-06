@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Notifications.Models;
-using Stud_io_Notifications.DTOs;
+﻿using Stud_io_Notifications.DTOs;
 
 namespace Stud_io_Notifications.Services.Interfaces
 {
@@ -8,7 +6,7 @@ namespace Stud_io_Notifications.Services.Interfaces
     {
         List<DeadlineDto> GetDeadlines();
         DeadlineDto GetDeadline(string id);
-        Deadline CreateDeadline(DeadlineDto deadline);
+        DeadlineDto CreateDeadline(DeadlineDto deadline);
         void UpdateDeadline(string id, UpdateDeadlineDto updateDeadlineDto);
         void RemoveDeadline(string id);
     }
