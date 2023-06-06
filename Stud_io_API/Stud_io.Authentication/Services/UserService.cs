@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Stud_io.Authentication.DTOs.ServiceCommunication;
 using Stud_io.Authentication.Interfaces;
+using Stud_io.Configuration;
 using Stud_io.Controllers;
 using Stud_io.DTOs;
 using Stud_io.Models;
@@ -13,10 +15,12 @@ namespace Stud_io.Authentication.Services
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly IMapper _mapper;
-        public UserService(UserManager<AppUser> userManager, IMapper mapper)
+        private readonly ApplicationDbContext _context;
+        public UserService(UserManager<AppUser> userManager, IMapper mapper, ApplicationDbContext context)
         {
             _userManager = userManager;
             _mapper = mapper;
+            _context = context;
         }
         public async Task<ActionResult<IEnumerable<UserDto>>> GetUsers()
         {
@@ -68,6 +72,22 @@ namespace Stud_io.Authentication.Services
                 .FirstOrDefaultAsync(user => user.Id.Equals(id));
 
             return student;
+        }
+
+        //gets all students from a certain study group that is on the study group microservice
+        public async Task<ActionResult<List<StudyGroupStudentDto>>> GetStudyGroupStudents(int id)
+        {
+            var studyGroupStudents = await _context.StudyGroupStudents
+                                                    .Include(x => x.Student)
+                                                    .Where(x => x.StudyGroupId == id)
+                                                    .Select(x => new StudyGroupStudentDto
+                                                    {
+                                                        Id = x.StudentId,
+                                                        FirstName = x.Student.FirstName,
+                                                        LastName = x.Student.LastName,
+                                                    }).ToListAsync();
+
+            return new OkObjectResult(studyGroupStudents);
         }
     }
 }

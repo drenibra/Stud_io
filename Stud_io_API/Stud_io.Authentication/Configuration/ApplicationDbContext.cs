@@ -1,15 +1,16 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Stud_io.Models;
+using Stud_io.StudyGroups.Models;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace Stud_io.Configuration
 {
     public class ApplicationDbContext : IdentityDbContext<AppUser>
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) 
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
-                
+
         }
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -20,5 +21,8 @@ namespace Stud_io.Configuration
                 .HasValue<AppUser>("AppUser")
                 .HasValue<Student>("Student");
         }
+
+        public DbSet<Student> Students { get; set; }
+        public DbSet<StudyGroupStudent> StudyGroupStudents { get; set; }
     }
 }

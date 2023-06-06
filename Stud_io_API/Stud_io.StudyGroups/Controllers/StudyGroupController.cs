@@ -16,6 +16,12 @@ namespace Stud_io.StudyGroups.Controllers
             _studyGroupService = studyGroupService;
         }
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult<StudyGroupDto>> GetStudyGroupById(int id)
+        {
+            return await _studyGroupService.GetStudyGroupById(id);
+        }
+
         [HttpPost]
         public async Task<ActionResult> CreateStudyGroup(CreateStudyGroupDto dto)
         {

@@ -17,6 +17,6 @@ namespace Stud_io.StudyGroups.Models
         [ForeignKey("MajorId")]
         public int MajorId { get; set; }
         public Major Major { get; set; }
-        public List<StudyGroupMember> Members { get; set; }
+        public List<StudyGroupStudent> Members { get; set; }
     }
 }

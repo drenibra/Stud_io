@@ -56,6 +56,8 @@ builder.Services.AddScoped<IStudyGroupService, StudyGroupService>();
 builder.Services.AddScoped<IFacultyService, FacultyService>();
 builder.Services.AddScoped<IMajorService, MajorService>();
 
+// Register IHttpClientFactory
+builder.Services.AddHttpClient();
 
 
 var app = builder.Build();

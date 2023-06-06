@@ -6,8 +6,11 @@ using Stud_io.Configuration;
 using Stud_io.StudyGroups.DTOs;
 using Stud_io.StudyGroups.DTOs.ServiceCommunication;
 using Stud_io.StudyGroups.Models;
+using Stud_io.StudyGroups.Models.ServiceCommunication.Authentication;
 using Stud_io.StudyGroups.Services.Interfaces;
+using System.Net.Http.Headers;
 using System.Text;
+using System.Text.Json;
 
 namespace Stud_io.StudyGroups.Services.Implementation
 {
@@ -15,11 +18,13 @@ namespace Stud_io.StudyGroups.Services.Implementation
     {
         private readonly ApplicationDbContext _context;
         private readonly IConfiguration _configuration;
+        private readonly IHttpClientFactory _httpClientFactory;
 
-        public StudyGroupService(ApplicationDbContext context, IConfiguration configuration)
+        public StudyGroupService(ApplicationDbContext context, IConfiguration configuration, IHttpClientFactory httpClientFactory)
         {
             _context = context;
             _configuration = configuration;
+            _httpClientFactory = httpClientFactory;
         }
 
         private async Task<string> UploadFile(IFormFile file)
@@ -49,7 +54,20 @@ namespace Stud_io.StudyGroups.Services.Implementation
             return fileUrl;
         }
 
-        public async Task<ActionResult<List<StudyGroupDto>>> GetStudyGroupById(int id)
+        private async Task<string> CommunicateWithUser(string uri)
+        {
+            var httpClient = _httpClientFactory.CreateClient();
+
+            var authentication = new AuthenticationHeaderValue("Bearer", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJkZTI4ODI4My1lZTI5LTRiNzMtYjk1Ny1iZjIwNmNmMWE0YjQiLCJ1bmlxdWVfbmFtZSI6InJyZXppIiwiZW1haWwiOiJyaDUyNzQxQHVidC11bmkubmV0Iiwicm9sZSI6IkFkbWluIiwibmJmIjoxNjg1ODI4Njc0LCJleHAiOjE2ODY0MzM0NzQsImlhdCI6MTY4NTgyODY3NH0.45JHMBXwjfQcxAuWr1BYCZLogzmgFB2oVFdi6ThArKY");
+            httpClient.DefaultRequestHeaders.Authorization = authentication;
+
+            var response = await httpClient.GetAsync(uri);
+            var responseAsString = await response.Content.ReadAsStringAsync();
+
+            return responseAsString;
+        }
+
+        public async Task<ActionResult<StudyGroupDto>> GetStudyGroupById(int id)
         {
             var studyGroup = await _context.StudyGroups.Where(x => x.Id == id).Select(x => new StudyGroupDto
             {
@@ -60,6 +78,18 @@ namespace Stud_io.StudyGroups.Services.Implementation
                 MajorId = x.MajorId
             }).FirstOrDefaultAsync();
 
+            //getting a serialized response from the api and then deserializing
+            var studyGroupStudentsSerialized = await CommunicateWithUser("http://localhost:5274/api/v1/User/study-group-students/" + id);
+            var studyGroupStudents = JsonSerializer.Deserialize<List<Models.ServiceCommunication.Authentication.StudyGroupStudent>>(studyGroupStudentsSerialized);
+
+            var students = studyGroupStudents.Select(x => new GroupStudyStudentDto
+            {
+                Id = x.id,
+                FirstName = x.firstName,
+                LastName = x.lastName,
+            }).ToList();
+
+            studyGroup.Students = students;
 
             return new OkObjectResult(studyGroup);
         }
@@ -94,7 +124,7 @@ namespace Stud_io.StudyGroups.Services.Implementation
             if (dbGroup == null)
                 return new NotFoundObjectResult("Study Group wasn't found");
 
-            dbGroup.Members = studentIds.Select(x => new StudyGroupMember()
+            dbGroup.Members = studentIds.Select(x => new Models.StudyGroupStudent()
             {
                 StudentId = x
             }).ToList();

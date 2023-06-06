@@ -9,7 +9,7 @@ namespace Stud_io.StudyGroups.DTOs
         public string Description { get; set; }
         public string GroupImageUrl { get; set; }
         public int MajorId { get; set; }
-        public List<StudentMemberDto> Members { get; set; }
+        public List<GroupStudyStudentDto> Students { get; set; }
     }
     public class CreateStudyGroupDto
     {

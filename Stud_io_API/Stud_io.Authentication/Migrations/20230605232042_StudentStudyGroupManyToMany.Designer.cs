@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Stud_io.Configuration;
 
@@ -11,9 +12,11 @@ using Stud_io.Configuration;
 namespace Stud_io.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230605232042_StudentStudyGroupManyToMany")]
+    partial class StudentStudyGroupManyToMany
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -302,7 +305,7 @@ namespace Stud_io.Migrations
 
                     b.HasIndex("StudentId");
 
-                    b.ToTable("StudyGroupStudents");
+                    b.ToTable("StudyGroupStudent");
                 });
 
             modelBuilder.Entity("Stud_io.Models.Student", b =>

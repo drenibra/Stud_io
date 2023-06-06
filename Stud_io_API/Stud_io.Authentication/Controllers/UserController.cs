@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Stud_io.Authentication.DTOs.ServiceCommunication;
 using Stud_io.Authentication.Interfaces;
 using Stud_io.Authentication.Services;
 using Stud_io.Controllers;
@@ -70,12 +71,18 @@ namespace Stud_io.Authentication.Controllers
 
             return Ok("Student successfuly updated");
         }
-        
+
         [HttpDelete("{id}")]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteUser(string id)
         {
             return Ok(await _contract.DeleteUser(id));
+        }
+
+        [HttpGet("study-group-students/{id}")]
+        public async Task<ActionResult<List<StudyGroupStudentDto>>> GetStudyGroupStudents(int id)
+        {
+            return await _contract.GetStudyGroupStudents(id);
         }
 
         //[HttpGet("student")]
