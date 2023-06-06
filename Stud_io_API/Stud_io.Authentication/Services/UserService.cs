@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Stud_io.Authentication.Interfaces;
 using Stud_io.Controllers;
 using Stud_io.DTOs;
-using Stud_io.Models;
+using Stud_io.Authentication.Models;
 
 namespace Stud_io.Authentication.Services
 {

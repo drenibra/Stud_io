@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Stud_io.DTOs;
-using Stud_io.Models;
+using Stud_io.Authentication.Models;
 
 namespace Stud_io.Authentication.Interfaces
 {

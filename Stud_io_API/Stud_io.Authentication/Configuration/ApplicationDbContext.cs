@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Stud_io.Models;
+using Stud_io.Authentication.Models;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace Stud_io.Configuration

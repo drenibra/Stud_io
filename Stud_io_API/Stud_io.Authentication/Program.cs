@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Stud_io.Configuration;
 using Stud_io.Extensions;
-using Stud_io.Models;
+using Stud_io.Authentication.Models;
 using Microsoft.AspNetCore.Authorization;
 using Stud_io.Authentication.Interfaces;
 using Stud_io.Authentication.Services;
