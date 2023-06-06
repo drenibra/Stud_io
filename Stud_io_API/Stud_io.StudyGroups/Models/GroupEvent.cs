@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using Stud_io.StudyGroups.Models.ServiceCommunication.Authentication;
 
 namespace Stud_io.StudyGroups.Models
 {

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Stud_io.Authentication.Models.ServiceCommunications.StudyGroup;
 using Stud_io.Models;
-using Stud_io.StudyGroups.Models;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace Stud_io.Configuration
@@ -24,5 +24,6 @@ namespace Stud_io.Configuration
 
         public DbSet<Student> Students { get; set; }
         public DbSet<StudyGroupStudent> StudyGroupStudents { get; set; }
+        public DbSet<GroupEventStudents> GroupEventStudents { get; set; }
     }
 }

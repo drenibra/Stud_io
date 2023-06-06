@@ -2,12 +2,14 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Stud_io.Authentication.DTOs.ServiceCommunication;
+using Stud_io.Authentication.DTOs.ServiceCommunication.StudyGroup;
 using Stud_io.Authentication.Interfaces;
+using Stud_io.Authentication.Models.ServiceCommunications.StudyGroup;
 using Stud_io.Configuration;
 using Stud_io.Controllers;
 using Stud_io.DTOs;
 using Stud_io.Models;
+using System.Text.RegularExpressions;
 
 namespace Stud_io.Authentication.Services
 {
@@ -75,12 +77,12 @@ namespace Stud_io.Authentication.Services
         }
 
         //gets all students from a certain study group that is on the study group microservice
-        public async Task<ActionResult<List<StudyGroupStudentDto>>> GetStudyGroupStudents(int id)
+        public async Task<ActionResult<List<MemberStudentDto>>> GetStudyGroupStudents(int id)
         {
             var studyGroupStudents = await _context.StudyGroupStudents
                                                     .Include(x => x.Student)
                                                     .Where(x => x.StudyGroupId == id)
-                                                    .Select(x => new StudyGroupStudentDto
+                                                    .Select(x => new MemberStudentDto
                                                     {
                                                         Id = x.StudentId,
                                                         FirstName = x.Student.FirstName,
@@ -88,6 +90,40 @@ namespace Stud_io.Authentication.Services
                                                     }).ToListAsync();
 
             return new OkObjectResult(studyGroupStudents);
+        }
+
+        public async Task<ActionResult<List<MemberStudentDto>>> GetGroupEventStudents(int id)
+        {
+            var groupEventStudents = await _context.GroupEventStudents
+                                                    .Include(x => x.Student)
+                                                    .Where(x => x.GroupEventId == id)
+                                                    .Select(x => new MemberStudentDto
+                                                    {
+                                                        Id = x.StudentId,
+                                                        FirstName = x.Student.FirstName,
+                                                        LastName = x.Student.LastName,
+                                                    }).ToListAsync();
+
+            return new OkObjectResult(groupEventStudents);
+        }
+
+        public async Task<ActionResult> AddStudyGroupMembers(int groupId, List<string> studentIds)
+        {
+
+            List<StudyGroupStudent> studyGroupStudents = new();
+            foreach(var studentId in studentIds)
+            {
+                studyGroupStudents.Add(new StudyGroupStudent
+                {
+                    StudentId = studentId,
+                    StudyGroupId = groupId,
+                });
+            }
+
+            await _context.StudyGroupStudents.AddRangeAsync(studyGroupStudents);
+            await _context.SaveChangesAsync();
+
+            return new OkResult();
         }
     }
 }

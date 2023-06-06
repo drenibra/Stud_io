@@ -1,5 +1,5 @@
 ﻿using Stud_io.Authentication.Models;
-using Stud_io.StudyGroups.Models;
+using Stud_io.Authentication.Models.ServiceCommunications.StudyGroup;
 
 namespace Stud_io.Models
 {
@@ -13,5 +13,7 @@ namespace Stud_io.Models
         public Major? Major { get; set; }
         public int? DormNumber { get; set; }
         public List<StudyGroupStudent> StudyGroupStudents { get; set; }
+        public List<GroupEventStudents> GroupEventStudents { get; set; }
+
     }
 }

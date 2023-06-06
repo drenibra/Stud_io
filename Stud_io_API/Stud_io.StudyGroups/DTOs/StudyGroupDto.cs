@@ -1,4 +1,4 @@
-﻿using Stud_io.StudyGroups.DTOs.ServiceCommunication;
+﻿using Stud_io.StudyGroups.DTOs.ServiceCommunication.Auth;
 
 namespace Stud_io.StudyGroups.DTOs
 {
@@ -9,7 +9,9 @@ namespace Stud_io.StudyGroups.DTOs
         public string Description { get; set; }
         public string GroupImageUrl { get; set; }
         public int MajorId { get; set; }
-        public List<GroupStudyStudentDto> Students { get; set; }
+        public List<MemberStudentDto> Students { get; set; }
+        public List<GroupEventDto> GroupEvents { get; set; }
+        public List<PostDto> Posts { get; set; }
     }
     public class CreateStudyGroupDto
     {

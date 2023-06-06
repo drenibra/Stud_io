@@ -1,12 +1,12 @@
 ﻿using Stud_io.Models;
 
-namespace Stud_io.StudyGroups.Models
+namespace Stud_io.Authentication.Models.ServiceCommunications.StudyGroup
 {
-    public class StudyGroupStudent
+    public class GroupEventStudents
     {
         public int Id { get; set; }
         public string StudentId { get; set; }
         public Student Student { get; set; }
-        public int StudyGroupId { get; set; }
+        public int GroupEventId { get; set; }
     }
 }

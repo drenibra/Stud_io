@@ -12,7 +12,7 @@ namespace Stud_io.StudyGroups.Models
         public List<Resource>? Resources { get; set; }
         public List<Comment>? Comments { get; set; }
         public List<PostLike>? Likes { get; set; }
-        public string AuthorId { get; set; } //Student that created the post
+        public string StudentId { get; set; }
         [ForeignKey("StudyGroup")]
         public int StudyGroupId { get; set; }
         public StudyGroup StudyGroup { get; set; }

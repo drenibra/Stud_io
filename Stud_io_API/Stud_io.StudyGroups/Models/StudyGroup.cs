@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Hosting;
+using Stud_io.StudyGroups.Models.ServiceCommunication.Authentication;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Stud_io.StudyGroups.Models

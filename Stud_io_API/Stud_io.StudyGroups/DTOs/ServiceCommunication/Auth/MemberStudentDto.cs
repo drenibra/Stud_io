@@ -1,6 +1,6 @@
-﻿namespace Stud_io.Authentication.DTOs.ServiceCommunication
+﻿namespace Stud_io.StudyGroups.DTOs.ServiceCommunication.Auth
 {
-    public class StudyGroupStudentDto
+    public class MemberStudentDto
     {
         public string Id { get; set; }
         public string FirstName { get; set; }

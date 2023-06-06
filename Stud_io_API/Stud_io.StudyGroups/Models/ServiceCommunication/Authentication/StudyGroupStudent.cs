@@ -1,4 +1,4 @@
-﻿namespace Stud_io.StudyGroups.Models
+﻿namespace Stud_io.StudyGroups.Models.ServiceCommunication.Authentication
 {
     public class StudyGroupStudent
     {

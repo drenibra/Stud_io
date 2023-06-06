@@ -55,6 +55,11 @@ builder.Services.AddScoped<IPostService, PostService>();
 builder.Services.AddScoped<IStudyGroupService, StudyGroupService>();
 builder.Services.AddScoped<IFacultyService, FacultyService>();
 builder.Services.AddScoped<IMajorService, MajorService>();
+builder.Services.AddScoped<IResourceService, ResourceService>();
+builder.Services.AddScoped<ICloudinaryService, CloudinaryService>();
+builder.Services.AddScoped<IGroupEventService, GroupEventService>();
+builder.Services.AddScoped<IMicroservicesRequestService, MicroservicesRequestService>();
+
 
 // Register IHttpClientFactory
 builder.Services.AddHttpClient();

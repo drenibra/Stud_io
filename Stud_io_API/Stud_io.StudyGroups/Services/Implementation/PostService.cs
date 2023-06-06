@@ -24,7 +24,7 @@ namespace Stud_io.StudyGroups.Services.Implementation
                 Title = x.Title,
                 Text = x.Text,
                 DatePosted = DateTime.Now.ToShortDateString(),
-                AuthorId = x.AuthorId,
+                StudentId = x.StudentId,
             }).FirstOrDefaultAsync();
 
             return new OkObjectResult(post);
@@ -42,7 +42,7 @@ namespace Stud_io.StudyGroups.Services.Implementation
                 Title = dto.Title,
                 Text = dto.Text,
                 DatePosted = DateTime.Now,
-                AuthorId = dto.AuthorId,
+                StudentId = dto.StudentId,
                 StudyGroupId = dto.StudyGroupId,
             };
 
