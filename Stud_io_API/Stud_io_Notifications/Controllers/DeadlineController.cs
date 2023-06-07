@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Notifications.Models;
+using Stud_io_Notifications.DTOs;
 using Stud_io_Notifications.Services.Interfaces;
 
 namespace Stud_io_Notifications.Controllers
@@ -16,10 +16,10 @@ namespace Stud_io_Notifications.Controllers
         }
 
         [HttpGet("get-all-deadlines")]
-        public ActionResult<List<Deadline>> GetDeadlines() => _deadlineService.GetDeadlines();
+        public ActionResult<List<DeadlineDto>> GetDeadlines() => _deadlineService.GetDeadlines();
 
         [HttpGet("get-deadline-by-id /{id}")]
-        public ActionResult<Deadline> GetDeadline(string id)
+        public ActionResult<DeadlineDto> GetDeadline(string id)
         {
             var deadline = _deadlineService.GetDeadline(id);
 
@@ -30,16 +30,19 @@ namespace Stud_io_Notifications.Controllers
         }
 
         [HttpPost("add-deadline")]
-        public ActionResult<Deadline> PostDeadline([FromBody] Deadline deadline)
+        public ActionResult<DeadlineDto> PostDeadline(DeadlineDto deadline)
         {
+            if(deadline == null)
+                return BadRequest("Deadline can't be null!");
+            
             _deadlineService.CreateDeadline(deadline);
 
-            return CreatedAtAction(nameof(GetDeadlines), new { id = deadline.Id }, deadline);
+            return deadline;
         }
 
 
         [HttpPut("update-deadline-by-id/{id}")]
-        public ActionResult PutDeadline(string id, [FromBody] Deadline deadline)
+        public ActionResult PutDeadline(string id, UpdateDeadlineDto deadline)
         {
             var existingDeadline = _deadlineService.GetDeadline(id);
 
@@ -59,7 +62,7 @@ namespace Stud_io_Notifications.Controllers
             if (existingDeadline == null)
                 return NotFound($"Deadline with Id = {id} not found");
 
-            _deadlineService.RemoveDeadline(existingDeadline.Id);
+            _deadlineService.RemoveDeadline(id);
 
             return Ok($"Deadline with Id = {id} deleted");
         }

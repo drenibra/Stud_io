@@ -1,14 +1,13 @@
-﻿using Notifications.Models;
-
+﻿using Stud_io_Notifications.DTOs;
 
 namespace Stud_io_Notifications.Services.Interfaces
 {
     public interface IAnnouncementService
     {
-        List<Announcement> GetAnnouncements();
-        Announcement GetAnnouncement(string id);
-        Announcement CreateAnnouncement(Announcement announcement);
-        void UpdateAnnouncement(string id, Announcement announcement);
+        List<AnnouncementDto> GetAnnouncements();
+        AnnouncementDto GetAnnouncement(string id);
+        AnnouncementDto CreateAnnouncement(AnnouncementDto announcementDto);
+        void UpdateAnnouncement(string id, UpdateAnnouncementDto updateAnnouncementDto);
         void RemoveAnnouncement(string id);
     }
 }

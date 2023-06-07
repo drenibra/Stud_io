@@ -7,7 +7,7 @@ using Stud_io.Authentication.Interfaces;
 using Stud_io.Authentication.Services;
 using Stud_io.Controllers;
 using Stud_io.DTOs;
-using Stud_io.Models;
+using Stud_io.Authentication.Models;
 using System.Data;
 using System.Security.Claims;
 

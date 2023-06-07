@@ -1,7 +1,7 @@
 ﻿using Stud_io.Authentication.Models;
 using Stud_io.Authentication.Models.ServiceCommunications.StudyGroup;
 
-namespace Stud_io.Models
+namespace Stud_io.Authentication.Models
 {
     public class Student : AppUser
     {

@@ -92,6 +92,17 @@ export default class UserStore {
     }
   };
 
+  updateStudent = async (student) => {
+    try {
+      await agent.Account.update(student);
+      runInAction(() => (this.student = student));
+      return true;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  }
+
   async fetchIsApplicant() {
     try {
       const roles = await agent.Account.roles();

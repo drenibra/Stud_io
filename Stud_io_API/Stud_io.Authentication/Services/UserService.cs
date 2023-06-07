@@ -8,7 +8,7 @@ using Stud_io.Authentication.Models.ServiceCommunications.StudyGroup;
 using Stud_io.Configuration;
 using Stud_io.Controllers;
 using Stud_io.DTOs;
-using Stud_io.Models;
+using Stud_io.Authentication.Models;
 using System.Text.RegularExpressions;
 
 namespace Stud_io.Authentication.Services
@@ -111,7 +111,7 @@ namespace Stud_io.Authentication.Services
         {
 
             List<StudyGroupStudent> studyGroupStudents = new();
-            foreach(var studentId in studentIds)
+            foreach (var studentId in studentIds)
             {
                 studyGroupStudents.Add(new StudyGroupStudent
                 {

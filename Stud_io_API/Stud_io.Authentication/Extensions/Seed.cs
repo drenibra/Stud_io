@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Stud_io.Configuration;
-using Stud_io.Models;
+using Stud_io.Authentication.Models;
 
 namespace Stud_io.Extensions
 {

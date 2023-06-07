@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
-using Stud_io_Notifications.Models;
+using Notifications.Models;
+using Stud_io_Notifications.DTOs;
 
 namespace Stud_io_Notifications.Configurations
 {
@@ -7,7 +8,9 @@ namespace Stud_io_Notifications.Configurations
     {
         public AutoMapperProfiles()
         {
-            //CreateMap<Information, InformationDTO>().ReverseMap();
+            CreateMap<Announcement, AnnouncementDto>().ReverseMap();
+            CreateMap<Deadline, DeadlineDto>().ReverseMap();
+            CreateMap<Information, InformationDto>().ReverseMap();
         }
     }
 }

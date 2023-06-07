@@ -2,10 +2,13 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Stud_io.Authentication.DTOs;
 using Stud_io.DTOs;
 using Stud_io.Extensions;
-using Stud_io.Models;
+using Stud_io.Authentication.Models;
 using System.Security.Claims;
+using static System.Net.Mime.MediaTypeNames;
+using System.Reflection;
 
 namespace Stud_io.Controllers
 {
@@ -85,9 +88,23 @@ namespace Stud_io.Controllers
         }
         [Authorize]
         [HttpGet("student")]
-        public async Task<ActionResult<Student>> GetCurrentStudent()
+        public async Task<ActionResult<StudentDto>> GetCurrentStudent()
         {
-            return await _userManager.FindByEmailAsync(User.FindFirstValue(ClaimTypes.Email)) as Student;
+            var student = await _userManager.FindByEmailAsync(User.FindFirstValue(ClaimTypes.Email)) as Student;
+            return new StudentDto
+            {
+                FirstName = student.FirstName,
+                LastName = student.LastName,
+                Gender = student.Gender,
+                Username = student.UserName,
+                FathersName = student.FathersName,
+                City = student.City,
+                GPA = student.GPA,
+                Status = student.Status,
+                MajorId = student.MajorId,
+                Major = student.Major,
+                DormNumber = student.DormNumber,
+            };
         }
         [Authorize]
         [HttpGet("currentId")]

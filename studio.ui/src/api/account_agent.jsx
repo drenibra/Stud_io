@@ -48,6 +48,7 @@ const Account = {
   register: (user) => requests.post("/Account/register", user),
   currentId: () => requests.get("/account/currentId"),
   roles: () => requests.get("/account/roles"),
+  update: (user) => requests.put("/user", user),
 };
 
 const agent = {

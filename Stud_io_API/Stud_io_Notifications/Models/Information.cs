@@ -1,9 +1,18 @@
-﻿namespace Stud_io_Notifications.Models
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+
+namespace Notifications.Models
 {
     public class Information
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string Link { get; set; }
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string Id { get; set; } = String.Empty;
+
+        [BsonElement("name")]
+        public string Name { get; set; } = String.Empty;
+
+        [BsonElement("link")]
+        public string Link { get; set; } = String.Empty;
     }
 }

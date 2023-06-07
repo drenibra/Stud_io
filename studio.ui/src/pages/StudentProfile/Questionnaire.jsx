@@ -2,7 +2,7 @@ import { useState } from 'react';
 import './questionnaire.scss';
 import axios from 'axios';
 import Button from "@mui/material/Button";
-import { ToastContainer, toast } from 'react-toastify';
+import {toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 export default function Questionnaire({handleClose})  {

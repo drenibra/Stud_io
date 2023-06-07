@@ -1,83 +1,57 @@
-﻿/*using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using MongoDB.Driver;
+using Notifications.Models;
 using Stud_io_Notifications.Configurations;
 using Stud_io_Notifications.DTOs;
-using Stud_io_Notifications.Models;
 using Stud_io_Notifications.Services.Interfaces;
 
 namespace Stud_io_Notifications.Services.Implementations
 {
     public class InformationService : IInformationService
     {
-        private readonly NotificationDbContext _context;
+        private readonly IMongoCollection<Information>_information;
         private readonly IMapper _mapper;
-
-        public InformationService(NotificationDbContext context, IMapper mapper)
+        public InformationService(INotificationsDatabaseSettings settings, IMongoClient mongoClient, IMapper mapper)
         {
-            _context = context;
+            var database = mongoClient.GetDatabase(settings.DatabaseName);
+            _information = database.GetCollection<Information>(settings.InformationsCollectionName);
             _mapper = mapper;
         }
-        public async Task<ActionResult> AddInformation(InformationDTO informationDTO)
+        public List<InformationDto> GetInformations()
         {
-            if (informationDTO == null)
-            {
-                return new BadRequestObjectResult("Information can not be null");
-            }
-            var mappedInformation = _mapper.Map<Information>(informationDTO);
-            await _context.Informations.AddAsync(mappedInformation);
-            await _context.SaveChangesAsync();
-            return new OkObjectResult("Information added successfully");
+            return _mapper.Map<List<InformationDto>>(_information.Find(information => true).ToList());
         }
 
-        public async Task<ActionResult> DeleteInformation(int id)
+        public InformationDto GetInformation(string id)
         {
-            var information = await _context.Informations.FindAsync(id);
-            if (information == null)
-            {
-                return new NotFoundObjectResult("Information doesn't exist");
-            }
-            _context.Informations.Remove(information);
-            await _context.SaveChangesAsync();
-            return new OkObjectResult("Information deleted successfully");
+            return _mapper.Map<InformationDto>(_information.Find(information => information.Id == id).FirstOrDefault());
         }
 
-        public async Task<ActionResult<List<InformationDTO>>> GetAllInformations(string? searchString)
+        public Information CreateInformation(InformationDto information)
         {
-            // sorting
-            var allInformations = _mapper.Map<List<InformationDTO>>( _context.Informations.OrderBy(n => n.Name).ToList());
+            var mappedInformation = _mapper.Map<Information>(information);
 
-            if (!string.IsNullOrEmpty(searchString))
-            {
-                allInformations = allInformations.Where(n => n.Name.Contains(searchString, StringComparison.CurrentCultureIgnoreCase)).ToList();
-            }
-            return allInformations;
+            _information.InsertOne(mappedInformation);
+            return mappedInformation;
         }
 
-
-        public async Task<ActionResult<InformationDTO>> GetInformationById(int id)
+        public void UpdateInformation(string id, UpdateInformationDto updateInformationDto)
         {
-            var mappedInformation = _mapper.Map<InformationDTO>(await _context.Informations.FindAsync(id));
-            return mappedInformation == null
-                ? new NotFoundObjectResult("Information doesn't exist")
-                : new OkObjectResult(mappedInformation);
+            var filter = Builders<Information>.Filter.Eq(d => d.Id, id);
+            var update = Builders<Information>.Update
+                .Set(i => i.Name, updateInformationDto.Name)
+                .Set(i => i.Link, updateInformationDto.Link);
+                
+
+            _information.UpdateOne(filter, update);
         }
 
-        public async Task<ActionResult> UpdateInformation(int id, UpdateInformationDTO updateInformation)
+        public void RemoveInformation(string id)
         {
-            if (updateInformation == null)
-                return new BadRequestObjectResult("Information can't be null");
-
-            var information = await _context.Informations.FindAsync(id);
-            if (information == null)
-                return new NotFoundObjectResult("Information doesn't exist");
-
-            information.Name = updateInformation.Name ?? information.Name;
-            information.Link = updateInformation.Link ?? information.Link;
-            await _context.SaveChangesAsync();
-
-            return new OkObjectResult("Information updated successfully");
+            _information.DeleteOne(information => information.Id == id);
         }
+
     }
+
+
 }
-*/
