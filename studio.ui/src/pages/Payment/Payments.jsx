@@ -10,6 +10,7 @@ import {
   TableCell,
   TextField,
   Grid,
+  Typography,
 } from "@mui/material";
 
 export default function PaymentsTable() {
@@ -78,55 +79,84 @@ export default function PaymentsTable() {
 
   return (
     <div className="payments-show">
-      <h1>Historia e pagesave</h1>
-        <Grid container spacing={5} justifyContent="center" marginBottom={4} marginTop={0.5}>
-          <Grid item>
-            <TextField
-              label="Emri"
-              value={nameFilter}
-              onChange={handleNameFilterChange}
-              variant="outlined"
-              size="small"
-              fullWidth
-            />
-          </Grid>
-          <Grid item>
-            <TextField
-              label="Përshkrimi"
-              value={descriptionFilter}
-              onChange={handleDescriptionFilterChange}
-              variant="outlined"
-              size="small"
-              fullWidth
-            />
-          </Grid>
-          <Grid item>
-            <TextField
-              label="Muaji"
-              value={monthFilter}
-              onChange={handleMonthFilterChange}
-              variant="outlined"
-              size="small"
-              fullWidth
-            />
-          </Grid>
+      <Grid container spacing={2} justifyContent="center" marginBottom={2}>
+        <Grid item xs={12}>
+          <Typography
+            variant="h4"
+            gutterBottom
+            sx={{
+              fontFamily: "Poppins",
+              marginTop: "1em",
+              textAlign: "center",
+            }}
+          >
+            Historia e pagesave
+          </Typography>
         </Grid>
-      <Table>
+      </Grid>
+      <Grid
+        container
+        spacing={5}
+        justifyContent="center"
+        marginBottom={4}
+      >
+        <Grid item>
+          <TextField
+            label="Emri"
+            value={nameFilter}
+            onChange={handleNameFilterChange}
+            variant="outlined"
+            size="small"
+            fullWidth
+          />
+        </Grid>
+        <Grid item>
+          <TextField
+            label="Përshkrimi"
+            value={descriptionFilter}
+            onChange={handleDescriptionFilterChange}
+            variant="outlined"
+            size="small"
+            fullWidth
+          />
+        </Grid>
+        <Grid item>
+          <TextField
+            label="Muaji"
+            value={monthFilter}
+            onChange={handleMonthFilterChange}
+            variant="outlined"
+            size="small"
+            fullWidth
+          />
+        </Grid>
+      </Grid>
+      <Table sx={{ marginTop: "2rem", maxWidth: "60%", marginLeft: "20%" }}>
         <TableHead>
           <TableRow sx={{ background: "#c62828" }}>
-            <TableCell sx={{ color: "white", fontWeight: "bold" }}>
+            <TableCell
+              sx={{ color: "white", fontWeight: "bold", width: "20%" }}
+            >
               Studenti
             </TableCell>
-            <TableCell sx={{ color: "white", fontWeight: "bold" }}>
+            <TableCell
+              sx={{ color: "white", fontWeight: "bold", width: "30%" }}
+            >
               Përshkrimi
             </TableCell>
-            <TableCell sx={{ color: "white", fontWeight: "bold" }}>
+            <TableCell
+              sx={{ color: "white", fontWeight: "bold", width: "15%" }}
+            >
               Shuma
             </TableCell>
-            <TableCell sx={{ color: "white", fontWeight: "bold" }}>
+            <TableCell
+              sx={{ color: "white", fontWeight: "bold", width: "15%" }}
+            >
               Muaji
             </TableCell>
-            <TableCell sx={{ color: "white", fontWeight: "bold" }}>
+            <TableCell
+              sx={{ color: "white", fontWeight: "bold", width: "20%" }}
+            >
               Data e pagesës
             </TableCell>
           </TableRow>
@@ -154,21 +184,33 @@ export default function PaymentsTable() {
       </Table>
 
       {/* Pagination controls */}
-      <div className="pagination">
-        <Button
-          onClick={() => handlePageChange(currentPage - 1)}
-          disabled={currentPage === 1}
-          text="Previous"
-        />
-        <span>
-          {currentPage} / {totalPages === 0 ? 1 : totalPages}
-        </span>
-        <Button
-          onClick={() => handlePageChange(currentPage + 1)}
-          disabled={currentPage === totalPages}
-          text="Next"
-        />
-      </div>
+      <Grid
+        container
+        spacing={2}
+        justifyContent="center"
+        alignItems="center"
+        marginTop={1}
+      >
+        <Grid item>
+          <Button
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+            text="Previous"
+          />
+        </Grid>
+        <Grid item>
+          <span>
+            {currentPage} / {totalPages === 0 ? 1 : totalPages}
+          </span>
+        </Grid>
+        <Grid item>
+          <Button
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage === totalPages}
+            text="Next"
+          />
+        </Grid>
+      </Grid>
     </div>
   );
 }

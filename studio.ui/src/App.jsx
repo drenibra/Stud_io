@@ -13,8 +13,7 @@ import Apply from "./pages/Application/Apply";
 import RegisterForm from "./pages/Authentication/RegisterForm";
 import ProtectedRoute from "./ProtectedRoute";
 
-import
-{
+import {
   LandingPage,
   Maintenance,
   Payment,
@@ -25,13 +24,13 @@ import
   Roommate,
   Questionnaire,
   Deadline,
-  Dormitory
+  Dormitory,
 } from "./pages";
 
 const routes = [
   { path: "/maintenance", element: Maintenance },
-  { path: "/payment", element: Payment },
-  { path: "/payments", element: Payments },
+  { path: "/pagesa", element: Payment },
+  { path: "/pagesat", element: Payments },
   { path: "/myprofile", element: MyProfile },
   { path: "/registerCustomer", element: RegisterCustomer },
   { path: "/announcement", element: Announcement },
@@ -39,35 +38,27 @@ const routes = [
   { path: "/questionnaire", element: Questionnaire },
   { path: "/Apply", element: Apply },
   { path: "/Deadline", element: Deadline },
-  { path: "/dormitory", element: Dormitory }
+  { path: "/dormitory", element: Dormitory },
 ];
 
-const App = observer(function App()
-{
+const App = observer(function App() {
   const { commonStore, userStore } = useStore();
   const [user, setUser] = useState({});
 
-  useEffect(() =>
-  {
-    if (commonStore.token)
-    {
-      try
-      {
-        const fetchData = async () =>
-        {
+  useEffect(() => {
+    if (commonStore.token) {
+      try {
+        const fetchData = async () => {
           const userData = await agent.Account.current();
           setUser(userData);
         };
         fetchData();
-      } catch (error)
-      {
+      } catch (error) {
         console.error(error);
-      } finally
-      {
+      } finally {
         commonStore.setAppLoaded();
       }
-    } else
-    {
+    } else {
       commonStore.setAppLoaded();
     }
   }, [commonStore, userStore]);

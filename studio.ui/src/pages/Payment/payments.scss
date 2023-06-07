@@ -3,55 +3,21 @@ table {
     background:#ffffff;
     border-radius:10px;
     overflow:hidden;
-    width:100%;
-   
-    td,th{ 
-      padding:0px 10px}
 
     thead tr{ 
-      height:60px;
       background:#f3f3f3;
       border-bottom:4px solid #ffffff ;
-      font-size:16px;
       color: #161616;
     }
     
     tbody tr{
         background-color: #f3f3f3;
-        height:45px; 
         border-bottom:4px solid #ffffff ;
         color: #161616;
     }
-    
-    td,th { text-align:left;}
   }
-
-.payments-show{
-    margin-top: 20px;
-    color: #c62828;
-}
-
-.payments-show Button{
-    max-width: 70px;
-}
 
 .payments-show span{
     margin-left: 15px;
     margin-right: 15px;
-}
-
-.styled-table {
-    margin: 25px 0;
-    font-size: 0.9em;
-    font-family: sans-serif;
-    min-width: 400px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-
-    table th, td {
-        padding: 12px 15px;
-    }
-
-    tbody tr:last-of-type {
-        border-bottom: 3px solid #c62828;
-    }
 }
