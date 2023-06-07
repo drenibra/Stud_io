@@ -130,7 +130,8 @@ namespace Stud_io.Controllers
                 LastName = user.LastName,
                 Token = _tokenService.CreateToken(user),
                 Username = user.UserName,
-                Email = user.Email
+                Email = user.Email,
+                Gender = user.Gender
             };
         }
     }
