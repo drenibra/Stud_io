@@ -79,6 +79,9 @@ const UserForm = observer(function UserForm(props) {
 
   return (
     <Container sx={{ mt: 8 }}>
+      <div className="menu">
+        <Menu />
+      </div>
       <Grid container spacing={2}>
         <Grid item xs={4}>
           <StyledTitle variant="h2">My profile</StyledTitle>

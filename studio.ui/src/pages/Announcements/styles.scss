@@ -7,11 +7,26 @@
 
 .title-hapja-konkursit {
     margin-top: 40px;
+    margin-left: 42%;
 }
 
 .hapja-konkursit {
     display: flex;
     flex-direction: row;
     margin-top: 50px;
-    margin-left: 70px;
+    margin-left: 35%;
+}
+
+.deadline-konkursi {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin-right: 100px;
+}
+
+.link-anouncement {
+    border: 1px solid #bf1a2f;
+    width: 50px;
+    text-align: center;
+    color: #bf1a2f;
 }

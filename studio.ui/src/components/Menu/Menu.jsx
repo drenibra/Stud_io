@@ -51,15 +51,15 @@ const Menu = () => {
             <AccountCircleIcon />
           </ListItemIcon>
           <StyledLink to="/MyProfile">
-            <StyledListItemText primary="My Profile" />
+            <StyledListItemText primary="Profili im" />
           </StyledLink>
         </StyledListItem>
         <StyledListItem className="menu-item">
           <ListItemIcon>
             <HotelIcon />
           </ListItemIcon>
-          <StyledLink to="/dormitory">
-            <StyledListItemText primary="Dormitory" />
+          <StyledLink to="/Dormitory">
+            <StyledListItemText primary="Konvikti" />
           </StyledLink>
         </StyledListItem>
         <StyledListItem className="menu-item">
@@ -67,7 +67,7 @@ const Menu = () => {
             <PeopleIcon />
           </ListItemIcon>
           <StyledLink to="/Roommate">
-            <StyledListItemText primary="Roommate" />
+            <StyledListItemText primary="Shokët e dhomës" />
           </StyledLink>
         </StyledListItem>
         <StyledListItem className="menu-item">

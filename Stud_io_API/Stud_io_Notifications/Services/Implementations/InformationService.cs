@@ -38,11 +38,13 @@ namespace Stud_io_Notifications.Services.Implementations
         public void UpdateInformation(string id, UpdateInformationDto updateInformationDto)
         {
             var filter = Builders<Information>.Filter.Eq(d => d.Id, id);
-            var update = Builders<Information>.Update
-                .Set(i => i.Name, updateInformationDto.Name)
-                .Set(i => i.Link, updateInformationDto.Link);
-                
 
+            var existingInformation = _information.Find(filter).FirstOrDefault();
+
+            var update = Builders<Information>.Update
+                .Set(i => i.Name, updateInformationDto.Name ?? existingInformation.Name)
+                .Set(i => i.Link, updateInformationDto.Link ?? existingInformation.Link);
+                
             _information.UpdateOne(filter, update);
         }
 

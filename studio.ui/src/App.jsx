@@ -13,7 +13,8 @@ import Apply from "./pages/Application/Apply";
 import RegisterForm from "./pages/Authentication/RegisterForm";
 import ProtectedRoute from "./ProtectedRoute";
 
-import {
+import
+{
   LandingPage,
   Maintenance,
   Payment,
@@ -23,6 +24,8 @@ import {
   Announcement,
   Roommate,
   Questionnaire,
+  Deadline,
+  Dormitory
 } from "./pages";
 
 const routes = [
@@ -32,28 +35,39 @@ const routes = [
   { path: "/myprofile", element: MyProfile },
   { path: "/registerCustomer", element: RegisterCustomer },
   { path: "/announcement", element: Announcement },
-  { path: "/roomate", element: Roommate },
+  { path: "/roommate", element: Roommate },
   { path: "/questionnaire", element: Questionnaire },
+  { path: "/Apply", element: Apply },
+  { path: "/Deadline", element: Deadline },
+  { path: "/dormitory", element: Dormitory }
 ];
 
-const App = observer(function App() {
+const App = observer(function App()
+{
   const { commonStore, userStore } = useStore();
   const [user, setUser] = useState({});
 
-  useEffect(() => {
-    if (commonStore.token) {
-      try {
-        const fetchData = async () => {
+  useEffect(() =>
+  {
+    if (commonStore.token)
+    {
+      try
+      {
+        const fetchData = async () =>
+        {
           const userData = await agent.Account.current();
           setUser(userData);
         };
         fetchData();
-      } catch (error) {
+      } catch (error)
+      {
         console.error(error);
-      } finally {
+      } finally
+      {
         commonStore.setAppLoaded();
       }
-    } else {
+    } else
+    {
       commonStore.setAppLoaded();
     }
   }, [commonStore, userStore]);
