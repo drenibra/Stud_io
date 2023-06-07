@@ -35,37 +35,91 @@ namespace Stud_io.Authentication.Controllers
         {
             return Ok(await _contract.GetUserById(id));
         }
+        //[HttpPut]
+        //[Authorize(Roles = "Admin,Student")]
+        //public async Task<ActionResult<Student>> UpdateStudent(Student student)
+        //{
+        //    var user = await _userManager.FindByEmailAsync(User.FindFirstValue(ClaimTypes.Email)) as Student;
+
+        //    if (user == null)
+        //    {
+        //        return BadRequest("Unauthorized");
+        //    }
+
+        //    user.FirstName = student.FirstName;
+        //    user.LastName = student.LastName;
+        //    user.Gender = student.Gender;
+
+        //    user.FathersName = student.FathersName;
+        //    user.City = student.City;
+        //    user.GPA = student.GPA;
+        //    user.Status = student.Status;
+        //    user.MajorId = student.MajorId;
+        //    user.Major = student.Major;
+        //    user.DormNumber = student.DormNumber;
+
+        //    var result = await _userManager.UpdateAsync(user);
+
+        //    if (!result.Succeeded)
+        //    {
+        //        return BadRequest(result.Errors);
+        //    }
+
+        //    return Ok("Student successfuly updated");
+        //}
         [HttpPut]
         [Authorize(Roles = "Admin,Student")]
-        public async Task<ActionResult<Student>> UpdateStudent(Student student)
+        public async Task<ActionResult<Student>> UpdateStudent(Student updatedStudent)
         {
-            var user = await _userManager.FindByEmailAsync(User.FindFirstValue(ClaimTypes.Email)) as Student;
+            var user = await _userManager.FindByEmailAsync(User.FindFirstValue(ClaimTypes.Email));
 
             if (user == null)
             {
                 return BadRequest("Unauthorized");
             }
 
-            user.FirstName = student.FirstName;
-            user.LastName = student.LastName;
-            user.Gender = student.Gender;
+            var isStudent = await _userManager.IsInRoleAsync(user, "Student");
+            var isAdmin = await _userManager.IsInRoleAsync(user, "Admin");
 
-            user.FathersName = student.FathersName;
-            user.City = student.City;
-            user.GPA = student.GPA;
-            user.Status = student.Status;
-            user.MajorId = student.MajorId;
-            user.Major = student.Major;
-            user.DormNumber = student.DormNumber;
-
-            var result = await _userManager.UpdateAsync(user);
-
-            if (!result.Succeeded)
+            if (isStudent || isAdmin)
             {
-                return BadRequest(result.Errors);
-            }
+                user.FirstName = updatedStudent.FirstName;
+                user.LastName = updatedStudent.LastName;
+                user.Gender = updatedStudent.Gender;
+                user.UserName = updatedStudent.UserName;
 
-            return Ok("Student successfuly updated");
+                if (isStudent)
+                {
+                    var studentUser = user as Student;
+                    studentUser.FathersName = updatedStudent.FathersName;
+                    studentUser.City = updatedStudent.City;
+                    studentUser.GPA = updatedStudent.GPA;
+                    studentUser.Status = updatedStudent.Status;
+                    studentUser.MajorId = updatedStudent.MajorId;
+                    studentUser.Major = updatedStudent.Major;
+                    studentUser.DormNumber = updatedStudent.DormNumber;
+
+                    var studentResult = await _userManager.UpdateAsync(studentUser);
+
+                    if (!studentResult.Succeeded)
+                    {
+                        return BadRequest(studentResult.Errors);
+                    }
+                }
+
+                var result = await _userManager.UpdateAsync(user);
+
+                if (!result.Succeeded)
+                {
+                    return BadRequest(result.Errors);
+                }
+
+                return Ok("User successfully updated");
+            }
+            else
+            {
+                return BadRequest("Unauthorized");
+            }
         }
         [HttpDelete("{id}")]
         [Authorize(Roles = "Admin")]
