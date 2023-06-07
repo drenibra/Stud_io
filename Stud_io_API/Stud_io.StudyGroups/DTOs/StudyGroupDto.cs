@@ -2,6 +2,15 @@
 
 namespace Stud_io.StudyGroups.DTOs
 {
+
+    public class FilterStudyGroupDto
+    {
+        public int? FacultyId { get; set; }
+        public string? Name { get; set; }
+        public string? Major { get; set; }
+
+    }
+
     public class StudyGroupDto
     {
         public int Id { get; set; }
@@ -13,6 +22,16 @@ namespace Stud_io.StudyGroups.DTOs
         public List<GroupEventDto> GroupEvents { get; set; }
         public List<PostDto> Posts { get; set; }
     }
+
+    public class StudyGroupsDto
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public string GroupImageUrl { get; set; }
+        public string Major { get; set; }
+    }
+
     public class CreateStudyGroupDto
     {
         public string Name { get; set; }

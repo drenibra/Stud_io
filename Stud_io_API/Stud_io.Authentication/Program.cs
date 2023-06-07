@@ -35,7 +35,6 @@ builder.Services.AddCors(opt =>
     opt.AddPolicy("CorsPolicy", policy =>
     {
         policy.AllowAnyMethod().AllowCredentials().AllowAnyHeader().WithOrigins(builder.Configuration["CorsOriginsEndpoint:ReactOrigin"]);
-        Console.WriteLine(builder.Configuration["CorsOriginsEndpoint:ReactOrigin"]);
     });
 });
 

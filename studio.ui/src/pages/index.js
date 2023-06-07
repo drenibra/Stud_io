@@ -9,3 +9,5 @@ export { default as Roommate } from './StudentProfile/Roommate';
 export { default as Questionnaire } from './StudentProfile/Questionnaire';
 export { default as Deadline } from './Announcements/Deadline';
 export { default as Apply } from './Application/Apply.jsx';
+export {default as StudyGroups} from './StudyGroups/StudyGroups.jsx'
+export {default as StudyGroup} from './StudyGroups/StudyGroup.jsx'

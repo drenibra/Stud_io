@@ -29,37 +29,41 @@ namespace Stud_io.StudyGroups.Services.Implementation
             _requestService = requestService;
         }
 
-
         public async Task<ActionResult<StudyGroupDto>> GetStudyGroupById(int id)
         {
-            var studyGroup = await _context.StudyGroups.Where(x => x.Id == id).Select(x => new StudyGroupDto
-            {
-                Id = x.Id,
-                Name = x.Name,
-                Description = x.Description,
-                GroupImageUrl = x.GroupImageUrl,
-                MajorId = x.MajorId,
-                GroupEvents = x.GroupEvents.Select(x => new GroupEventDto
+            var studyGroup = await _context.StudyGroups
+                .Where(x => x.Id == id)
+                .Select(x => new StudyGroupDto
                 {
                     Id = x.Id,
-                    StudyGroupId = x.StudyGroupId,
-                    Title = x.Title,
-                    Capacity = x.Capacity,
-                    DateTime = x.DateTime.ToShortDateString(),
+                    Name = x.Name,
                     Description = x.Description,
-                    Duration = x.Duration,
-                    Location = x.Location,
-                }).ToList(),
-                Posts = x.Posts.Select(x => new PostDto
-                {
-                    Id = x.Id,
-                    Title = x.Title,
-                    Text = x.Text,
-                    StudyGroupId = x.StudyGroupId,
-                    DatePosted = x.DatePosted.ToShortDateString(),
-                    StudentId = x.StudentId,
-                }).ToList(),
-            }).FirstOrDefaultAsync();
+                    GroupImageUrl = x.GroupImageUrl,
+                    MajorId = x.MajorId,
+                    GroupEvents = x.GroupEvents.Select(x => new GroupEventDto
+                    {
+                        Id = x.Id,
+                        StudyGroupId = x.StudyGroupId,
+                        Title = x.Title,
+                        Capacity = x.Capacity,
+                        DateTime = x.DateTime.ToShortDateString(),
+                        Description = x.Description,
+                        Duration = x.Duration,
+                        Location = x.Location,
+                    }).ToList(),
+                    Posts = x.Posts.Select(x => new PostDto
+                    {
+                        Id = x.Id,
+                        Title = x.Title,
+                        Text = x.Text,
+                        StudyGroupId = x.StudyGroupId,
+                        DatePosted = x.DatePosted.ToShortDateString(),
+                        StudentId = x.StudentId,
+                    }).ToList(),
+                }).FirstOrDefaultAsync();
+
+            if (studyGroup == null)
+                return new NotFoundObjectResult("No study groups.");
 
             //getting a serialized response from the api and then deserializing
             //StudentByIdJds is a class that contains the mapped attributes that come from the json response
@@ -76,6 +80,32 @@ namespace Stud_io.StudyGroups.Services.Implementation
             studyGroup.Students = students;
 
             return new OkObjectResult(studyGroup);
+        }
+
+        public async Task<ActionResult<List<StudyGroupsDto>>> GetStudyGroups(FilterStudyGroupDto filter)
+        {
+            var studyGroups = _context.StudyGroups
+                                    .Include(x => x.Major)
+                                    .Where(x => (filter.Name != "" ? true : x.Name.Contains(filter.Name))
+                                                && (filter.Major != "" ? true : x.Major.Title.Contains(filter.Major))
+                                                && x.Major.FacultyId == (filter.FacultyId ?? filter.FacultyId))
+                                    .AsQueryable();
+
+            if (studyGroups.Count() <= 0)
+                return new NotFoundObjectResult("No study groups found with these parameters.");
+
+            var studyGroupDto = await studyGroups.Select(x => new StudyGroupsDto
+            {
+                Id = x.Id,
+                Description = x.Description,
+                GroupImageUrl = x.GroupImageUrl,
+                Major = x.Major.Title,
+                Name = x.Name,
+            }).ToListAsync();
+
+            return new OkObjectResult(studyGroupDto);
+
+            //var dtoTasks = _mapper.Map<List<GetTaskDto>>(await PaginatedList<DTask>.Create(tasks, pageNumber ?? 1, 10));
         }
 
         public async Task<ActionResult> CreateStudyGroup(CreateStudyGroupDto dto)

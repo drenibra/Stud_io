@@ -8,7 +8,7 @@ import theme from "./styles/theme";
 import { Routes, Route } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 import { useStore } from "./stores/store";
-import LoginForm from "./pages/Login/LoginForm";
+import LoginForm from "./pages/Authentication/Loginform";
 
 import {
   LandingPage,
@@ -21,6 +21,8 @@ import {
   Roommate,
   Questionnaire,
   Apply,
+  StudyGroups,
+  StudyGroup,
 } from "./pages";
 
 const App = observer(function App() {
@@ -41,6 +43,8 @@ const App = observer(function App() {
           <Route path="/Announcements" element={<Announcement />}></Route>
           <Route path="/Roommate" element={<Roommate />} />
           <Route path="/Questionnaire" element={<Questionnaire />} />
+          <Route path="/study-groups" element={<StudyGroups />} />
+          <Route path="/study-group/:id" element={<StudyGroup />} />
         </Routes>
       </div>
       <Footer />

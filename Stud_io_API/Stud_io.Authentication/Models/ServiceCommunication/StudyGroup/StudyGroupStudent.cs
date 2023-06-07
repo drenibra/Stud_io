@@ -1,6 +1,4 @@
-﻿using Stud_io.Models;
-
-namespace Stud_io.Authentication.Models.ServiceCommunications.StudyGroup
+﻿namespace Stud_io.Authentication.Models.ServiceCommunications.StudyGroup
 {
     public class StudyGroupStudent
     {

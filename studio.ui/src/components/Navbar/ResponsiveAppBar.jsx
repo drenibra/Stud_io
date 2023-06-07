@@ -42,6 +42,10 @@ const pages = [
     path: "/pagesat",
   },
   {
+    name: "StudyGroups",
+    path: "/study-groups",
+  },
+  {
     name: "About Us",
     path: "/about",
   },
