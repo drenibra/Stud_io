@@ -1,8 +1,23 @@
 .deadline {
     display: flex;
     flex-direction: column;
-    margin-right: 100px;
+    margin-left: 34%;
+    width: 35vw;
+    height: 67vh;
+    margin-top: 40px;
+    background-color: white;
+}
+
+.form-deadline {
     width: 30vw;
+    display: flex;
+    flex-direction: column;
+    margin-left: 30px;
+    margin-top: 20px;
+}
+
+.h4-deadline {
+    text-align: center;
 }
 
 .butoni-deadline {
@@ -11,4 +26,16 @@
 
 .daysDifference {
     color: black;
+}
+
+.label1 {
+    font-size: smaller;
+    color: #bf1a2f;
+    margin-left: 5px;
+}
+
+.link-deadline {
+    border: 1px solid #bf1a2f;
+    width: 50px;
+    text-align: center;
 }

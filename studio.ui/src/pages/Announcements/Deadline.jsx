@@ -1,30 +1,78 @@
 import React, { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import TextField from "@mui/material/TextField";
-import { Button } from "@mui/material";
+import { Button, Link } from "@mui/material";
 import axios from "axios";
 import './DeadlineStyles.scss'
 
-const Deadline = () =>
+
+
+
+
+export default function Deadline({ handleClose })
 {
 
-    const [deadline, setDeadline] = useState({
-        name: "",
-        openDate: "",
-        closedDate: "",
-    });
+
+    const [error, setError] = useState(false);
+    const [error2, setError2] = useState(false);
 
     // const [firstDate, setFirstDate] = useState('');
     // const [secondDate, setSecondDate] = useState('');
     // const [daysDifference, setDaysDifference] = useState(0);
 
-    const handleChange = (e) =>
+
+
+    const [name, setName] = useState("");
+    const [selectedOpenDate, setSelectedOpenDate] = useState(new Date().toISOString().slice(0, 10));
+    const [selectedClosedDate, setSelectedClosedDate] = useState('');
+
+
+
+    const handleOpenDateChange = (e) =>
     {
-        const newData = { ...deadline }
-        newData[e.target.id] = e.target.value
-        setDeadline(newData)
+
+        const selected = e.target.value;
+        const today = new Date().toISOString().slice(0, 10);
+
+        if (selected >= today)
+        {
+            setSelectedOpenDate(selected);
+        }
+        else
+        {
+            setError(true);
+        }
+    }
+
+    const handleClosedDate = (e) =>
+    {
+        const selected = e.target.value;
+        if (selected > selectedOpenDate)
+        {
+            setSelectedClosedDate(selected);
+        }
+        else
+        {
+            setError2(true);
+        }
 
     }
+
+
+    // const handleClosedDate = (e) =>
+    // {
+    //     const selected = e.target.value;
+
+    //     if (selected >= selectedOpenDate)
+    //     {
+    //         setSelectedClosedDate(selected);
+    //     }
+    //     else
+    //     {
+    //         setError(true);
+    //     }
+    // }
+
 
     // const handleOpenDateChange = (e) =>
     // {
@@ -50,9 +98,12 @@ const Deadline = () =>
     //     setSecondDate(e.target.value);
     // }
 
+
+
     const handleSubmit = async (e) =>
     {
         e.preventDefault();
+        const deadline = { name, selectedOpenDate, selectedClosedDate };
         try
         {
             const response = await axios.post('https://localhost:7137/api/Deadline/add-deadline', deadline);
@@ -63,46 +114,50 @@ const Deadline = () =>
             console.log(error);
             toast.error(error.response.data);
         }
+
+
     };
 
     return (
         <div className="deadline">
+            <h3 className="h4-deadline">Cakto nje deadline</h3>
             <form onSubmit={(e) => handleSubmit(e)} className="form-deadline">
                 <TextField
                     label="Name"
                     name="name"
                     id="name"
-                    value={deadline.name}
-                    onChange={handleChange}
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
                     variant="outlined"
                     fullWidth
                     helperText="Please select name of deadline"
                     required
                     margin="normal"
                     sx={{ marginBottom: "8px" }}
+
                 />
+
                 <TextField
                     name="opendate"
                     id="openDate"
-                    value={deadline.openDate}
-                    //value={firstDate}
+                    value={selectedOpenDate}
                     type="date"
-                    onChange={handleChange}
-                    //onChange={handleOpenDateChange}
+                    onChange={handleOpenDateChange}
                     variant="outlined"
                     required
                     fullWidth
                     helperText="Please select open date"
                     margin="normal"
                     sx={{ marginBottom: "8px" }}
+                    min={new Date().toISOString().slice(0, 10)}
                 />
+                {error ?
+                    <label className="label1">Select a valid date!</label> : ""}
                 <TextField
                     name="closeddate"
                     id="closedDate"
-                    value={deadline.closedDate}
-                    //value={secondDate}
-                    onChange={handleChange}
-                    //onChange={handleClosedDateChange}
+                    value={selectedClosedDate}
+                    onChange={handleClosedDate}
                     type="date"
                     required
                     helperText="Please select closed date"
@@ -110,13 +165,24 @@ const Deadline = () =>
                     fullWidth
                     margin="normal"
                     sx={{ marginBottom: "8px" }}
+
                 />
+                {error2 ?
+                    <label className="label1">Select a valid date!</label> : ""}
 
                 {/* <p className="daysDifference">{daysDifference} days</p> */}
 
                 <Button variant="contained" color="primary" type="submit" className="butoni-deadline">
                     Submit
                 </Button>
+
+                <br />
+
+                <Link href="/announcement" underline="none" className="link-deadline">Next</Link>
+
+
+
+
             </form>
             <ToastContainer />
 
@@ -125,5 +191,5 @@ const Deadline = () =>
     )
 };
 
-export default Deadline;
+
 

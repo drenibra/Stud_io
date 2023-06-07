@@ -32,7 +32,7 @@ const pages = [
   },
   {
     name: "Konkursi",
-    path: "/Announcements",
+    path: "/Deadline",
   },
   {
     name: "Apliko",
@@ -48,18 +48,21 @@ const pages = [
   },
 ];
 
-const ResponsiveAppBar = observer(function ResponsiveAppBar() {
+const ResponsiveAppBar = observer(function ResponsiveAppBar()
+{
   const navigate = useNavigate();
 
   const { userStore } = useStore();
 
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
-  const handleOpenUserMenu = (event) => {
+  const handleOpenUserMenu = (event) =>
+  {
     setAnchorElUser(event.currentTarget);
   };
 
-  const handleCloseUserMenu = () => {
+  const handleCloseUserMenu = () =>
+  {
     setAnchorElUser(null);
   };
 
@@ -141,7 +144,8 @@ const ResponsiveAppBar = observer(function ResponsiveAppBar() {
                   </Typography>
                 </MenuItem>
                 <MenuItem
-                  onClick={() => {
+                  onClick={() =>
+                  {
                     handleCloseUserMenu();
                     userStore.logout();
                   }}
