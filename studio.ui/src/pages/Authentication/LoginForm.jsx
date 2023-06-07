@@ -55,11 +55,13 @@ const LoginForm = observer(function LoginForm(props) {
     });
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     try {
       event.preventDefault();
-      userStore.login(formValues);
-      navigate("/");
+      const loggedIn = await userStore.login(formValues);
+      if (loggedIn) {
+        navigate("/");
+      }
     } catch (error) {
       setErrorMsg(true);
       console.log(errorMsg);

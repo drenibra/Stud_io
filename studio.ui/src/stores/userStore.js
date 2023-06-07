@@ -29,6 +29,8 @@ export default class UserStore {
       store.commonStore.setToken(user.token);
       runInAction(() => (this.user = user));
       this.removeError();
+      if (user.token) return true;
+      else return false;
     } catch (error) {
       console.log("Invalid credentials");
       this.triggerError();
@@ -92,16 +94,20 @@ export default class UserStore {
     }
   };
 
-  updateStudent = async (student) => {
+  updateUser = async (user) => {
     try {
-      await agent.Account.update(student);
-      runInAction(() => (this.student = student));
+      await agent.Account.update(user);
+      if (this.getRoles[0] === "Student") {
+        runInAction(() => (this.student = student));
+      } else if (this.getRoles[0] === "Admin") {
+        runInAction(() => (this.user = user));
+      }
       return true;
     } catch (error) {
       console.log(error);
       return false;
     }
-  }
+  };
 
   async fetchIsApplicant() {
     try {
