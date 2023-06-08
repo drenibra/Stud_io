@@ -1,15 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
+import React, { useState } from "react";
+import { createTheme } from "@mui/material/styles";
+import { TextField, Box, Grid, Button } from "@mui/material";
 import Logo from "../../assets/logo/icon-color-stud-io.svg";
 import agent from "../../api/payment_agents";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Menu from "../../components/Menu/Menu";
-import "./registerCustomer.scss";
 
 const theme = createTheme({
   palette: {
@@ -72,101 +68,102 @@ const PaymentForm = () => {
   };
 
   return (
-    <div className="addCard">
-      <ThemeProvider theme={theme}>
-        <div className=".menu">
-          <Menu />
-        </div>
-        <div className="cardForm">
-          <Box
-            border={`2px solid #c62828`}
-            borderRadius={2}
-            p={2}
-            maxWidth={500}
-            marginTop={5}
-            marginBottom={5}
-          >
+    <div>
+      <Box maxWidth="250px" position="absolute">
+        <Menu />
+      </Box>
+      <Grid container marginTop={4}>
+        <Box
+          border={`2px solid #c62828`}
+          borderRadius={2}
+          p={2}
+          maxWidth={500}
+          marginTop={5}
+          marginBottom={3}
+          marginLeft={"40%"}
+        >
+          <Box textAlign="center" mb={2}>
             <img
               src={Logo}
               alt="Our logo."
               style={{ width: "50px", padding: "1vw" }}
             />
-            <Grid container spacing={2}>
-              <Grid item xs={6}>
-                <TextField
-                  label="Name"
-                  variant="outlined"
-                  size="small"
-                  fullWidth
-                  name="name"
-                  onChange={handleChange}
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <TextField
-                  label="Email"
-                  variant="outlined"
-                  size="small"
-                  fullWidth
-                  name="email"
-                  onChange={handleChange}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  label="Card Number"
-                  variant="outlined"
-                  size="small"
-                  fullWidth
-                  name="cardNumber"
-                  onChange={handleChange}
-                />
-              </Grid>
-              <Grid item xs={4}>
-                <TextField
-                  label="Expiration Month"
-                  variant="outlined"
-                  size="small"
-                  fullWidth
-                  name="expirationMonth"
-                  onChange={handleChange}
-                />
-              </Grid>
-              <Grid item xs={4}>
-                <TextField
-                  label="Expiration Year"
-                  variant="outlined"
-                  size="small"
-                  fullWidth
-                  name="expirationYear"
-                  onChange={handleChange}
-                />
-              </Grid>
-              <Grid item xs={4}>
-                <TextField
-                  label="CVC"
-                  variant="outlined"
-                  size="small"
-                  fullWidth
-                  name="cvc"
-                  onChange={handleChange}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  fullWidth
-                  onClick={handleSubmit}
-                >
-                  Paguaj
-                </Button>
-                <ToastContainer />
-              </Grid>
-            </Grid>
           </Box>
-        </div>
-      </ThemeProvider>
+          <Grid container spacing={2}>
+            <Grid item xs={6}>
+              <TextField
+                label="Name"
+                variant="outlined"
+                size="small"
+                fullWidth
+                name="name"
+                onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                label="Email"
+                variant="outlined"
+                size="small"
+                fullWidth
+                name="email"
+                onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                label="Card Number"
+                variant="outlined"
+                size="small"
+                fullWidth
+                name="cardNumber"
+                onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={4}>
+              <TextField
+                label="Expiration Month"
+                variant="outlined"
+                size="small"
+                fullWidth
+                name="expirationMonth"
+                onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={4}>
+              <TextField
+                label="Expiration Year"
+                variant="outlined"
+                size="small"
+                fullWidth
+                name="expirationYear"
+                onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={4}>
+              <TextField
+                label="CVC"
+                variant="outlined"
+                size="small"
+                fullWidth
+                name="cvc"
+                onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Button
+                variant="contained"
+                color="primary"
+                fullWidth
+                onClick={handleSubmit}
+              >
+                Paguaj
+              </Button>
+              <ToastContainer />
+            </Grid>
+          </Grid>
+        </Box>
+      </Grid>
     </div>
   );
 };

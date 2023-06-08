@@ -1,7 +1,7 @@
 import Menu from "../../components/Menu/Menu";
 import "./roommate.scss";
 import { useState } from "react";
-import { TextField, Modal, Backdrop, Fade } from "@mui/material";
+import { TextField, Modal, Backdrop, Fade, Box } from "@mui/material";
 import { IconButton } from "@mui/material";
 import Button from "@mui/material/Button";
 import accept from "../UserProfile/img/accept3.svg";
@@ -26,9 +26,9 @@ export default function Roommate() {
 
   return (
     <div className="styledContainerR">
-      <div className="menu">
+      <Box maxWidth="250px" position="absolute">
         <Menu />
-      </div>
+      </Box>
       <div className="firstPart">
         <div className="roommateContainer">
           <div className="title2">

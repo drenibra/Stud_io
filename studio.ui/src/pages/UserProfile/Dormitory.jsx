@@ -1,8 +1,7 @@
 import React from "react";
-import { Grid, Container } from "@mui/material";
+import { Grid, Container, Box, Typography } from "@mui/material";
 import { styled } from "@mui/system";
 import Menu from "../../components/Menu/Menu";
-import "./dormitory.scss";
 
 const StyledRowContainer = styled("div")({
   background: "#f3f3f3",
@@ -13,17 +12,20 @@ const StyledRowContainer = styled("div")({
 
 export default function Dormitory() {
   return (
-    <>
-      <div className="menu">
+    <div>
+      <Box maxWidth="250px" position="absolute">
         <Menu />
-      </div>
-
+      </Box>
       <Container maxWidth="sm">
-        <h2
-          style={{ marginBottom: "50px", marginTop: "2em", marginLeft: "10px" }}
-        >
-          Konvikti
-        </h2>
+        <Box textAlign="center" marginTop={4}>
+          <Typography
+            variant="h4"
+            gutterBottom
+            style={{ fontFamily: "Poppins", marginBottom: " 1em" }}
+          >
+            Konvikti
+          </Typography>
+        </Box>
         <Grid container spacing={6}>
           <Grid item xs={12} md={6}>
             <StyledRowContainer>
@@ -57,6 +59,6 @@ export default function Dormitory() {
           </Grid>
         </Grid>
       </Container>
-    </>
+    </div>
   );
 }
