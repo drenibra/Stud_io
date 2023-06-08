@@ -1,12 +1,23 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Headline from "../../../assets/study-groups/headline.jpg";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import "./StudyGroup.scss";
 import { Posts, GroupEvents, Info, Resources } from "..";
+import { useParams } from "react-router";
+import agent from "../../../api/study-group-agents";
 
 const StudyGroup = () => {
   const [activeButton, setActiveButton] = useState(1);
+  const [studyGroup, setStudyGroup] = useState();
+  const params = useParams();
+
+  useEffect(() => {
+    agent.StudyGroups.getById(params.id).then((response) => {
+      setStudyGroup(response);
+      console.log(params.id);
+    });
+  }, []);
 
   const handleNavButtonClick = (buttonIndex) => {
     setActiveButton(buttonIndex);
@@ -29,16 +40,18 @@ const StudyGroup = () => {
 
   return (
     <>
-      <section className="sg_headline">
-        <img
-          src={Headline}
-          alt="Headline Image"
-          style={{ width: "100vw", height: "100%", objectFit: "cover" }}
-        />
-        <h1 className="sg_headline__headlineImageOverlay">
-          Welcome to Study Groups
-        </h1>
-      </section>
+      {studyGroup && (
+        <section className="sg_headline">
+          <img
+            src={studyGroup.groupImageUrl}
+            alt="Headline Image"
+            style={{ width: "100vw", height: "100%", objectFit: "cover" }}
+          />
+          <h1 className="sg_headline__headlineImageOverlay">
+            {studyGroup.name}
+          </h1>
+        </section>
+      )}
 
       <section className="sg_navbar">
         <Stack spacing={2} direction="row">

@@ -22,9 +22,9 @@ namespace Stud_io.StudyGroups.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ResourceDto>>> GetAllResources()
+        public async Task<ActionResult<List<ResourceDto>>> GetAllResources([FromQuery]FilterResourceDto filter)
         {
-            return await _resourceService.GetAllResources();
+            return await _resourceService.GetResources(filter);
         }
 
         [HttpPost]

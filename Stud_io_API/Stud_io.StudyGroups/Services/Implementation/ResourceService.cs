@@ -35,26 +35,34 @@ namespace Stud_io.StudyGroups.Services.Implementation
                 FileName = resource.FileName,
                 FileType = resource.FileType,
                 FileUrl = resource.FileUrl,
-                StudentId = resource.StudentId,
+                Author = resource.StudentId,
                 StudyGroupId = resource.StudyGroupId
             };
 
             return resourceDto;
         }
 
-        public async Task<ActionResult<IEnumerable<ResourceDto>>> GetAllResources()
+        public async Task<ActionResult<List<ResourceDto>>> GetResources(FilterResourceDto filter)
         {
-            var resources = await _context.Resources.ToListAsync();
+            var resources = _context.Resources
+                .Where(x => x.StudyGroupId == filter.StudyGroupId
+                            //search bby student //&& x.StudentId == (filter.StudentId ?? x.StudentId)
+                            && (filter.FileName == null ? true : x.FileName.Contains(filter.FileName))
+                            && (filter.FileType == null ? true : x.FileType.Contains(filter.FileType))
+                            ).AsQueryable();
 
-            var resourceDtos = resources.Select(resource => new ResourceDto
+            if (!resources.Any())
+                return new NotFoundObjectResult("No study groups found with these parameters.");
+
+            var resourceDtos = await resources.Select(resource => new ResourceDto
             {
                 Id = resource.Id,
                 FileName = resource.FileName,
                 FileType = resource.FileType,
                 FileUrl = resource.FileUrl,
-                StudentId = resource.StudentId,
+                Author = resource.StudentId,
                 StudyGroupId = resource.StudyGroupId
-            }).ToList();
+            }).ToListAsync();
 
             return resourceDtos;
         }
@@ -67,7 +75,7 @@ namespace Stud_io.StudyGroups.Services.Implementation
             var resource = new Resource
             {
                 FileName = dto.FileName,
-                FileType = dto.FileType,
+                FileType = dto.File.ContentType,
                 StudentId = dto.StudentId,
                 StudyGroupId = dto.StudyGroupId
             };

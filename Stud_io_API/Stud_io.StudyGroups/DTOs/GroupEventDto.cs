@@ -2,6 +2,14 @@
 
 namespace Stud_io.StudyGroups.DTOs
 {
+
+    public class FilterGroupEventDto
+    {
+        public int StudyGroupId { get; set; }
+        public string? Location { get; set; }
+        public string? Title { get; set; }
+        public string? Description { get; set; }
+    }
     public class GroupEventDto
     {
         public int Id { get; set; }

@@ -58,11 +58,17 @@ namespace Stud_io.StudyGroups.Services.Implementation
             return groupEventDto;
         }
 
-        public async Task<ActionResult<IEnumerable<GroupEventDto>>> GetAllGroupEvents()
+        public async Task<ActionResult<List<GroupEventDto>>> GetGroupEvents(FilterGroupEventDto filter)
         {
-            var groupEvents = await _context.GroupEvents.ToListAsync();
+            var groupEvents = _context.GroupEvents
+                                   .Where(x => x.StudyGroupId == filter.StudyGroupId
+                                       && (filter.Title == null ? true : x.Title.Contains(filter.Title))
+                                    ).AsQueryable();
 
-            var groupEventDtos = groupEvents.Select(groupEvent => new GroupEventDto
+            if (groupEvents == null)
+                return new NotFoundResult();
+
+            var groupEventDtos = await groupEvents.Select(groupEvent => new GroupEventDto
             {
                 Id = groupEvent.Id,
                 Title = groupEvent.Title,
@@ -72,7 +78,7 @@ namespace Stud_io.StudyGroups.Services.Implementation
                 DateTime = groupEvent.DateTime.ToShortDateString(),
                 Duration = groupEvent.Duration,
                 StudyGroupId = groupEvent.StudyGroupId
-            }).ToList();
+            }).ToListAsync();
 
             return groupEventDtos;
         }

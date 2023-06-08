@@ -23,9 +23,21 @@ const Posts = {
   getById: (id) => requests.get("Post/" + id),
 };
 
+const Resources = {
+  getAll: (filter) => requests.get("Resource" + filter),
+  getById: (id) => requests.get("Resource/" + id),
+};
+
+const GroupEvents = {
+  getAll: (filter) => requests.get("GroupEvent" + filter),
+  getById: (id) => requests.get("GroupEvent/" + id),
+};
+
 const agent = {
   StudyGroups,
   Posts,
+  Resources,
+  GroupEvents,
 };
 
 export default agent;

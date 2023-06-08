@@ -16,6 +16,9 @@
     transform: translate(-50%, -50%);
     color: #fff;
     font-size: 40px;
+    backdrop-filter: blur(16px);
+    border-radius: 4px;
+    padding-inline: 20px;
   }
 }
 
@@ -27,4 +30,5 @@
 .sg__activePage {
   display: flex;
   width: 100%;
+  justify-content: center;
 }

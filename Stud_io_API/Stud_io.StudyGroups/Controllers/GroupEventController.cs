@@ -24,9 +24,9 @@ namespace Stud_io.StudyGroups.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<GroupEventDto>>> GetAllGroupEvents()
+        public async Task<ActionResult<List<GroupEventDto>>> GetGroupEvents([FromQuery] FilterGroupEventDto filter)
         {
-            return await _groupEventService.GetAllGroupEvents();
+            return await _groupEventService.GetGroupEvents(filter);
         }
 
         [HttpPost]
