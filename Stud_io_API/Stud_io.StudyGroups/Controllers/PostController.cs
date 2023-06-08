@@ -15,6 +15,12 @@ namespace Stud_io.StudyGroups.Controllers
             _postService = postService;
         }
 
+        [HttpGet]
+        public async Task<ActionResult<List<PostsDto>>> GetPosts([FromQuery]FilterPostsDto filter)
+        {
+            return await _postService.GetPosts(filter);
+        }
+
         [HttpGet("{id}")]
         public async Task<ActionResult<PostDto>> GetPostById(int id)
         {

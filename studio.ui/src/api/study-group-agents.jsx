@@ -14,11 +14,18 @@ const requests = {
 };
 
 const StudyGroups = {
-  getAll: (values) => requests.get("StudyGroup" + values),
+  getAll: (filter) => requests.get("StudyGroup" + filter),
+  getById: (id) => requests.get("StudyGroup/" + id),
+};
+
+const Posts = {
+  getAll: (filter) => requests.get("Post" + filter),
+  getById: (id) => requests.get("Post/" + id),
 };
 
 const agent = {
   StudyGroups,
+  Posts,
 };
 
 export default agent;

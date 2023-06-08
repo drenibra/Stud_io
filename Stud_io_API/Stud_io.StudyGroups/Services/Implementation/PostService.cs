@@ -16,6 +16,33 @@ namespace Stud_io.StudyGroups.Services.Implementation
             _context = context;
         }
 
+        public async Task<ActionResult<List<PostsDto>>> GetPosts(FilterPostsDto filter)
+        {
+            var posts = _context.Posts
+                                    .Include(x => x.Likes)
+                                    .Where(x => filter.StudyGroupId == x.StudyGroupId
+                                                && (filter.Title != "" ? true : x.Title.Contains(filter.Title)))
+                                                //&& (filter.Author != "" ? true : x.Major.Title.Contains(filter.Major)) find a way to get the student's info
+                                    .AsQueryable();
+
+            if (posts.Count() <= 0)
+                return new NotFoundObjectResult("No study groups found with these parameters.");
+
+            var postsDto = await posts.Select(x => new PostsDto
+            {
+                Id = x.Id,
+                StudyGroupId = x.StudyGroupId,
+                Title = x.Title,
+                Text = x.Text,
+                DatePosted = x.DatePosted.ToShortDateString(),
+                Author = "Endrit Jashari",
+            }).ToListAsync();
+
+            return new OkObjectResult(postsDto);
+
+            //var dtoTasks = _mapper.Map<List<GetTaskDto>>(await PaginatedList<DTask>.Create(tasks, pageNumber ?? 1, 10));
+        }
+
         public async Task<ActionResult<PostDto>> GetPostById(int id)
         {
             var post = await _context.Posts.Where(x => x.Id == id).Select(x => new PostDto

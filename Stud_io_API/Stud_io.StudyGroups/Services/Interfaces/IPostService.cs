@@ -7,5 +7,6 @@ namespace Stud_io.StudyGroups.Services.Interfaces
     {
         Task<ActionResult> CreatePost(CreatePostDto dto);
         Task<ActionResult<PostDto>> GetPostById(int id);
+        Task<ActionResult<List<PostsDto>>> GetPosts(FilterPostsDto filter);
     }
 }

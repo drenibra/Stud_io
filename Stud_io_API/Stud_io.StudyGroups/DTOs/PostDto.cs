@@ -2,6 +2,14 @@
 
 namespace Stud_io.StudyGroups.DTOs
 {
+
+    public class FilterPostsDto
+    {
+        public int StudyGroupId { get; set; }
+        public string? Title { get; set; }
+        public string? Author { get; set; } //Student that created the post
+    }
+
     public class PostDto
     {
         public int Id { get; set; }
@@ -14,6 +22,17 @@ namespace Stud_io.StudyGroups.DTOs
         //public List<Comment>? Comments { get; set; }
         //public List<PostLike>? Likes { get; set; }
         public string StudentId { get; set; } //Student that created the post
+    }
+
+    public class PostsDto
+    {
+        public int Id { get; set; }
+        public int StudyGroupId { get; set; }
+        public string Title { get; set; }
+        public string Text { get; set; }
+        public string DatePosted { get; set; }
+        //public int Likes { get; set; }
+        public string Author { get; set; } //Student that created the post
     }
 
     public class CreatePostDto
