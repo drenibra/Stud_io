@@ -25,6 +25,7 @@ import
   Roommate,
   Questionnaire,
   Deadline,
+  Dormitory
 } from "./pages";
 
 const routes = [
@@ -37,7 +38,8 @@ const routes = [
   { path: "/roommate", element: Roommate },
   { path: "/questionnaire", element: Questionnaire },
   { path: "/Apply", element: Apply },
-  { path: "/Deadline", element: Deadline }
+  { path: "/Deadline", element: Deadline },
+  { path: "/dormitory", element: Dormitory }
 ];
 
 const App = observer(function App()

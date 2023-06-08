@@ -1,12 +1,13 @@
-.menu {
-    position: absolute;
-    left: 10px;
-    max-width: 250px;
-    margin-top: 1em;
-}
+
 
 .styledContainerR{
 
+    .menu {
+        position: absolute;
+        left: 10px;
+        max-width: 250px;
+        margin-top: 1em;
+    }
     .firstPart{
         display: flex;
         flex-direction: row;
