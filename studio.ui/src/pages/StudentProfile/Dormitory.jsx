@@ -4,6 +4,7 @@ import { styled } from "@mui/system";
 import Menu from "../../components/Menu/Menu";
 import "./dormitory.scss";
 
+
 const StyledRowContainer = styled("div")({
   background: "#f3f3f3",
   padding: "10px",
