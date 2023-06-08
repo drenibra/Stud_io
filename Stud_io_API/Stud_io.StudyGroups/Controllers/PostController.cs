@@ -32,5 +32,11 @@ namespace Stud_io.StudyGroups.Controllers
         {
             return await _postService.CreatePost(dto);
         }
+
+        [HttpPost("likeOrUnlike")]
+        public async Task<ActionResult> LikeOrUnlike(string studentId, int postId)
+        {
+            return await _postService.LikeOrUnlike(studentId, postId);
+        }
     }
 }

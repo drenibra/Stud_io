@@ -58,7 +58,7 @@ namespace Stud_io.StudyGroups.Services.Implementation
                         Text = x.Text,
                         StudyGroupId = x.StudyGroupId,
                         DatePosted = x.DatePosted.ToShortDateString(),
-                        StudentId = x.StudentId,
+                        Author = x.StudentId,
                     }).ToList(),
                 }).FirstOrDefaultAsync();
 

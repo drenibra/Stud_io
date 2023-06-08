@@ -4,15 +4,8 @@ import { DataGrid } from "@mui/x-data-grid";
 import { Button } from "@mui/material";
 import "./Resources.scss"; // Import the custom CSS file
 
-const ResourceTable = () => {
-  const [resources, setResources] = useState([]);
-
-  useEffect(() => {
-    agent.Resources.getAll("?StudyGroupId=3").then((response) => {
-      setResources(response);
-    });
-  }, []);
-
+const ResourceTable = (props) => {
+  const { resources } = props;
   const columns = [
     { field: "id", headerName: "ID" },
     { field: "fileName", headerName: "File Name", width: 200 },

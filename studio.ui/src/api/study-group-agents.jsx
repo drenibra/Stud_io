@@ -21,6 +21,10 @@ const StudyGroups = {
 const Posts = {
   getAll: (filter) => requests.get("Post" + filter),
   getById: (id) => requests.get("Post/" + id),
+  likeOrUnlike: (studentId, postId) =>
+    requests
+      .post(`Post/likeOrUnlike?studentId=${studentId}&postId=${postId}`)
+      .then(responseBody),
 };
 
 const Resources = {
