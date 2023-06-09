@@ -1,0 +1,27 @@
+.posts__list {
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 64px;
+  justify-items: center;
+  margin-top: 32px;
+  text-align: left;
+
+  .postCard {
+    overflow: visible;
+    &__author {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 8px;
+    }
+    &__action {
+      justify-content: space-between;
+      gap: 8px;
+    }
+    &__likeBtn {
+      border-radius: 50px;
+      margin-right: -32px;
+    }
+  }
+}

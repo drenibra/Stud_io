@@ -1,0 +1,20 @@
+.resources {
+  li {
+    filter: drop-shadow(0 0 3px #8f8f8f);
+    cursor: pointer;
+  }
+  &__imgText {
+    background-color: #bf1a2f;
+    border-radius: 0px 0px 4px 4px;
+    text-align: left;
+    &__title {
+      color: white;
+      margin: 0px 4px;
+    }
+  }
+}
+
+.resource-table-container {
+  display: flex;
+  justify-content: space-between;
+}

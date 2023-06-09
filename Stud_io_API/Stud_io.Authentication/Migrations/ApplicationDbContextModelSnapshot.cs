@@ -159,6 +159,89 @@ namespace Stud_io.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Stud_io.Authentication.Models.Faculty", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Faculty");
+                });
+
+            modelBuilder.Entity("Stud_io.Authentication.Models.Major", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("FacultyId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FacultyId");
+
+                    b.ToTable("Major");
+                });
+
+            modelBuilder.Entity("Stud_io.Authentication.Models.ServiceCommunications.StudyGroup.GroupEventStudents", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("GroupEventId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("StudentId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("GroupEventStudents");
+                });
+
+            modelBuilder.Entity("Stud_io.Authentication.Models.ServiceCommunications.StudyGroup.StudyGroupStudent", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("StudentId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("StudyGroupId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("StudyGroupStudents");
+                });
+
             modelBuilder.Entity("Stud_io.Models.AppUser", b =>
                 {
                     b.Property<string>("Id")
@@ -244,45 +327,6 @@ namespace Stud_io.Migrations
                     b.UseTphMappingStrategy();
                 });
 
-            modelBuilder.Entity("Stud_io.Models.Faculty", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Faculty");
-                });
-
-            modelBuilder.Entity("Stud_io.Models.Major", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("FacultyId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("FacultyId");
-
-                    b.ToTable("Major");
-                });
-
             modelBuilder.Entity("Stud_io.Models.Student", b =>
                 {
                     b.HasBaseType("Stud_io.Models.AppUser");
@@ -361,9 +405,9 @@ namespace Stud_io.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Stud_io.Models.Major", b =>
+            modelBuilder.Entity("Stud_io.Authentication.Models.Major", b =>
                 {
-                    b.HasOne("Stud_io.Models.Faculty", "Faculty")
+                    b.HasOne("Stud_io.Authentication.Models.Faculty", "Faculty")
                         .WithMany("Majors")
                         .HasForeignKey("FacultyId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -372,18 +416,47 @@ namespace Stud_io.Migrations
                     b.Navigation("Faculty");
                 });
 
+            modelBuilder.Entity("Stud_io.Authentication.Models.ServiceCommunications.StudyGroup.GroupEventStudents", b =>
+                {
+                    b.HasOne("Stud_io.Models.Student", "Student")
+                        .WithMany("GroupEventStudents")
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Student");
+                });
+
+            modelBuilder.Entity("Stud_io.Authentication.Models.ServiceCommunications.StudyGroup.StudyGroupStudent", b =>
+                {
+                    b.HasOne("Stud_io.Models.Student", "Student")
+                        .WithMany("StudyGroupStudents")
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Student");
+                });
+
             modelBuilder.Entity("Stud_io.Models.Student", b =>
                 {
-                    b.HasOne("Stud_io.Models.Major", "Major")
+                    b.HasOne("Stud_io.Authentication.Models.Major", "Major")
                         .WithMany()
                         .HasForeignKey("MajorId");
 
                     b.Navigation("Major");
                 });
 
-            modelBuilder.Entity("Stud_io.Models.Faculty", b =>
+            modelBuilder.Entity("Stud_io.Authentication.Models.Faculty", b =>
                 {
                     b.Navigation("Majors");
+                });
+
+            modelBuilder.Entity("Stud_io.Models.Student", b =>
+                {
+                    b.Navigation("GroupEventStudents");
+
+                    b.Navigation("StudyGroupStudents");
                 });
 #pragma warning restore 612, 618
         }

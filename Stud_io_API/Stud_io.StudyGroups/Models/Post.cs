@@ -8,14 +8,14 @@ namespace Stud_io.StudyGroups.Models
         public string Title { get; set; }
         public string Text { get; set; }
         public DateTime DatePosted { get; set; }
-        public List<Student>? Likes { get; set; }
-        public List<Resource>? Resource { get; set; }
+
+        public List<Resource>? Resources { get; set; }
         public List<Comment>? Comments { get; set; }
-        [ForeignKey("Author")]
-        public string AuthorId { get; set; }
-        public Student Author { get; set; }
+        public List<PostLike>? Likes { get; set; }
+        public string StudentId { get; set; }
         [ForeignKey("StudyGroup")]
         public int StudyGroupId { get; set; }
         public StudyGroup StudyGroup { get; set; }
     }
+
 }

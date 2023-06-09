@@ -13,6 +13,7 @@ import Apply from "./pages/Application/Apply";
 import RegisterForm from "./pages/Authentication/RegisterForm";
 import ProtectedRoute from "./ProtectedRoute";
 
+
 import {
   LandingPage,
   Maintenance,
@@ -27,6 +28,9 @@ import {
   Dormitory,
   MajorDormitory,
   Statistics,
+  StudyGroup,
+  StudyGroups,
+  Apply
 } from "./pages";
 
 const routes = [
@@ -44,6 +48,7 @@ const routes = [
   { path: "/MajorDormitory", element: MajorDormitory },
   { path: "/Statistics", element: Statistics },
 ];
+
 
 const App = observer(function App() {
   const { commonStore, userStore } = useStore();
