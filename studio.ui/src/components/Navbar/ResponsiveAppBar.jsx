@@ -138,9 +138,9 @@ const ResponsiveAppBar = observer(function ResponsiveAppBar()
                   <Typography
                     color="common.black"
                     textAlign="center"
-                    onClick={() => navigate("/pagesat")}
+                    onClick={() => navigate("/MajorDormitory")}
                   >
-                    Pagesat
+                    Konvikti
                   </Typography>
                 </MenuItem>
                 <MenuItem

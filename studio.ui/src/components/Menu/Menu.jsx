@@ -1,28 +1,33 @@
-import { Link } from 'react-router-dom';
-import { List, ListItem, ListItemIcon, ListItemText, ThemeProvider } from '@mui/material';
-import { styled } from '@mui/system';
-import HomeIcon from '@mui/icons-material/Home';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import HotelIcon from '@mui/icons-material/Hotel';
-import PeopleIcon from '@mui/icons-material/People';
-import PaymentIcon from '@mui/icons-material/Payment';
-import { createTheme } from '@mui/material/styles';
-import { AddCard } from '@mui/icons-material';
-//import "./menu.scss";
+import { Link } from "react-router-dom";
+import {
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  ThemeProvider,
+} from "@mui/material";
+import { styled } from "@mui/system";
+import HomeIcon from "@mui/icons-material/Home";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import HotelIcon from "@mui/icons-material/Hotel";
+import PeopleIcon from "@mui/icons-material/People";
+import PaymentIcon from "@mui/icons-material/Payment";
+import { createTheme } from "@mui/material/styles";
+import { AddCard } from "@mui/icons-material";
 
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#464545', 
+      main: "#464545",
     },
   },
 });
 
 const StyledListItem = styled(ListItem)({
-  backgroundColor: '#f3f3f3',
-  border: '2px solid #ffff',
-  borderRadius: '10px',
-  width: '250px',
+  backgroundColor: "#f3f3f3",
+  border: "2px solid #ffff",
+  borderRadius: "10px",
+  width: "250px",
 });
 
 const StyledLink = styled(Link)`
@@ -31,7 +36,7 @@ const StyledLink = styled(Link)`
 
 const StyledListItemText = styled(ListItemText)(({ theme }) => ({
   color: theme.palette.primary.main,
-  fontWeight: 'bold',
+  fontWeight: "bold",
 }));
 
 const Menu = () => {
@@ -89,6 +94,6 @@ const Menu = () => {
       </List>
     </ThemeProvider>
   );
-}
+};
 
 export default Menu;

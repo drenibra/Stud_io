@@ -9,3 +9,5 @@ export { default as Roommate } from "./UserProfile/Roommate";
 export { default as Questionnaire } from "./UserProfile/Questionnaire";
 export { default as Deadline } from "./Announcements/Deadline";
 export { default as Dormitory } from "./UserProfile/Dormitory";
+export { default as MajorDormitory } from "./MajorDashboard/MajorDormitory";
+export { default as Statistics } from "./MajorDashboard/Statistics";

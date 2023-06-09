@@ -1,6 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { List, ListItem, ListItemIcon, ListItemText, ThemeProvider } from "@mui/material";
+import {
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  ThemeProvider,
+} from "@mui/material";
 import { styled } from "@mui/system";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import HotelIcon from "@mui/icons-material/Hotel";
@@ -56,7 +62,7 @@ const Sidebar = () => {
           <ListItemIcon>
             <PaymentIcon />
           </ListItemIcon>
-          <StyledLink to="/AllPayments">
+          <StyledLink to="/pagesat">
             <StyledListItemText primary="Të gjitha pagesat" />
           </StyledLink>
         </StyledListItem>
@@ -66,6 +72,14 @@ const Sidebar = () => {
           </ListItemIcon>
           <StyledLink to="/Konkurset">
             <StyledListItemText primary="Konkurset" />
+          </StyledLink>
+        </StyledListItem>
+        <StyledListItem className="sidebar-item">
+          <ListItemIcon>
+            <FormatListBulletedIcon />
+          </ListItemIcon>
+          <StyledLink to="/Statistics">
+            <StyledListItemText primary="Statistikat" />
           </StyledLink>
         </StyledListItem>
       </List>

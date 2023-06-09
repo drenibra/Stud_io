@@ -25,6 +25,8 @@ import {
   Questionnaire,
   Deadline,
   Dormitory,
+  MajorDormitory,
+  Statistics,
 } from "./pages";
 
 const routes = [
@@ -39,6 +41,8 @@ const routes = [
   { path: "/Apply", element: Apply },
   { path: "/Deadline", element: Deadline },
   { path: "/dormitory", element: Dormitory },
+  { path: "/MajorDormitory", element: MajorDormitory },
+  { path: "/Statistics", element: Statistics },
 ];
 
 const App = observer(function App() {
