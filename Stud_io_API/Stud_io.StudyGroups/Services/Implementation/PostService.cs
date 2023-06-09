@@ -58,7 +58,14 @@ namespace Stud_io.StudyGroups.Services.Implementation
                     Author = x.StudentId,
                     LikeCount = x.Likes.Count(),
                     CommentCount = x.Comments.Count(),
-                    Comments = x.Comments
+                    Comments = x.Comments.Select(z => new CommentDto
+                    {
+                        Id = z.Id,
+                        Author = z.StudentId,
+                        DateTime = z.DateTime.ToShortDateString(),
+                        LikesAmount = z.LikesAmount,
+                        Text = z.Text,
+                    }).ToList(),
                 }).FirstOrDefaultAsync();
 
             return new OkObjectResult(post);
@@ -97,14 +104,53 @@ namespace Stud_io.StudyGroups.Services.Implementation
             var postClicked = post.Likes.Where(x => x.StudentId == studentId).FirstOrDefault();
 
             if (postClicked != null)
+            {
                 post.Likes.Remove(postClicked);
-            else 
+                await _context.SaveChangesAsync();
+                return new OkObjectResult("Unliked");
+            }
+            else
+            {
                 post.Likes.Add(new PostLike { StudentId = studentId });
+            }
+
+            await _context.SaveChangesAsync();
+            return new OkObjectResult("Liked");
+        }
+
+        public async Task<ActionResult> CreateComment(CreateCommentDto dto)
+        {
+            var post = await _context.Posts
+                                .Include(x => x.Comments)
+                                .Where(x => x.Id == dto.PostId)
+                                .FirstOrDefaultAsync();
+
+            if (post == null)
+                return new NotFoundResult();
+
+            post.Comments.Add(new Comment()
+            {
+                Text = dto.Text,
+                DateTime = DateTime.Now,
+                LikesAmount = 0,
+                StudentId = dto.StudentId
+            });
 
             await _context.SaveChangesAsync();
 
-            return new OkResult();
+            return new OkObjectResult("Comment added succesfully.");
         }
 
+        public async Task<ActionResult> DeleteComment(int commentId)
+        {
+            var comment = await _context.Comments.FindAsync(commentId);
+            if (comment == null)
+                return new NotFoundResult();
+
+            _context.Comments.Remove(comment);
+            await _context.SaveChangesAsync();
+
+            return new OkObjectResult("Deleted");
+        }
     }
 }

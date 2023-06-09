@@ -22,7 +22,7 @@ namespace Stud_io.StudyGroups.DTOs
         public int CommentCount { get; set; }
 
         //public List<Resource>? Resources { get; set; }
-        public List<Comment>? Comments { get; set; }
+        public List<CommentDto>? Comments { get; set; }
         public List<PostLike>? Likes { get; set; }
     }
         
@@ -45,4 +45,6 @@ namespace Stud_io.StudyGroups.DTOs
         public int StudyGroupId { get; set; }
         public string StudentId { get; set; } //Student that created the post
     }
+
+
 }

@@ -16,7 +16,7 @@ namespace Stud_io.StudyGroups.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<PostsDto>>> GetPosts([FromQuery]FilterPostsDto filter)
+        public async Task<ActionResult<List<PostsDto>>> GetPosts([FromQuery] FilterPostsDto filter)
         {
             return await _postService.GetPosts(filter);
         }
@@ -37,6 +37,18 @@ namespace Stud_io.StudyGroups.Controllers
         public async Task<ActionResult> LikeOrUnlike(string studentId, int postId)
         {
             return await _postService.LikeOrUnlike(studentId, postId);
+        }
+
+        [HttpPost("create-comment")]
+        public async Task<ActionResult> CreateComment(CreateCommentDto dto)
+        {
+            return await _postService.CreateComment(dto);
+        }
+
+        [HttpDelete("delete-comment")]
+        public async Task<ActionResult> DeleteComment(int commentId)
+        {
+            return await _postService.DeleteComment(commentId);
         }
     }
 }

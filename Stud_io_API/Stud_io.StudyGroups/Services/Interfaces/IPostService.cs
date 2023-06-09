@@ -9,5 +9,7 @@ namespace Stud_io.StudyGroups.Services.Interfaces
         Task<ActionResult<PostDto>> GetPostById(int id);
         Task<ActionResult<List<PostsDto>>> GetPosts(FilterPostsDto filter);
         Task<ActionResult> LikeOrUnlike(string studentId, int postId);
-    }
+        Task<ActionResult> CreateComment(CreateCommentDto dto);
+        Task<ActionResult> DeleteComment(int commentId);
+        }
 }

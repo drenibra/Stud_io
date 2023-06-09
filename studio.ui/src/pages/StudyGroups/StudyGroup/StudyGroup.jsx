@@ -15,7 +15,6 @@ const StudyGroup = () => {
   useEffect(() => {
     agent.StudyGroups.getById(params.id).then((response) => {
       setStudyGroup(response);
-      console.log(params.id);
     });
   }, []);
 
