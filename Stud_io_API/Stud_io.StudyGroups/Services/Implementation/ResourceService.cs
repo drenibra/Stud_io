@@ -69,19 +69,19 @@ namespace Stud_io.StudyGroups.Services.Implementation
 
         public async Task<ActionResult> CreateResource(CreateResourceDto dto)
         {
-            if (dto == null || dto.File == null)
+            if (dto == null || dto.Document == null)
                 return new BadRequestObjectResult("You must provide a valid resource file.");
 
             var resource = new Resource
             {
                 FileName = dto.FileName,
-                FileType = dto.File.ContentType,
+                FileType = dto.Document.ContentType,
                 StudentId = dto.StudentId,
                 StudyGroupId = dto.StudyGroupId
             };
 
             // Upload the file and set the FileUrl property of the resource
-            resource.FileUrl = await _cloudinaryService.UploadFile(dto.File);
+            resource.FileUrl = await _cloudinaryService.UploadFile(dto.Document);
 
             await _context.Resources.AddAsync(resource);
             await _context.SaveChangesAsync();

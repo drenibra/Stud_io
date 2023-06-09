@@ -21,15 +21,20 @@ const StudyGroups = {
 const Posts = {
   getAll: (filter) => requests.get("Post" + filter),
   getById: (id) => requests.get("Post/" + id),
+  create: (post) => requests.post("Post/", post),
   likeOrUnlike: (studentId, postId) =>
     requests.post(`Post/likeOrUnlike?studentId=${studentId}&postId=${postId}`),
+  comment: (comment) => requests.post("Post/create-comment/", comment),
+  deleteComment: (commentId) =>
+    requests.del("Post/delete-comment/" + commentId),
 };
 
 const Resources = {
   getAll: (filter) => requests.get("Resource" + filter),
   getById: (id) => requests.get("Resource/" + id),
+  create: (resource, config) =>
+    requests.post("Resource/create", resource, config),
 };
-
 const GroupEvents = {
   getAll: (filter) => requests.get("GroupEvent" + filter),
   getById: (id) => requests.get("GroupEvent/" + id),

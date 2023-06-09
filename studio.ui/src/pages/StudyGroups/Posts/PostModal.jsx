@@ -12,13 +12,14 @@ import Comments from "./Comments";
 
 const PostModal = ({ open, handleClose, post }) => {
   const [currentPost, setCurrentPost] = useState();
+  const [refreshKey, setRefreshKey] = useState(1);
   const studentId = "eca02143-0335-4fc0-951b-4c8904aace9a"; // to be replaced with currentStudent
 
   useEffect(() => {
     agent.Posts.getById(post.id).then((response) => {
       setCurrentPost(response);
     });
-  }, []);
+  }, [refreshKey]);
 
   const handleLike = () => {
     agent.Posts.likeOrUnlike(studentId, post.id).then((likeStatus) => {
@@ -43,7 +44,7 @@ const PostModal = ({ open, handleClose, post }) => {
         className="postModal"
         open={open}
         onClose={handleClose}
-        maxWidth="sm"
+        maxWidth="md"
         fullWidth
       >
         <DialogTitle className="postModal__header">
@@ -56,18 +57,28 @@ const PostModal = ({ open, handleClose, post }) => {
           </Box>
         </DialogTitle>
         <DialogContent dividers>
-          <Typography variant="h5">{currentPost.title}</Typography>
-          <Typography variant="h7">{currentPost.text}</Typography>
-          <div>
+          <Typography marginBottom={"8px"} variant="h5">
+            {currentPost.title}
+          </Typography>
+          <Typography marginBottom={"16px"} variant="h7">
+            {currentPost.text}
+          </Typography>
+          <Box marginTop={"16px"}>
             <Button variant="contained" onClick={handleLike}>
               Likes ({currentPost.likeCount})
             </Button>
             <Button variant="outlined">
               Comments ({currentPost.commentCount})
             </Button>
-          </div>
-
-          <Comments comments={currentPost.comments} />
+          </Box>
+          <Box dividers marginTop={"20px"}>
+            <Comments
+              setRefreshKey={setRefreshKey}
+              studentId={studentId}
+              postId={currentPost.id}
+              comments={currentPost.comments}
+            />
+          </Box>
         </DialogContent>
       </Dialog>
     )

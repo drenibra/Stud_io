@@ -5,8 +5,10 @@ import ResourceModal from "./ResourceModal";
 import ResourcePhotos from "./ResourcePhotos";
 import Button from "@mui/material/Button";
 import ResourceTable from "./ResourceTable";
+import { Box } from "@mui/system";
 import PhotoIcon from "@mui/icons-material/Photo";
 import DescriptionIcon from "@mui/icons-material/Description";
+import CreateResourceModal from "./CreateResourceModal";
 
 const Resources = () => {
   const [resources, setResources] = useState([]);
@@ -14,13 +16,14 @@ const Resources = () => {
   const [openModal, setOpenModal] = useState(false);
   const [isTable, setIsTable] = useState(false);
   const [fileType, setFileType] = useState("&FileType=.jpg");
+  const [refreshKey, setRefreshKey] = useState(1);
 
   useEffect(() => {
     console.log(fileType);
     agent.Resources.getAll(`?StudyGroupId=3${fileType}`).then((response) => {
       setResources(response);
     });
-  }, [fileType, isTable]);
+  }, [fileType, isTable, refreshKey]);
 
   const handleImageClick = (resource) => {
     setSelectedResource(resource);
@@ -59,6 +62,13 @@ const Resources = () => {
           List
         </Button>
       </div>
+      <Box marginY={"16px"}>
+        <CreateResourceModal
+          studentId={"eca02143-0335-4fc0-951b-4c8904aace9a"} //currentuserId
+          studyGroupId={3} //passed as prop
+          setRefreshKey={setRefreshKey}
+        />
+      </Box>
       {isTable ? (
         <ResourceTable resources={resources} setResources={setResources} />
       ) : (

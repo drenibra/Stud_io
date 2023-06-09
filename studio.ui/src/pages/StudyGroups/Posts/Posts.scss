@@ -8,7 +8,10 @@
   text-align: left;
 
   .postCard {
+    display: flex;
     overflow: visible;
+    flex-direction: column;
+    justify-content: space-between;
     &__author {
       display: flex;
       flex-direction: row;

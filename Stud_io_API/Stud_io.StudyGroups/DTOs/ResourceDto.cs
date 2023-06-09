@@ -6,8 +6,8 @@ namespace Stud_io.StudyGroups.DTOs
     {
         public int StudyGroupId { get; set; }
         public string? StudentId { get; set; }
-        public string? FileType { get; set;}
-        public string? FileName { get; set;}
+        public string? FileType { get; set; }
+        public string? FileName { get; set; }
     }
 
     public class ResourceDto
@@ -23,10 +23,8 @@ namespace Stud_io.StudyGroups.DTOs
     public class CreateResourceDto
     {
         public string FileName { get; set; }
-        public IFormFile File { get; set; }
-        [Required]
+        public IFormFile Document { get; set; }
         public string StudentId { get; set; }
-        [Required]
         public int StudyGroupId { get; set; }
     }
 }

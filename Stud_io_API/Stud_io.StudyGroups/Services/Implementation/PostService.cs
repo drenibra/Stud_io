@@ -28,7 +28,7 @@ namespace Stud_io.StudyGroups.Services.Implementation
             if (posts.Count() <= 0)
                 return new NotFoundObjectResult("No study groups found with these parameters.");
 
-            var postsDto = await posts.Select(x => new PostsDto
+            var postsDto = await posts.OrderByDescending(x => x.DatePosted).Select(x => new PostsDto
             {
                 Id = x.Id,
                 StudyGroupId = x.StudyGroupId,

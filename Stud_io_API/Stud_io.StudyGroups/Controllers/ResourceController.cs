@@ -27,7 +27,7 @@ namespace Stud_io.StudyGroups.Controllers
             return await _resourceService.GetResources(filter);
         }
 
-        [HttpPost]
+        [HttpPost("create")]
         public async Task<ActionResult> CreateResource(CreateResourceDto dto)
         {
             return await _resourceService.CreateResource(dto);

@@ -45,7 +45,7 @@ namespace Stud_io.StudyGroups.Controllers
             return await _postService.CreateComment(dto);
         }
 
-        [HttpDelete("delete-comment")]
+        [HttpDelete("delete-comment/{commentId}")]
         public async Task<ActionResult> DeleteComment(int commentId)
         {
             return await _postService.DeleteComment(commentId);

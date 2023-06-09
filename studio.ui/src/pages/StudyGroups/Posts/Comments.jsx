@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import agent from "../../../api/study-group-agents";
 import {
   TextField,
   Box,
@@ -10,49 +11,66 @@ import {
   IconButton,
   Avatar,
 } from "@mui/material";
+import { Delete } from "@mui/icons-material";
 
-const Comments = ({ comments }) => {
-  const [newComment, setNewComment] = useState("");
+const Comments = ({ comments, postId, studentId, setRefreshKey }) => {
+  const [addComment, setAddComment] = useState({
+    postId: postId,
+    studentId: studentId,
+    text: "",
+  });
 
   const handleAddComment = () => {
-    // Perform API call to add the comment
-    // Use the newComment value
-    console.log("Adding comment:", newComment);
-    setNewComment("");
+    agent.Posts.comment(addComment).then((response) => {
+      setRefreshKey((prev) => prev + 1);
+      setAddComment((prev) => ({ ...prev, text: "" }));
+    });
   };
 
   const handleDeleteComment = (commentId) => {
-    // Perform API call to delete the comment
-    console.log("Deleting comment:", commentId);
+    agent.Posts.deleteComment(commentId).then((response) => {
+      setRefreshKey((prev) => prev + 1);
+    });
   };
 
   return (
     <div>
-      <Box mb={2}>
+      <Box mb={2} display={"flex"} gap={"8px"} justifyContent={"space-between"}>
         <TextField
           label="Add a comment"
-          value={newComment}
-          onChange={(e) => setNewComment(e.target.value)}
+          value={addComment.text}
+          onChange={(e) =>
+            setAddComment((prev) => ({ ...prev, text: e.target.value }))
+          }
           variant="outlined"
           fullWidth
         />
         <Button
+          style={{ width: "20%" }}
+          marginTop
           variant="contained"
           onClick={handleAddComment}
-          disabled={!newComment}
+          disabled={!addComment.text}
         >
           Add Comment
         </Button>
       </Box>
       {comments.map((comment) => (
-        <Card key={comment.id} variant="outlined" sx={{ mb: 2 }}>
+        <Card
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            mb: 2,
+            justifyContent: "space-between",
+          }}
+          key={comment.id}
+          variant="outlined"
+        >
           <CardContent>
             <Box display="flex" alignItems="center" mb={1}>
-              <Avatar src={comment.authorImage} alt={comment.authorName} />
+              <Avatar src={comment.authorImage} alt={comment.author} />
               <Box ml={1}>
-                <Typography variant="subtitle1">
-                  {comment.authorName}
-                </Typography>
+                <Typography variant="subtitle1">{comment.author}</Typography>
                 <Typography variant="caption">{comment.datePosted}</Typography>
               </Box>
             </Box>
@@ -63,7 +81,7 @@ const Comments = ({ comments }) => {
               color="error"
               onClick={() => handleDeleteComment(comment.id)}
             >
-              Delete
+              <Delete />
             </IconButton>
           </CardActions>
         </Card>
