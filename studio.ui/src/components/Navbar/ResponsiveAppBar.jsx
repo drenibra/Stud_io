@@ -1,6 +1,7 @@
 import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
+import Button from "../Button/Button";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
@@ -51,21 +52,18 @@ const pages = [
   },
 ];
 
-const ResponsiveAppBar = observer(function ResponsiveAppBar()
-{
+const ResponsiveAppBar = observer(function ResponsiveAppBar() {
   const navigate = useNavigate();
 
   const { userStore } = useStore();
 
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
-  const handleOpenUserMenu = (event) =>
-  {
+  const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
 
-  const handleCloseUserMenu = () =>
-  {
+  const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
 
@@ -147,8 +145,7 @@ const ResponsiveAppBar = observer(function ResponsiveAppBar()
                   </Typography>
                 </MenuItem>
                 <MenuItem
-                  onClick={() =>
-                  {
+                  onClick={() => {
                     handleCloseUserMenu();
                     userStore.logout();
                   }}

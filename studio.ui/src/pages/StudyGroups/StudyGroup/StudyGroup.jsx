@@ -38,7 +38,7 @@ const StudyGroup = () => {
   };
 
   return (
-    <>
+    <div className="main-container">
       {studyGroup && (
         <section className="sg_headline">
           <img
@@ -88,7 +88,7 @@ const StudyGroup = () => {
       <section className="sg__activePage">
         <ActivePage />
       </section>
-    </>
+    </div>
   );
 };
 

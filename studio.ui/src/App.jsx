@@ -9,10 +9,8 @@ import { Routes, Route } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 import { useStore } from "./stores/store";
 import LoginForm from "./pages/Authentication/Loginform";
-import Apply from "./pages/Application/Apply";
 import RegisterForm from "./pages/Authentication/RegisterForm";
 import ProtectedRoute from "./ProtectedRoute";
-
 
 import {
   LandingPage,
@@ -30,7 +28,7 @@ import {
   Statistics,
   StudyGroup,
   StudyGroups,
-  Apply
+  Apply,
 } from "./pages";
 
 const routes = [
@@ -42,13 +40,14 @@ const routes = [
   { path: "/announcement", element: Announcement },
   { path: "/roommate", element: Roommate },
   { path: "/questionnaire", element: Questionnaire },
-  { path: "/Apply", element: Apply },
+  { path: "/apliko", element: Apply },
   { path: "/Deadline", element: Deadline },
   { path: "/dormitory", element: Dormitory },
   { path: "/MajorDormitory", element: MajorDormitory },
   { path: "/Statistics", element: Statistics },
+  { path: "/study-group/:id", element: StudyGroup },
+  { path: "/study-groups", element: StudyGroups },
 ];
-
 
 const App = observer(function App() {
   const { commonStore, userStore } = useStore();

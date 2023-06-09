@@ -24,7 +24,7 @@ const StudyGroups = () => {
   }, []);
 
   return (
-    <>
+    <div className="main-container">
       <section className="headline">
         <img
           src={Headline}
@@ -68,7 +68,7 @@ const StudyGroups = () => {
           )}
         </div>
       </section>
-    </>
+    </div>
   );
 };
 
