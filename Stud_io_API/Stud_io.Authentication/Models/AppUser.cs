@@ -7,6 +7,6 @@ namespace Stud_io.Authentication.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public char Gender { get; set; }
-        public string ProfileImage { get; set; }
+        public string? ProfileImage { get; set; }
     }
 }
