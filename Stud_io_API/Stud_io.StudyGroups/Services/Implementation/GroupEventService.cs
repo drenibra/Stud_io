@@ -36,8 +36,10 @@ namespace Stud_io.StudyGroups.Services.Implementation
                 Description = groupEvent.Description,
                 Location = groupEvent.Location,
                 Capacity = groupEvent.Capacity,
-                DateTime = groupEvent.DateTime.ToShortDateString(),
-                Duration = groupEvent.Duration,
+                DateStart = groupEvent.DateTimeStart.ToShortDateString(),
+                TimeStart = groupEvent.DateTimeStart.ToShortTimeString(),
+                DateEnd = groupEvent.DateTimeEnd.ToShortDateString(),
+                TimeEnd = groupEvent.DateTimeEnd.ToShortTimeString(),
                 StudyGroupId = groupEvent.StudyGroupId
             };
 
@@ -51,6 +53,7 @@ namespace Stud_io.StudyGroups.Services.Implementation
                 Id = x.id,
                 FirstName = x.firstName,
                 LastName = x.lastName,
+                ProfileImage = x.profileImage
             }).ToList();
 
             groupEventDto.Attendees = students;
@@ -75,8 +78,7 @@ namespace Stud_io.StudyGroups.Services.Implementation
                 Description = groupEvent.Description,
                 Location = groupEvent.Location,
                 Capacity = groupEvent.Capacity,
-                DateTime = groupEvent.DateTime.ToShortDateString(),
-                Duration = groupEvent.Duration,
+                DateStart = groupEvent.DateTimeStart.ToShortDateString(),
                 StudyGroupId = groupEvent.StudyGroupId
             }).ToListAsync();
 
@@ -94,8 +96,7 @@ namespace Stud_io.StudyGroups.Services.Implementation
                 Description = dto.Description,
                 Location = dto.Location,
                 Capacity = dto.Capacity,
-                DateTime = dto.DateTime,
-                Duration = dto.Duration,
+                DateTimeStart = dto.DateTime,
                 StudyGroupId = dto.StudyGroupId
             };
 
@@ -116,8 +117,7 @@ namespace Stud_io.StudyGroups.Services.Implementation
             groupEvent.Description = dto.Description;
             groupEvent.Location = dto.Location;
             groupEvent.Capacity = dto.Capacity;
-            groupEvent.DateTime = dto.DateTime;
-            groupEvent.Duration = dto.Duration;
+            groupEvent.DateTimeStart = dto.DateTime;
             groupEvent.StudyGroupId = dto.StudyGroupId;
 
             await _context.SaveChangesAsync();

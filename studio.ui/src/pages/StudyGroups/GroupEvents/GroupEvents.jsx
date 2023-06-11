@@ -66,7 +66,7 @@ const GroupEvents = () => {
         <GroupEventModal
           open={Boolean(selectedEvent)}
           handleClose={handleCloseModal}
-          post={selectedEvent}
+          event={selectedEvent}
         />
       )}
     </div>

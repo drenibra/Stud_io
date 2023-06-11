@@ -1,19 +1,26 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using Stud_io.Configuration;
 using Stud_io.StudyGroups.DTOs;
+using Stud_io.StudyGroups.DTOs.ServiceCommunication.Auth;
+using Stud_io.StudyGroups.DTOs.ServiceCommunication.Auth.ApiModels;
+using Stud_io.StudyGroups.DTOs.ServiceCommunication.Auth.JsonDeserializers;
 using Stud_io.StudyGroups.Models;
 using Stud_io.StudyGroups.Services.Interfaces;
+using System.Text.Json;
 
 namespace Stud_io.StudyGroups.Services.Implementation
 {
     public class PostService : IPostService
     {
         private readonly ApplicationDbContext _context;
+        private readonly IMicroservicesRequestService _requestService;
 
-        public PostService(ApplicationDbContext context)
+        public PostService(ApplicationDbContext context, IMicroservicesRequestService requestService)
         {
             _context = context;
+            _requestService = requestService;
         }
 
         public async Task<ActionResult<List<PostsDto>>> GetPosts(FilterPostsDto filter)
@@ -28,6 +35,9 @@ namespace Stud_io.StudyGroups.Services.Implementation
             if (posts.Count() <= 0)
                 return new NotFoundObjectResult("No study groups found with these parameters.");
 
+            var studentsSerialized = await _requestService.GetRequestAt("http://localhost:5274/api/v1/User");
+            var students = JsonSerializer.Deserialize<StudentInfoListJds>(studentsSerialized).result.value;
+
             var postsDto = await posts.OrderByDescending(x => x.DatePosted).Select(x => new PostsDto
             {
                 Id = x.Id,
@@ -35,13 +45,26 @@ namespace Stud_io.StudyGroups.Services.Implementation
                 Title = x.Title,
                 Text = x.Text,
                 DatePosted = x.DatePosted.ToShortDateString(),
-                Author = "Endrit Jashari",
+                Author = x.StudentId,
                 LikesCount = x.Likes.Count()
             }).ToListAsync();
 
-            return new OkObjectResult(postsDto);
+            // Update the Author attribute in postsDto
+            foreach (var post in postsDto)
+            {
+                var author = students.FirstOrDefault(s => s.id == post.Author);
+                if (author != null)
+                {
+                    post.Author = $"{author.firstName} {author.lastName}";
+                    post.AuthorProfileImage = author.profileImage;
+                }
+                else
+                {
+                    post.Author = "Unknown";
+                }
+            }
 
-            //var dtoTasks = _mapper.Map<List<GetTaskDto>>(await PaginatedList<DTask>.Create(tasks, pageNumber ?? 1, 10));
+            return new OkObjectResult(postsDto);
         }
 
         public async Task<ActionResult<PostDto>> GetPostById(int id)
@@ -55,9 +78,9 @@ namespace Stud_io.StudyGroups.Services.Implementation
                     Title = x.Title,
                     Text = x.Text,
                     DatePosted = DateTime.Now.ToShortDateString(),
-                    Author = x.StudentId,
                     LikeCount = x.Likes.Count(),
                     CommentCount = x.Comments.Count(),
+                    StudentId = x.StudentId,
                     Comments = x.Comments.Select(z => new CommentDto
                     {
                         Id = z.Id,
@@ -67,6 +90,24 @@ namespace Stud_io.StudyGroups.Services.Implementation
                         Text = z.Text,
                     }).ToList(),
                 }).FirstOrDefaultAsync();
+
+            var studentSerialized = await _requestService.GetRequestAt("http://localhost:5274/api/v1/User/" + post.StudentId);
+            var student = JsonSerializer.Deserialize<StudentInfoJds>(studentSerialized);
+
+            var poster = new StudentInfoDto
+            {
+                Id = student.value.id,
+                FirstName = student.value.firstName,
+                LastName = student.value.lastName,
+                Email = student.value.email,
+                Gender = student.value.gender,
+                ProfileImage = student.value.profileImage,
+                Username = student.value.username
+            };
+
+            
+
+            post.Author = poster;
 
             return new OkObjectResult(post);
         }

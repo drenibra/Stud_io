@@ -15,7 +15,7 @@ const Resources = () => {
   const [selectedResource, setSelectedResource] = useState(null);
   const [openModal, setOpenModal] = useState(false);
   const [isTable, setIsTable] = useState(false);
-  const [fileType, setFileType] = useState("&FileType=.jpg");
+  const [fileType, setFileType] = useState("&FileType=image/jpeg");
   const [refreshKey, setRefreshKey] = useState(1);
 
   useEffect(() => {
@@ -37,7 +37,9 @@ const Resources = () => {
 
   const handleToggleView = () => {
     setFileType((prev) =>
-      !isTable ? (prev = "&FileType=.pdf") : (prev = "&FileType=.jpg")
+      !isTable
+        ? (prev = "&FileType=application/pdf")
+        : (prev = "&FileType=image/jpeg")
     );
     setIsTable(!isTable);
   };

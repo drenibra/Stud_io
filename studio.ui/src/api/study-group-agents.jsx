@@ -33,7 +33,7 @@ const Resources = {
   getAll: (filter) => requests.get("Resource" + filter),
   getById: (id) => requests.get("Resource/" + id),
   create: (resource, config) =>
-    requests.post("Resource/create", resource, config),
+    requests.post("Resource/create-resource", resource, config),
 };
 const GroupEvents = {
   getAll: (filter) => requests.get("GroupEvent" + filter),

@@ -11,7 +11,7 @@ const service1Axios = axios.create({
   baseURL: import.meta.env.VITE_API_AUTH_URL,
 });
 
-axios.interceptors.request.use(
+service1Axios.interceptors.request.use(
   (config) => {
     const token = store.commonStore.token;
     if (token) config.headers.Authorization = `Bearer ${token}`;
@@ -22,7 +22,7 @@ axios.interceptors.request.use(
   }
 );
 
-axios.interceptors.response.use(async (response) => {
+service1Axios.interceptors.response.use(async (response) => {
   try {
     await sleep(400);
     return response;

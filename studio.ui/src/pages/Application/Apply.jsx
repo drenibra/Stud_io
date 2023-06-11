@@ -11,11 +11,12 @@ import { useStore } from "../../stores/store";
 
 const Apply = () => {
   const { userStore } = useStore();
+  let studentidd = userStore.getCurrentUserId();
   const [formData, setFormData] = useState({
     isSpecialCategory: false,
     specialCategory: "",
     personalNo: "",
-    studentId: "3cf17ac8-3ee6-4565-8b8c-8b4bf88672bd", //userStore.getCurrentUserId(),
+    studentId: 3, //studentidd,
     document: null,
   });
 
@@ -38,7 +39,7 @@ const Apply = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    console.log(userStore.getCurrentUserId());
     agent.Apply.apply(formData)
       .then(() => {
         toast.success("Pagesa u krye me sukses");

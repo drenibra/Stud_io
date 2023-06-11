@@ -9,11 +9,15 @@ import { Box } from "@mui/material";
 import agent from "../../../api/study-group-agents";
 import "./PostModal.scss";
 import Comments from "./Comments";
+import { useStore } from "../../../stores/store";
+import { observer } from "mobx-react-lite";
 
-const PostModal = ({ open, handleClose, post }) => {
+const PostModal = observer(({ open, handleClose, post }) => {
   const [currentPost, setCurrentPost] = useState();
   const [refreshKey, setRefreshKey] = useState(1);
-  const studentId = "eca02143-0335-4fc0-951b-4c8904aace9a"; // to be replaced with currentStudent
+  const { userStore } = useStore();
+
+  const studentId = userStore.user.id; // to be replaced with currentStudent
 
   useEffect(() => {
     agent.Posts.getById(post.id).then((response) => {
@@ -48,10 +52,10 @@ const PostModal = ({ open, handleClose, post }) => {
         fullWidth
       >
         <DialogTitle className="postModal__header">
-          <Avatar />
+          <Avatar src={currentPost.author.profileImage} />
           <Box lineHeight={"0px"} flexDirection={"row"}>
             <Typography fontWeight={"600"} variant="subtitle1">
-              {currentPost.author} Endrit Jashari
+              {currentPost.author.firstName + " " + currentPost.author.lastName}
             </Typography>
             <Typography variant="caption">{currentPost.datePosted}</Typography>
           </Box>
@@ -67,7 +71,7 @@ const PostModal = ({ open, handleClose, post }) => {
             <Button variant="contained" onClick={handleLike}>
               Likes ({currentPost.likeCount})
             </Button>
-            <Button variant="outlined">
+            <Button variant="text">
               Comments ({currentPost.commentCount})
             </Button>
           </Box>
@@ -83,6 +87,6 @@ const PostModal = ({ open, handleClose, post }) => {
       </Dialog>
     )
   );
-};
+});
 
 export default PostModal;

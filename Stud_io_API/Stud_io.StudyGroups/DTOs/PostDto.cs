@@ -1,4 +1,5 @@
-﻿using Stud_io.StudyGroups.Models;
+﻿using Stud_io.StudyGroups.DTOs.ServiceCommunication.Auth;
+using Stud_io.StudyGroups.Models;
 
 namespace Stud_io.StudyGroups.DTOs
 {
@@ -14,7 +15,8 @@ namespace Stud_io.StudyGroups.DTOs
     {
         public int Id { get; set; }
         public int StudyGroupId { get; set; }
-        public string Author { get; set; }
+        public string StudentId { get; set; }
+        public StudentInfoDto Author { get; set; }
         public string Title { get; set; }
         public string Text { get; set; }
         public string DatePosted { get; set; }
@@ -25,7 +27,7 @@ namespace Stud_io.StudyGroups.DTOs
         public List<CommentDto>? Comments { get; set; }
         public List<PostLike>? Likes { get; set; }
     }
-        
+
 
     public class PostsDto
     {
@@ -36,6 +38,7 @@ namespace Stud_io.StudyGroups.DTOs
         public string DatePosted { get; set; }
         public int LikesCount { get; set; }
         public string Author { get; set; } //Student that created the post
+        public string AuthorProfileImage { get; set; }
     }
 
     public class CreatePostDto

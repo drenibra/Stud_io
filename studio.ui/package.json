@@ -42,6 +42,7 @@
     "react-dropzone": "^14.2.3",
     "react-hook-form": "^7.43.9",
     "react-hooks": "^1.0.1",
+    "react-material-ui-carousel": "^3.4.2",
     "react-router": "^6.11.1",
     "react-router-dom": "^6.11.1",
     "react-toastify": "^9.1.3",

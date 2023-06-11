@@ -44,7 +44,10 @@ namespace Stud_io.Authentication.Services
                 Id = user.Id,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
-                Username = user.UserName
+                Username = user.UserName,
+                Email = user.Email,
+                ProfileImage = user.ProfileImage,
+                Gender = user.Gender,
             };
         }
         public async Task<IActionResult> DeleteUser(string id)
@@ -87,6 +90,7 @@ namespace Stud_io.Authentication.Services
                                                         Id = x.StudentId,
                                                         FirstName = x.Student.FirstName,
                                                         LastName = x.Student.LastName,
+                                                        ProfileImage = x.Student.ProfileImage,
                                                     }).ToListAsync();
 
             return new OkObjectResult(studyGroupStudents);
@@ -102,6 +106,7 @@ namespace Stud_io.Authentication.Services
                                                         Id = x.StudentId,
                                                         FirstName = x.Student.FirstName,
                                                         LastName = x.Student.LastName,
+                                                        ProfileImage = x.Student.ProfileImage,
                                                     }).ToListAsync();
 
             return new OkObjectResult(groupEventStudents);

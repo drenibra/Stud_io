@@ -10,8 +10,8 @@ namespace Stud_io.StudyGroups.Models
         public string Description { get; set; }
         public string Location { get; set; }
         public int Capacity { get; set; }
-        public DateTime DateTime { get; set; }
-        public int Duration { get; set; }
+        public DateTime DateTimeStart { get; set; }
+        public DateTime DateTimeEnd { get; set; }
         public List<GroupEventStudents> Attendees { get; set; }
 
         [ForeignKey("StudyGroupId")]

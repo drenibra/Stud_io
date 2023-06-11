@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Button from "../Button/Button";
@@ -108,7 +108,7 @@ const ResponsiveAppBar = observer(function ResponsiveAppBar() {
                   onClick={handleOpenUserMenu}
                   sx={{ p: 0 }}
                 >
-                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                  <Avatar alt="Remy Sharp" src={userStore.user.profileImage} />
                 </IconButton>
               </Tooltip>
               <Menu

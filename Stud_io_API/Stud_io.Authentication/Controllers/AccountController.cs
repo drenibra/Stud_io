@@ -126,12 +126,14 @@ namespace Stud_io.Controllers
         {
             return new UserDto
             {
+                Id = user.Id,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Token = _tokenService.CreateToken(user),
                 Username = user.UserName,
                 Email = user.Email,
-                Gender = user.Gender
+                Gender = user.Gender,
+                ProfileImage = user.ProfileImage,
             };
         }
     }

@@ -46,9 +46,11 @@ namespace Stud_io.StudyGroups.Services.Implementation
                         StudyGroupId = x.StudyGroupId,
                         Title = x.Title,
                         Capacity = x.Capacity,
-                        DateTime = x.DateTime.ToShortDateString(),
+                        DateStart = x.DateTimeStart.ToShortDateString(),
+                        TimeStart = x.DateTimeEnd.ToShortTimeString(),
+                        DateEnd = x.DateTimeEnd.ToShortDateString(),
+                        TimeEnd = x.DateTimeEnd.ToShortTimeString(),
                         Description = x.Description,
-                        Duration = x.Duration,
                         Location = x.Location,
                     }).ToList(),
                     Posts = x.Posts.Select(x => new PostDto
@@ -58,7 +60,7 @@ namespace Stud_io.StudyGroups.Services.Implementation
                         Text = x.Text,
                         StudyGroupId = x.StudyGroupId,
                         DatePosted = x.DatePosted.ToShortDateString(),
-                        Author = x.StudentId,
+                        StudentId = x.StudentId,
                     }).ToList(),
                 }).FirstOrDefaultAsync();
 

@@ -19,7 +19,7 @@ namespace Stud_io.StudyGroups.Services.Implementation
         {
             var httpClient = _httpClientFactory.CreateClient();
 
-            var authentication = new AuthenticationHeaderValue("Bearer", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJkZTI4ODI4My1lZTI5LTRiNzMtYjk1Ny1iZjIwNmNmMWE0YjQiLCJ1bmlxdWVfbmFtZSI6InJyZXppIiwiZW1haWwiOiJyaDUyNzQxQHVidC11bmkubmV0Iiwicm9sZSI6IkFkbWluIiwibmJmIjoxNjg1ODI4Njc0LCJleHAiOjE2ODY0MzM0NzQsImlhdCI6MTY4NTgyODY3NH0.45JHMBXwjfQcxAuWr1BYCZLogzmgFB2oVFdi6ThArKY");
+            var authentication = new AuthenticationHeaderValue("Bearer", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJlYTc4OGYzMy1kNzlmLTQ2OTctYTQzMS1lMTFhMzkwZjIwZGIiLCJ1bmlxdWVfbmFtZSI6InJyZXppIiwiZW1haWwiOiJyaDUyNzQxQHVidC11bmkubmV0Iiwicm9sZSI6IkFkbWluIiwibmJmIjoxNjg2NDg1OTgwLCJleHAiOjE2ODcwOTA3ODAsImlhdCI6MTY4NjQ4NTk4MH0.O2unv_ZaKWKojOp_Hld6gsTgCKWBR0J1sCVr96EsPLw");
             httpClient.DefaultRequestHeaders.Authorization = authentication;
 
             var response = await httpClient.GetAsync(uri);
@@ -32,7 +32,7 @@ namespace Stud_io.StudyGroups.Services.Implementation
         {
             var httpClient = _httpClientFactory.CreateClient();
 
-            var authentication = new AuthenticationHeaderValue("Bearer", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJkZTI4ODI4My1lZTI5LTRiNzMtYjk1Ny1iZjIwNmNmMWE0YjQiLCJ1bmlxdWVfbmFtZSI6InJyZXppIiwiZW1haWwiOiJyaDUyNzQxQHVidC11bmkubmV0Iiwicm9sZSI6IkFkbWluIiwibmJmIjoxNjg1ODI4Njc0LCJleHAiOjE2ODY0MzM0NzQsImlhdCI6MTY4NTgyODY3NH0.45JHMBXwjfQcxAuWr1BYCZLogzmgFB2oVFdi6ThArKY");
+            var authentication = new AuthenticationHeaderValue("Bearer", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJlYTc4OGYzMy1kNzlmLTQ2OTctYTQzMS1lMTFhMzkwZjIwZGIiLCJ1bmlxdWVfbmFtZSI6InJyZXppIiwiZW1haWwiOiJyaDUyNzQxQHVidC11bmkubmV0Iiwicm9sZSI6IkFkbWluIiwibmJmIjoxNjg2NDg1OTgwLCJleHAiOjE2ODcwOTA3ODAsImlhdCI6MTY4NjQ4NTk4MH0.O2unv_ZaKWKojOp_Hld6gsTgCKWBR0J1sCVr96EsPLw");
             httpClient.DefaultRequestHeaders.Authorization = authentication;
 
             var content = new StringContent(JsonSerializer.Serialize(studentIds), Encoding.UTF8, "application/json");

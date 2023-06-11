@@ -22,13 +22,13 @@ namespace Stud_io.StudyGroups.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<ResourceDto>>> GetAllResources([FromQuery]FilterResourceDto filter)
+        public async Task<ActionResult<List<ResourceDto>>> GetAllResources([FromQuery] FilterResourceDto filter)
         {
             return await _resourceService.GetResources(filter);
         }
 
-        [HttpPost("create")]
-        public async Task<ActionResult> CreateResource(CreateResourceDto dto)
+        [HttpPost("create-resource")]
+        public async Task<ActionResult> CreateResource([FromForm] CreateResourceDto dto)
         {
             return await _resourceService.CreateResource(dto);
         }

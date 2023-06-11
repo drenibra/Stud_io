@@ -17,7 +17,10 @@ namespace Stud_io.StudyGroups.DTOs
         public string Description { get; set; }
         public string Location { get; set; }
         public int Capacity { get; set; }
-        public string DateTime { get; set; }
+        public string DateStart { get; set; }
+        public string TimeStart { get; set; }
+        public string DateEnd { get; set; }
+        public string TimeEnd { get; set; }
         public int Duration { get; set; }
         public int StudyGroupId { get; set; }
         public List<MemberStudentDto> Attendees { get; set; }
