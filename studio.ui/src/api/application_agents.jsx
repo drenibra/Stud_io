@@ -14,7 +14,7 @@ const requests = {
 };
 
 const Apply = {
-  apply: (values) => requests.post("AddApplication", values),
+  apply: (values) => requests.post("Application/AddApplication", values),
 };
 
 const agent = {

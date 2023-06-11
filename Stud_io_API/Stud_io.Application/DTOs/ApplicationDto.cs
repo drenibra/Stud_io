@@ -5,7 +5,7 @@
         public bool IsSpecialCategory { get; set; }
         public string? SpecialCategoryReason { get; set; }
         public string PersonalNo { get; set; }
-        public int StudentId { get; set; }
+        public int StudentId { get; set; } = 3;
         public IFormFile? Document { get; set; }
     }
 
@@ -17,5 +17,15 @@
         public string? PersonalNo { get; set; }
         public int? StudentId { get; set; }
         public int? FileId { get; set; }
+    }
+
+    public class ApplicationDetailsDto
+    {
+        public bool IsSpecialCategory { get; set; }
+        public string? SpecialCategoryReason { get; set; }
+        public string PersonalNo { get; set; } = null!;
+        public string? DocumentUrl { get; set; }
+        public string StudentId { get; set; } = null!;
+        public StudentDetailsDto StudentDetails { get; set; } = null!;
     }
 }

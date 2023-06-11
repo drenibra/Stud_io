@@ -1,5 +1,17 @@
 ﻿namespace Stud_io.Application.DTOs
 {
+    public class StudentDetailsDto
+    {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public char? Gender { get; set; }
+        public string? FathersName { get; set; }
+        public string? City { get; set; }
+        public double? GPA { get; set; }
+        public string? Status { get; set; }
+        public int? MajorId { get; set; }
+    }
+
     public class StudentDto
     {
         public string PersonalNo { get; set; } = null!;

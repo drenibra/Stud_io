@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Stud_io.Authentication.DTOs.ServiceCommunication.StudyGroup;
 using Stud_io.DTOs;
 using Stud_io.Authentication.Models;
 
@@ -9,6 +10,9 @@ namespace Stud_io.Authentication.Interfaces
         Task<ActionResult<IEnumerable<UserDto>>> GetUsers();
         Task<ActionResult<UserDto>> GetUserById(string id);
         Task<IActionResult> DeleteUser(string id);
+        Task<ActionResult<List<MemberStudentDto>>> GetStudyGroupStudents(int id);
+        Task<ActionResult<List<MemberStudentDto>>> GetGroupEventStudents(int id);
+        Task<ActionResult> AddStudyGroupMembers(int groupId, List<string> studentIds);
 
         //Task<ActionResult<IEnumerable<Student>>> GetStudents();
         //Task<Student> GetStudentById(string id);

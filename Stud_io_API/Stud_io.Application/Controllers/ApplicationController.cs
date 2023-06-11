@@ -22,7 +22,7 @@ namespace Stud_io.Application.Controllers
         }
 
         [HttpGet("GetApplicationById/{id}")]
-        public async Task<ActionResult<ApplicationDto>> GetApplicationById(int id)
+        public async Task<ActionResult<ApplicationDetailsDto>> GetApplicationById(int id)
         {
             return await _applicationService.GetApplicationById(id);
         }

@@ -12,6 +12,9 @@ export default createTheme({
     error: {
       main: red.A400,
     },
+    danger: {
+      500: '#19857b',
+    },
     background: {
       default: '#fff',
     },
