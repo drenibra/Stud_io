@@ -38,6 +38,8 @@ const Resources = {
 const GroupEvents = {
   getAll: (filter) => requests.get("GroupEvent" + filter),
   getById: (id) => requests.get("GroupEvent/" + id),
+  confirmGoing: (groupEventId, studentId) =>
+    requests.post("GroupEvent/confirm-going/" + groupEventId + "/" + studentId),
 };
 
 const agent = {

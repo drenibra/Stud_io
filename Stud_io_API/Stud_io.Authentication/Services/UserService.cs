@@ -130,5 +130,20 @@ namespace Stud_io.Authentication.Services
 
             return new OkResult();
         }
+
+        public async Task<ActionResult> AddGroupEventStudent(int groupEventId, string studentId)
+        {
+            var groupEventStudy = new GroupEventStudents
+            {
+                GroupEventId = groupEventId,
+                StudentId = studentId
+            };
+
+            await _context.GroupEventStudents.AddAsync(groupEventStudy);
+
+            await _context.SaveChangesAsync();
+
+            return new OkResult();
+        }
     }
 }

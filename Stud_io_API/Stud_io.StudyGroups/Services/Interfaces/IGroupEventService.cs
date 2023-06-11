@@ -12,7 +12,7 @@ namespace Stud_io.StudyGroups.Services.Interfaces
         Task<ActionResult> CreateGroupEvent(CreateGroupEventDto dto);
         Task<ActionResult> UpdateGroupEvent(int id, UpdateGroupEventDto dto);
         Task<ActionResult> DeleteGroupEvent(int id);
-        Task<ActionResult> AddAttendees(int groupEventId, List<string> studentIds);
+        Task<ActionResult> ConfirmGoing(int groupEventId, string studentId);
         //Task<ActionResult> RemoveAttendees(int groupEventId, List<string> studentIds);
     }
 }

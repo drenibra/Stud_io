@@ -12,31 +12,43 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import PersonIcon from "@mui/icons-material/Person";
 import Button from "@mui/material/Button";
 import { Box, Divider } from "@mui/material";
+import { observer } from "mobx-react-lite";
 
 import GroupStudentsSlider from "./GroupStudentsSlider";
+import { useStore } from "../../../stores/store";
 
-const GroupEventModal = ({ open, handleClose, event }) => {
+const GroupEventModal = observer(({ open, handleClose, event }) => {
   const [groupEvent, setGroupEvent] = useState();
+  const [refreshKey, setRefreshKey] = useState(1);
+  const { userStore } = useStore();
   const [isGoing, setIsGoing] = useState(false);
 
   useEffect(() => {
-    if (event) {
-      agent.GroupEvents.getById(event.id).then((response) => {
-        setGroupEvent(response);
-        console.log(response);
-      });
+    if (groupEvent) {
+      const isUserAttending = groupEvent.attendees.some(
+        (attendee) => attendee.id === userStore.user.id
+      );
+      setIsGoing(isUserAttending);
+    } else {
+      fetchGroupEvent();
     }
-  }, [event]);
+  }, [refreshKey]);
+
+  const fetchGroupEvent = async () => {
+    if (event) {
+      const response = await agent.GroupEvents.getById(event.id);
+      setGroupEvent(response);
+      setRefreshKey((prev) => prev + 1);
+    }
+  };
 
   const handleGoingClick = () => {
-    agent.GroupEvents.addAttendee(event.id).then((response) => {
-      // Update the local state with the modified group event
-      setGroupEvent((prevGroupEvent) => ({
-        ...prevGroupEvent,
-        attendees: response.attendees,
-      }));
-      setIsGoing(true);
-    });
+    agent.GroupEvents.confirmGoing(event.id, userStore.user.id).then(
+      (response) => {
+        fetchGroupEvent();
+        setRefreshKey((prev) => prev + 1);
+      }
+    );
   };
 
   if (!event) {
@@ -76,10 +88,19 @@ const GroupEventModal = ({ open, handleClose, event }) => {
             attendees={groupEvent.attendees}
             atendeesLength={groupEvent.attendees.length}
           />
+          <Divider sx={{ marginY: "16px" }} />
+
+          <Button
+            disabled={isGoing}
+            variant="contained"
+            onClick={handleGoingClick}
+          >
+            {isGoing ? "Going" : "I am going"}
+          </Button>
         </DialogContent>
       </Dialog>
     )
   );
-};
+});
 
 export default GroupEventModal;

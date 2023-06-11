@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Stud_io.StudyGroups.Models;
+using Stud_io.StudyGroups.Models.ServiceCommunication.Authentication;
 
 namespace Stud_io.Configuration
 {
@@ -26,6 +27,7 @@ namespace Stud_io.Configuration
         public DbSet<Comment> Comments { get; set; }
         public DbSet<StudyGroup> StudyGroups { get; set; }
         public DbSet<GroupEvent> GroupEvents { get; set; }
+        public DbSet<GroupEventStudents> GroupEventStudents { get; set; }
         public DbSet<GroupSettings> GroupSettings { get; set; }
         public DbSet<Resource> Resources { get; set; }
         public DbSet<PostLike> PostLikes { get; set; }

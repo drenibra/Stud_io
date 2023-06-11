@@ -17,7 +17,7 @@ const PostModal = observer(({ open, handleClose, post }) => {
   const [refreshKey, setRefreshKey] = useState(1);
   const { userStore } = useStore();
 
-  const studentId = userStore.user.id; // to be replaced with currentStudent
+  const studentId = userStore.user.id;
 
   useEffect(() => {
     agent.Posts.getById(post.id).then((response) => {

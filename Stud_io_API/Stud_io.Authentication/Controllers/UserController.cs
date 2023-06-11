@@ -150,6 +150,12 @@ namespace Stud_io.Authentication.Controllers
             return await _contract.AddStudyGroupMembers(groupId, studentIds);
         }
 
+        [HttpPost("group-event-student/{groupEventId}/{studentId}")]
+        public async Task<ActionResult> AddGroupEventStudent(int groupEventId,  string studentId)
+        {
+            return await _contract.AddGroupEventStudent(groupEventId, studentId);
+        }
+
         //[HttpGet("student")]
         //[Authorize(Roles = "Admin")]
         //public async Task<ActionResult<List<Student>>> GetStudents()

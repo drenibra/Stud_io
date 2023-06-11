@@ -4,5 +4,6 @@
     {
         Task<string> GetRequestAt(string uri);
         Task<string> PostRequestAt(string uri, List<string> studentIds);
+        Task<string> PostRequestWithUrlOnly(string uri);
     }
 }

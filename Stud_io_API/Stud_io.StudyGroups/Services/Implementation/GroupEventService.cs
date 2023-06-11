@@ -8,6 +8,7 @@ using Stud_io.StudyGroups.Models;
 using Stud_io.StudyGroups.Models.ServiceCommunication.Authentication;
 using Stud_io.StudyGroups.Services.Interfaces;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 
 namespace Stud_io.StudyGroups.Services.Implementation
 {
@@ -138,18 +139,34 @@ namespace Stud_io.StudyGroups.Services.Implementation
             return new OkObjectResult("Group event deleted successfully!");
         }
 
-        public async Task<ActionResult> AddAttendees(int groupEventId, List<string> studentIds)
+        public async Task<ActionResult> ConfirmGoing(int groupEventId, string studentId)
         {
-            var groupEvent = await _context.GroupEvents.FindAsync(groupEventId);
+            var groupEvent = await _context.GroupEvents.Where(x => x.Id == groupEventId).FirstOrDefaultAsync();
 
             if (groupEvent == null)
                 return new NotFoundObjectResult("Group Event wasn't found.");
 
-            groupEvent.Attendees = studentIds.Select(x => new GroupEventStudents()
-            {
-                StudentId = x
-            }).ToList();
+            var hasAlreadyApplied = await _context.GroupEventStudents.Where(x => x.GroupEventId == groupEventId && x.StudentId == studentId).AnyAsync();
 
+            if (hasAlreadyApplied)
+            {
+                return new BadRequestObjectResult("You already applied.");
+            }
+
+            // Initialize groupEvent.Attendees if it is null
+            if (groupEvent.Attendees == null)
+            {
+                groupEvent.Attendees = new List<GroupEventStudents>();
+            }
+
+            // Add a new GroupEventStudents object to groupEvent.Attendees
+            groupEvent.Attendees.Add(new GroupEventStudents()
+            {
+                StudentId = studentId
+            });
+
+
+            var response = await _requestService.PostRequestWithUrlOnly("http://localhost:5274/api/v1/User/group-event-student/" + groupEventId + "/" +  studentId);
 
             var result = await _context.SaveChangesAsync();
             if (result >= 0)

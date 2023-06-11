@@ -47,10 +47,10 @@ namespace Stud_io.StudyGroups.Controllers
             return await _groupEventService.DeleteGroupEvent(id);
         }
 
-        [HttpPost("add-attendees/{groupEventId}")]
-        public async Task<ActionResult> AddAttendees(int groupEventId, List<string> studentIds)
+        [HttpPost("confirm-going/{groupEventId}/{studentId}")]
+        public async Task<ActionResult> AddAttendees(int groupEventId, string studentId)
         {
-            return await _groupEventService.AddAttendees(groupEventId, studentIds);
+            return await _groupEventService.ConfirmGoing(groupEventId, studentId);
         }
 
         //[HttpPost("remove-attendees/{groupEventId}")]
