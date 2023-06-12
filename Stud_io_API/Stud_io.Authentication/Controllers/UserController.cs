@@ -144,6 +144,12 @@ namespace Stud_io.Authentication.Controllers
             return await _contract.GetGroupEventStudents(id);
         }
 
+        [HttpGet("students-customerId/{email}")]
+        public async Task<ActionResult<string>> GetStudentsCustomerId(string email)
+        {
+            return await _contract.GetStudentsCustomerId(email);
+        }
+
         [HttpPost("study-group-member")]
         public async Task<ActionResult> AddStudyGroupMember(int groupId, List<string> studentIds)
         {
