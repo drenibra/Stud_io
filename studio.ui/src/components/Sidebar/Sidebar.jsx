@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import {
+import
+{
   List,
   ListItem,
   ListItemIcon,
@@ -38,7 +39,8 @@ const StyledListItemText = styled(ListItemText)(({ theme }) => ({
   fontWeight: "bold",
 }));
 
-const Sidebar = () => {
+const Sidebar = () =>
+{
   return (
     <ThemeProvider theme={theme}>
       <List className="sidebar">
@@ -70,8 +72,8 @@ const Sidebar = () => {
           <ListItemIcon>
             <FormatListBulletedIcon />
           </ListItemIcon>
-          <StyledLink to="/Konkurset">
-            <StyledListItemText primary="Konkurset" />
+          <StyledLink to="/Deadline">
+            <StyledListItemText primary="Konkursi" />
           </StyledLink>
         </StyledListItem>
         <StyledListItem className="sidebar-item">
