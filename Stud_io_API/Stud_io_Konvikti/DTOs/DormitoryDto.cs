@@ -2,14 +2,14 @@
 {
     public class DormitoryDto
     {
-        public string Major { get; set; } = null!;
+        public int DormNo { get; set; }
         public char Gender { get; set; }
         public int NoOfRooms { get; set; }
     }
 
     public class UpdateDormitoryDto
     {
-        public string? Major { get; set; }
+        public int? DormNo { get; set; }
         public char? Gender { get; set; }
         public int? NoOfRooms { get; set; }
     }

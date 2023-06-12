@@ -8,11 +8,11 @@ using Stud_io_Dormitory.Configurations;
 
 #nullable disable
 
-namespace Stud_io_Dormitory.Migrations
+namespace Stud_io.Dormitory.Migrations
 {
     [DbContext(typeof(DormitoryDbContext))]
-    [Migration("20230422234436_Questionnaire_Table")]
-    partial class Questionnaire_Table
+    [Migration("20230612080452_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -26,18 +26,11 @@ namespace Stud_io_Dormitory.Migrations
             modelBuilder.Entity("Stud_io_Dormitory.Models.Dormitory", b =>
                 {
                     b.Property<int>("DormNo")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DormNo"), 1L, 1);
 
                     b.Property<string>("Gender")
                         .IsRequired()
                         .HasColumnType("nvarchar(1)");
-
-                    b.Property<string>("Major")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("NoOfRooms")
                         .HasColumnType("int");
@@ -84,21 +77,45 @@ namespace Stud_io_Dormitory.Migrations
 
             modelBuilder.Entity("Stud_io.Dormitory.Models.Room", b =>
                 {
-                    b.Property<int>("RoomNo")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RoomNo"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("Capacity")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DormitoryId")
                         .HasColumnType("int");
 
                     b.Property<int>("Floor")
                         .HasColumnType("int");
 
-                    b.HasKey("RoomNo");
+                    b.Property<int>("RoomNo")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DormitoryId");
 
                     b.ToTable("Rooms");
+                });
+
+            modelBuilder.Entity("Stud_io.Dormitory.Models.Room", b =>
+                {
+                    b.HasOne("Stud_io_Dormitory.Models.Dormitory", "Dormitory")
+                        .WithMany("Rooms")
+                        .HasForeignKey("DormitoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Dormitory");
+                });
+
+            modelBuilder.Entity("Stud_io_Dormitory.Models.Dormitory", b =>
+                {
+                    b.Navigation("Rooms");
                 });
 #pragma warning restore 612, 618
         }

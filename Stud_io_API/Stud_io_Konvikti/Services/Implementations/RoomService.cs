@@ -49,8 +49,11 @@ namespace Stud_io.Dormitory.Services.Implementations
             if (dbRoom == null)
                 return new NotFoundObjectResult("Room doesn't exist!!");
 
+            dbRoom.RoomNo = updateRoomDTO.RoomNo ?? dbRoom.RoomNo;
             dbRoom.Floor = updateRoomDTO.Floor ?? dbRoom.Floor;
             dbRoom.Capacity = updateRoomDTO.Capacity ?? dbRoom.Capacity;
+            dbRoom.DormitoryId = updateRoomDTO.DormitoryId ?? dbRoom.DormitoryId;
+
             await _context.SaveChangesAsync();
 
             return new OkObjectResult("Room updated successfully!");

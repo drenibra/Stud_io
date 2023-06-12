@@ -3,6 +3,7 @@ using Stud_io.Dormitory.Services.Implementations;
 using Stud_io.Dormitory.Services.Interfaces;
 using Stud_io_Dormitory.Configurations;
 using Stud_io_Dormitory.Services.Implementations;
+using Microsoft.Extensions.DependencyInjection;
 using Stud_io_Dormitory.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -40,7 +41,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-
 app.UseCors("CorsPolicy");
 
 app.UseHttpsRedirection();
@@ -48,5 +48,13 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<DormitoryDbContext>();
+    var dormitoryService = scope.ServiceProvider.GetRequiredService<IDormitoryService>();
+    dbContext.Database.EnsureCreated();
+    dormitoryService.GenerateDormitoryData();
+}
 
 app.Run();

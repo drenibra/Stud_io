@@ -49,7 +49,7 @@ namespace Stud_io_Dormitory.Services.Implementations
             if (dbDormitory == null)
                 return new NotFoundObjectResult("Dormitory doesn't exist!!");
 
-            dbDormitory.Major = updateDormitoryDTO.Major ?? dbDormitory.Major;
+            dbDormitory.DormNo = updateDormitoryDTO.DormNo ?? dbDormitory.DormNo;
             dbDormitory.Gender = updateDormitoryDTO.Gender ?? dbDormitory.Gender;
             dbDormitory.NoOfRooms = updateDormitoryDTO.NoOfRooms ?? dbDormitory.NoOfRooms;
             await _context.SaveChangesAsync();
@@ -66,6 +66,12 @@ namespace Stud_io_Dormitory.Services.Implementations
             _context.Dormitories.Remove(dbDormitory);
             await _context.SaveChangesAsync();
             return new OkObjectResult("Dormitory deleted successfully!");
+        }
+
+        public async Task GenerateDormitoryData()
+        {
+            var dormitoryDataGenerator = new DormitoryDataGenerator(_context);
+            dormitoryDataGenerator.GenerateDormitories();
         }
     }
 }
