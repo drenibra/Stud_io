@@ -30,10 +30,7 @@ const pages = [
     name: "Ankesa",
     path: "/ankesa",
   },
-  {
-    name: "Konkursi",
-    path: "/Deadline",
-  },
+
   {
     name: "Konkurset",
     path: "/Konkurset",
