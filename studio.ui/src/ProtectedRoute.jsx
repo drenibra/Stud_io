@@ -7,7 +7,6 @@ ProtectedRoute.propTypes = {
 };
 
 export default function ProtectedRoute({ loggedIn, children }) {
-  console.log("loggedIn: " + loggedIn);
   if (!loggedIn) {
     return <Navigate to="/login" replace />;
   }

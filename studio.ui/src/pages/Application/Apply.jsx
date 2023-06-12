@@ -7,14 +7,16 @@ import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import Dropzone from "../../components/Dropzone/Dropzone";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useStore } from "../../stores/store";
 
 const Apply = () => {
+  const { userStore } = useStore();
+  let studentidd = userStore.getCurrentUserId();
   const [formData, setFormData] = useState({
     isSpecialCategory: false,
     specialCategory: "",
-    applyDate: "2023-03-03 ",
     personalNo: "",
-    studentId: "11",
+    studentId: 3, //studentidd,
     document: null,
   });
 
@@ -37,15 +39,8 @@ const Apply = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    const formDataToSend = new FormData();
-    formDataToSend.append("personalNo", formData.personalNo);
-    formDataToSend.append("studentId", formData.studentId);
-    formDataToSend.append("specialCategory", formData.specialCategory);
-    formDataToSend.append("isSpecialCategory", formData.isSpecialCategory);
-    formDataToSend.append("document", formData.document);
-
-    agent.Apply.apply(formDataToSend)
+    console.log(userStore.getCurrentUserId());
+    agent.Apply.apply(formData)
       .then(() => {
         toast.success("Pagesa u krye me sukses");
       })
@@ -62,17 +57,6 @@ const Apply = () => {
           label="Personal No"
           name="personalNo"
           value={formData.personalNo}
-          onChange={handleChange}
-          variant="outlined"
-          fullWidth
-          margin="normal"
-          sx={{ marginBottom: "8px" }}
-        />
-        <TextField
-          label="Student ID"
-          name="studentId"
-          type="number"
-          value={formData.studentId}
           onChange={handleChange}
           variant="outlined"
           fullWidth

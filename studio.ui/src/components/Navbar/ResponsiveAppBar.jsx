@@ -1,7 +1,7 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
+import Button from "../Button/Button";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
@@ -36,11 +36,15 @@ const pages = [
   },
   {
     name: "Apliko",
-    path: "/Apply",
+    path: "/apliko",
   },
   {
     name: "Pagesat",
     path: "/pagesat",
+  },
+  {
+    name: "StudyGroups",
+    path: "/study-groups",
   },
   {
     name: "About Us",
@@ -48,21 +52,18 @@ const pages = [
   },
 ];
 
-const ResponsiveAppBar = observer(function ResponsiveAppBar()
-{
+const ResponsiveAppBar = observer(function ResponsiveAppBar() {
   const navigate = useNavigate();
 
   const { userStore } = useStore();
 
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
-  const handleOpenUserMenu = (event) =>
-  {
+  const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
 
-  const handleCloseUserMenu = () =>
-  {
+  const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
 
@@ -107,11 +108,11 @@ const ResponsiveAppBar = observer(function ResponsiveAppBar()
                   onClick={handleOpenUserMenu}
                   sx={{ p: 0 }}
                 >
-                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                  <Avatar alt="Remy Sharp" src={userStore.user.profileImage} />
                 </IconButton>
               </Tooltip>
               <Menu
-                className="menu"
+                class="menu"
                 sx={{ mt: "45px" }}
                 id="menu-appbar"
                 anchorEl={anchorElUser}
@@ -144,8 +145,7 @@ const ResponsiveAppBar = observer(function ResponsiveAppBar()
                   </Typography>
                 </MenuItem>
                 <MenuItem
-                  onClick={() =>
-                  {
+                  onClick={() => {
                     handleCloseUserMenu();
                     userStore.logout();
                   }}

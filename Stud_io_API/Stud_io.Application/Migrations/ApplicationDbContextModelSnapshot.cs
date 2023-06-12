@@ -47,6 +47,10 @@ namespace Stud_io.Application.Migrations
                     b.Property<int>("StudentId")
                         .HasColumnType("int");
 
+                    b.Property<string>("StudentsId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("isSpecialCategory")
                         .HasColumnType("bit");
 

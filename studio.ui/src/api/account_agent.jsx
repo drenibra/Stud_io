@@ -8,7 +8,7 @@ const sleep = (delay) => {
 };
 
 const service1Axios = axios.create({
-  baseURL: "http://localhost:5274/api/v1",
+  baseURL: import.meta.env.VITE_API_AUTH_URL,
 });
 
 service1Axios.interceptors.request.use(

@@ -30,7 +30,10 @@ builder.Services.AddScoped<IFacultyService, FacultyService>();
 builder.Services.AddScoped<IFileService, FileService>();
 builder.Services.AddScoped<IApplicationService, ApplicationService>();
 builder.Services.AddScoped<IProfileMatchService, ProfileMatchService>();
+builder.Services.AddScoped<IMailKitEmailService, MailKitEmailService>();
 
+// Register IHttpClientFactory
+builder.Services.AddHttpClient();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
