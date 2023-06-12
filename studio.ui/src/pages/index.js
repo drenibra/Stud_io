@@ -12,5 +12,7 @@ export { default as Dormitory } from "./UserProfile/Dormitory";
 export { default as MajorDormitory } from "./MajorDashboard/MajorDormitory";
 export { default as Statistics } from "./MajorDashboard/Statistics";
 export { default as Apply } from './Application/Apply.jsx';
-export {default as StudyGroups} from './StudyGroups/StudyGroups/StudyGroups.jsx'
-export {default as StudyGroup} from './StudyGroups/StudyGroup/StudyGroup.jsx'
+export { default as StudyGroups } from './StudyGroups/StudyGroups/StudyGroups.jsx';
+export { default as StudyGroup } from './StudyGroups/StudyGroup/StudyGroup.jsx';
+export { default as Konkurset } from './Announcements/Konkurset';
+export { default as AnnouncementDetail } from './Announcements/AnnouncementDetail';
