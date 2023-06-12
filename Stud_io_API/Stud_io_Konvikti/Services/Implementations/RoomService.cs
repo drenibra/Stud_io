@@ -5,6 +5,7 @@ using Stud_io.Dormitory.DTOs;
 using Stud_io.Dormitory.Models;
 using Stud_io.Dormitory.Services.Interfaces;
 using Stud_io_Dormitory.Configurations;
+using Stud_io_Dormitory.Services.Implementations;
 
 namespace Stud_io.Dormitory.Services.Implementations
 {
@@ -12,11 +13,12 @@ namespace Stud_io.Dormitory.Services.Implementations
     {
         private readonly DormitoryDbContext _context;
         private readonly IMapper _mapper;
-
-        public RoomService(DormitoryDbContext context, IMapper mapper)
+        private readonly DormitoryDataGenerator _dataGenerator; // Add the DormitoryDataGenerator
+        public RoomService(DormitoryDbContext context, IMapper mapper, DormitoryDataGenerator dataGenerator)
         {
             _context = context;
             _mapper = mapper;
+            _dataGenerator = dataGenerator;
         }
 
         public async Task<ActionResult<List<RoomDto>>> GetRooms() =>
@@ -68,6 +70,18 @@ namespace Stud_io.Dormitory.Services.Implementations
             _context.Rooms.Remove(dbRoom);
             await _context.SaveChangesAsync();
             return new OkObjectResult("Room deleted successfully!");
+        }
+
+        public async Task<ActionResult<List<RoomDto>>> GetRoomsData()
+        {
+            // Check if rooms are already generated for the dormitories
+            if (!_context.Rooms.Any())
+            {
+                // Generate and insert room data into the database for all dormitories
+                _dataGenerator.GenerateRoomsForDormitories();
+            }
+
+            return _mapper.Map<List<RoomDto>>(await _context.Rooms.ToListAsync());
         }
 
         /*

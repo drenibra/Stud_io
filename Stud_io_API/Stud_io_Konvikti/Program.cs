@@ -27,6 +27,7 @@ builder.Services.AddAutoMapper(typeof(Program).Assembly);
 builder.Services.AddScoped<IDormitoryService, DormitoryService>();
 builder.Services.AddScoped<IRoomService, RoomService>();
 builder.Services.AddScoped<IQuestionnaireService, QuestionnaireService>();
+builder.Services.AddScoped<DormitoryDataGenerator>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -54,7 +55,9 @@ using (var scope = app.Services.CreateScope())
     var dbContext = scope.ServiceProvider.GetRequiredService<DormitoryDbContext>();
     var dormitoryService = scope.ServiceProvider.GetRequiredService<IDormitoryService>();
     dbContext.Database.EnsureCreated();
-    dormitoryService.GenerateDormitoryData();
+
+    var dormitoryDataGenerator = scope.ServiceProvider.GetRequiredService<DormitoryDataGenerator>();
+    dormitoryDataGenerator.GenerateRoomsForDormitories();
 }
 
 app.Run();

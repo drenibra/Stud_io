@@ -52,6 +52,8 @@ namespace Stud_io_Dormitory.Services.Implementations
             dbDormitory.DormNo = updateDormitoryDTO.DormNo ?? dbDormitory.DormNo;
             dbDormitory.Gender = updateDormitoryDTO.Gender ?? dbDormitory.Gender;
             dbDormitory.NoOfRooms = updateDormitoryDTO.NoOfRooms ?? dbDormitory.NoOfRooms;
+            dbDormitory.Capacity = updateDormitoryDTO.Capacity ?? dbDormitory.Capacity;
+            dbDormitory.isFull = updateDormitoryDTO.isFull ?? dbDormitory.isFull;
             await _context.SaveChangesAsync();
 
             return new OkObjectResult("Dormitory updated successfully!");
@@ -68,10 +70,5 @@ namespace Stud_io_Dormitory.Services.Implementations
             return new OkObjectResult("Dormitory deleted successfully!");
         }
 
-        public async Task GenerateDormitoryData()
-        {
-            var dormitoryDataGenerator = new DormitoryDataGenerator(_context);
-            dormitoryDataGenerator.GenerateDormitories();
-        }
     }
 }

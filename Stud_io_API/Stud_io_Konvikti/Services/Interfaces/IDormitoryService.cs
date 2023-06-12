@@ -10,8 +10,6 @@ namespace Stud_io_Dormitory.Services.Interfaces
         public Task<ActionResult> AddDormitory(DormitoryDto dormitoryDTO);
         public Task<ActionResult> UpdateDormitory(int id, UpdateDormitoryDto updateDormitoryDTO);
         public Task<ActionResult> DeleteDormitory(int id);
-        public Task GenerateDormitoryData();
-
     }
 }
 

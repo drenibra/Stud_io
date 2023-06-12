@@ -11,6 +11,8 @@ namespace Stud_io_Dormitory.Models
         public int DormNo { get; set; }
         public char Gender { get; set; }
         public int NoOfRooms { get; set; }
+        public int Capacity { get; set; } //sa studenta i zen
+        public Boolean isFull { get; set; } 
 
         //navigation prop
         public ICollection<Room> Rooms { get; set; } = new List<Room>();

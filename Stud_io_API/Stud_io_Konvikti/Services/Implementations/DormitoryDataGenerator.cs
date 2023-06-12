@@ -1,6 +1,7 @@
 ﻿using Stud_io.Dormitory.Models;
 using Stud_io_Dormitory.Configurations;
 using Stud_io_Dormitory.Models;
+using System.Linq;
 
 namespace Stud_io_Dormitory.Services.Implementations
 {
@@ -13,65 +14,53 @@ namespace Stud_io_Dormitory.Services.Implementations
             _context = context;
         }
 
-       public void GenerateDormitories()
+        public void GenerateRoomsForDormitories()
         {
-            List<Dormitory> dormitories = new List<Dormitory>();
-
-            // Generate rooms for each dormitory
-            for (int dormitoryId = 1; dormitoryId <= 8; dormitoryId++)
+            // Check if rooms are already generated for the dormitories
+            if (_context.Rooms.Any())
             {
-                Dormitory dormitory = new Dormitory
-                {
-                    //DormNo = dormitoryId,
-                    Gender = (dormitoryId <= 4) ? 'F' : 'M',
-                    NoOfRooms = 200
-                    // Set other dormitory properties as needed
-                };
-
-                List<Room> rooms = GenerateRoomsForDormitory(dormitoryId);
-                dormitory.Rooms = rooms;
-
-                dormitories.Add(dormitory);
+                // Rooms already exist, no need to generate them again
+                return;
             }
 
-            _context.Dormitories.AddRange(dormitories);
-            _context.SaveChanges();
-        }
+            int totalRoomsPerFloor = 40; // Total rooms per floor
+            int capacityPerRoom1 = 2; // Capacity for the first 20 rooms
+            int capacityPerRoom2 = 3; // Capacity for the next 20 rooms
 
-        private List<Room> GenerateRoomsForDormitory(int dormitoryId)
-        {
-            List<Room> rooms = new List<Room>();
-            int roomId = 1;
-            int capacityPerRoom1 = 2; // Capacity for the first 100 rooms
-            int capacityPerRoom2 = 3; // Capacity for the next 100 rooms
+            int totalFloors = 5; // Total number of floors
+            int roomNoIncrement = 100; // Increment value for room numbers
 
-            // Iterate through each floor
-            for (int floor = 1; floor <= 5; floor++)
+            // Iterate through each dormitory
+            foreach (var dormitory in _context.Dormitories)
             {
-                // Calculate the range of room numbers for the current floor
-                int startRoomNo = ((floor - 1) * 100) + 101;
-                int endRoomNo = (floor * 100) + 100;
-
-                // Generate rooms for the current floor
-                for (int roomNo = startRoomNo; roomNo <= endRoomNo; roomNo++)
+                // Iterate through each floor
+                for (int floor = 1; floor <= totalFloors; floor++)
                 {
-                    int capacity = (roomNo <= (startRoomNo + 100)) ? capacityPerRoom1 : capacityPerRoom2;
+                    // Calculate the range of room numbers for the current floor
+                    int startRoomNo = (floor * roomNoIncrement) + 1;
+                    int endRoomNo = startRoomNo + totalRoomsPerFloor - 1;
 
-                    Room room = new Room
+                    // Generate rooms for the current floor
+                    for (int roomNo = startRoomNo; roomNo <= endRoomNo; roomNo++)
                     {
-                        RoomNo = roomNo,
-                        Floor = floor,
-                        Capacity = capacity,
-                        DormitoryId = dormitoryId
-                    };
+                        int capacity = (roomNo <= startRoomNo + (totalRoomsPerFloor / 2)) ? capacityPerRoom1 : capacityPerRoom2;
 
-                    rooms.Add(room);
-                    roomId++;
+                        Room room = new Room
+                        {
+                            RoomNo = roomNo,
+                            Floor = floor,
+                            Capacity = capacity,
+                            DormitoryId = dormitory.DormNo
+                        };
+
+                        _context.Rooms.Add(room);
+                    }
                 }
             }
 
-            return rooms;
+            // Save the changes to the database
+            _context.SaveChanges();
         }
-    
+
     }
 }
