@@ -12,8 +12,8 @@ namespace Stud_io.Authentication.Models
         public int? MajorId { get; set; }
         public Major? Major { get; set; }
         public int? DormNumber { get; set; }
+        public string? CustomerId { get; set; }
         public List<StudyGroupStudent> StudyGroupStudents { get; set; }
         public List<GroupEventStudents> GroupEventStudents { get; set; }
-
     }
 }

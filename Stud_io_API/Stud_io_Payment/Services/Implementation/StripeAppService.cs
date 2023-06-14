@@ -1,11 +1,14 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using Payment.Contracts;
 using Payment.Models.Stripe;
 using Stripe;
 using Stud_io.Payment.DTOs;
+using Stud_io.Payment.Services.Interfaces;
 using Stud_io_Payment.Configurations;
+using System.Text.Json;
 
 namespace Payment.Application
 {
@@ -22,19 +25,37 @@ namespace Payment.Application
             CustomerService customerService,
             TokenService tokenService, 
             PaymentDbContext context, 
-            IMapper mapper)
+            IMapper mapper
+            /*IMicroservicesRequestService microservicesRequestService*/)
         {
             _chargeService = chargeService;
             _customerService = customerService;
             _tokenService = tokenService;
             _context = context;
             _mapper = mapper;
+            /*_microservicesRequestService = microservicesRequestService;*/
         }
 
         private static StripeCustomer MapStripeCustomer(Customer customer)
         {
             return new StripeCustomer(customer.Name, customer.Email, customer.Id);
         }
+
+        /*private async Task<StripeCustomer> GetCustomerById(string id)
+        {
+            var customer = await _context.StripeCustomers.FirstOrDefaultAsync(c => c.CustomerId == id);
+
+            return customer;
+        }
+
+        private async Task<string> GetCustomerIdAsync(string email)
+        {
+            var customerIdSerialized = await _microservicesRequestService.GetRequestAt("http://localhost:5274/api/v1/User/students-customerId" + email);
+
+            var customerId = JsonConvert.DeserializeObject<string>(customerIdSerialized);
+
+            return customerId;
+        }*/
 
         public async Task<StripeCustomer> AddStripeCustomerAsync(AddStripeCustomer customer, CancellationToken ct)
         {
@@ -90,6 +111,8 @@ namespace Payment.Application
             bool hasPaid = await HasPaid(payment);
             if (hasPaid)
                 throw new Exception("Pages u kry ma heret!");
+
+            //string customerId = await Get(payment.CustomerId);
 
             // Set the options for the payment we would like to create at Stripe
             ChargeCreateOptions paymentOptions = new()
@@ -147,6 +170,15 @@ namespace Payment.Application
         public async Task<ActionResult<List<PaymentDto>>> GetPayments()
         {
             return _mapper.Map<List<PaymentDto>>(await _context.StripePayments.ToListAsync());
+        }
+
+        public async Task<ActionResult<List<PaymentDto>>> GetPaymentsOfUser(string customerId)
+        {
+            List<PaymentDto> payments = _mapper.Map<List<PaymentDto>>(await _context.StripePayments
+            .Where(payment => payment.CustomerId == customerId)
+            .ToListAsync());
+
+            return payments;
         }
 
         public async Task<ActionResult<List<CustomerDto>>> GetCustomers()

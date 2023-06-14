@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Payment.Contracts;
 using Payment.Models.Stripe;
+using Stripe;
 using Stud_io.Payment.DTOs;
 
 namespace Payment.Controllers
@@ -42,6 +43,12 @@ namespace Payment.Controllers
         public async Task<ActionResult<List<PaymentDto>>> GetPayments()
         {
             return await _stripeService.GetPayments();
+        }
+
+        [HttpGet("payments-of-user")]
+        public async Task<ActionResult<List<PaymentDto>>> GetPaymentsOfUser(string customerId)
+        {
+            return await _stripeService.GetPaymentsOfUser(customerId);
         }
 
         [HttpGet("customers")]

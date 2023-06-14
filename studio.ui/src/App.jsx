@@ -12,7 +12,8 @@ import LoginForm from "./pages/Authentication/Loginform";
 import RegisterForm from "./pages/Authentication/RegisterForm";
 import ProtectedRoute from "./ProtectedRoute";
 
-import {
+import
+{
   LandingPage,
   Maintenance,
   Payment,
@@ -29,6 +30,8 @@ import {
   StudyGroup,
   StudyGroups,
   Apply,
+  Konkurset,
+  AnnouncementDetail,
 } from "./pages";
 
 const routes = [
@@ -47,26 +50,36 @@ const routes = [
   { path: "/Statistics", element: Statistics },
   { path: "/study-group/:id", element: StudyGroup },
   { path: "/study-groups", element: StudyGroups },
+  { path: "/Konkurset", element: Konkurset },
+  { path: "/AnnouncementDetail/:id", element: AnnouncementDetail },
 ];
 
-const App = observer(function App() {
+const App = observer(function App()
+{
   const { commonStore, userStore } = useStore();
   const [user, setUser] = useState({});
 
-  useEffect(() => {
-    if (commonStore.token) {
-      try {
-        const fetchData = async () => {
+  useEffect(() =>
+  {
+    if (commonStore.token)
+    {
+      try
+      {
+        const fetchData = async () =>
+        {
           const userData = await agent.Account.current();
           setUser(userData);
         };
         fetchData();
-      } catch (error) {
+      } catch (error)
+      {
         console.error(error);
-      } finally {
+      } finally
+      {
         commonStore.setAppLoaded();
       }
-    } else {
+    } else
+    {
       commonStore.setAppLoaded();
     }
   }, [commonStore, userStore]);

@@ -9,6 +9,7 @@ namespace Payment.Contracts
         Task<StripeCustomer> AddStripeCustomerAsync(AddStripeCustomer customer, CancellationToken ct);
         Task<StripePayment> AddStripePaymentAsync(AddStripePayment payment, CancellationToken ct);
         Task<ActionResult<List<PaymentDto>>> GetPayments();
+        Task<ActionResult<List<PaymentDto>>> GetPaymentsOfUser(string userId);
         Task<ActionResult<List<CustomerDto>>> GetCustomers();
     }
 }

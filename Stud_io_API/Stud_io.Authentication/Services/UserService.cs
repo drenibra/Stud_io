@@ -112,6 +112,13 @@ namespace Stud_io.Authentication.Services
             return new OkObjectResult(groupEventStudents);
         }
 
+        public async Task<ActionResult<string>> GetStudentsCustomerId(string email)
+        {
+            var user = await _context.Students.FirstOrDefaultAsync(u => u.Email == email);
+
+            return user.CustomerId;
+        }
+
         public async Task<ActionResult> AddStudyGroupMembers(int groupId, List<string> studentIds)
         {
 
