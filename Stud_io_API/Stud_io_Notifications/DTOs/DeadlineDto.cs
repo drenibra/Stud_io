@@ -9,6 +9,7 @@ namespace Stud_io_Notifications.DTOs
         [BsonElement("name")]
         public string Name { get; set; } = string.Empty;
 
+
         [BsonElement("openDate")]
         [DataType(DataType.Date)]
         public DateTime OpenDate { get; set; }

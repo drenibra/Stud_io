@@ -1,5 +1,6 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using System.ComponentModel.DataAnnotations;
 
 namespace Notifications.Models
 {
@@ -12,12 +13,13 @@ namespace Notifications.Models
         [BsonElement("name")]
         public string Name { get; set; } = string.Empty;
 
+        [DataType(DataType.Date)]
         [BsonElement("openDate")]
-        //[DataType(DataType.Date)]
+
         public DateTime OpenDate { get; set; }
 
+        [DataType(DataType.Date)]
         [BsonElement("closedDate")]
-        //[DataType(DataType.Date)]
         public DateTime ClosedDate { get; set; }
     }
 }

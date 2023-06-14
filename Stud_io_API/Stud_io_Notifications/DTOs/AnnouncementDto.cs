@@ -16,7 +16,7 @@ namespace Stud_io_Notifications.DTOs
         public string DeadlineId { get; set; } = string.Empty;
 
         [BsonIgnore]
-        public Deadline Deadline { get; set; }
+        public Deadline? Deadline { get; set; }
     }
 
     public class UpdateAnnouncementDto
@@ -30,4 +30,8 @@ namespace Stud_io_Notifications.DTOs
         [BsonRepresentation(BsonType.ObjectId)]
         public string? DeadlineId { get; set; }
     }
+
+ 
+
+
 }

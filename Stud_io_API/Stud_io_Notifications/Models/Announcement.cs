@@ -19,6 +19,6 @@ namespace Notifications.Models
         public string DeadlineId { get; set; } = string.Empty;
 
         [BsonIgnore]
-        public Deadline Deadline { get; set; }
+        public Deadline? Deadline { get; set; }
     }
 }

@@ -14,7 +14,6 @@ namespace Stud_io.Application.Models
         public int StudentId { get; set; }
         public string StudentsId { get; set; }
         public Student Student { get; set; }
-
-        public string FileUrl { get; set; }
+        public string? FileUrl { get; set; }
     }
 }
