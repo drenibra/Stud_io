@@ -31,7 +31,7 @@ import
   StudyGroups,
   Apply,
   Konkurset,
-  AnnouncementDetail,
+  AllAnnouncements,
 } from "./pages";
 
 const routes = [
@@ -51,7 +51,7 @@ const routes = [
   { path: "/study-group/:id", element: StudyGroup },
   { path: "/study-groups", element: StudyGroups },
   { path: "/Konkurset", element: Konkurset },
-  { path: "/AnnouncementDetail/:id", element: AnnouncementDetail },
+  { path: "/AllAnnouncements", element: AllAnnouncements },
 ];
 
 const App = observer(function App()

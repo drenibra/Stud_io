@@ -7,8 +7,6 @@ import './DeadlineStyles.scss'
 
 
 
-
-
 export default function Deadline({ handleClose })
 {
 
@@ -26,7 +24,12 @@ export default function Deadline({ handleClose })
     const [selectedOpenDate, setSelectedOpenDate] = useState(new Date().toISOString().slice(0, 10));
     const [selectedClosedDate, setSelectedClosedDate] = useState('');
 
-
+    const formatDate = (date) =>
+    {
+        const offset = date.getTimezoneOffset() * 60000; // Convert offset to milliseconds
+        const adjustedDate = new Date(date.getTime() - offset); // Adjust date based on offset
+        return adjustedDate.toISOString().slice(0, 10); // Format the adjusted date to YYYY-MM-DD
+    };
 
     const handleOpenDateChange = (e) =>
     {
@@ -36,7 +39,7 @@ export default function Deadline({ handleClose })
 
         if (selected >= today)
         {
-            setSelectedOpenDate(selected);
+            setSelectedOpenDate(formatDate(new Date(selected)));
         }
         else
         {
@@ -49,7 +52,7 @@ export default function Deadline({ handleClose })
         const selected = e.target.value;
         if (selected > selectedOpenDate)
         {
-            setSelectedClosedDate(selected);
+            setSelectedClosedDate(formatDate(new Date(selected)));
         }
         else
         {

@@ -14,6 +14,7 @@ import HotelIcon from "@mui/icons-material/Hotel";
 import PaymentIcon from "@mui/icons-material/Payment";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import { createTheme } from "@mui/material/styles";
+import AddAlertTwoToneIcon from '@mui/icons-material/AddAlertTwoTone';
 
 const theme = createTheme({
   palette: {
@@ -70,7 +71,7 @@ const Sidebar = () =>
         </StyledListItem>
         <StyledListItem className="sidebar-item">
           <ListItemIcon>
-            <FormatListBulletedIcon />
+            <AddAlertTwoToneIcon />
           </ListItemIcon>
           <StyledLink to="/Deadline">
             <StyledListItemText primary="Konkursi" />

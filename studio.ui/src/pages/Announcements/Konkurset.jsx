@@ -7,7 +7,7 @@ import { Button, CardActionArea, CardActions } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import Img from './img/announcement.png';
 import './styles.scss'
-import AssignmentLateOutlinedIcon from '@mui/icons-material/AssignmentLateOutlined';
+
 
 export default function Announcement()
 {
@@ -70,10 +70,14 @@ export default function Announcement()
                                 <Typography variant="body2" color="text.secondary">
                                     {desc}
                                 </Typography>
+                                <Typography variant="body2" color="text.secondary">
+                                    Data e hapjes:  {openDate} <br />
+                                    Data e mbylljes: {closedDate}
+                                </Typography>
                             </CardContent>
                         </CardActionArea>
                         <CardActions>
-                            <Button size="small" className='btn-card'>Shiko</Button>
+                            <Button size="small" className='btn-card' >Shiko</Button>
                         </CardActions>
                     </Card>
                     //             <Link key={id} to={`/AnnouncementDetail/${id}`} className="link-card">Shiko me shume</Link>
