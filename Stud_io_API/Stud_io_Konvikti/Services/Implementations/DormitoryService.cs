@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Stud_io.Dormitory.Models;
 using Stud_io_Dormitory.Configurations;
 using Stud_io_Dormitory.DTOs;
 using Stud_io_Dormitory.Models;
@@ -53,7 +54,7 @@ namespace Stud_io_Dormitory.Services.Implementations
             dbDormitory.Gender = updateDormitoryDTO.Gender ?? dbDormitory.Gender;
             dbDormitory.NoOfRooms = updateDormitoryDTO.NoOfRooms ?? dbDormitory.NoOfRooms;
             dbDormitory.Capacity = updateDormitoryDTO.Capacity ?? dbDormitory.Capacity;
-            dbDormitory.isFull = updateDormitoryDTO.isFull ?? dbDormitory.isFull;
+      
             await _context.SaveChangesAsync();
 
             return new OkObjectResult("Dormitory updated successfully!");
@@ -69,6 +70,40 @@ namespace Stud_io_Dormitory.Services.Implementations
             await _context.SaveChangesAsync();
             return new OkObjectResult("Dormitory deleted successfully!");
         }
+
+        public async Task AssignStudentsToDormitories()
+        {
+            var acceptedStudents = await _context.Students.Where(s => s.isAccepted).ToListAsync();
+            var femaleStudents = acceptedStudents.Where(s => s.Gender == 'F').ToList();
+            var maleStudents = acceptedStudents.Where(s => s.Gender == 'M').ToList();
+            var dormitories = await _context.Dormitories.ToListAsync();
+
+      
+            var femaleDormitories = dormitories.Where(d => d.Gender == 'F').ToList();
+            await AssignStudentsToDormitory(femaleStudents, femaleDormitories);
+
+            var maleDormitories = dormitories.Where(d => d.Gender == 'M').ToList();
+            await AssignStudentsToDormitory(maleStudents, maleDormitories);
+
+            await _context.SaveChangesAsync();
+        }
+
+        private async Task AssignStudentsToDormitory(List<Student> students, List<Dormitory> dormitories)
+        {
+            foreach (var student in students)
+            {
+                var dormitory = dormitories.FirstOrDefault(d => d.CurrentStudents < d.Capacity);
+
+                if (dormitory != null)
+                {
+                    student.DormNumber = dormitory.DormNo;
+
+                    dormitory.CurrentStudents++;
+                }
+            }
+        }
+
+
 
     }
 }

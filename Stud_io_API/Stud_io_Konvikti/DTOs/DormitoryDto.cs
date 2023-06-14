@@ -6,7 +6,7 @@
         public char Gender { get; set; }
         public int NoOfRooms { get; set; }
         public int Capacity { get; set; }
-        public Boolean isFull { get; set; }
+        public int CurrentStudents { get; set; }
     }
 
     public class UpdateDormitoryDto
@@ -15,6 +15,6 @@
         public char? Gender { get; set; }
         public int? NoOfRooms { get; set; }
         public int? Capacity { get; set; }
-        public Boolean? isFull { get; set; }
+        public int? CurrentStudents { get; set; }
     }
 }
