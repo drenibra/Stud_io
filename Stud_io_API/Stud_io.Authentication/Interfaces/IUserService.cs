@@ -14,8 +14,5 @@ namespace Stud_io.Authentication.Interfaces
         Task<ActionResult<string>> GetStudentsCustomerId(string email);
         Task<ActionResult> AddStudyGroupMembers(int groupId, List<string> studentIds);
         Task<ActionResult> AddGroupEventStudent(int groupEventId, string studentId);
-
-        //Task<ActionResult<IEnumerable<Student>>> GetStudents();
-        //Task<Student> GetStudentById(string id);
     }
 }

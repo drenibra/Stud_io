@@ -1,14 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Stud_io.Authentication.DTOs.ServiceCommunication.StudyGroup;
 using Stud_io.Authentication.Interfaces;
-using Stud_io.Authentication.Services;
-using Stud_io.Controllers;
-using Stud_io.DTOs;
 using Stud_io.Authentication.Models;
-using System.Data;
+using Stud_io.DTOs;
 using System.Security.Claims;
 
 namespace Stud_io.Authentication.Controllers
@@ -38,38 +34,25 @@ namespace Stud_io.Authentication.Controllers
         {
             return Ok(await _contract.GetUserById(id));
         }
-        //[HttpPut]
-        //[Authorize(Roles = "Admin,Student")]
-        //public async Task<ActionResult<Student>> UpdateStudent(Student student)
-        //{
-        //    var user = await _userManager.FindByEmailAsync(User.FindFirstValue(ClaimTypes.Email)) as Student;
 
-        //    if (user == null)
-        //    {
-        //        return BadRequest("Unauthorized");
-        //    }
+        [HttpPut("update-customer-id/{customerId}")]
+        [Authorize(Roles = "Student")]
+        public async Task<ActionResult> AddCustomerId(string customerId)
+        {
+            var user = await _userManager.FindByEmailAsync(User.FindFirstValue(ClaimTypes.Email)) as Student;
 
-        //    user.FirstName = student.FirstName;
-        //    user.LastName = student.LastName;
-        //    user.Gender = student.Gender;
+            if (user == null)
+                return BadRequest("Unauthorized");
 
-        //    user.FathersName = student.FathersName;
-        //    user.City = student.City;
-        //    user.GPA = student.GPA;
-        //    user.Status = student.Status;
-        //    user.MajorId = student.MajorId;
-        //    user.Major = student.Major;
-        //    user.DormNumber = student.DormNumber;
+            user.CustomerId = customerId;
 
-        //    var result = await _userManager.UpdateAsync(user);
+            var result = await _userManager.UpdateAsync(user);
 
-        //    if (!result.Succeeded)
-        //    {
-        //        return BadRequest(result.Errors);
-        //    }
+            if(result.Succeeded)
+                return Ok("Customer ID added.");
+            return BadRequest("Customer ID failed to be added!");
+        }
 
-        //    return Ok("Student successfuly updated");
-        //}
         [HttpPut]
         [Authorize(Roles = "Admin,Student")]
         public async Task<ActionResult<Student>> UpdateStudent(Student updatedStudent)
@@ -161,17 +144,5 @@ namespace Stud_io.Authentication.Controllers
         {
             return await _contract.AddGroupEventStudent(groupEventId, studentId);
         }
-
-        //[HttpGet("student")]
-        //[Authorize(Roles = "Admin")]
-        //public async Task<ActionResult<List<Student>>> GetStudents()
-        //{
-        //    return await _contract.GetStudents();
-        //}
-        //[HttpGet("applicant/{id}")]
-        //public ActionResult<AppUser> GetStudentById(string id)
-        //{
-        //    return Ok(_contract.GetStudentById(id));
-        //}
     }
 }

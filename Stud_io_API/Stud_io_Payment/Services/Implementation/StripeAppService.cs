@@ -1,14 +1,13 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 using Payment.Contracts;
 using Payment.Models.Stripe;
 using Stripe;
 using Stud_io.Payment.DTOs;
-using Stud_io.Payment.Services.Interfaces;
 using Stud_io_Payment.Configurations;
-using System.Text.Json;
+using System.Net.Http.Headers;
+using System.Text;
 
 namespace Payment.Application
 {
@@ -19,43 +18,28 @@ namespace Payment.Application
         private readonly TokenService _tokenService;
         private readonly PaymentDbContext _context;
         private readonly IMapper _mapper;
+        private readonly IHttpClientFactory _httpClientFactory;
 
         public StripeAppService(
             ChargeService chargeService,
             CustomerService customerService,
-            TokenService tokenService, 
-            PaymentDbContext context, 
-            IMapper mapper
-            /*IMicroservicesRequestService microservicesRequestService*/)
+            TokenService tokenService,
+            PaymentDbContext context,
+            IMapper mapper,
+            IHttpClientFactory httpClientFactory)
         {
             _chargeService = chargeService;
             _customerService = customerService;
             _tokenService = tokenService;
             _context = context;
             _mapper = mapper;
-            /*_microservicesRequestService = microservicesRequestService;*/
+            _httpClientFactory = httpClientFactory;
         }
 
         private static StripeCustomer MapStripeCustomer(Customer customer)
         {
             return new StripeCustomer(customer.Name, customer.Email, customer.Id);
         }
-
-        /*private async Task<StripeCustomer> GetCustomerById(string id)
-        {
-            var customer = await _context.StripeCustomers.FirstOrDefaultAsync(c => c.CustomerId == id);
-
-            return customer;
-        }
-
-        private async Task<string> GetCustomerIdAsync(string email)
-        {
-            var customerIdSerialized = await _microservicesRequestService.GetRequestAt("http://localhost:5274/api/v1/User/students-customerId" + email);
-
-            var customerId = JsonConvert.DeserializeObject<string>(customerIdSerialized);
-
-            return customerId;
-        }*/
 
         public async Task<StripeCustomer> AddStripeCustomerAsync(AddStripeCustomer customer, CancellationToken ct)
         {
@@ -86,6 +70,19 @@ namespace Payment.Application
             // Create customer at Stripe
             Customer createdCustomer = await _customerService.CreateAsync(customerOptions, null, ct);
             StripeCustomer mappedCustomer = MapStripeCustomer(createdCustomer);
+
+            var httpClient = _httpClientFactory.CreateClient();
+
+            var uri = "http://localhost:5274/api/v1/User/update-customer-id/" + mappedCustomer.CustomerId;
+
+            var authentication = new AuthenticationHeaderValue("Bearer",
+                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI2YzNiZWIxMC0wNDU2LTQ0NzEtYmVjMC00NWU3NjNkOTQ1MDMiLCJ1bmlxdWVfbmFtZSI6IkZhdGluam8iLCJlbWFpbCI6ImZhdHNpamFyaW5hMTJAZ21haWwuY29tIiwicm9sZSI6IlN0dWRlbnQiLCJuYmYiOjE2ODY3Njg3NTEsImV4cCI6MTY4NzM3MzU1MSwiaWF0IjoxNjg2NzY4NzUxfQ.EJwEvYoAu_44SpH_88NKyQGEDep_bbQ-M3bcgC3F_TM");
+            httpClient.DefaultRequestHeaders.Authorization = authentication;
+
+            var content = new StringContent("", Encoding.UTF8, "application/json");
+
+            var response = await httpClient.PutAsync(uri, content);
+            
             await _context.StripeCustomers.AddAsync(mappedCustomer, ct);
             await _context.SaveChangesAsync(ct);
 
@@ -111,8 +108,6 @@ namespace Payment.Application
             bool hasPaid = await HasPaid(payment);
             if (hasPaid)
                 throw new Exception("Pages u kry ma heret!");
-
-            //string customerId = await Get(payment.CustomerId);
 
             // Set the options for the payment we would like to create at Stripe
             ChargeCreateOptions paymentOptions = new()

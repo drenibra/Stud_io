@@ -4,12 +4,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Stud_io.Authentication.DTOs.ServiceCommunication.StudyGroup;
 using Stud_io.Authentication.Interfaces;
+using Stud_io.Authentication.Models;
 using Stud_io.Authentication.Models.ServiceCommunications.StudyGroup;
 using Stud_io.Configuration;
-using Stud_io.Controllers;
 using Stud_io.DTOs;
-using Stud_io.Authentication.Models;
-using System.Text.RegularExpressions;
 
 namespace Stud_io.Authentication.Services
 {
@@ -24,6 +22,7 @@ namespace Stud_io.Authentication.Services
             _mapper = mapper;
             _context = context;
         }
+
         public async Task<ActionResult<IEnumerable<UserDto>>> GetUsers()
         {
             var users = await _userManager.Users.ToListAsync();
@@ -32,6 +31,7 @@ namespace Stud_io.Authentication.Services
 
             return Ok(userDtos);
         }
+
         public async Task<ActionResult<UserDto>> GetUserById(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
@@ -50,6 +50,7 @@ namespace Stud_io.Authentication.Services
                 Gender = user.Gender,
             };
         }
+
         public async Task<IActionResult> DeleteUser(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
@@ -65,11 +66,6 @@ namespace Stud_io.Authentication.Services
             return NoContent();
         }
 
-        //public async Task<ActionResult<IEnumerable<Student>>> GetStudents()
-        //{
-        //    var recruiters = await _userManager.Users.ToListAsync();
-        //    return recruiters.OfType<Student>().ToList();
-        //}
         public async Task<Student> GetStudentById(string id)
         {
             var student = await _userManager.Users
