@@ -58,11 +58,17 @@ const GroupEventModal = observer(({ open, handleClose, event }) => {
   return (
     groupEvent && (
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>{groupEvent.title}</DialogTitle>
+        <DialogTitle>
+          {" "}
+          <Avatar
+            alt="Remy Sharp"
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSM38-KJLC_EYZQKyhG0ckuElEsUmT2stRZUw&usqp=CAU"
+          />
+          {groupEvent.title}
+        </DialogTitle>
         <DialogContent>
           <Box divider>
             <Typography variant="subtitle1">
-              <GroupIcon sx={{ marginRight: 1 }} />
               {groupEvent.description}
             </Typography>
           </Box>
@@ -81,7 +87,7 @@ const GroupEventModal = observer(({ open, handleClose, event }) => {
           </Typography>
           <Divider sx={{ marginY: "16px" }} />
           <Typography marginTop="16px" variant="subtitle2">
-            <PersonIcon sx={{ marginRight: 1 }} />
+            <GroupIcon sx={{ marginRight: 1 }} />
             Attendees:
           </Typography>
           <GroupStudentsSlider

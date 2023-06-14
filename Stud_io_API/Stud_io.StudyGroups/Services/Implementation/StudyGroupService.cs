@@ -77,6 +77,7 @@ namespace Stud_io.StudyGroups.Services.Implementation
                 Id = x.id,
                 FirstName = x.firstName,
                 LastName = x.lastName,
+                ProfileImage = x.profileImage
             }).ToList();
 
             studyGroup.Students = students;
@@ -138,9 +139,15 @@ namespace Stud_io.StudyGroups.Services.Implementation
 
         public async Task<ActionResult> AddMembers(int groupId, List<string> studentIds)
         {
-            var dbGroup = await _context.StudyGroups.FindAsync(groupId);
+            var dbGroup = await _context.StudyGroups
+                                        .Include(x => x.Members)
+                                        .Where(x => x.Id == groupId)
+                                        .FirstOrDefaultAsync();
             if (dbGroup == null)
                 return new NotFoundObjectResult("Study Group wasn't found");
+
+            if (dbGroup.Members.Any(x => studentIds.Contains(x.StudentId)))
+                return new BadRequestObjectResult("Members already exist in the group.");
 
             dbGroup.Members = studentIds.Select(x => new StudyGroupStudent()
             {

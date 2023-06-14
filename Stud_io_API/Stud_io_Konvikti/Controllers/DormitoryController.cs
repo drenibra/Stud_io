@@ -46,6 +46,20 @@ namespace Stud_io_Dormitory.Controllers
         {
             return await _dormitoryService.DeleteDormitory(id);
         }
+
+        [HttpPost("AssignStudentsToDormitories")]
+        public async Task<ActionResult> AssignStudentsToDormitories()
+        {
+            try
+            {
+                await _dormitoryService.AssignStudentsToDormitories();
+                return Ok("Students assigned to dormitories successfully!");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while assigning students to dormitories: {ex.Message}");
+            }
+        }
     }
 }
 

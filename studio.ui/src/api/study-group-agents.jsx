@@ -1,4 +1,5 @@
 import axios from "axios";
+import { values } from "mobx";
 
 const serviceAxios = axios.create({
   baseURL: import.meta.env.VITE_API_STUDYGROUPS_URL,
@@ -16,6 +17,8 @@ const requests = {
 const StudyGroups = {
   getAll: (filter) => requests.get("StudyGroup" + filter),
   getById: (id) => requests.get("StudyGroup/" + id),
+  joinGroup: (groupId, values) =>
+    requests.put("StudyGroup/add-members/" + groupId, values),
 };
 
 const Posts = {

@@ -90,7 +90,7 @@ namespace Stud_io.Authentication.Services
                                                         Id = x.StudentId,
                                                         FirstName = x.Student.FirstName,
                                                         LastName = x.Student.LastName,
-                                                        ProfileImage = x.Student.ProfileImage,
+                                                        ProfileImage = x.Student.ProfileImage ?? "N/A",
                                                     }).ToListAsync();
 
             return new OkObjectResult(studyGroupStudents);

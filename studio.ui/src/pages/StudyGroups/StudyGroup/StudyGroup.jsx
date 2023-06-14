@@ -12,6 +12,7 @@ const StudyGroup = () => {
   const [activeButton, setActiveButton] = useState(1);
   const [studyGroup, setStudyGroup] = useState();
   const [isLoading, setIsLoading] = useState(true);
+  const [refreshKey, setRefreshKey] = useState(1);
 
   const params = useParams();
 
@@ -21,7 +22,7 @@ const StudyGroup = () => {
       setStudyGroup(response);
     });
     setIsLoading(false);
-  }, []);
+  }, [refreshKey]);
 
   const handleNavButtonClick = (buttonIndex) => {
     setActiveButton(buttonIndex);
@@ -36,7 +37,7 @@ const StudyGroup = () => {
       case 3:
         return <GroupEvents />;
       case 4:
-        return <Info />;
+        return <Info setRefreshKey={setRefreshKey} studyGroup={studyGroup} />;
       default:
         return <Posts />;
     }

@@ -80,6 +80,9 @@ namespace Stud_io.StudyGroups.Services.Implementation
                 Location = groupEvent.Location,
                 Capacity = groupEvent.Capacity,
                 DateStart = groupEvent.DateTimeStart.ToShortDateString(),
+                DateEnd = groupEvent.DateTimeEnd.ToShortDateString(),
+                TimeStart = groupEvent.DateTimeStart.ToShortTimeString(),
+                TimeEnd = groupEvent.DateTimeEnd.ToShortTimeString(),
                 StudyGroupId = groupEvent.StudyGroupId
             }).ToListAsync();
 
