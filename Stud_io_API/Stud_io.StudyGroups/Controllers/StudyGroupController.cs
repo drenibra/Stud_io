@@ -34,7 +34,7 @@ namespace Stud_io.StudyGroups.Controllers
             return await _studyGroupService.CreateStudyGroup(dto);
         }
 
-        [HttpPut("add-members{groupId}")]
+        [HttpPut("add-members/{groupId}")]
         public async Task<ActionResult> AddMembers(int groupId, List<string> studentIds)
         {
             return await _studyGroupService.AddMembers(groupId, studentIds);

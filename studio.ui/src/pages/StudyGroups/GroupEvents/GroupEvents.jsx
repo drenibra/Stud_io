@@ -8,6 +8,7 @@ import Typography from "@mui/material/Typography";
 import CardActions from "@mui/material/CardActions";
 import Avatar from "@mui/material/Avatar";
 import GroupEventModal from "./GroupEventModal";
+import { Box } from "@mui/material";
 import Icon from "../../../assets/logo/icon-color-stud-io.svg";
 
 import { Link } from "react-router-dom";
@@ -19,6 +20,7 @@ const GroupEvents = () => {
   useEffect(() => {
     agent.GroupEvents.getAll("?StudyGroupId=3").then((response) => {
       setGroupEvents(response);
+      console.log(response);
     });
   }, []);
 
@@ -35,15 +37,27 @@ const GroupEvents = () => {
       {groupEvents.map((event) => (
         <Card key={event.id} className="groupEvent" sx={{ minWidth: 350 }}>
           <CardContent>
-            <Typography
-              sx={{ fontSize: 14 }}
-              color="text.secondary"
-              className="groupEvent__author"
-              gutterBottom
-            >
-              <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-              {event.author}
-            </Typography>
+            <Box gap={"8px"} display={"flex"} flexDirection={"row"}>
+              <Typography
+                sx={{ fontSize: 14 }}
+                color="text.secondary"
+                className="groupEvent__author"
+                gutterBottom
+              >
+                <Avatar
+                  alt="Remy Sharp"
+                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSM38-KJLC_EYZQKyhG0ckuElEsUmT2stRZUw&usqp=CAU"
+                />
+              </Typography>
+              <Box>
+                <Typography variant="subtitle2" fontWeight={"600"}>
+                  {event.dateStart}
+                </Typography>
+                <Typography variant="subtitle2">
+                  {event.timeStart} - {event.timeEnd}
+                </Typography>
+              </Box>
+            </Box>
             <Typography variant="h5" component="div">
               {event.title}
             </Typography>
