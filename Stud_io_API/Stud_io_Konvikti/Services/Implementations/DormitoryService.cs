@@ -76,34 +76,38 @@ namespace Stud_io_Dormitory.Services.Implementations
             var acceptedStudents = await _context.Students.Where(s => s.isAccepted).ToListAsync();
             var femaleStudents = acceptedStudents.Where(s => s.Gender == 'F').ToList();
             var maleStudents = acceptedStudents.Where(s => s.Gender == 'M').ToList();
-            var dormitories = await _context.Dormitories.ToListAsync();
 
-      
-            var femaleDormitories = dormitories.Where(d => d.Gender == 'F').ToList();
-            await AssignStudentsToDormitory(femaleStudents, femaleDormitories);
-
-            var maleDormitories = dormitories.Where(d => d.Gender == 'M').ToList();
-            await AssignStudentsToDormitory(maleStudents, maleDormitories);
+            await AssignStudentsToDormitory(femaleStudents, 'F');
+            await AssignStudentsToDormitory(maleStudents, 'M');
 
             await _context.SaveChangesAsync();
         }
 
-        private async Task AssignStudentsToDormitory(List<Student> students, List<Dormitory> dormitories)
+        private async Task AssignStudentsToDormitory(List<Student> students, char gender)
         {
-            foreach (var student in students)
+            var dormitories = await _context.Dormitories
+                .Where(d => d.Gender == gender && d.CurrentStudents < d.Capacity)
+                .ToListAsync();
+
+            foreach (var student in students.Where(s => !s.DormNumber.HasValue))
             {
-                var dormitory = dormitories.FirstOrDefault(d => d.CurrentStudents < d.Capacity);
+                var dormitory = dormitories.FirstOrDefault();
 
                 if (dormitory != null)
                 {
                     student.DormNumber = dormitory.DormNo;
-
                     dormitory.CurrentStudents++;
+                }
+                else
+                {
+                    break; // No more available dormitories
                 }
             }
         }
 
 
-
     }
+
 }
+
+

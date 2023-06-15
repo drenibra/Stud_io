@@ -48,6 +48,7 @@ namespace Stud_io_Dormitory.Controllers
         }
 
         [HttpPost("AssignStudentsToDormitories")]
+        
         public async Task<ActionResult> AssignStudentsToDormitories()
         {
             try
