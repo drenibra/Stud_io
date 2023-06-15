@@ -17,7 +17,7 @@ namespace Stud_io.Application.Services.Implementations
             _context = context;
             _mapper = mapper;
         }
-        public int CalculateAverageGradePoints(double averageGrade)
+        public int CalculateAverageGradePoints(double? averageGrade)
         {
             int averageGradePoints;
             if (averageGrade >= 6.00 && averageGrade <= 6.99)

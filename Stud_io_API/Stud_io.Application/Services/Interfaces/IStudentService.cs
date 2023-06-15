@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Stud_io.Application.DTOs;
+using Stud_io.Authentication.DTOs;
 
 namespace Stud_io.Application.Services.Interfaces
 {
@@ -9,7 +10,7 @@ namespace Stud_io.Application.Services.Interfaces
         public Task<ActionResult<StudentDto>> GetStudentById(int id);
         public Task<ActionResult<StudentDto>> GetStudentByPersonalNo(string personalNo);
         public Task<ActionResult> AddStudent(StudentDto studentDTO);
-        public Task<ActionResult> UpdateStudent(int id, UpdateStudentDto updateStudentDTO);
+        //public Task<ActionResult> UpdateStudent(int id, UpdateStudentDto updateStudentDTO);
         public Task<ActionResult> DeleteStudent(int id);
    
     }

@@ -47,6 +47,7 @@ builder.Services.AddDefaultIdentity<AppUser>().AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.AddIdentityServices(builder.Configuration);
+builder.Services.AddIdentityCore<AppUser>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<AccountController>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());

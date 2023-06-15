@@ -1,7 +1,9 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Stud_io.Application.Configurations;
 using Stud_io.Application.Services.Implementations;
 using Stud_io.Application.Services.Interfaces;
+using Stud_io.Authentication.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,6 +33,11 @@ builder.Services.AddScoped<IFileService, FileService>();
 builder.Services.AddScoped<IApplicationService, ApplicationService>();
 builder.Services.AddScoped<IProfileMatchService, ProfileMatchService>();
 builder.Services.AddScoped<IMailKitEmailService, MailKitEmailService>();
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+builder.Services.AddIdentity<AppUser, IdentityRole>()
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddDefaultTokenProviders();
+
 
 // Register IHttpClientFactory
 builder.Services.AddHttpClient();

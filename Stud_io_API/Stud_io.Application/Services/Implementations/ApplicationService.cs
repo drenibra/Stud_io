@@ -8,8 +8,11 @@ using Stud_io.Application.DTOs;
 using Stud_io.Application.Models;
 using Stud_io.Application.Models.ServiceCommunication.Authentication;
 using Stud_io.Application.Services.Interfaces;
+using Stud_io.Authentication.DTOs;
+using Stud_io.Authentication.Models;
 using System;
 using System.Net.Http.Headers;
+using System.Security.Claims;
 using System.Text.Json;
 
 namespace Stud_io.Application.Services.Implementations
@@ -82,7 +85,7 @@ namespace Stud_io.Application.Services.Implementations
             return existingApplication != null;
         }
 
-        public async Task<ActionResult> AddApplication(ApplicationDto applicationDto)
+        public async Task<ActionResult> AddApplication(ApplicationDto applicationDto, StudentDto User)
         {
             StudentService _studentService = new(_context, _mapper);
             if (applicationDto == null)

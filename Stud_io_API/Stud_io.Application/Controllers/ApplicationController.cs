@@ -1,6 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Stud_io.Application.DTOs;
 using Stud_io.Application.Services.Interfaces;
+using System.Security.Claims;
+using Stud_io.Authentication.Models;
+using Stud_io.Authentication.DTOs;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Stud_io.Application.Controllers
 {
@@ -9,10 +14,13 @@ namespace Stud_io.Application.Controllers
     public class ApplicationController : ControllerBase
     {
         private readonly IApplicationService _applicationService;
-
-        public ApplicationController(IApplicationService applicationService)
+        private readonly UserManager<AppUser> _userManager;
+        private readonly IServiceProvider _serviceProvider;
+        public ApplicationController(IApplicationService applicationService, UserManager<AppUser> userManager, IServiceProvider serviceProvider)
         {
             _applicationService = applicationService;
+            _userManager = userManager;
+            _serviceProvider = serviceProvider;
         }
 
         [HttpGet("GetApplications")]
@@ -26,12 +34,27 @@ namespace Stud_io.Application.Controllers
         {
             return await _applicationService.GetApplicationById(id);
         }
-
-
         [HttpPost("AddApplication")]
         public async Task<ActionResult> AddApplication(ApplicationDto applicationDto)
         {
-            return await _applicationService.AddApplication(applicationDto);
+            //var student = await _userManager.GetUserAsync(HttpContext.User) as Student;
+            var userManager2 = _serviceProvider.GetRequiredService<UserManager<AppUser>>();
+            var student = await userManager2.FindByEmailAsync(User.FindFirstValue(ClaimTypes.Email)) as Student;
+            var user = new StudentDto
+            {
+                PersonalNo = student.PersonalNo,
+                ParentName = student.ParentName,
+                City = student.City,
+                GPA = student.GPA,
+                AcademicYear = student.AcademicYear,
+                Status = student.Status,
+                DormNumber = student.DormNumber,
+                MajorId = student.MajorId,
+                Major = student.Major,
+                FacultyId = student.FacultyId,
+                Faculty = student.Faculty,
+            };
+            return await _applicationService.AddApplication(applicationDto, user);
         }
 
         [HttpPut("UpdateApplication")]

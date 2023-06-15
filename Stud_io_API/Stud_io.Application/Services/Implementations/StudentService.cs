@@ -5,6 +5,8 @@ using Stud_io.Application.Configurations;
 using Stud_io.Application.DTOs;
 using Stud_io.Application.Models;
 using Stud_io.Application.Services.Interfaces;
+using Stud_io.Authentication.DTOs;
+using Stud_io.Authentication.Models;
 
 namespace Stud_io.Application.Services.Implementations
 {
@@ -51,34 +53,34 @@ namespace Stud_io.Application.Services.Implementations
             return new OkObjectResult("Student added successfully!");
         }
         
-        public async Task<ActionResult> UpdateStudent(int id, UpdateStudentDto updateStudentDTO)
-        {
-            if (updateStudentDTO == null)
-                return new BadRequestObjectResult("Student can not be null!!");
+        //public async Task<ActionResult> UpdateStudent(int id, UpdateStudentDto updateStudentDTO)
+        //{
+        //    if (updateStudentDTO == null)
+        //        return new BadRequestObjectResult("Student can not be null!!");
 
-            var dbStudent = await _context.Students.FindAsync(id);
-            if (dbStudent == null)
-                return new NotFoundObjectResult("Student doesn't exist!!");
+        //    var dbStudent = await _context.Students.FindAsync(id);
+        //    if (dbStudent == null)
+        //        return new NotFoundObjectResult("Student doesn't exist!!");
 
-            dbStudent.PersonalNo = updateStudentDTO.PersonalNo ?? dbStudent.PersonalNo;
-            dbStudent.Name = updateStudentDTO.Name ?? dbStudent.Name;
-            dbStudent.ParentName = updateStudentDTO.ParentName ?? dbStudent.ParentName;
-            dbStudent.Surname = updateStudentDTO.Surname ?? dbStudent.Surname;
-            dbStudent.City = updateStudentDTO.City ?? dbStudent.City;
-            dbStudent.GPA = updateStudentDTO.GPA ?? dbStudent.GPA;
-            dbStudent.PhoneNo = updateStudentDTO.PhoneNo ?? dbStudent.PhoneNo;
-            dbStudent.Email = updateStudentDTO.Email ?? dbStudent.Email;
-            dbStudent.Gender = updateStudentDTO.Gender ?? dbStudent.Gender;
-            dbStudent.AcademicYear = updateStudentDTO.AcademicYear ?? dbStudent.AcademicYear;
-            dbStudent.Status = updateStudentDTO.Status ?? dbStudent.Status;
-            dbStudent.ProfilePicUrl = updateStudentDTO.ProfilePicUrl ?? dbStudent.ProfilePicUrl;
-            dbStudent.FacultyId = updateStudentDTO.FacultyId ?? dbStudent.FacultyId;
+        //    dbStudent.PersonalNo = updateStudentDTO.PersonalNo ?? dbStudent.PersonalNo;
+        //    dbStudent.Name = updateStudentDTO.Name ?? dbStudent.Name;
+        //    dbStudent.ParentName = updateStudentDTO.ParentName ?? dbStudent.ParentName;
+        //    dbStudent.Surname = updateStudentDTO.Surname ?? dbStudent.Surname;
+        //    dbStudent.City = updateStudentDTO.City ?? dbStudent.City;
+        //    dbStudent.GPA = updateStudentDTO.GPA ?? dbStudent.GPA;
+        //    dbStudent.PhoneNo = updateStudentDTO.PhoneNo ?? dbStudent.PhoneNo;
+        //    dbStudent.Email = updateStudentDTO.Email ?? dbStudent.Email;
+        //    dbStudent.Gender = updateStudentDTO.Gender ?? dbStudent.Gender;
+        //    dbStudent.AcademicYear = updateStudentDTO.AcademicYear ?? dbStudent.AcademicYear;
+        //    dbStudent.Status = updateStudentDTO.Status ?? dbStudent.Status;
+        //    dbStudent.ProfilePicUrl = updateStudentDTO.ProfilePicUrl ?? dbStudent.ProfilePicUrl;
+        //    dbStudent.FacultyId = updateStudentDTO.FacultyId ?? dbStudent.FacultyId;
 
 
-            await _context.SaveChangesAsync();
+        //    await _context.SaveChangesAsync();
 
-            return new OkObjectResult("Student updated successfully!");
-        }
+        //    return new OkObjectResult("Student updated successfully!");
+        //}
 
         public async Task<ActionResult> DeleteStudent(int id)
         {

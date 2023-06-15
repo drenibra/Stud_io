@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Stud_io.Application.DTOs;
 using Stud_io.Application.Models;
+using Stud_io.Authentication.DTOs;
+using Stud_io.Authentication.Models;
 
 namespace Stud_io.Application.Configurations
 {

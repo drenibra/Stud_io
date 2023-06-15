@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Stud_io.Application.Models;
+using Stud_io.Authentication.Models;
 
 namespace Stud_io.Application.Configurations
 {

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Stud_io.Application.DTOs;
 using Stud_io.Application.Services.Interfaces;
+using Stud_io.Authentication.DTOs;
 
 namespace Stud_io.Application.Controllers
 {
@@ -40,11 +41,11 @@ namespace Stud_io.Application.Controllers
             return await _studentService.AddStudent(studentDto);
         }
 
-        [HttpPut("UpdateStudent")]
-        public async Task<ActionResult> UpdateStudent(int id, UpdateStudentDto studentDto)
-        {
-            return await _studentService.UpdateStudent(id, studentDto);
-        }
+        //[HttpPut("UpdateStudent")]
+        //public async Task<ActionResult> UpdateStudent(int id, UpdateStudentDto studentDto)
+        //{
+        //    return await _studentService.UpdateStudent(id, studentDto);
+        //}
 
         [HttpDelete("DeleteStudent/{id}")]
         public async Task<ActionResult> DeleteStudent(int id)

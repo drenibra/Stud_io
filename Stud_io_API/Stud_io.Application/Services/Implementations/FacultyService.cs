@@ -5,6 +5,7 @@ using Stud_io.Application.Configurations;
 using Stud_io.Application.DTOs;
 using Stud_io.Application.Models;
 using Stud_io.Application.Services.Interfaces;
+using Stud_io.Authentication.Models;
 
 namespace Stud_io.Application.Services.Implementations
 {
@@ -49,8 +50,7 @@ namespace Stud_io.Application.Services.Implementations
             if (dbFaculty == null)
                 return new NotFoundObjectResult("Faculty doesn't exist!!");
 
-            dbFaculty.FacultyName = updateFacultyDto.FacultyName ?? dbFaculty.FacultyName;
-            dbFaculty.Major = updateFacultyDto.Major ?? dbFaculty.Major;
+            dbFaculty.Name = updateFacultyDto.Name ?? dbFaculty.Name;
           
             await _context.SaveChangesAsync();
 

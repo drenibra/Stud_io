@@ -7,7 +7,7 @@ namespace Stud_io.Application.Services.Interfaces
     public interface IProfileMatchService
     {
 
-        public int CalculateAverageGradePoints(double averageGrade);
+        public int CalculateAverageGradePoints(double? averageGrade);
         public int CalculateExtraPoints(string category);
         public int CalculateCityPoints(string city);
         public Task<List<ProfileMatch>> CalculateTotalPointsForAllStudents();

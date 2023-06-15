@@ -34,7 +34,6 @@ namespace Stud_io.Authentication.Controllers
         {
             return Ok(await _contract.GetUserById(id));
         }
-
         [HttpPut("update-customer-id/{customerId}")]
         [Authorize(Roles = "Student")]
         public async Task<ActionResult> AddCustomerId(string customerId)
@@ -52,7 +51,6 @@ namespace Stud_io.Authentication.Controllers
                 return Ok("Customer ID added.");
             return BadRequest("Customer ID failed to be added!");
         }
-
         [HttpPut]
         [Authorize(Roles = "Admin,Student")]
         public async Task<ActionResult<Student>> UpdateStudent(Student updatedStudent)
@@ -77,13 +75,16 @@ namespace Stud_io.Authentication.Controllers
                 if (isStudent)
                 {
                     var studentUser = user as Student;
-                    studentUser.FathersName = updatedStudent.FathersName;
+                    studentUser.PersonalNo = updatedStudent.PersonalNo;
+                    studentUser.CustomerId = updatedStudent.CustomerId;
+                    studentUser.ParentName = updatedStudent.ParentName;
                     studentUser.City = updatedStudent.City;
                     studentUser.GPA = updatedStudent.GPA;
+                    studentUser.AcademicYear = updatedStudent.AcademicYear;
                     studentUser.Status = updatedStudent.Status;
-                    studentUser.MajorId = updatedStudent.MajorId;
-                    studentUser.Major = updatedStudent.Major;
                     studentUser.DormNumber = updatedStudent.DormNumber;
+                    studentUser.MajorId = updatedStudent.MajorId;
+                    studentUser.FacultyId = updatedStudent.FacultyId;
 
                     var studentResult = await _userManager.UpdateAsync(studentUser);
 

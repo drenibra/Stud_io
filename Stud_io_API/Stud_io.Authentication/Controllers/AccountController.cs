@@ -93,17 +93,17 @@ namespace Stud_io.Controllers
             var student = await _userManager.FindByEmailAsync(User.FindFirstValue(ClaimTypes.Email)) as Student;
             return new StudentDto
             {
-                FirstName = student.FirstName,
-                LastName = student.LastName,
-                Gender = student.Gender,
-                Username = student.UserName,
-                FathersName = student.FathersName,
+                PersonalNo = student.PersonalNo,
+                ParentName = student.ParentName,
                 City = student.City,
                 GPA = student.GPA,
+                AcademicYear = student.AcademicYear,
                 Status = student.Status,
+                DormNumber = student.DormNumber,
                 MajorId = student.MajorId,
                 Major = student.Major,
-                DormNumber = student.DormNumber,
+                FacultyId = student.FacultyId,
+                Faculty = student.Faculty,
             };
         }
         [Authorize]
