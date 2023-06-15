@@ -1,6 +1,7 @@
 import "./styles.css";
 
-export default function Footer() {
+export default function Footer()
+{
     return (
         <section className="footer">
             <div className="container">
@@ -15,7 +16,7 @@ export default function Footer() {
                     <li> <a href="#"> Terms and conditions </a> </li>
                     <li> <a href="#"> Privacy Policy </a> </li>
                 </ul>
-                <p className="copyright">Qenda e Studenteve ©2023</p>
+                <p className="copyright">Qendra e Studenteve ©2023</p>
             </div>
         </section>
     )

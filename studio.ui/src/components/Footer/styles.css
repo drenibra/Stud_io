@@ -1,15 +1,72 @@
+/* Mobile Styles */
+@media (max-width: 767px) {
+    .footer {
+        position: relative;
+        padding: 20px 0;
+    }
+
+    .footer .social {
+        padding-bottom: 15px;
+    }
+
+    .footer ul {
+        text-align: center;
+    }
+
+    .footer ul li {
+        display: block;
+        padding: 10px 0;
+    }
+
+    .footer .copyright {
+        margin: 15px auto 0;
+        text-align: center;
+    }
+}
+
+/* Tablet Styles */
+@media (min-width: 768px) and (max-width: 991px) {
+    .footer {
+        padding: 30px 0;
+    }
+
+    .footer ul li {
+        display: block;
+        padding: 10px 0;
+    }
+
+    .footer .copyright {
+        margin-right: 0;
+        text-align: center;
+    }
+}
+
+/* Desktop Styles */
+@media (min-width: 992px) {
+    .footer {
+        padding: 40px 0;
+    }
+
+    .footer ul li {
+        padding: 0 40px;
+    }
+
+    .footer .copyright {
+        margin-left: 39%;
+        margin-top: 20px;
+    }
+}
+
+/* Common Styles */
 .footer {
-    padding: 40px 0;
     background-color: #BF1A2F;
-    position: absolute;
-    width: 100%;
-    margin-top: 9%;
     margin-bottom: 0;
+    margin-top: 70px;
+    height: 150px;
 }
 
 .footer .social {
     text-align: center;
-    padding-bottom: 25px;
     color: #ffffff;
 }
 
@@ -20,11 +77,11 @@
     width: 40px;
     height: 40px;
     line-height: 38px;
-    display: inline-block;
     text-align: center;
     border-radius: 50%;
     margin: 0 8px;
     opacity: 0.75;
+
 }
 
 .footer .social a:hover {
@@ -39,7 +96,9 @@
     line-height: 1.6;
     margin-bottom: 0;
     opacity: 0.8;
-    text-align: center;
+    display: flex;
+    flex-direction: row;
+    margin-left: 25%;
 }
 
 .footer ul li a {
@@ -51,17 +110,4 @@
 
 .footer ul li a:hover {
     opacity: 1;
-}
-
-.footer ul li {
-    display: inline-block;
-    padding: 0 15px;
-
-}
-
-.footer .copyright {
-    margin-top: 15px;
-    margin-right: 590px;
-    font-size: 13px;
-    color: #ffffff
 }
