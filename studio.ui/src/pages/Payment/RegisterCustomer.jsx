@@ -6,6 +6,7 @@ import agent from "../../api/payment_agents";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Menu from "../../components/Menu/Menu";
+import { useStore } from "../../stores/store";
 
 const theme = createTheme({
   palette: {
@@ -67,6 +68,10 @@ const PaymentForm = () => {
       });
   };
 
+  const { userStore } = useStore();
+
+  var student = userStore.user;
+
   return (
     <div>
       <Box maxWidth="250px" position="absolute">
@@ -93,6 +98,8 @@ const PaymentForm = () => {
             <Grid item xs={6}>
               <TextField
                 label="Name"
+                value={student.firstName}
+                disabled
                 variant="outlined"
                 size="small"
                 fullWidth
@@ -103,6 +110,8 @@ const PaymentForm = () => {
             <Grid item xs={6}>
               <TextField
                 label="Email"
+                value={student.email}
+                disabled
                 variant="outlined"
                 size="small"
                 fullWidth

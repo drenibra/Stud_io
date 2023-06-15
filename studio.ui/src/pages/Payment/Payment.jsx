@@ -18,6 +18,7 @@ import {
   Typography,
 } from "@mui/material";
 import Menu from "../../components/Menu/Menu";
+import { useStore } from "../../stores/store";
 
 const Payment = () => {
   const [pagesa, setPagesa] = useState({
@@ -28,6 +29,12 @@ const Payment = () => {
     amount: "",
     month: "",
   });
+
+  const { userStore } = useStore();
+
+  //TO DO
+  //Figure out why customer id is not accessible
+  var customerIdOfUser = userStore.user.customerId;
 
   const [latestPayment, setLatestPayment] = useState(null);
 
@@ -115,12 +122,13 @@ const Payment = () => {
                   <TextField
                     type="text"
                     name="customerId"
-                    label="Numri personal"
                     variant="outlined"
+                    label="Customer Id"
+                    value={customerIdOfUser} // Set the default value
                     onChange={handleChange}
+                    disabled
                     fullWidth
                     size="small"
-                    required
                   />
                 </Grid>
                 <Grid item xs={12}>
