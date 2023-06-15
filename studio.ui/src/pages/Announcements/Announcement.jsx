@@ -105,7 +105,7 @@ export default function Announcement()
 
                         <div>
                             <Link to="/deadline" className="link-anouncement">Back</Link>
-                            <Link to="/AllAnnouncements" className="link-aplikimet">Gjenero konkurset</Link>
+                            <Link to="/AnnouncementTable" className="link-aplikimet">Gjenero konkurset</Link>
                         </div>
 
                     </form>

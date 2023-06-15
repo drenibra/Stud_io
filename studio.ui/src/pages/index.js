@@ -15,4 +15,4 @@ export { default as Apply } from './Application/Apply.jsx';
 export { default as StudyGroups } from './StudyGroups/StudyGroups/StudyGroups.jsx';
 export { default as StudyGroup } from './StudyGroups/StudyGroup/StudyGroup.jsx';
 export { default as Konkurset } from './Announcements/Konkurset';
-export { default as AllAnnouncements } from './Announcements/AllAnnouncements';
+export { default as AnnouncementTable } from './Announcements/AnnouncementTable';
