@@ -6,10 +6,12 @@ namespace Stud_io.Authentication.DTOs
     {
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
-        public char? Gender { get; set; }
+        public string Email { get; set; }
+        public string? CustomerId { get; set; }
         public string? Username { get; set; }
+        public char? Gender { get; set; }
         public string? Image { get; set; }
-        public string? FathersName { get; set; }
+        public string? ParentName { get; set; }
         public string? City { get; set; }
         public double? GPA { get; set; }
         public string? Status { get; set; }

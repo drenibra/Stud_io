@@ -77,7 +77,7 @@ namespace Stud_io.Authentication.Controllers
                 if (isStudent)
                 {
                     var studentUser = user as Student;
-                    studentUser.FathersName = updatedStudent.FathersName;
+                    studentUser.ParentName = updatedStudent.ParentName;
                     studentUser.City = updatedStudent.City;
                     studentUser.GPA = updatedStudent.GPA;
                     studentUser.Status = updatedStudent.Status;

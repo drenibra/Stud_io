@@ -75,8 +75,7 @@ namespace Payment.Application
 
             var uri = "http://localhost:5274/api/v1/User/update-customer-id/" + mappedCustomer.CustomerId;
 
-            var authentication = new AuthenticationHeaderValue("Bearer",
-                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI2YzNiZWIxMC0wNDU2LTQ0NzEtYmVjMC00NWU3NjNkOTQ1MDMiLCJ1bmlxdWVfbmFtZSI6IkZhdGluam8iLCJlbWFpbCI6ImZhdHNpamFyaW5hMTJAZ21haWwuY29tIiwicm9sZSI6IlN0dWRlbnQiLCJuYmYiOjE2ODY3Njg3NTEsImV4cCI6MTY4NzM3MzU1MSwiaWF0IjoxNjg2NzY4NzUxfQ.EJwEvYoAu_44SpH_88NKyQGEDep_bbQ-M3bcgC3F_TM");
+            var authentication = new AuthenticationHeaderValue("Bearer", customer.Token);
             httpClient.DefaultRequestHeaders.Authorization = authentication;
 
             var content = new StringContent("", Encoding.UTF8, "application/json");
