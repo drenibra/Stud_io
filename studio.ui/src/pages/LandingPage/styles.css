@@ -30,6 +30,12 @@
   font-size: 30px;
 }
 
+.njoftimet-item {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
 
 /* Njoftimet */
 
@@ -40,18 +46,9 @@
     padding-left: 50px;
     height: auto;
   }
-
-  .njoftimet img {
-    margin-right: 0;
-    margin-bottom: 15px;
-    width: 70px;
-    padding-right: 25px;
-  }
-
   .njoftimet-p {
     flex-direction: row;
   }
-
   .njoftimet-p p {
     padding-right: 8px;
     padding-bottom: 10px;
@@ -60,55 +57,40 @@
 
 /* Tablet Styles */
 @media (min-width: 768px) and (max-width: 991px) {
-  .njoftimet {
+  /*   .njoftimet {
     margin-top: 60px;
     padding-left: 60px;
   }
-
-  .njoftimet img {
-    margin-right: 100px;
-    width: 90px;
-  }
-
   .njoftimet-p {
     margin-right: 50px;
   }
-
   .njoftimet-p p {
     padding-right: 88spx;
     margin-right: 20px;
-  }
+  } */
 }
 
 /* Desktop Styles */
 @media (min-width: 992px) {
-  .njoftimet {
+  /*   .njoftimet {
     margin-top: 80px;
     padding-left: 160px;
   }
-
-  .njoftimet img {
-    margin-right: 100px;
-    width: 140px;
-  }
-
   .njoftimet-p {
     padding-right: 65px;
   }
-
   .njoftimet-p p {
     padding-right: 60px;
-  }
+  } */
 }
 
 /* Common Styles */
-.njoftimet {
+.njoftimet-container {
   border: 1px solid #e3e3e3;
   background-color: #e3e3e3;
-  height: 250px;
 }
 
-.njoftimet-div {
+/* .njoftimet-div {
   margin-top: 15px;
   margin-left: 15px;
 }
@@ -117,7 +99,7 @@
   display: flex;
   margin-left: 8px;
 }
-
+ */
 .njoftimet-p p {
   color: #bf1a2f;
   font-weight: bold;

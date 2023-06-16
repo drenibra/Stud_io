@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const service1Axios = axios.create({
-  baseURL: import.meta.env.VITE_API_PAYMENT_URL,
+  baseURL: "https://localhost:7163/api/",
 });
 
 const responseBody = (response) => response.data;
@@ -24,6 +24,8 @@ const Payment = {
 
 const Payments = {
   get: () => requests.get("Stripe/payments"),
+  getPaymentsOfCustomer: (id) =>
+    requests.get(`Stripe/payments-of-user?customerId=${id}`),
 };
 
 const Customers = {

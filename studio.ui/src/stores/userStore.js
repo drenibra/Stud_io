@@ -1,6 +1,7 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import { makePersistable } from "mobx-persist-store";
 import agent from "../api/account_agent.jsx";
+import paymentAgent from "../api/payment_agents.jsx";
 import { store } from "./store.js";
 
 export default class UserStore {
@@ -118,6 +119,17 @@ export default class UserStore {
       console.log(error);
     }
   }
+
+  getPayments = async (customerId) => {
+    try {
+      const payments = await paymentAgent.Payments.getPaymentsOfCustomer(
+        customerId
+      );
+      return payments;
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   /*   getRoles = async (): Promise<string[]> => {
     try {
