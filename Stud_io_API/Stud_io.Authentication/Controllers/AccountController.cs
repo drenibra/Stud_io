@@ -95,9 +95,11 @@ namespace Stud_io.Controllers
             {
                 FirstName = student.FirstName,
                 LastName = student.LastName,
-                Gender = student.Gender,
                 Username = student.UserName,
-                FathersName = student.FathersName,
+                Email = student.Email,
+                CustomerId = student.CustomerId,
+                Gender = student.Gender,
+                ParentName = student.ParentName,
                 City = student.City,
                 GPA = student.GPA,
                 Status = student.Status,

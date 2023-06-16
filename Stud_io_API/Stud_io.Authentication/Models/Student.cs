@@ -5,7 +5,7 @@ namespace Stud_io.Authentication.Models
 {
     public class Student : AppUser
     {
-        public string? FathersName { get; set; }
+        public string? ParentName { get; set; }
         public string? City { get; set; }
         public double? GPA { get; set; }
         public string? Status { get; set; }
