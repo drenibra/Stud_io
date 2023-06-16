@@ -1,12 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { createTheme } from "@mui/material/styles";
 import { TextField, Box, Grid, Button } from "@mui/material";
 import Logo from "../../assets/logo/icon-color-stud-io.svg";
-import agent from "../../api/payment_agents";
+import paymentAgent from "../../api/payment_agents";
+import accountAgent from "../../api/account_agent";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Menu from "../../components/Menu/Menu";
+import { observer } from "mobx-react-lite";
 import { useStore } from "../../stores/store";
+import LoadingComponent from "../LoadingComponent/LoadingComponent";
 
 const theme = createTheme({
   palette: {
@@ -16,7 +19,10 @@ const theme = createTheme({
   },
 });
 
-const PaymentForm = () => {
+const PaymentForm = observer(function PaymentForm() {
+  const { userStore } = useStore();
+  const [loading, setLoading] = useState(true);
+
   const [client, setClient] = useState({
     email: "",
     name: "",
@@ -47,18 +53,19 @@ const PaymentForm = () => {
     e.preventDefault();
 
     const newClient = {
-      email: client.email,
-      name: client.name,
+      email: student.email,
+      name: `${student.firstName} ${student.lastName}`,
       creditCard: {
-        name: client.name,
+        name: `${student.firstName} ${student.lastName}`,
         cardNumber: client.creditCard.cardNumber,
         expirationYear: client.creditCard.expirationYear,
         expirationMonth: client.creditCard.expirationMonth,
         cvc: client.creditCard.cvc,
       },
+      token: userStore.user.token,
     };
 
-    agent.Customers.create(newClient)
+    paymentAgent.Customers.create(newClient)
       .then(() => {
         toast.success("Të dhënat tua u ruajtën!");
       })
@@ -68,9 +75,7 @@ const PaymentForm = () => {
       });
   };
 
-  const { userStore } = useStore();
-
-  var student = userStore.user;
+  var student = userStore.student;
 
   return (
     <div>
@@ -98,7 +103,7 @@ const PaymentForm = () => {
             <Grid item xs={6}>
               <TextField
                 label="Name"
-                value={student.firstName}
+                value={`${student.firstName} ${student.lastName}`}
                 disabled
                 variant="outlined"
                 size="small"
@@ -166,7 +171,7 @@ const PaymentForm = () => {
                 fullWidth
                 onClick={handleSubmit}
               >
-                Paguaj
+                Regjistro Kartelen
               </Button>
               <ToastContainer />
             </Grid>
@@ -175,6 +180,6 @@ const PaymentForm = () => {
       </Grid>
     </div>
   );
-};
+});
 
 export default PaymentForm;

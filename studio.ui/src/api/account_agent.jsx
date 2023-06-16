@@ -1,10 +1,8 @@
 import axios from "axios";
 import { store } from "../stores/store";
 
-const sleep = (delay) =>
-{
-  return new Promise((resolve) =>
-  {
+const sleep = (delay) => {
+  return new Promise((resolve) => {
     setTimeout(resolve, delay);
   });
 };
@@ -14,26 +12,21 @@ const service1Axios = axios.create({
 });
 
 service1Axios.interceptors.request.use(
-  (config) =>
-  {
+  (config) => {
     const token = store.commonStore.token;
     if (token) config.headers.Authorization = `Bearer ${token}`;
     return config;
   },
-  (error) =>
-  {
+  (error) => {
     return Promise.reject(error);
   }
 );
 
-service1Axios.interceptors.response.use(async (response) =>
-{
-  try
-  {
+service1Axios.interceptors.response.use(async (response) => {
+  try {
     await sleep(400);
     return response;
-  } catch (error)
-  {
+  } catch (error) {
     console.log(error);
     return Promise.reject(error);
   }

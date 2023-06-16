@@ -62,6 +62,7 @@ const LoginForm = observer(function LoginForm(props) {
       if (loggedIn) {
         navigate("/");
       }
+      await userStore.getStudent();
     } catch (error) {
       setErrorMsg(true);
       console.log(errorMsg);

@@ -14,7 +14,7 @@ export default class UserStore {
 
     makePersistable(this, {
       name: "UserStore",
-      properties: ["user"],
+      properties: ["user", "student"],
       storage: window.localStorage,
     });
   }
@@ -69,6 +69,7 @@ export default class UserStore {
     try {
       const student = await agent.Account.student();
       runInAction(() => (this.student = student));
+      return student;
     } catch (error) {
       console.log(error);
     }

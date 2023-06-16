@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { observer } from "mobx-react-lite";
 import agent from "../../api/payment_agents";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -19,9 +20,14 @@ import {
 } from "@mui/material";
 import Menu from "../../components/Menu/Menu";
 import { useStore } from "../../stores/store";
+import LoadingComponent from "../LoadingComponent/LoadingComponent";
 
-const Payment = () => {
-  const [pagesa, setPagesa] = useState({
+const Payment = observer(function Payment() {
+  const [loading, setLoading] = useState(true);
+  const [typeOfPayments, setTypeOfPayments] = useState([]);
+  const { userStore } = useStore();
+
+  const [payment, setPayment] = useState({
     customerId: "",
     receiptEmail: "fs51701@ubt-uni.net",
     description: "",
@@ -30,39 +36,36 @@ const Payment = () => {
     month: "",
   });
 
-  const { userStore } = useStore();
-
-  //TO DO
-  //Figure out why customer id is not accessible
-  var customerIdOfUser = userStore.user.customerId;
+  useEffect(() => {
+    const fetchUser = async () => {
+      const student = await userStore.getStudent();
+      if (student) {
+        setPayment({ ...payment, customerId: student.customerId });
+      }
+      setLoading(false);
+    };
+    fetchUser();
+  }, []);
 
   const [latestPayment, setLatestPayment] = useState(null);
 
   const handleChange = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
-    setPagesa((prev) => {
-      if (name === "month") {
-        return {
-          ...prev,
-          [name]: value,
-        };
-      } else {
-        return {
-          ...prev,
-          [name]: value,
-          amount:
-            typeOfPayments.find((payment) => payment.type === value)?.price ||
-            "",
-        };
-      }
-    });
+    const { name, value } = e.target;
+    const selectedPayment = typeOfPayments.find(
+      (payment) => payment.type === value
+    );
+    const updatedPayment = {
+      ...payment,
+      [name]: value,
+      amount: selectedPayment?.price || "",
+    };
+    setPayment(updatedPayment);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    agent.Payment.create(pagesa)
+    agent.Payment.create(payment)
       .then((newPayment) => {
         setLatestPayment(newPayment);
         toast.success("Pagesa u krye me sukses");
@@ -71,8 +74,6 @@ const Payment = () => {
         toast.error("Pagesa nuk u realizua!");
       });
   };
-
-  const [typeOfPayments, setTypeOfPayments] = useState([]);
 
   useEffect(() => {
     agent.TypeOfPayments.get().then((response) => {
@@ -96,8 +97,10 @@ const Payment = () => {
         currentDay >= 1 &&
         currentDay <= 7);
 
-    return !isWithinPreviousRange;
+    return isWithinPreviousRange;
   };
+
+  if (loading) return <LoadingComponent />;
 
   return (
     <div>
@@ -118,7 +121,7 @@ const Payment = () => {
           <Box width="400px" margin="auto">
             <form onSubmit={handleSubmit}>
               <Grid container spacing={2}>
-                <Grid item xs={12}>
+                {/*                 <Grid item xs={12}>
                   <TextField
                     type="text"
                     name="customerId"
@@ -130,12 +133,12 @@ const Payment = () => {
                     fullWidth
                     size="small"
                   />
-                </Grid>
+                </Grid> */}
                 <Grid item xs={12}>
                   <FormControl variant="outlined" fullWidth required>
                     <Select
                       name="description"
-                      value={pagesa.description}
+                      value={payment.description}
                       onChange={handleChange}
                       displayEmpty
                       size="small"
@@ -158,26 +161,27 @@ const Payment = () => {
                   </FormControl>
                 </Grid>
                 <Grid item xs={12}>
-                  <TextField
+                  {/*                   <TextField
                     type="text"
                     name="amount"
                     label="Shuma për pagesë"
                     variant="outlined"
                     size="small"
                     value={
-                      pagesa.amount !== ""
-                        ? `${(pagesa.amount / 100).toFixed(2)} €`
-                        : ""
+                      // payment.amount !== ""
+                      //   ? `${(payment.amount / 100).toFixed(2)} €`
+                      //   : ""
+                      payment.amount !== "" ? `${payment.amount} €` : ""
                     }
                     disabled
                     fullWidth
-                  />
+                  /> */}
                 </Grid>
                 <Grid item xs={12}>
                   <FormControl variant="outlined" fullWidth required>
                     <Select
                       name="month"
-                      value={pagesa.month}
+                      value={payment.month}
                       onChange={handleChange}
                       size="small"
                       displayEmpty
@@ -287,6 +291,6 @@ const Payment = () => {
       )}
     </div>
   );
-};
+});
 
 export default Payment;
