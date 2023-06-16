@@ -104,36 +104,43 @@ namespace Payment.Application
 
         public async Task<StripePayment> AddStripePaymentAsync(AddStripePayment payment, CancellationToken ct)
         {
-            bool hasPaid = await HasPaid(payment);
-            if (hasPaid)
-                throw new Exception("Pages u kry ma heret!");
-
-            // Set the options for the payment we would like to create at Stripe
-            ChargeCreateOptions paymentOptions = new()
+            try
             {
-                Customer = payment.CustomerId,
-                ReceiptEmail = payment.ReceiptEmail,
-                Description = payment.Description,
-                Currency = payment.Currency,
-                Amount = payment.Amount
-            };
+                bool hasPaid = await HasPaid(payment);
+                if (hasPaid)
+                    throw new Exception("Pages u kry ma heret!");
 
-            // Create the payment
-            var createdPayment = await _chargeService.CreateAsync(paymentOptions, null, ct);
-            StripePayment mappedPayment = MapStripePayment(createdPayment, payment.Month);
-            await _context.StripePayments.AddAsync(mappedPayment, ct);
-            await _context.SaveChangesAsync(ct);
+                // Set the options for the payment we would like to create at Stripe
+                ChargeCreateOptions paymentOptions = new()
+                {
+                    Customer = payment.CustomerId,
+                    ReceiptEmail = payment.ReceiptEmail,
+                    Description = payment.Description,
+                    Currency = payment.Currency,
+                    Amount = payment.Amount
+                };
 
-            // Return the payment to requesting method
-            return new StripePayment(
-              createdPayment.CustomerId,
-              createdPayment.ReceiptEmail,
-              createdPayment.Description,
-              createdPayment.Currency,
-              createdPayment.Amount,
-              createdPayment.Id, 
-              createdPayment.Created,
-              payment.Month);
+                // Create the payment
+                var createdPayment = await _chargeService.CreateAsync(paymentOptions, null, ct);
+                StripePayment mappedPayment = MapStripePayment(createdPayment, payment.Month);
+                await _context.StripePayments.AddAsync(mappedPayment, ct);
+                await _context.SaveChangesAsync(ct);
+
+                // Return the payment to requesting method
+                return new StripePayment(
+                  createdPayment.CustomerId,
+                  createdPayment.ReceiptEmail,
+                  createdPayment.Description,
+                  createdPayment.Currency,
+                  createdPayment.Amount,
+                  createdPayment.Id,
+                  createdPayment.Created,
+                  payment.Month);
+            } 
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
         }
 
         private async Task<bool> HasPaid(AddStripePayment payment)
