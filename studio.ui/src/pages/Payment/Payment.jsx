@@ -25,6 +25,7 @@ import LoadingComponent from "../LoadingComponent/LoadingComponent";
 const Payment = observer(function Payment() {
   const [loading, setLoading] = useState(true);
   const [typeOfPayments, setTypeOfPayments] = useState([]);
+  const [paymentsHistory, setPaymentsHistory] = useState([]);
   const { userStore } = useStore();
 
   const [payment, setPayment] = useState({
@@ -36,18 +37,21 @@ const Payment = observer(function Payment() {
     month: "",
   });
 
+  const [latestPayment, setLatestPayment] = useState(null);
+
   useEffect(() => {
     const fetchUser = async () => {
       const student = await userStore.getStudent();
       if (student) {
         setPayment({ ...payment, customerId: student.customerId });
       }
+      const payments = await userStore.getPayments(student.customerId);
+      setPaymentsHistory(payments);
+      console.log(payments);
       setLoading(false);
     };
     fetchUser();
-  }, []);
-
-  const [latestPayment, setLatestPayment] = useState(null);
+  }, [latestPayment]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -57,13 +61,18 @@ const Payment = observer(function Payment() {
     const updatedPayment = {
       ...payment,
       [name]: value,
-      amount: selectedPayment?.price || "",
     };
+
+    if (name === "description") {
+      updatedPayment.amount = selectedPayment?.price || "";
+    }
+
     setPayment(updatedPayment);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(payment);
 
     agent.Payment.create(payment)
       .then((newPayment) => {
@@ -161,21 +170,20 @@ const Payment = observer(function Payment() {
                   </FormControl>
                 </Grid>
                 <Grid item xs={12}>
-                  {/*                   <TextField
+                  <TextField
                     type="text"
                     name="amount"
                     label="Shuma për pagesë"
                     variant="outlined"
                     size="small"
                     value={
-                      // payment.amount !== ""
-                      //   ? `${(payment.amount / 100).toFixed(2)} €`
-                      //   : ""
-                      payment.amount !== "" ? `${payment.amount} €` : ""
+                      payment.amount !== ""
+                        ? `${(payment.amount / 100).toFixed(2)} €`
+                        : ""
                     }
                     disabled
                     fullWidth
-                  /> */}
+                  />
                 </Grid>
                 <Grid item xs={12}>
                   <FormControl variant="outlined" fullWidth required>
@@ -246,7 +254,7 @@ const Payment = observer(function Payment() {
           <ToastContainer />
         </Grid>
       </Grid>
-      {latestPayment && (
+      {paymentsHistory && (
         <Table sx={{ marginTop: "2rem", maxWidth: "60%", marginLeft: "20%" }}>
           <TableHead>
             <TableRow sx={{ background: "#c62828" }}>
@@ -268,24 +276,33 @@ const Payment = observer(function Payment() {
             </TableRow>
           </TableHead>
           <TableBody>
-            <TableRow key={latestPayment.id}>
-              <TableCell>{latestPayment.customerId}</TableCell>
-              <TableCell>{latestPayment.description}</TableCell>
-              <TableCell>
-                {(latestPayment.amount * 0.01).toFixed(2)} €
-              </TableCell>
-              <TableCell>{latestPayment.month}</TableCell>
-              <TableCell>
-                {new Date(latestPayment.dateOfPayment).toLocaleString("en-GB", {
-                  year: "numeric",
-                  month: "2-digit",
-                  day: "2-digit",
-                  hour: "2-digit",
-                  minute: "2-digit",
-                  second: "2-digit",
-                })}
-              </TableCell>
-            </TableRow>
+            {paymentsHistory.map((paymentItem) => {
+              return (
+                <TableRow key={paymentItem.id}>
+                  <TableCell>
+                    {userStore.student.firstName} {userStore.student.lastName}
+                  </TableCell>
+                  <TableCell>{paymentItem.description}</TableCell>
+                  <TableCell>
+                    {(paymentItem.amount * 0.01).toFixed(2)} €
+                  </TableCell>
+                  <TableCell>{paymentItem.month}</TableCell>
+                  <TableCell>
+                    {new Date(paymentItem.dateOfPayment).toLocaleString(
+                      "en-GB",
+                      {
+                        year: "numeric",
+                        month: "2-digit",
+                        day: "2-digit",
+                        hour: "2-digit",
+                        minute: "2-digit",
+                        second: "2-digit",
+                      }
+                    )}
+                  </TableCell>
+                </TableRow>
+              );
+            })}
           </TableBody>
         </Table>
       )}

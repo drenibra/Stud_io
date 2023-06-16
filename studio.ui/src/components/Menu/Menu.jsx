@@ -59,14 +59,14 @@ const Menu = () => {
             <StyledListItemText primary="Profili im" />
           </StyledLink>
         </StyledListItem>
-        <StyledListItem className="menu-item">
+        {/*         <StyledListItem className="menu-item">
           <ListItemIcon>
             <HotelIcon />
           </ListItemIcon>
           <StyledLink to="/Dormitory">
             <StyledListItemText primary="Konvikti" />
           </StyledLink>
-        </StyledListItem>
+        </StyledListItem> */}
         <StyledListItem className="menu-item">
           <ListItemIcon>
             <PeopleIcon />

@@ -12,8 +12,7 @@ import LoginForm from "./pages/Authentication/Loginform";
 import RegisterForm from "./pages/Authentication/RegisterForm";
 import ProtectedRoute from "./ProtectedRoute";
 
-import
-{
+import {
   LandingPage,
   Maintenance,
   Payment,
@@ -54,57 +53,51 @@ const routes = [
   { path: "/AnnouncementTable", element: AnnouncementTable },
 ];
 
-const App = observer(function App()
-{
+const App = observer(function App() {
   const { commonStore, userStore } = useStore();
   const [user, setUser] = useState({});
 
-  useEffect(() =>
-  {
-    if (commonStore.token)
-    {
-      try
-      {
-        const fetchData = async () =>
-        {
+  useEffect(() => {
+    if (commonStore.token) {
+      try {
+        const fetchData = async () => {
           const userData = await agent.Account.current();
           setUser(userData);
         };
         fetchData();
-      } catch (error)
-      {
+      } catch (error) {
         console.error(error);
-      } finally
-      {
+      } finally {
         commonStore.setAppLoaded();
       }
-    } else
-    {
+    } else {
       commonStore.setAppLoaded();
     }
   }, [commonStore, userStore]);
 
   return (
     <ThemeProvider theme={theme}>
-      <ResponsiveAppBar />
-      <Routes>
-        {routes.map((route) => (
-          <Route
-            path={route.path}
-            key={route.key}
-            element={
-              <ProtectedRoute loggedIn={userStore.isLoggedIn}>
-                <route.element />
-              </ProtectedRoute>
-            }
-          />
-        ))}
-        <Route element={<LoginForm />} path="/login" />
-        <Route element={<RegisterForm />} path="/register" />
-        <Route path="/" element={<LandingPage />} />
-        <Route path="*" element={<LandingPage />} />
-      </Routes>
-      <Footer />
+      <div className="wrapper">
+        <ResponsiveAppBar />
+        <Routes>
+          {routes.map((route) => (
+            <Route
+              path={route.path}
+              key={route.key}
+              element={
+                <ProtectedRoute loggedIn={userStore.isLoggedIn}>
+                  <route.element />
+                </ProtectedRoute>
+              }
+            />
+          ))}
+          <Route element={<LoginForm />} path="/login" />
+          <Route element={<RegisterForm />} path="/register" />
+          <Route path="/" element={<LandingPage />} />
+          <Route path="*" element={<LandingPage />} />
+        </Routes>
+        <Footer />
+      </div>
     </ThemeProvider>
   );
 });
