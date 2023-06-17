@@ -46,7 +46,6 @@ namespace Stud_io.Authentication.Services
                 LastName = user.LastName,
                 Username = user.UserName,
                 Email = user.Email,
-                ProfileImage = user.ProfileImage,
                 Gender = user.Gender,
             };
         }
@@ -86,7 +85,6 @@ namespace Stud_io.Authentication.Services
                                                         Id = x.StudentId,
                                                         FirstName = x.Student.FirstName,
                                                         LastName = x.Student.LastName,
-                                                        ProfileImage = x.Student.ProfileImage ?? "N/A",
                                                     }).ToListAsync();
 
             return new OkObjectResult(studyGroupStudents);
@@ -102,7 +100,6 @@ namespace Stud_io.Authentication.Services
                                                         Id = x.StudentId,
                                                         FirstName = x.Student.FirstName,
                                                         LastName = x.Student.LastName,
-                                                        ProfileImage = x.Student.ProfileImage,
                                                     }).ToListAsync();
 
             return new OkObjectResult(groupEventStudents);

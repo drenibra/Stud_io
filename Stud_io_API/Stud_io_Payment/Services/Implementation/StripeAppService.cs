@@ -121,7 +121,7 @@ namespace Payment.Application
                 };
 
                 // Create the payment
-                var createdPayment = await _chargeService.CreateAsync(paymentOptions, null, ct);
+                    var createdPayment = await _chargeService.CreateAsync(paymentOptions, null, ct);
                 StripePayment mappedPayment = MapStripePayment(createdPayment, payment.Month);
                 await _context.StripePayments.AddAsync(mappedPayment, ct);
                 await _context.SaveChangesAsync(ct);

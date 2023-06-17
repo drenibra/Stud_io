@@ -25,5 +25,6 @@ namespace Stud_io.Configuration
         public DbSet<Student> Students { get; set; }
         public DbSet<StudyGroupStudent> StudyGroupStudents { get; set; }
         public DbSet<GroupEventStudents> GroupEventStudents { get; set; }
+        public DbSet<Photo> Photos { get; set; }
     }
 }

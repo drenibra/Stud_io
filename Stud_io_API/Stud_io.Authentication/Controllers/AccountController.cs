@@ -135,7 +135,6 @@ namespace Stud_io.Controllers
                 Username = user.UserName,
                 Email = user.Email,
                 Gender = user.Gender,
-                ProfileImage = user.ProfileImage,
             };
         }
     }
