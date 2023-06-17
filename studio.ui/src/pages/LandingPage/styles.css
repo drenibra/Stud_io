@@ -36,6 +36,9 @@
   flex-direction: column;
   align-items: center;
 }
+.njoftimet-item p {
+  padding-top: 20px;
+}
 
 /* Njoftimet */
 
@@ -52,6 +55,12 @@
   .njoftimet-p p {
     padding-right: 8px;
     padding-bottom: 10px;
+  }
+  .njoftimet-grid {
+    flex-direction: column !important;
+  }
+  .njoftimet-grid-item {
+    margin: 0 auto !important;
   }
 }
 
@@ -86,10 +95,8 @@
 
 /* Common Styles */
 .njoftimet-container {
-  border: 1px solid #e3e3e3;
-  background-color: #e3e3e3;
+  padding: 65px 0;
 }
-
 /* .njoftimet-div {
   margin-top: 15px;
   margin-left: 15px;
