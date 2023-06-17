@@ -74,12 +74,12 @@ const Menu = observer(function Menu() {
       icon: <AccountCircleIcon />,
     },
     {
-      name: 'Të gjitha dhomat',
-      path: '/AllRooms',
+      name: 'Dhomat',
+      path: '/dormitory',
       icon: <HotelIcon />,
     },
     {
-      name: 'Të gjitha pagesat',
+      name: 'Pagesat',
       path: '/pagesat',
       icon: <PaymentIcon />,
     },
