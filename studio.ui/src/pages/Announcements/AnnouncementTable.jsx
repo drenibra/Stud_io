@@ -1,13 +1,12 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { DataGrid } from '@mui/x-data-grid';
-import { Button } from "@mui/material";
+import './styles.scss'
 
 export default function AnnouncementTable()
 {
 
     const [announcements, setAnnouncements] = useState([]);
-    const [deadlines, setDeadlines] = useState([]);
     const [refreshKey, setRefreshKey] = useState('0');
 
     // announcements
@@ -24,88 +23,26 @@ export default function AnnouncementTable()
     }, [])
 
 
-    function DeleteAnnouncement(id)
-    {
-        const confirmBox = window.confirm(
-            "A jeni te sigurte qe deshironi te fshini konkursin me id " + id + "?  "
-        );
-        if (confirmBox === true)
-        {
-            axios.delete('https://localhost:7137/api/Announcement/delete-announcement/' + id)
-                .then(() =>
-                {
-                    setRefreshKey(refreshKey => refreshKey + 1)
-                });
-        }
-        else
-        {
-            console.log("Process of deleting an announcement canceled !!");
-        }
-    }
-
-    function UpdateAnnouncement(id)
-    {
-        const confirmBox = window.confirm(
-            "A jeni te sigurte qe deshironi te fshini konkursin me id " + id + "?  "
-        );
-        if (confirmBox === true)
-        {
-            axios.delete('https://localhost:7137/api/Announcement/update-announcement-by-id/' + id)
-                .then(() =>
-                {
-                    setRefreshKey(refreshKey => refreshKey + 1)
-                });
-        }
-        else
-        {
-            console.log("Process of deleting an announcement canceled !!");
-        }
-    }
 
 
-    // deadlines
-    useEffect(() =>
-    {
-        axios.get('https://localhost:7137/api/Deadline/get-all-deadlines')
-            .then(response =>
-            {
-                setDeadlines(response.data);
-            }).catch(function (error)
-            {
-                console.log(error);
-            });
-    }, [])
+
 
     const columns = [
         { field: "id", headerName: "Id", width: 180 },
         { field: "title", headerName: "Title", width: 180 },
         { field: "description", headerName: "Description", width: 220 },
-        { field: "openDate", headerName: "Open Date" },
-        { field: "closedDate", headerName: "Closed Date" },
-        {
-            field: "Delete",
-            headerName: "Delete",
-            width: 150,
-            renderCell: (params) => (
-                <Button
-                    onClick={(e) => DeleteAnnouncement(id)}
-                >
-                    Delete
-                </Button>
-            )
-        },
-
+        { field: "openDate", headerName: "Open Date", width: 110 },
+        { field: "closedDate", headerName: "Closed Date", width: 120 },
     ];
 
     const rows = announcements.map((announcement, index) =>
     {
-        const deadline = deadlines.find(d => d.id === announcement.deadlineId);
         return {
             id: announcement.id || index + 1,
             title: announcement.title,
             description: announcement.description,
-            openDate: deadline ? deadline.openDate : "",
-            closedDate: deadline ? deadline.closedDate : "",
+            openDate: announcement.deadline.openDate,
+            closedDate: announcement.deadline.closedDate,
         };
     });
 
