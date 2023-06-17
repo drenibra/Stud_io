@@ -1,14 +1,14 @@
 import React from 'react';
 import { ResponsiveBar } from '@nivo/bar';
-import { Grid, Container, Box, Typography, Paper } from "@mui/material";
-import { styled } from "@mui/system";
-import Sidebar from "../../components/Sidebar/Sidebar";
+import { Grid, Container, Box, Typography, Paper } from '@mui/material';
+import { styled } from '@mui/system';
+import Menu from '../../components/Menu/Menu';
 
-const StyledRowContainer = styled("div")({
-  background: "#f3f3f3",
-  padding: "10px",
-  borderRadius: "10px",
-  position: "relative",
+const StyledRowContainer = styled('div')({
+  background: '#f3f3f3',
+  padding: '10px',
+  borderRadius: '10px',
+  position: 'relative',
 });
 
 const ComplaintsFeedbackChart = () => {
@@ -35,15 +35,11 @@ const ComplaintsFeedbackChart = () => {
   return (
     <div>
       <Box maxWidth="250px" position="absolute">
-        <Sidebar />
+        <Menu />
       </Box>
       <Container maxWidth="md">
         <Box textAlign="center" marginTop={4}>
-          <Typography
-            variant="h4"
-            gutterBottom
-            style={{ fontFamily: "Poppins", marginBottom: " 1em" }}
-          >
+          <Typography variant="h4" gutterBottom style={{ fontFamily: 'Poppins', marginBottom: ' 1em' }}>
             Ankesat
           </Typography>
         </Box>

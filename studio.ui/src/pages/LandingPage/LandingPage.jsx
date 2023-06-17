@@ -18,26 +18,26 @@ const LandingPage = function LandingPage() {
       <Container className="njoftimet-container" maxwidth="true">
         <div className="njoftimet">
           <p className="njoftimet-e-reja-title">Njoftimet e reja</p>
-          <Grid container spacing={4}>
-            <Grid item xs={3}>
+          <Grid container spacing={4} className="njoftimet-grid">
+            <Grid item xs={3} className="njoftimet-grid-item">
               <Link to="#" className="njoftimet-item">
                 <img src={Ankesa} />
                 <p>Hapet konkursi per ankese</p>
               </Link>
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={3} className="njoftimet-grid-item">
               <Link to="#" className="njoftimet-item">
                 <img src={ListaPritjes} />
                 <p>Lista e pritjes 22/23</p>
               </Link>
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={3} className="njoftimet-grid-item">
               <Link to="#" className="njoftimet-item">
                 <img src={Lista} />
                 <p>Lista e rezultateve 22/23</p>
               </Link>
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={3} className="njoftimet-grid-item">
               <Link to="#" className="njoftimet-item">
                 <img src={Konkursi} />
                 <p>

@@ -1,21 +1,21 @@
-import { makeAutoObservable, runInAction } from "mobx";
-import { makePersistable } from "mobx-persist-store";
-import agent from "../api/account_agent.jsx";
-import paymentAgent from "../api/payment_agents.jsx";
-import { store } from "./store.js";
+import { makeAutoObservable, runInAction } from 'mobx';
+import { makePersistable } from 'mobx-persist-store';
+import agent from '../api/account_agent.jsx';
+import paymentAgent from '../api/payment_agents.jsx';
+import { store } from './store.js';
 
 export default class UserStore {
-  isApplicant = false;
   user = null;
   error = false;
   student = null;
+  roles = null;
 
   constructor() {
     makeAutoObservable(this);
 
     makePersistable(this, {
-      name: "UserStore",
-      properties: ["user", "student"],
+      name: 'UserStore',
+      properties: ['user', 'student', 'roles'],
       storage: window.localStorage,
     });
   }
@@ -30,10 +30,11 @@ export default class UserStore {
       store.commonStore.setToken(user.token);
       runInAction(() => (this.user = user));
       this.removeError();
+      this.getRoles();
       if (user.token) return true;
       else return false;
     } catch (error) {
-      console.log("Invalid credentials");
+      console.log('Invalid credentials');
       this.triggerError();
       throw error;
     }
@@ -52,9 +53,13 @@ export default class UserStore {
 
   logout = () => {
     store.commonStore.setToken(null);
-    window.localStorage.removeItem("jwt");
+    window.localStorage.removeItem('jwt');
+
     this.user = null;
-    window.location.replace("/login");
+    this.student = null;
+    this.roles = null;
+
+    window.location.replace('/login');
   };
 
   getUser = async () => {
@@ -82,26 +87,16 @@ export default class UserStore {
       return userId;
     } catch (error) {
       console.log(error);
-      return "";
-    }
-  };
-
-  getRoles = async () => {
-    try {
-      const roles = agent.Account.roles();
-      return roles;
-    } catch (error) {
-      console.log(error);
-      return [];
+      return '';
     }
   };
 
   updateUser = async (user) => {
     try {
       await agent.Account.update(user);
-      if (this.getRoles[0] === "Student") {
+      if (this.getRoles[0] === 'Student') {
         runInAction(() => (this.student = student));
-      } else if (this.getRoles[0] === "Admin") {
+      } else if (this.getRoles[0] === 'Admin') {
         runInAction(() => (this.user = user));
       }
       return true;
@@ -111,35 +106,25 @@ export default class UserStore {
     }
   };
 
-  async fetchIsApplicant() {
-    try {
-      const roles = await agent.Account.roles();
-      this.isApplicant = roles.includes("Applicant");
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
   getPayments = async (customerId) => {
     try {
-      const payments = await paymentAgent.Payments.getPaymentsOfCustomer(
-        customerId
-      );
+      const payments = await paymentAgent.Payments.getPaymentsOfCustomer(customerId);
       return payments;
     } catch (error) {
       console.log(error);
     }
   };
 
-  /*   getRoles = async (): Promise<string[]> => {
+  getRoles = async () => {
     try {
-      const roles = await agent.Account.roles;
+      const roles = await agent.Account.roles();
+      runInAction(() => (this.roles = roles));
       return roles;
     } catch (error) {
       console.log(error);
       return [];
     }
-  }; */
+  };
 
   triggerError = () => {
     this.error = true;

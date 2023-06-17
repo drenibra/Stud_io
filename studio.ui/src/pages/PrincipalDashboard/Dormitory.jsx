@@ -1,28 +1,24 @@
-import React from "react";
-import { Grid, Container, Box, Typography, Paper } from "@mui/material";
-import { styled } from "@mui/system";
-import Sidebar from "../../components/Sidebar/Sidebar";
+import React from 'react';
+import { Grid, Container, Box, Typography, Paper } from '@mui/material';
+import { styled } from '@mui/system';
+import Menu from '../../components/Menu/Menu';
 
-const StyledRowContainer = styled("div")({
-  background: "#f3f3f3",
-  padding: "10px",
-  borderRadius: "10px",
-  position: "relative",
+const StyledRowContainer = styled('div')({
+  background: '#f3f3f3',
+  padding: '10px',
+  borderRadius: '10px',
+  position: 'relative',
 });
 
 export default function Dormitory() {
   return (
     <div>
       <Box maxWidth="250px" position="absolute">
-        <Sidebar />
+        <Menu />
       </Box>
       <Container maxWidth="md">
         <Box textAlign="center" marginTop={4}>
-          <Typography
-            variant="h4"
-            gutterBottom
-            style={{ fontFamily: "Poppins", marginBottom: " 1em" }}
-          >
+          <Typography variant="h4" gutterBottom style={{ fontFamily: 'Poppins', marginBottom: ' 1em' }}>
             Konvikti I
           </Typography>
         </Box>
@@ -31,24 +27,20 @@ export default function Dormitory() {
             <StyledRowContainer>
               <Paper elevation={0} style={{ background: 'transparent', padding: '10px' }}>
                 <Grid item>
-                  <div style={{ fontSize: "18px", fontWeight: "bold" }}>
-                    Fat Sijarina
-                  </div>
+                  <div style={{ fontSize: '18px', fontWeight: 'bold' }}>Fat Sijarina</div>
                 </Grid>
                 <Grid item>
-                  <div style={{ fontSize: "18px", fontWeight: "bold" }}>
-                    Rrezart Hetemi
-                  </div>
+                  <div style={{ fontSize: '18px', fontWeight: 'bold' }}>Rrezart Hetemi</div>
                 </Grid>
                 <Grid
                   item
                   style={{
-                    borderTop: "2px solid #ffffff",
-                    marginTop: "10px",
-                    paddingTop: "10px",
+                    borderTop: '2px solid #ffffff',
+                    marginTop: '10px',
+                    paddingTop: '10px',
                   }}
                 >
-                  <div style={{ fontSize: "16px" }}>
+                  <div style={{ fontSize: '16px' }}>
                     Dhoma: <strong>428</strong>
                   </div>
                 </Grid>
@@ -59,24 +51,20 @@ export default function Dormitory() {
             <StyledRowContainer>
               <Paper elevation={0} style={{ background: 'transparent', padding: '10px' }}>
                 <Grid item>
-                  <div style={{ fontSize: "18px", fontWeight: "bold" }}>
-                    Fat Sijarina
-                  </div>
+                  <div style={{ fontSize: '18px', fontWeight: 'bold' }}>Fat Sijarina</div>
                 </Grid>
                 <Grid item>
-                  <div style={{ fontSize: "18px", fontWeight: "bold" }}>
-                    Rrezart Hetemi
-                  </div>
+                  <div style={{ fontSize: '18px', fontWeight: 'bold' }}>Rrezart Hetemi</div>
                 </Grid>
                 <Grid
                   item
                   style={{
-                    borderTop: "2px solid #ffffff",
-                    marginTop: "10px",
-                    paddingTop: "10px",
+                    borderTop: '2px solid #ffffff',
+                    marginTop: '10px',
+                    paddingTop: '10px',
                   }}
                 >
-                  <div style={{ fontSize: "16px" }}>
+                  <div style={{ fontSize: '16px' }}>
                     Dhoma: <strong>428</strong>
                   </div>
                 </Grid>
@@ -87,24 +75,20 @@ export default function Dormitory() {
             <StyledRowContainer>
               <Paper elevation={0} style={{ background: 'transparent', padding: '10px' }}>
                 <Grid item>
-                  <div style={{ fontSize: "18px", fontWeight: "bold" }}>
-                    Fat Sijarina
-                  </div>
+                  <div style={{ fontSize: '18px', fontWeight: 'bold' }}>Fat Sijarina</div>
                 </Grid>
                 <Grid item>
-                  <div style={{ fontSize: "18px", fontWeight: "bold" }}>
-                    Rrezart Hetemi
-                  </div>
+                  <div style={{ fontSize: '18px', fontWeight: 'bold' }}>Rrezart Hetemi</div>
                 </Grid>
                 <Grid
                   item
                   style={{
-                    borderTop: "2px solid #ffffff",
-                    marginTop: "10px",
-                    paddingTop: "10px",
+                    borderTop: '2px solid #ffffff',
+                    marginTop: '10px',
+                    paddingTop: '10px',
                   }}
                 >
-                  <div style={{ fontSize: "16px" }}>
+                  <div style={{ fontSize: '16px' }}>
                     Dhoma: <strong>428</strong>
                   </div>
                 </Grid>
@@ -115,24 +99,20 @@ export default function Dormitory() {
             <StyledRowContainer>
               <Paper elevation={0} style={{ background: 'transparent', padding: '10px' }}>
                 <Grid item>
-                  <div style={{ fontSize: "18px", fontWeight: "bold" }}>
-                    Fat Sijarina
-                  </div>
+                  <div style={{ fontSize: '18px', fontWeight: 'bold' }}>Fat Sijarina</div>
                 </Grid>
                 <Grid item>
-                  <div style={{ fontSize: "18px", fontWeight: "bold" }}>
-                    Rrezart Hetemi
-                  </div>
+                  <div style={{ fontSize: '18px', fontWeight: 'bold' }}>Rrezart Hetemi</div>
                 </Grid>
                 <Grid
                   item
                   style={{
-                    borderTop: "2px solid #ffffff",
-                    marginTop: "10px",
-                    paddingTop: "10px",
+                    borderTop: '2px solid #ffffff',
+                    marginTop: '10px',
+                    paddingTop: '10px',
                   }}
                 >
-                  <div style={{ fontSize: "16px" }}>
+                  <div style={{ fontSize: '16px' }}>
                     Dhoma: <strong>428</strong>
                   </div>
                 </Grid>
@@ -143,29 +123,23 @@ export default function Dormitory() {
             <StyledRowContainer>
               <Paper elevation={0} style={{ background: 'transparent', padding: '10px' }}>
                 <Grid item>
-                  <div style={{ fontSize: "18px", fontWeight: "bold" }}>
-                    Fat Sijarina
-                  </div>
+                  <div style={{ fontSize: '18px', fontWeight: 'bold' }}>Fat Sijarina</div>
                 </Grid>
                 <Grid item>
-                  <div style={{ fontSize: "18px", fontWeight: "bold" }}>
-                    Rrezart Hetemi
-                  </div>
+                  <div style={{ fontSize: '18px', fontWeight: 'bold' }}>Rrezart Hetemi</div>
                 </Grid>
                 <Grid item>
-                  <div style={{ fontSize: "18px", fontWeight: "bold" }}>
-                    Dren Ibrahimi
-                  </div>
+                  <div style={{ fontSize: '18px', fontWeight: 'bold' }}>Dren Ibrahimi</div>
                 </Grid>
                 <Grid
                   item
                   style={{
-                    borderTop: "2px solid #ffffff",
-                    marginTop: "10px",
-                    paddingTop: "10px",
+                    borderTop: '2px solid #ffffff',
+                    marginTop: '10px',
+                    paddingTop: '10px',
                   }}
                 >
-                  <div style={{ fontSize: "16px" }}>
+                  <div style={{ fontSize: '16px' }}>
                     Dhoma: <strong>428</strong>
                   </div>
                 </Grid>
@@ -176,29 +150,23 @@ export default function Dormitory() {
             <StyledRowContainer>
               <Paper elevation={0} style={{ background: 'transparent', padding: '10px' }}>
                 <Grid item>
-                  <div style={{ fontSize: "18px", fontWeight: "bold" }}>
-                    Fat Sijarina
-                  </div>
+                  <div style={{ fontSize: '18px', fontWeight: 'bold' }}>Fat Sijarina</div>
                 </Grid>
                 <Grid item>
-                  <div style={{ fontSize: "18px", fontWeight: "bold" }}>
-                    Rrezart Hetemi
-                  </div>
+                  <div style={{ fontSize: '18px', fontWeight: 'bold' }}>Rrezart Hetemi</div>
                 </Grid>
                 <Grid item>
-                  <div style={{ fontSize: "18px", fontWeight: "bold" }}>
-                    Dren Ibrahimi
-                  </div>
+                  <div style={{ fontSize: '18px', fontWeight: 'bold' }}>Dren Ibrahimi</div>
                 </Grid>
                 <Grid
                   item
                   style={{
-                    borderTop: "2px solid #ffffff",
-                    marginTop: "10px",
-                    paddingTop: "10px",
+                    borderTop: '2px solid #ffffff',
+                    marginTop: '10px',
+                    paddingTop: '10px',
                   }}
                 >
-                  <div style={{ fontSize: "16px" }}>
+                  <div style={{ fontSize: '16px' }}>
                     Dhoma: <strong>428</strong>
                   </div>
                 </Grid>
@@ -209,29 +177,23 @@ export default function Dormitory() {
             <StyledRowContainer>
               <Paper elevation={0} style={{ background: 'transparent', padding: '10px' }}>
                 <Grid item>
-                  <div style={{ fontSize: "18px", fontWeight: "bold" }}>
-                    Fat Sijarina
-                  </div>
+                  <div style={{ fontSize: '18px', fontWeight: 'bold' }}>Fat Sijarina</div>
                 </Grid>
                 <Grid item>
-                  <div style={{ fontSize: "18px", fontWeight: "bold" }}>
-                    Rrezart Hetemi
-                  </div>
+                  <div style={{ fontSize: '18px', fontWeight: 'bold' }}>Rrezart Hetemi</div>
                 </Grid>
                 <Grid item>
-                  <div style={{ fontSize: "18px", fontWeight: "bold" }}>
-                    Dren Ibrahimi
-                  </div>
+                  <div style={{ fontSize: '18px', fontWeight: 'bold' }}>Dren Ibrahimi</div>
                 </Grid>
                 <Grid
                   item
                   style={{
-                    borderTop: "2px solid #ffffff",
-                    marginTop: "10px",
-                    paddingTop: "10px",
+                    borderTop: '2px solid #ffffff',
+                    marginTop: '10px',
+                    paddingTop: '10px',
                   }}
                 >
-                  <div style={{ fontSize: "16px" }}>
+                  <div style={{ fontSize: '16px' }}>
                     Dhoma: <strong>428</strong>
                   </div>
                 </Grid>
