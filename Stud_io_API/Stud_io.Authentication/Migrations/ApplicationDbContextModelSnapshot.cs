@@ -8,7 +8,7 @@ using Stud_io.Configuration;
 
 #nullable disable
 
-namespace Stud_io.Migrations
+namespace Stud_io.Authentication.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -217,9 +217,6 @@ namespace Stud_io.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<string>("ProfileImage")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
@@ -286,6 +283,28 @@ namespace Stud_io.Migrations
                     b.ToTable("Major");
                 });
 
+            modelBuilder.Entity("Stud_io.Authentication.Models.Photo", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("IsMain")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
+
+                    b.ToTable("Photos");
+                });
+
             modelBuilder.Entity("Stud_io.Authentication.Models.ServiceCommunications.StudyGroup.GroupEventStudents", b =>
                 {
                     b.Property<int>("Id")
@@ -343,17 +362,20 @@ namespace Stud_io.Migrations
                     b.Property<int?>("DormNumber")
                         .HasColumnType("int");
 
-                    b.Property<string>("FathersName")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<double?>("GPA")
                         .HasColumnType("float");
 
                     b.Property<int?>("MajorId")
                         .HasColumnType("int");
 
+                    b.Property<string>("ParentName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Status")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool?>("isAccepted")
+                        .HasColumnType("bit");
 
                     b.HasIndex("MajorId");
 
@@ -422,6 +444,13 @@ namespace Stud_io.Migrations
                     b.Navigation("Faculty");
                 });
 
+            modelBuilder.Entity("Stud_io.Authentication.Models.Photo", b =>
+                {
+                    b.HasOne("Stud_io.Authentication.Models.AppUser", null)
+                        .WithMany("Photos")
+                        .HasForeignKey("AppUserId");
+                });
+
             modelBuilder.Entity("Stud_io.Authentication.Models.ServiceCommunications.StudyGroup.GroupEventStudents", b =>
                 {
                     b.HasOne("Stud_io.Authentication.Models.Student", "Student")
@@ -451,6 +480,11 @@ namespace Stud_io.Migrations
                         .HasForeignKey("MajorId");
 
                     b.Navigation("Major");
+                });
+
+            modelBuilder.Entity("Stud_io.Authentication.Models.AppUser", b =>
+                {
+                    b.Navigation("Photos");
                 });
 
             modelBuilder.Entity("Stud_io.Authentication.Models.Faculty", b =>

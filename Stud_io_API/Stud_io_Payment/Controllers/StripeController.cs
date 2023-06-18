@@ -56,5 +56,11 @@ namespace Payment.Controllers
         {
             return await _stripeService.GetCustomers();
         }
+
+        [HttpPatch("has-paid-for-dormitory")]
+        public async Task<bool> HasPaidForDormitory(string customerId)
+        {
+            return await _stripeService.HasPaidForDormitory(customerId);
+        }
     }
 }

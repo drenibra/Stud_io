@@ -40,10 +40,6 @@ const pages = [
     path: '/apliko',
   },
   {
-    name: 'Pagesat',
-    path: '/pagesat',
-  },
-  {
     name: 'StudyGroups',
     path: '/study-groups',
   },

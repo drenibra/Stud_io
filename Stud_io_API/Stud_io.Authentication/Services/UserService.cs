@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Stud_io.Authentication.DTOs;
+using Stud_io.Authentication.DTOs.ServiceCommunication.Dormitory;
 using Stud_io.Authentication.DTOs.ServiceCommunication.StudyGroup;
 using Stud_io.Authentication.Interfaces;
 using Stud_io.Authentication.Models;
@@ -46,7 +48,6 @@ namespace Stud_io.Authentication.Services
                 LastName = user.LastName,
                 Username = user.UserName,
                 Email = user.Email,
-                ProfileImage = user.ProfileImage,
                 Gender = user.Gender,
             };
         }
@@ -75,6 +76,8 @@ namespace Stud_io.Authentication.Services
             return student;
         }
 
+        
+
         //gets all students from a certain study group that is on the study group microservice
         public async Task<ActionResult<List<MemberStudentDto>>> GetStudyGroupStudents(int id)
         {
@@ -86,7 +89,6 @@ namespace Stud_io.Authentication.Services
                                                         Id = x.StudentId,
                                                         FirstName = x.Student.FirstName,
                                                         LastName = x.Student.LastName,
-                                                        ProfileImage = x.Student.ProfileImage ?? "N/A",
                                                     }).ToListAsync();
 
             return new OkObjectResult(studyGroupStudents);
@@ -102,7 +104,6 @@ namespace Stud_io.Authentication.Services
                                                         Id = x.StudentId,
                                                         FirstName = x.Student.FirstName,
                                                         LastName = x.Student.LastName,
-                                                        ProfileImage = x.Student.ProfileImage,
                                                     }).ToListAsync();
 
             return new OkObjectResult(groupEventStudents);
@@ -148,5 +149,8 @@ namespace Stud_io.Authentication.Services
 
             return new OkResult();
         }
+
+        public async Task<ActionResult<List<DormitoryStudentDto>>> GetDormitoryStudents() =>
+            _mapper.Map<List<DormitoryStudentDto>>(await _context.Students.ToListAsync());
     }
 }

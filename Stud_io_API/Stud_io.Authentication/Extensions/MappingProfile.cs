@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Stud_io.DTOs;
 using Stud_io.Authentication.Models;
+using Stud_io.Authentication.DTOs;
+using Stud_io.Authentication.DTOs.ServiceCommunication.Dormitory;
 
 namespace Stud_io.Authentication.Extensions
 {
@@ -9,6 +11,8 @@ namespace Stud_io.Authentication.Extensions
         public MappingProfile()
         {
             CreateMap<AppUser, UserDto>();
+            CreateMap<Student, DormitoryStudentDto>();
+
         }
     }
 }

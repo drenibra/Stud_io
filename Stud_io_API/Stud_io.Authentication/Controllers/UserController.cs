@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Stud_io.Authentication.DTOs.ServiceCommunication.Dormitory;
 using Stud_io.Authentication.DTOs.ServiceCommunication.StudyGroup;
 using Stud_io.Authentication.Interfaces;
 using Stud_io.Authentication.Models;
@@ -143,6 +144,13 @@ namespace Stud_io.Authentication.Controllers
         public async Task<ActionResult> AddGroupEventStudent(int groupEventId,  string studentId)
         {
             return await _contract.AddGroupEventStudent(groupEventId, studentId);
+        }
+
+        [HttpGet("get-dormitory-students")]
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult<List<DormitoryStudentDto>>> GetDormitoryStudents()
+        {
+            return await _contract.GetDormitoryStudents();
         }
     }
 }
