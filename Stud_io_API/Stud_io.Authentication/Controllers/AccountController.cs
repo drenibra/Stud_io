@@ -140,7 +140,7 @@ namespace Stud_io.Controllers
                 Username = user.UserName,
                 Email = user.Email,
                 Gender = user.Gender,
-                Image = user?.Photos?.FirstOrDefault(x => x.IsMain)?.Url,
+                ProfileImage = user?.Photos?.FirstOrDefault(x => x.IsMain)?.Url,
                 ImageId = user?.Photos?.FirstOrDefault(x => x.IsMain)?.Id,
             };
         }

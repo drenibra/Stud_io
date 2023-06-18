@@ -49,6 +49,7 @@ namespace Stud_io.Authentication.Services
                 Username = user.UserName,
                 Email = user.Email,
                 Gender = user.Gender,
+                ProfileImage = user.Photos.FirstOrDefault(p => p.IsMain).Url
             };
         }
 
@@ -76,7 +77,7 @@ namespace Stud_io.Authentication.Services
 
             return student;
         }
-      
+
 
         //gets all students from a certain study group that is on the study group microservice
         public async Task<ActionResult<List<MemberStudentDto>>> GetStudyGroupStudents(int id)
@@ -89,6 +90,7 @@ namespace Stud_io.Authentication.Services
                                                         Id = x.StudentId,
                                                         FirstName = x.Student.FirstName,
                                                         LastName = x.Student.LastName,
+                                                        ProfileImage = x.Student.Photos.FirstOrDefault(p => p.IsMain).Url
                                                     }).ToListAsync();
 
             return new OkObjectResult(studyGroupStudents);
@@ -104,6 +106,7 @@ namespace Stud_io.Authentication.Services
                                                         Id = x.StudentId,
                                                         FirstName = x.Student.FirstName,
                                                         LastName = x.Student.LastName,
+                                                        ProfileImage = x.Student.Photos.FirstOrDefault(p => p.IsMain).Url
                                                     }).ToListAsync();
 
             return new OkObjectResult(groupEventStudents);
@@ -153,6 +156,6 @@ namespace Stud_io.Authentication.Services
         public async Task<ActionResult<List<DormitoryStudentDto>>> GetDormitoryStudents() =>
             _mapper.Map<List<DormitoryStudentDto>>(await _context.Students.ToListAsync());
 
-       
+
     }
 }
