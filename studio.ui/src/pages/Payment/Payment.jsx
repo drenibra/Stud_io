@@ -84,7 +84,7 @@ const Payment = observer(function Payment() {
 
     const isWithinPreviousRange = (currentMonthIndex === monthIndex && currentDay >= 27 && currentDay <= 31) || (previousMonthIndex + 1 === monthIndex && currentDay >= 1 && currentDay <= 7);
 
-    return isWithinPreviousRange;
+    return !isWithinPreviousRange;
   };
 
   if (loading) return <LoadingComponent />;

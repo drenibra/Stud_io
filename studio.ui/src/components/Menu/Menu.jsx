@@ -57,7 +57,7 @@ const Menu = observer(function Menu() {
       icon: <PeopleIcon />,
     },
     {
-      name: 'RegisterCustomer',
+      name: 'Regjistrohu për pagesë',
       path: '/RegisterCustomer',
       icon: <AddCard />,
     },
