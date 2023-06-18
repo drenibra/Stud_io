@@ -8,6 +8,7 @@ using Stud_io_Dormitory.DTOs;
 using Stud_io_Dormitory.Models;
 using Stud_io_Dormitory.Services.Interfaces;
 using System.Net.Http.Headers;
+using System.Text;
 
 namespace Stud_io_Dormitory.Services.Implementations
 {
@@ -80,9 +81,9 @@ namespace Stud_io_Dormitory.Services.Implementations
 
             var httpClient = _httpClientFactory.CreateClient();
 
-            var uri = "http://localhost:5274/api/v1/User/GetStudents";
+            var uri = "http://localhost:5274/api/v1/User/get-dormitory-students";
 
-            var adminToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJjMGQwY2RjNC1kYTg1LTQ1NDAtYWNkZi1lMjlmNjQ2YWMwNzkiLCJ1bmlxdWVfbmFtZSI6ImJsZW9uYSIsImVtYWlsIjoiYmc1MjczMkB1YnQtdW5pLm5ldCIsInJvbGUiOiJBZG1pbiIsIm5iZiI6MTY4NzA2MTk5MywiZXhwIjoxNjg3NjY2NzkzLCJpYXQiOjE2ODcwNjE5OTN9.e0EX3Xrosr_PVjCxOcb17Z0cRU9_Xa2zHWLeU3d5D7A";
+            var adminToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJjMGQwY2RjNC1kYTg1LTQ1NDAtYWNkZi1lMjlmNjQ2YWMwNzkiLCJ1bmlxdWVfbmFtZSI6ImJsZW9uYSIsImVtYWlsIjoiYmc1MjczMkB1YnQtdW5pLm5ldCIsInJvbGUiOiJBZG1pbiIsIm5iZiI6MTY4NzEyOTk3MSwiZXhwIjoxNjg3NzM0NzcxLCJpYXQiOjE2ODcxMjk5NzF9.-h8VjCHJk1XncBm3Mk9lxqDmv_1EQQEBZvYOcwNVeSw";
 
 
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", adminToken);
@@ -96,7 +97,7 @@ namespace Stud_io_Dormitory.Services.Implementations
 
                 var students = JsonConvert.DeserializeObject<List<StudentDeserializer>>(studentsJson);
 
-                var acceptedStudents = students.Where(s => s.isAccepted.Equals("True")).ToList();
+                var acceptedStudents = students.Where(s => (bool)s.isAccepted).ToList();
                 var femaleStudents = acceptedStudents.Where(s => s.Gender == 'F').ToList();
                 var maleStudents = acceptedStudents.Where(s => s.Gender == 'M').ToList();
 
@@ -111,6 +112,24 @@ namespace Stud_io_Dormitory.Services.Implementations
             }
         }
 
+        private async Task AddDormNumber(string studentId, int dormNo)
+        {
+            var httpClient = _httpClientFactory.CreateClient();
+
+            var uri = $"http://localhost:5274/api/v1/User/add-dorm-number/{studentId}/{dormNo}";
+
+            var authentication = new AuthenticationHeaderValue("Bearer", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJjMGQwY2RjNC1kYTg1LTQ1NDAtYWNkZi1lMjlmNjQ2YWMwNzkiLCJ1bmlxdWVfbmFtZSI6ImJsZW9uYSIsImVtYWlsIjoiYmc1MjczMkB1YnQtdW5pLm5ldCIsInJvbGUiOiJBZG1pbiIsIm5iZiI6MTY4NzE0NjUwNywiZXhwIjoxNjg3NzUxMzA3LCJpYXQiOjE2ODcxNDY1MDd9.sGHS1HNmrJVjkTJEUEoCkhr3cg1u84bHrWtXYLNYdc8");
+            httpClient.DefaultRequestHeaders.Authorization = authentication;
+
+            var data = new {StudentId = studentId, DormNumber = dormNo };
+            var jsonContent = JsonConvert.SerializeObject(data);
+            var content = new StringContent("",Encoding.UTF8, "application/json");
+
+
+            var response = await httpClient.PutAsync(uri, content);
+        }
+
+
         private async Task AssignStudentsToDormitory(List<StudentDeserializer> students, char gender)
         {
             var dormitories = await _context.Dormitories
@@ -124,7 +143,9 @@ namespace Stud_io_Dormitory.Services.Implementations
                 if (dormitory != null)
                 {
                     student.DormNumber = dormitory.DormNo;
+                    await AddDormNumber(student.StudentId, dormitory.DormNo);
                     dormitory.CurrentStudents++;
+
                 }
                 else
                 {
@@ -132,6 +153,7 @@ namespace Stud_io_Dormitory.Services.Implementations
                 }
             }
         }
+
 
     }
 

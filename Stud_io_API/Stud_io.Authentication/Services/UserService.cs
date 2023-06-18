@@ -52,6 +52,7 @@ namespace Stud_io.Authentication.Services
             };
         }
 
+
         public async Task<IActionResult> DeleteUser(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
@@ -75,8 +76,7 @@ namespace Stud_io.Authentication.Services
 
             return student;
         }
-
-        
+      
 
         //gets all students from a certain study group that is on the study group microservice
         public async Task<ActionResult<List<MemberStudentDto>>> GetStudyGroupStudents(int id)
@@ -152,5 +152,7 @@ namespace Stud_io.Authentication.Services
 
         public async Task<ActionResult<List<DormitoryStudentDto>>> GetDormitoryStudents() =>
             _mapper.Map<List<DormitoryStudentDto>>(await _context.Students.ToListAsync());
+
+       
     }
 }
