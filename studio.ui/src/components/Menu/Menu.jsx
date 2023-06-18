@@ -56,11 +56,11 @@ const Menu = observer(function Menu() {
       path: '/Roommate',
       icon: <PeopleIcon />,
     },
-    {
-      name: 'Regjistrohu',
-      path: '/RegisterCustomer',
-      icon: <AddCard />,
-    },
+    // {
+    //   name: 'Regjistrohu',
+    //   path: '/RegisterCustomer',
+    //   icon: <AddCard />,
+    // },
     {
       name: 'Pagesa',
       path: '/Pagesa',
