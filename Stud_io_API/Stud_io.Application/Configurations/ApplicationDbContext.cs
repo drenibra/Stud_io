@@ -17,5 +17,6 @@ namespace Stud_io.Application.Configurations
         public DbSet<Faculty> Faculties { get; set; }
         public DbSet<ApplicationForm> Applications { get; set; }
         public DbSet<ProfileMatch> ProfileMatches { get; set; }
+        public DbSet<Complaint> Complaints { get; set; }
     }
 }

@@ -10,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("ApplicationConnectionString"));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
 
@@ -31,6 +31,7 @@ builder.Services.AddScoped<IFileService, FileService>();
 builder.Services.AddScoped<IApplicationService, ApplicationService>();
 builder.Services.AddScoped<IProfileMatchService, ProfileMatchService>();
 builder.Services.AddScoped<IMailKitEmailService, MailKitEmailService>();
+builder.Services.AddScoped<IComplaintService, ComplaintService>();
 
 // Register IHttpClientFactory
 builder.Services.AddHttpClient();

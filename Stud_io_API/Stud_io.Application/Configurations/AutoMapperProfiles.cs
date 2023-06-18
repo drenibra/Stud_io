@@ -12,7 +12,7 @@ namespace Stud_io.Application.Configurations
             CreateMap<Faculty, FacultyDto>().ReverseMap();
             CreateMap<ApplicationForm, ApplicationDto>().ReverseMap();
             CreateMap<ProfileMatch, ProfileMatchDto>().ReverseMap();
-           
+            CreateMap<Complaint, ComplaintDto>().ReverseMap();
         }
     }
 }
