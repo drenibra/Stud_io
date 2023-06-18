@@ -124,8 +124,7 @@ namespace Stud_io.Application.Services.Implementations
                 PersonalNo = applicationDto.PersonalNo,
                 isSpecialCategory = applicationDto.IsSpecialCategory,
                 SpecialCategoryReason = applicationDto.SpecialCategoryReason,
-                StudentId = applicationDto.StudentId,
-                StudentsId = "4906282a-5fbc-458b-ab41-eb49ff732084",
+                StudentsId = applicationDto.StudentId,
                 FileUrl = imageUrl,
             };
 

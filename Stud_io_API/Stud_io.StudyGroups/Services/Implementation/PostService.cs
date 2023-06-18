@@ -46,7 +46,7 @@ namespace Stud_io.StudyGroups.Services.Implementation
                 Text = x.Text,
                 DatePosted = x.DatePosted.ToShortDateString(),
                 Author = x.StudentId,
-                LikesCount = x.Likes.Count()
+                LikesCount = x.Likes.Count(),
             }).ToListAsync();
 
             // Update the Author attribute in postsDto
@@ -69,6 +69,7 @@ namespace Stud_io.StudyGroups.Services.Implementation
 
         public async Task<ActionResult<PostDto>> GetPostById(int id)
         {
+
             var post = await _context.Posts
                 .Include(x => x.Likes)
                 .Include(x => x.Comments)
@@ -104,8 +105,6 @@ namespace Stud_io.StudyGroups.Services.Implementation
                 ProfileImage = student.value.profileImage,
                 Username = student.value.username
             };
-
-            
 
             post.Author = poster;
 
@@ -171,6 +170,7 @@ namespace Stud_io.StudyGroups.Services.Implementation
 
             post.Comments.Add(new Comment()
             {
+                StudentName = dto.StudentName,
                 Text = dto.Text,
                 DateTime = DateTime.Now,
                 LikesAmount = 0,

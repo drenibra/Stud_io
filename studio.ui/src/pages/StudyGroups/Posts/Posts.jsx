@@ -1,23 +1,23 @@
-import React, { useState, useEffect } from "react";
-import "./Posts.scss";
-import agent from "../../../api/study-group-agents";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import CardActions from "@mui/material/CardActions";
-import Avatar from "@mui/material/Avatar";
-import { Box } from "@mui/system";
-import Icon from "../../../assets/logo/icon-color-stud-io.svg";
+import React, { useState, useEffect } from 'react';
+import './Posts.scss';
+import agent from '../../../api/study-group-agents';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import CardActions from '@mui/material/CardActions';
+import Avatar from '@mui/material/Avatar';
+import { Box } from '@mui/system';
+import Icon from '../../../assets/logo/icon-color-stud-io.svg';
 
-import { Link } from "react-router-dom";
-import Modal from "./PostModal";
-import CreatePostModal from "./CreatePostModal";
-import LoadingComponent from "../../LoadingComponent/LoadingComponent";
-import UserStore from "../../../stores/userStore";
-import { observe } from "mobx";
-import { observer } from "mobx-react-lite";
-import { useStore } from "../../../stores/store";
+import { Link } from 'react-router-dom';
+import Modal from './PostModal';
+import CreatePostModal from './CreatePostModal';
+import LoadingComponent from '../../LoadingComponent/LoadingComponent';
+import UserStore from '../../../stores/userStore';
+import { observe } from 'mobx';
+import { observer } from 'mobx-react-lite';
+import { useStore } from '../../../stores/store';
 
 const Posts = observer(() => {
   const [posts, setPosts] = useState([]);
@@ -28,7 +28,7 @@ const Posts = observer(() => {
 
   useEffect(() => {
     setIsLoading(true);
-    agent.Posts.getAll("?StudyGroupId=3").then((response) => {
+    agent.Posts.getAll('?StudyGroupId=3').then((response) => {
       setPosts(response);
     });
     setIsLoading(false);
@@ -44,7 +44,7 @@ const Posts = observer(() => {
 
   if (isLoading) {
     return (
-      <Box height={"100vw"}>
+      <Box height={'100vw'}>
         <LoadingComponent />;
       </Box>
     );
@@ -63,12 +63,7 @@ const Posts = observer(() => {
           {posts.map((post) => (
             <Card key={post.id} className="postCard" sx={{ minWidth: 350 }}>
               <CardContent>
-                <Typography
-                  sx={{ fontSize: 14 }}
-                  color="text.secondary"
-                  className="postCard__author"
-                  gutterBottom
-                >
+                <Typography sx={{ fontSize: 14 }} color="text.secondary" className="postCard__author" gutterBottom>
                   <Avatar alt="Remy Sharp" src={post.authorProfileImage} />
                   {post.author}
                 </Typography>
@@ -81,27 +76,15 @@ const Posts = observer(() => {
               </CardContent>
               <CardActions className="postCard__action">
                 <Box>
-                  <Button
-                    variant="contained"
-                    size="small"
-                    onClick={() => handleExpandClick(post)}
-                  >
+                  <Button variant="contained" size="small" onClick={() => handleExpandClick(post)}>
                     Expand
                   </Button>
-                  <Button size="small">
-                    {post.likesCount == 1
-                      ? post.likesCount + " hats"
-                      : post.likesCount + " hats"}
-                  </Button>
+                  <Button size="small">{post.likesCount == 1 ? post.likesCount + ' hats' : post.likesCount + ' hats'}</Button>
                 </Box>
                 <Button className="postCard__likeBtn" size="small">
                   <Box>
                     <img src={Icon} />
-                    <Typography
-                      fontWeight={600}
-                      variant="subtitle2"
-                      component="div"
-                    >
+                    <Typography fontWeight={600} variant="subtitle2" component="div">
                       Hat off
                     </Typography>
                   </Box>
@@ -109,13 +92,7 @@ const Posts = observer(() => {
               </CardActions>
             </Card>
           ))}
-          {selectedPost && (
-            <Modal
-              open={Boolean(selectedPost)}
-              handleClose={handleCloseModal}
-              post={selectedPost}
-            />
-          )}
+          {selectedPost && <Modal open={Boolean(selectedPost)} handleClose={handleCloseModal} post={selectedPost} />}
         </div>
       </>
     );

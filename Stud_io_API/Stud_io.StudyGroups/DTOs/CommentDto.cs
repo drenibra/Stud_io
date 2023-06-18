@@ -17,6 +17,7 @@ namespace Stud_io.StudyGroups.DTOs
     {
         public int PostId { get; set; }
         public string StudentId { get; set; }
+        public string StudentName { get; set; }
         public string Text { get; set; }
     }
 }

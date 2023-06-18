@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios';
 
 const service2Axios = axios.create({
   baseURL: import.meta.env.VITE_API_APPLICATION_URL,
@@ -14,7 +14,7 @@ const requests = {
 };
 
 const Apply = {
-  apply: (values) => requests.post("Application/AddApplication", values),
+  apply: (values, config) => requests.post('Application/AddApplication', values, config),
 };
 
 const agent = {
