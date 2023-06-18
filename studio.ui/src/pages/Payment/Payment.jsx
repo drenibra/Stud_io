@@ -3,10 +3,11 @@ import { observer } from 'mobx-react-lite';
 import agent from '../../api/payment_agents';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Table, TableHead, TableBody, TableRow, TableCell, TextField, FormControl, Select, MenuItem, Box, Grid, Button, Typography } from '@mui/material';
+import { Table, TableHead, TableBody, TableRow, TableCell, TextField, FormControl, Paper, Select, MenuItem, Box, Grid, Button, Typography } from '@mui/material';
 import Menu from '../../components/Menu/Menu';
 import { useStore } from '../../stores/store';
 import LoadingComponent from '../LoadingComponent/LoadingComponent';
+import { Link } from 'react-router-dom';
 
 const Payment = observer(function Payment() {
   const [loading, setLoading] = useState(true);
@@ -84,7 +85,7 @@ const Payment = observer(function Payment() {
 
     const isWithinPreviousRange = (currentMonthIndex === monthIndex && currentDay >= 27 && currentDay <= 31) || (previousMonthIndex + 1 === monthIndex && currentDay >= 1 && currentDay <= 7);
 
-    return isWithinPreviousRange;
+    return !isWithinPreviousRange;
   };
 
   if (loading) return <LoadingComponent />;
@@ -201,7 +202,30 @@ const Payment = observer(function Payment() {
           </Grid>
         </Grid>
       ) : (
-        'Ju nuk keni kartele!'
+        <Box width="400px" margin="auto">
+          <Grid
+            container
+            style={{
+              marginTop: '2em',
+              backgroundColor: '#f5f5f5',
+              padding: '16px',
+              justifyContent: 'center',
+              fontSize: '20px',
+              fontWeight: 'bold',
+            }}
+          >
+            {'Ju nuk keni kartelë!'}
+            <Button
+              variant="contained"
+              color="primary"
+              sx={{
+                marginTop: '15px',
+              }}
+            >
+              <Link to="/RegisterCustomer" style={{ color: '#FFFFFF'}}>Regjistro Kartelën</Link>
+            </Button>
+          </Grid>
+        </Box>
       )}
       {paymentsHistory.length > 0 && (
         <Table sx={{ marginTop: '2rem', maxWidth: '60%', marginLeft: '20%' }}>

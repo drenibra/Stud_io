@@ -14,7 +14,6 @@ using AutoMapper;
 using Microsoft.Extensions.DependencyInjection;
 using Stud_io.Authentication.Photos;
 using System.Reflection;
-using Stud_io.Authentication.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -41,7 +40,7 @@ builder.Services.AddCors(opt =>
 {
     opt.AddPolicy("CorsPolicy", policy =>
     {
-        policy.AllowAnyMethod().AllowCredentials().AllowAnyHeader().WithOrigins("http://127.0.0.1:5174");
+        policy.AllowAnyMethod().AllowCredentials().AllowAnyHeader().WithOrigins(builder.Configuration["CorsOriginsEndpoint:ReactOrigin"]);
     });
 });
 
@@ -68,6 +67,7 @@ builder.Services.AddDefaultIdentity<AppUser>().AddRoles<IdentityRole>()
 builder.Services.AddIdentityServices(builder.Configuration);
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<AccountController>();
+builder.Services.AddScoped<IProfilesController, ProfilesController>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 

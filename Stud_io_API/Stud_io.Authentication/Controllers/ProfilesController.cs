@@ -1,12 +1,13 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Stud_io.Authentication.Interfaces;
 using Stud_io.Authentication.ProfileSpace;
 
 namespace Stud_io.Authentication.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]")]
-    public class ProfilesController : BaseController
+    public class ProfilesController : BaseController, IProfilesController
     {
         [HttpGet("{username}")]
         public async Task<ActionResult<Profile>> GetProfile(string username)

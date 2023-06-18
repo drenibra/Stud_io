@@ -11,6 +11,7 @@ namespace Stud_io.Authentication.DTOs
         public string? Username { get; set; }
         public char? Gender { get; set; }
         public string? Image { get; set; }
+        public string? ImageId { get; set; }
         public string? ParentName { get; set; }
         public string? City { get; set; }
         public double? GPA { get; set; }

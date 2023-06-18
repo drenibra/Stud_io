@@ -42,25 +42,25 @@ const Menu = observer(function Menu() {
 
   const studentList = [
     {
-      name: 'Home',
+      name: 'Shtëpia',
       path: '/',
       icon: <HomeIcon />,
     },
     {
-      name: 'MyProfile',
+      name: 'Profili im',
       path: '/MyProfile',
       icon: <AccountCircleIcon />,
     },
     {
-      name: 'Roommate',
+      name: 'Shoku i dhomes',
       path: '/Roommate',
       icon: <PeopleIcon />,
     },
-    {
-      name: 'RegisterCustomer',
-      path: '/RegisterCustomer',
-      icon: <AddCard />,
-    },
+    // {
+    //   name: 'Regjistrohu',
+    //   path: '/RegisterCustomer',
+    //   icon: <AddCard />,
+    // },
     {
       name: 'Pagesa',
       path: '/Pagesa',
