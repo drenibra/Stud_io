@@ -17,7 +17,7 @@ namespace Stud_io_Dormitory.Services.Implementations
         private readonly IMapper _mapper;
         private readonly IHttpClientFactory _httpClientFactory;
 
-        public DormitoryService(DormitoryDbContext context, IMapper mapper , IHttpClientFactory httpClientFactory)
+        public DormitoryService(DormitoryDbContext context, IMapper mapper, IHttpClientFactory httpClientFactory)
         {
             _context = context;
             _mapper = mapper;
@@ -58,7 +58,7 @@ namespace Stud_io_Dormitory.Services.Implementations
             dbDormitory.Gender = updateDormitoryDTO.Gender ?? dbDormitory.Gender;
             dbDormitory.NoOfRooms = updateDormitoryDTO.NoOfRooms ?? dbDormitory.NoOfRooms;
             dbDormitory.Capacity = updateDormitoryDTO.Capacity ?? dbDormitory.Capacity;
-      
+
             await _context.SaveChangesAsync();
 
             return new OkObjectResult("Dormitory updated successfully!");
@@ -81,7 +81,7 @@ namespace Stud_io_Dormitory.Services.Implementations
             var httpClient = _httpClientFactory.CreateClient();
 
             var uri = "http://localhost:5274/api/v1/User/GetStudents";
-            
+
             var adminToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJjMGQwY2RjNC1kYTg1LTQ1NDAtYWNkZi1lMjlmNjQ2YWMwNzkiLCJ1bmlxdWVfbmFtZSI6ImJsZW9uYSIsImVtYWlsIjoiYmc1MjczMkB1YnQtdW5pLm5ldCIsInJvbGUiOiJBZG1pbiIsIm5iZiI6MTY4NzA2MTk5MywiZXhwIjoxNjg3NjY2NzkzLCJpYXQiOjE2ODcwNjE5OTN9.e0EX3Xrosr_PVjCxOcb17Z0cRU9_Xa2zHWLeU3d5D7A";
 
 
@@ -107,7 +107,7 @@ namespace Stud_io_Dormitory.Services.Implementations
             }
             else
             {
-              
+
             }
         }
 
@@ -136,5 +136,4 @@ namespace Stud_io_Dormitory.Services.Implementations
     }
 
 }
-
 

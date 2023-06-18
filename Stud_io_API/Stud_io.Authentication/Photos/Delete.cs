@@ -36,7 +36,7 @@ namespace Stud_io.Authentication.Photos
                 var photo = user.Photos.FirstOrDefault(x => x.Id == request.Id);
 
                 if (photo == null) throw new Exception("Photo is null");
-                if (photo.IsMain) throw new Exception("You cannot delete your main photo");
+                //if (photo.IsMain) throw new Exception("You cannot delete your main photo");
 
                 var result = await _photoAccessor.DeletePhoto(photo.Id);
 
