@@ -6,6 +6,8 @@ using Stud_io_Dormitory.Configurations;
 using Stud_io_Dormitory.DTOs;
 using Stud_io_Dormitory.Models;
 using Stud_io_Dormitory.Services.Interfaces;
+using System.Net.Http.Headers;
+using System.Text;
 
 namespace Stud_io_Dormitory.Services.Implementations
 {
@@ -13,11 +15,13 @@ namespace Stud_io_Dormitory.Services.Implementations
     {
         private readonly DormitoryDbContext _context;
         private readonly IMapper _mapper;
+        private readonly IHttpClientFactory _httpClientFactory;
 
-        public DormitoryService(DormitoryDbContext context, IMapper mapper)
+        public DormitoryService(DormitoryDbContext context, IMapper mapper , IHttpClientFactory httpClientFactory)
         {
             _context = context;
             _mapper = mapper;
+            _httpClientFactory = httpClientFactory;
         }
 
         public async Task<ActionResult<List<DormitoryDto>>> GetDormitories() =>
@@ -71,8 +75,22 @@ namespace Stud_io_Dormitory.Services.Implementations
             return new OkObjectResult("Dormitory deleted successfully!");
         }
 
+
         public async Task AssignStudentsToDormitories()
         {
+            var httpClient = _httpClientFactory.CreateClient();
+
+           /* var uri = "http://localhost:5274/api/v1/User/update-customer-id/";
+
+            var authentication = new AuthenticationHeaderValue("Bearer", customer.Token);
+            httpClient.DefaultRequestHeaders.Authorization = authentication;
+
+            var content = new StringContent("", Encoding.UTF8, "application/json");
+
+            var response = await httpClient.PutAsync(uri, content);
+
+            */
+
             var acceptedStudents = await _context.Students.Where(s => s.isAccepted).ToListAsync();
             var femaleStudents = acceptedStudents.Where(s => s.Gender == 'F').ToList();
             var maleStudents = acceptedStudents.Where(s => s.Gender == 'M').ToList();
@@ -100,7 +118,7 @@ namespace Stud_io_Dormitory.Services.Implementations
                 }
                 else
                 {
-                    break; // No more available dormitories
+                    break;
                 }
             }
         }

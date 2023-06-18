@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Stud_io.Authentication.DTOs;
 using Stud_io.Authentication.DTOs.ServiceCommunication.StudyGroup;
 using Stud_io.Authentication.Interfaces;
 using Stud_io.Authentication.Models;
@@ -26,6 +27,13 @@ namespace Stud_io.Authentication.Controllers
         public async Task<ActionResult<IEnumerable<UserDto>>> GetUsers()
         {
             return Ok(await _contract.GetUsers());
+        }
+
+        [HttpGet("GetStudents")]
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult<List<StudentDto>>> GetStudents()
+        {
+            return await _contract.GetStudents();
         }
 
         [HttpGet("{id}")]
