@@ -14,6 +14,8 @@ using AutoMapper;
 using Microsoft.Extensions.DependencyInjection;
 using Stud_io.Authentication.Photos;
 using System.Reflection;
+using Stud_io.Authentication.Controllers;
+using Stud_io.Authentication.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -47,7 +49,7 @@ builder.Services.AddCors(opt =>
 
 var mapperConfig = new MapperConfiguration(mc =>
 {
-    mc.AddProfile(new MappingProfiles());
+    mc.AddProfile(new MappingProfile());
 });
 IMapper mapper = mapperConfig.CreateMapper();
 builder.Services.AddSingleton(mapper);
@@ -66,6 +68,7 @@ builder.Services.AddDefaultIdentity<AppUser>().AddRoles<IdentityRole>()
 builder.Services.AddIdentityServices(builder.Configuration);
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<AccountController>();
+builder.Services.AddScoped<IProfilesController, ProfilesController>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 

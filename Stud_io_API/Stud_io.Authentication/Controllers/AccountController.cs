@@ -9,6 +9,8 @@ using Stud_io.Authentication.Models;
 using System.Security.Claims;
 using static System.Net.Mime.MediaTypeNames;
 using System.Reflection;
+using Stud_io.Authentication.Interfaces;
+using Stud_io.Authentication.ProfileSpace;
 
 namespace Stud_io.Controllers
 {
@@ -20,6 +22,7 @@ namespace Stud_io.Controllers
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly TokenService _tokenService;
+        private readonly IProfilesController _profilesController;
         public AccountController(
             UserManager<AppUser> userManager,
             SignInManager<AppUser> signInManager,
@@ -33,7 +36,7 @@ namespace Stud_io.Controllers
         [HttpPost("login")]
         public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
         {
-            var user = await _userManager.FindByEmailAsync(loginDto.Email);
+            var user = await _userManager.Users.Include(p => p.Photos).FirstOrDefaultAsync(x => x.Email == loginDto.Email);
 
             if (user == null) return Unauthorized();
 
@@ -82,7 +85,7 @@ namespace Stud_io.Controllers
         [HttpGet]
         public async Task<ActionResult<UserDto>> GetCurrentUser()
         {
-            var user = await _userManager.FindByEmailAsync(User.FindFirstValue(ClaimTypes.Email));
+            var user = await _userManager.Users.Include(p => p.Photos).FirstOrDefaultAsync(x => x.Email == User.FindFirstValue(ClaimTypes.Email));
 
             return CreateUserObject(user);
         }
@@ -90,7 +93,7 @@ namespace Stud_io.Controllers
         [HttpGet("student")]
         public async Task<ActionResult<StudentDto>> GetCurrentStudent()
         {
-            var student = await _userManager.FindByEmailAsync(User.FindFirstValue(ClaimTypes.Email)) as Student;
+            var student = await _userManager.Users.Include(p => p.Photos).FirstOrDefaultAsync(x => x.Email == User.FindFirstValue(ClaimTypes.Email)) as Student;
             return new StudentDto
             {
                 FirstName = student.FirstName,
@@ -106,6 +109,8 @@ namespace Stud_io.Controllers
                 MajorId = student.MajorId,
                 Major = student.Major,
                 DormNumber = student.DormNumber,
+                Image = student?.Photos?.FirstOrDefault(p => p.IsMain)?.Url,
+                ImageId = student?.Photos?.FirstOrDefault(p => p.IsMain)?.Id,
             };
         }
         [Authorize]
@@ -135,6 +140,8 @@ namespace Stud_io.Controllers
                 Username = user.UserName,
                 Email = user.Email,
                 Gender = user.Gender,
+                Image = user?.Photos?.FirstOrDefault(x => x.IsMain)?.Url,
+                ImageId = user?.Photos?.FirstOrDefault(x => x.IsMain)?.Id,
             };
         }
     }
