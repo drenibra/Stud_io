@@ -29,7 +29,7 @@ namespace Stud_io.Application.Controllers
 
 
         [HttpPost("AddApplication")]
-        public async Task<ActionResult> AddApplication(ApplicationDto applicationDto)
+        public async Task<ActionResult> AddApplication([FromForm] ApplicationDto applicationDto)
         {
             return await _applicationService.AddApplication(applicationDto);
         }

@@ -124,12 +124,11 @@ namespace Stud_io.Application.Services.Implementations
                 PersonalNo = applicationDto.PersonalNo,
                 isSpecialCategory = applicationDto.IsSpecialCategory,
                 SpecialCategoryReason = applicationDto.SpecialCategoryReason,
-                StudentId = applicationDto.StudentId,
-                StudentsId = "4906282a-5fbc-458b-ab41-eb49ff732084",
+                StudentsId = applicationDto.StudentId,
                 FileUrl = imageUrl,
             };
 
-            _mailService.SendEmail("rrezart.hetemi@outlook.com", "Email nga Studio - Qendra Studentore", "", "studio.qendrastudentore@gmail.com");
+            //_mailService.SendEmail("rrezart.hetemi@outlook.com", "Email nga Studio - Qendra Studentore", "", "studio.qendrastudentore@gmail.com");
 
             await _context.Applications.AddAsync(application);
             await _context.SaveChangesAsync();

@@ -4,8 +4,8 @@
     {
         public bool IsSpecialCategory { get; set; }
         public string? SpecialCategoryReason { get; set; }
-        public string PersonalNo { get; set; }
-        public int StudentId { get; set; } = 3;
+        public string? PersonalNo { get; set; }
+        public string StudentId { get; set; }
         public IFormFile? Document { get; set; }
     }
 
