@@ -171,5 +171,11 @@ namespace Stud_io.Authentication.Controllers
             return BadRequest("Dormitory ID failed to be added!");
         }
 
+       [HttpPost("add-complaint/{studentId}/{description}")]
+       public async Task<ActionResult> AddComplaint(string studentId, string description)
+       {
+            return await _contract.AddComplaint(studentId, description);
+       }
+
     }
 }

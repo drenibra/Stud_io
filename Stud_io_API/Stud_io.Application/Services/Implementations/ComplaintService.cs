@@ -12,11 +12,13 @@ namespace Stud_io.Application.Services.Implementations
     {
         private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
+        private readonly IHttpClientFactory _httpClientFactory;
 
-        public ComplaintService(ApplicationDbContext context, IMapper mapper)
+        public ComplaintService(ApplicationDbContext context, IMapper mapper, IHttpClientFactory httpClientFactory)
         {
             _context = context;
             _mapper = mapper;
+            _httpClientFactory = httpClientFactory;
         }
 
         public async Task<ActionResult<List<ComplaintDto>>> GetComplaints() =>
@@ -32,6 +34,7 @@ namespace Stud_io.Application.Services.Implementations
 
         public async Task<ActionResult> AddComplaint(ComplaintDto complaintDto)
         {
+            var httpClient = _httpClientFactory.CreateClient();
             if (complaintDto == null)
                 return new BadRequestObjectResult("Complaint can not be null!!");
             var mappedFaculty = _mapper.Map<Complaint>(complaintDto);
