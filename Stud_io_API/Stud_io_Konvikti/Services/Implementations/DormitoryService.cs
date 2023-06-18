@@ -1,11 +1,13 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Stud_io.Dormitory.Models;
+using Newtonsoft.Json;
+using Stud_io.Dormitory.DTOs.Deserializer;
 using Stud_io_Dormitory.Configurations;
 using Stud_io_Dormitory.DTOs;
 using Stud_io_Dormitory.Models;
 using Stud_io_Dormitory.Services.Interfaces;
+using System.Net.Http.Headers;
 
 namespace Stud_io_Dormitory.Services.Implementations
 {
@@ -13,11 +15,13 @@ namespace Stud_io_Dormitory.Services.Implementations
     {
         private readonly DormitoryDbContext _context;
         private readonly IMapper _mapper;
+        private readonly IHttpClientFactory _httpClientFactory;
 
-        public DormitoryService(DormitoryDbContext context, IMapper mapper)
+        public DormitoryService(DormitoryDbContext context, IMapper mapper , IHttpClientFactory httpClientFactory)
         {
             _context = context;
             _mapper = mapper;
+            _httpClientFactory = httpClientFactory;
         }
 
         public async Task<ActionResult<List<DormitoryDto>>> GetDormitories() =>
@@ -73,17 +77,41 @@ namespace Stud_io_Dormitory.Services.Implementations
 
         public async Task AssignStudentsToDormitories()
         {
-            var acceptedStudents = await _context.Students.Where(s => s.isAccepted).ToListAsync();
-            var femaleStudents = acceptedStudents.Where(s => s.Gender == 'F').ToList();
-            var maleStudents = acceptedStudents.Where(s => s.Gender == 'M').ToList();
 
-            await AssignStudentsToDormitory(femaleStudents, 'F');
-            await AssignStudentsToDormitory(maleStudents, 'M');
+            var httpClient = _httpClientFactory.CreateClient();
 
-            await _context.SaveChangesAsync();
+            var uri = "http://localhost:5274/api/v1/User/GetStudents";
+            
+            var adminToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJjMGQwY2RjNC1kYTg1LTQ1NDAtYWNkZi1lMjlmNjQ2YWMwNzkiLCJ1bmlxdWVfbmFtZSI6ImJsZW9uYSIsImVtYWlsIjoiYmc1MjczMkB1YnQtdW5pLm5ldCIsInJvbGUiOiJBZG1pbiIsIm5iZiI6MTY4NzA2MTk5MywiZXhwIjoxNjg3NjY2NzkzLCJpYXQiOjE2ODcwNjE5OTN9.e0EX3Xrosr_PVjCxOcb17Z0cRU9_Xa2zHWLeU3d5D7A";
+
+
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", adminToken);
+
+            var response = await httpClient.GetAsync(uri);
+
+
+            if (response.IsSuccessStatusCode)
+            {
+                var studentsJson = await response.Content.ReadAsStringAsync();
+
+                var students = JsonConvert.DeserializeObject<List<StudentDeserializer>>(studentsJson);
+
+                var acceptedStudents = students.Where(s => s.isAccepted.Equals("True")).ToList();
+                var femaleStudents = acceptedStudents.Where(s => s.Gender == 'F').ToList();
+                var maleStudents = acceptedStudents.Where(s => s.Gender == 'M').ToList();
+
+                await AssignStudentsToDormitory(femaleStudents, 'F');
+                await AssignStudentsToDormitory(maleStudents, 'M');
+
+                await _context.SaveChangesAsync();
+            }
+            else
+            {
+              
+            }
         }
 
-        private async Task AssignStudentsToDormitory(List<Student> students, char gender)
+        private async Task AssignStudentsToDormitory(List<StudentDeserializer> students, char gender)
         {
             var dormitories = await _context.Dormitories
                 .Where(d => d.Gender == gender && d.CurrentStudents < d.Capacity)
@@ -100,11 +128,10 @@ namespace Stud_io_Dormitory.Services.Implementations
                 }
                 else
                 {
-                    break; // No more available dormitories
+                    break;
                 }
             }
         }
-
 
     }
 

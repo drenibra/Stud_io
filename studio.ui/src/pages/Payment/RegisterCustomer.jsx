@@ -11,14 +11,6 @@ import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores/store';
 import LoadingComponent from '../LoadingComponent/LoadingComponent';
 
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#c62828',
-    },
-  },
-});
-
 const PaymentForm = observer(function PaymentForm() {
   const { userStore } = useStore();
   const [loading, setLoading] = useState(true);

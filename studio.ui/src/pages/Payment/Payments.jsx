@@ -129,7 +129,7 @@ export default function PaymentsTable() {
         </Table>
 
         {/* Pagination controls */}
-        <Grid container spacing={2} justifyContent="center" alignItems="center" marginTop={1}>
+        <Grid container spacing={2} justifyContent="center" alignItems="center" marginTop={1} marginBottom={3}>
           <Grid item>
             <Button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1} text="Previous" />
           </Grid>

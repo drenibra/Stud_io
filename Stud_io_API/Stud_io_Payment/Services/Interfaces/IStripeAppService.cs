@@ -11,5 +11,6 @@ namespace Payment.Contracts
         Task<ActionResult<List<PaymentDto>>> GetPayments();
         Task<ActionResult<List<PaymentDto>>> GetPaymentsOfUser(string userId);
         Task<ActionResult<List<CustomerDto>>> GetCustomers();
+        Task<bool> HasPaidForDormitory(string customerId);
     }
 }

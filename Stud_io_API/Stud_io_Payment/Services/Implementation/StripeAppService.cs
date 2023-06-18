@@ -44,7 +44,7 @@ namespace Payment.Application
         public async Task<StripeCustomer> AddStripeCustomerAsync(AddStripeCustomer customer, CancellationToken ct)
         {
             // Set Stripe Token options based on customer data
-            TokenCreateOptions tokenOptions = new TokenCreateOptions
+            TokenCreateOptions tokenOptions = new()
             {
                 Card = new TokenCardOptions
                 {
@@ -60,7 +60,7 @@ namespace Payment.Application
             Token stripeToken = await _tokenService.CreateAsync(tokenOptions, null, ct);
 
             // Set Customer options using
-            CustomerCreateOptions customerOptions = new CustomerCreateOptions
+            CustomerCreateOptions customerOptions = new()
             {
                 Name = customer.Name,
                 Email = customer.Email,
@@ -185,6 +185,45 @@ namespace Payment.Application
         public async Task<ActionResult<List<CustomerDto>>> GetCustomers()
         {
             return _mapper.Map<List<CustomerDto>>(await _context.StripeCustomers.ToListAsync());
+        }
+
+        public async Task<bool> HasPaidForDormitory(string customerId)
+        {
+            DateTime now = DateTime.Now;
+            int currentMonth = DateTime.Today.Month;
+            string month = currentMonth switch
+            {
+                1 => "Janar",
+                2 => "Shkurt",
+                3 => "Mars",
+                4 => "Prill",
+                5 => "Maj",
+                6 => "Qershor",
+                7 => "Korrik",
+                8 => "Gusht",
+                9 => "Shtator",
+                10 => "Tetor",
+                11 => "Nentor",
+                12 => "Dhjetor",
+                _ => string.Empty,// Handle the case when the month value is not within 1-12
+            };
+
+            // Compare if the current date is greater than the 7th of the current month
+            if (now.Day > 7)
+            {
+                // Retrieve all the payments of the user
+                ActionResult<List<PaymentDto>> payments = await GetPaymentsOfUser(customerId);
+
+                // Iterate through each payment and check if the month matches the current month
+                foreach (PaymentDto payment in payments.Value)
+                {
+                    if (payment.Month == month && payment.Description.Contains("strehim")) // Compare as string
+                    {
+                        return true; // User has paid for the current month
+                    }
+                }
+            }
+            return false;
         }
     }
 }
