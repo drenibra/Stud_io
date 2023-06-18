@@ -19,7 +19,7 @@ namespace Stud_io.StudyGroups.Services.Implementation
         {
             var httpClient = _httpClientFactory.CreateClient();
 
-            var authentication = new AuthenticationHeaderValue("Bearer", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJlYTc4OGYzMy1kNzlmLTQ2OTctYTQzMS1lMTFhMzkwZjIwZGIiLCJ1bmlxdWVfbmFtZSI6InJyZXppIiwiZW1haWwiOiJyaDUyNzQxQHVidC11bmkubmV0Iiwicm9sZSI6IkFkbWluIiwibmJmIjoxNjg2NDg1OTgwLCJleHAiOjE2ODcwOTA3ODAsImlhdCI6MTY4NjQ4NTk4MH0.O2unv_ZaKWKojOp_Hld6gsTgCKWBR0J1sCVr96EsPLw");
+            var authentication = new AuthenticationHeaderValue("Bearer", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJlYTc4OGYzMy1kNzlmLTQ2OTctYTQzMS1lMTFhMzkwZjIwZGIiLCJ1bmlxdWVfbmFtZSI6InJyZXppIiwiZW1haWwiOiJyaDUyNzQxQHVidC11bmkubmV0Iiwicm9sZSI6IkFkbWluIiwibmJmIjoxNjg3MTE1NzIwLCJleHAiOjE2ODc3MjA1MjAsImlhdCI6MTY4NzExNTcyMH0.n0ScQd79pm5zYxH7685o714sy9OU15FqnfZTylT1BZM");
             httpClient.DefaultRequestHeaders.Authorization = authentication;
 
             var response = await httpClient.GetAsync(uri);
@@ -32,7 +32,7 @@ namespace Stud_io.StudyGroups.Services.Implementation
         {
             var httpClient = _httpClientFactory.CreateClient();
 
-            var authentication = new AuthenticationHeaderValue("Bearer", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJlYTc4OGYzMy1kNzlmLTQ2OTctYTQzMS1lMTFhMzkwZjIwZGIiLCJ1bmlxdWVfbmFtZSI6InJyZXppIiwiZW1haWwiOiJyaDUyNzQxQHVidC11bmkubmV0Iiwicm9sZSI6IkFkbWluIiwibmJmIjoxNjg2NDg1OTgwLCJleHAiOjE2ODcwOTA3ODAsImlhdCI6MTY4NjQ4NTk4MH0.O2unv_ZaKWKojOp_Hld6gsTgCKWBR0J1sCVr96EsPLw");
+            var authentication = new AuthenticationHeaderValue("Bearer", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJlYTc4OGYzMy1kNzlmLTQ2OTctYTQzMS1lMTFhMzkwZjIwZGIiLCJ1bmlxdWVfbmFtZSI6InJyZXppIiwiZW1haWwiOiJyaDUyNzQxQHVidC11bmkubmV0Iiwicm9sZSI6IkFkbWluIiwibmJmIjoxNjg3MTE1NzIwLCJleHAiOjE2ODc3MjA1MjAsImlhdCI6MTY4NzExNTcyMH0.n0ScQd79pm5zYxH7685o714sy9OU15FqnfZTylT1BZM");
             httpClient.DefaultRequestHeaders.Authorization = authentication;
 
             var content = new StringContent(JsonSerializer.Serialize(studentIds), Encoding.UTF8, "application/json");
@@ -47,7 +47,7 @@ namespace Stud_io.StudyGroups.Services.Implementation
         {
             var httpClient = _httpClientFactory.CreateClient();
 
-            var authentication = new AuthenticationHeaderValue("Bearer", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJlYTc4OGYzMy1kNzlmLTQ2OTctYTQzMS1lMTFhMzkwZjIwZGIiLCJ1bmlxdWVfbmFtZSI6InJyZXppIiwiZW1haWwiOiJyaDUyNzQxQHVidC11bmkubmV0Iiwicm9sZSI6IkFkbWluIiwibmJmIjoxNjg2NDg1OTgwLCJleHAiOjE2ODcwOTA3ODAsImlhdCI6MTY4NjQ4NTk4MH0.O2unv_ZaKWKojOp_Hld6gsTgCKWBR0J1sCVr96EsPLw");
+            var authentication = new AuthenticationHeaderValue("Bearer", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJlYTc4OGYzMy1kNzlmLTQ2OTctYTQzMS1lMTFhMzkwZjIwZGIiLCJ1bmlxdWVfbmFtZSI6InJyZXppIiwiZW1haWwiOiJyaDUyNzQxQHVidC11bmkubmV0Iiwicm9sZSI6IkFkbWluIiwibmJmIjoxNjg3MTE1NzIwLCJleHAiOjE2ODc3MjA1MjAsImlhdCI6MTY4NzExNTcyMH0.n0ScQd79pm5zYxH7685o714sy9OU15FqnfZTylT1BZM");
             httpClient.DefaultRequestHeaders.Authorization = authentication;
 
             var content = new StringContent("", Encoding.UTF8, "application/json");
