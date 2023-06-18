@@ -14,6 +14,7 @@ using AutoMapper;
 using Microsoft.Extensions.DependencyInjection;
 using Stud_io.Authentication.Photos;
 using System.Reflection;
+using Stud_io.Authentication.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -45,9 +46,10 @@ builder.Services.AddCors(opt =>
 });
 
 
+
 var mapperConfig = new MapperConfiguration(mc =>
 {
-    mc.AddProfile(new MappingProfiles());
+    mc.AddProfile(new MappingProfile());
 });
 IMapper mapper = mapperConfig.CreateMapper();
 builder.Services.AddSingleton(mapper);
