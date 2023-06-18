@@ -67,6 +67,7 @@ const MyProfile = observer(function MyProfile() {
     return <LoadingComponent />;
   }
 
+  console.log(user);
   return <UserForm user={user} roles={roles} attributeList={attributes} />;
 });
 

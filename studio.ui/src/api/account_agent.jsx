@@ -1,5 +1,5 @@
-import axios from "axios";
-import { store } from "../stores/store";
+import axios from 'axios';
+import { store } from '../stores/store';
 
 const sleep = (delay) => {
   return new Promise((resolve) => {
@@ -8,7 +8,7 @@ const sleep = (delay) => {
 };
 
 const service1Axios = axios.create({
-  baseURL: "http://localhost:5274/api/v1",
+  baseURL: 'http://localhost:5274/api/v1',
 });
 
 service1Axios.interceptors.request.use(
@@ -42,17 +42,32 @@ const requests = {
 };
 
 const Account = {
-  current: () => requests.get("/account"),
-  student: () => requests.get("/account/student"),
-  login: (user) => requests.post("/Account/login", user),
-  register: (user) => requests.post("/Account/register", user),
-  currentId: () => requests.get("/account/currentId"),
-  roles: () => requests.get("/account/roles"),
-  update: (user) => requests.put("/user", user),
+  current: () => requests.get('/account'),
+  student: () => requests.get('/account/student'),
+  login: (user) => requests.post('/Account/login', user),
+  register: (user) => requests.post('/Account/register', user),
+  currentId: () => requests.get('/account/currentId'),
+  roles: () => requests.get('/account/roles'),
+  update: (user) => requests.put('/user', user),
+};
+
+const Profiles = {
+  get: (username) => requests.get(`/profiles/${username}`),
+
+  uploadPhoto: (file) => {
+    let formData = new FormData();
+    formData.append('File', file);
+    return service1Axios.post('photos', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+  },
+  setMainPhoto: (id) => service1Axios.post(`/photos/${id}/setMain`, {}),
+  deletePhoto: (id) => service1Axios.delete(`/photos/${id}`),
 };
 
 const agent = {
   Account,
+  Profiles,
 };
 
 export default agent;
