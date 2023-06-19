@@ -41,10 +41,11 @@ namespace Stud_io.Extensions
                     new AppUser{FirstName = "Rrezart", LastName = "Hetemi", UserName="rrezi", Email = "rh52741@ubt-uni.net"},
                 };
 
+
                 foreach (var user in users)
                 {
                     await userManager.CreateAsync(user, "Pa$$w0rd");
-                    await userManager.AddToRoleAsync(user, "Admin");
+                    await userManager.AddToRoleAsync(user, "Student");
                 }
             }
         }

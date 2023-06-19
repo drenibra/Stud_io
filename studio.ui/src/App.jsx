@@ -13,27 +13,28 @@ import RegisterForm from './pages/Authentication/RegisterForm';
 import ProtectedRoute from './ProtectedRoute';
 
 import
-  {
-    LandingPage,
-    Maintenance,
-    Payment,
-    Payments,
-    MyProfile,
-    RegisterCustomer,
-    Announcement,
-    Roommate,
-    Questionnaire,
-    Deadline,
-    Dormitory,
-    Statistics,
-    StudyGroup,
-    StudyGroups,
-    Apply,
-    Konkurset,
-    AnnouncementTable,
-    Complaint,
-    Dormitories,
-  } from './pages';
+{
+  LandingPage,
+  Maintenance,
+  Payment,
+  Payments,
+  MyProfile,
+  RegisterCustomer,
+  Announcement,
+  Roommate,
+  Questionnaire,
+  Deadline,
+  Dormitory,
+  Statistics,
+  StudyGroup,
+  StudyGroups,
+  Apply,
+  Konkurset,
+  AnnouncementTable,
+  Complaint,
+  Dormitories,
+  GetComplaints,
+} from './pages';
 
 const routes = [
   { path: '/maintenance', element: Maintenance },
@@ -53,7 +54,8 @@ const routes = [
   { path: '/Konkurset', element: Konkurset },
   { path: '/AnnouncementTable', element: AnnouncementTable },
   { path: '/Complaint', element: Complaint },
-  { path: '/Dormitories', element: Dormitories }
+  { path: '/Dormitories', element: Dormitories },
+  { path: '/GetComplaints', element: GetComplaints }
 ];
 
 const App = observer(function App()

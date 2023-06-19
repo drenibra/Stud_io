@@ -9,7 +9,7 @@ using Stud_io.Application.Models;
 using Stud_io.Application.Services.Interfaces;
 using Stud_io.Application.Models.ServiceCommunication.Authentication;
 using Stud_io.Application.DTOs.Deserializer;
-using Newtonsoft.Json;
+using System.Text.Json;
 
 namespace Stud_io.Application.Services.Implementations
 {
@@ -81,12 +81,29 @@ namespace Stud_io.Application.Services.Implementations
         public async Task<ActionResult> AddComplaint(ComplaintDto complaintDto)
         {
             var httpClient = _httpClientFactory.CreateClient();
-            if (complaintDto == null)
-                return new BadRequestObjectResult("Complaint can not be null!!");
-            var mappedFaculty = _mapper.Map<Complaint>(complaintDto);
-            await _context.Complaints.AddAsync(mappedFaculty);
+
+            var uri = "http://localhost:5274/api/v1/User/GetStudentById";
+
+            var authentication = new AuthenticationHeaderValue("Bearer", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI5MDI0ZmFhYy0zZDIyLTQ3MmUtYTljZC0yYjVhMTk0OTZmODEiLCJ1bmlxdWVfbmFtZSI6ImFsbWEiLCJlbWFpbCI6ImFuNTE3MThAdWJ0LXVuaS5uZXQiLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE2ODcyMDQ5MDUsImV4cCI6MTY4NzgwOTcwNSwiaWF0IjoxNjg3MjA0OTA1fQ.TebDpiKEO-u0EKIztYsFgAPHcQ-XsbfDu5GDB8su1dY");
+            httpClient.DefaultRequestHeaders.Authorization = authentication;
+
+            var response = await httpClient.GetAsync(uri);
+
+            var responseAsString = await response.Content.ReadAsStringAsync();
+
+            var student = JsonSerializer.Deserialize<StudentComplaintDeserializer>(responseAsString);
+
+            var complaint = new Complaint()
+            {
+               
+                Description = complaintDto.Description,
+                StudentsId = student.id,
+
+            };
+
+            await _context.Complaints.AddAsync(complaint);
             await _context.SaveChangesAsync();
-            return new OkObjectResult("Complaint added successfully!");
+            return new OkObjectResult("Complaint added successfully!");     
         }
 
         public async Task<ActionResult> UpdateComplaint(int id, UpdateComplaintDto updateComplaintDto)

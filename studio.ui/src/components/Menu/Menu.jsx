@@ -12,6 +12,7 @@ import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import AddAlertTwoToneIcon from '@mui/icons-material/AddAlertTwoTone';
 import { useStore } from '../../stores/store';
 import { observer } from 'mobx-react-lite';
+import FeedbackTwoToneIcon from '@mui/icons-material/FeedbackTwoTone';
 
 const theme = createTheme({
   palette: {
@@ -37,7 +38,8 @@ const StyledListItemText = styled(ListItemText)(({ theme }) => ({
   fontWeight: 'bold',
 }));
 
-const Menu = observer(function Menu() {
+const Menu = observer(function Menu()
+{
   const { userStore } = useStore();
 
   const studentList = [
@@ -94,6 +96,11 @@ const Menu = observer(function Menu() {
       icon: <AddAlertTwoToneIcon />,
     },
     {
+      name: 'Ankesat',
+      path: '/Getcomplaints',
+      icon: <FeedbackTwoToneIcon />,
+    },
+    {
       name: 'Statistikat',
       path: '/Statistics',
       icon: <FormatListBulletedIcon />,
@@ -102,16 +109,19 @@ const Menu = observer(function Menu() {
 
   var list;
 
-  if (userStore.roles.includes('Admin')) {
+  if (userStore.roles.includes('Admin'))
+  {
     list = adminList;
-  } else if (userStore.roles.includes('Student')) {
+  } else if (userStore.roles.includes('Student'))
+  {
     list = studentList;
   }
 
   return (
     <ThemeProvider theme={theme}>
       <List className="menu">
-        {list.map((item) => {
+        {list.map((item) =>
+        {
           return (
             <StyledListItem className="menu-item">
               <ListItemIcon>{item.icon}</ListItemIcon>

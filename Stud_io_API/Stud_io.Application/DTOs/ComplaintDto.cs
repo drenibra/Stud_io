@@ -3,7 +3,6 @@
     public class ComplaintDto
     {
         public string Description { get; set; }
-        public string StudentsId { get; set; }
     }
 
     public class UpdateComplaintDto

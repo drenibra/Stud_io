@@ -78,7 +78,7 @@ namespace Stud_io.Authentication.Controllers
             if (user == null)
             {
                 return BadRequest("Unauthorized");
-            }
+            } 
 
             var isStudent = await _userManager.IsInRoleAsync(user, "Student");
             var isAdmin = await _userManager.IsInRoleAsync(user, "Admin");
