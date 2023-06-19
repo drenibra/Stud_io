@@ -5,6 +5,7 @@ using Payment.Contracts;
 using Payment.Models.Stripe;
 using Stripe;
 using Stud_io.Payment.DTOs;
+using Stud_io.Payment.Services.Interfaces;
 using Stud_io_Payment.Configurations;
 using System.Net.Http.Headers;
 using System.Text;
@@ -19,6 +20,7 @@ namespace Payment.Application
         private readonly PaymentDbContext _context;
         private readonly IMapper _mapper;
         private readonly IHttpClientFactory _httpClientFactory;
+        private readonly IMailKitEmailService _mailKitservice;
 
         public StripeAppService(
             ChargeService chargeService,
@@ -26,7 +28,8 @@ namespace Payment.Application
             TokenService tokenService,
             PaymentDbContext context,
             IMapper mapper,
-            IHttpClientFactory httpClientFactory)
+            IHttpClientFactory httpClientFactory,
+            IMailKitEmailService mailKitservice)
         {
             _chargeService = chargeService;
             _customerService = customerService;
@@ -34,6 +37,7 @@ namespace Payment.Application
             _context = context;
             _mapper = mapper;
             _httpClientFactory = httpClientFactory;
+            _mailKitservice = mailKitservice;
         }
 
         private static StripeCustomer MapStripeCustomer(Customer customer)
@@ -125,6 +129,9 @@ namespace Payment.Application
                 StripePayment mappedPayment = MapStripePayment(createdPayment, payment.Month);
                 await _context.StripePayments.AddAsync(mappedPayment, ct);
                 await _context.SaveChangesAsync(ct);
+
+                _mailKitservice.SendEmail(payment.ReceiptEmail, "Email nga Studio - Qendra Studentore", "", "studio.qendrastudentore@gmail.com");
+
 
                 // Return the payment to requesting method
                 return new StripePayment(
