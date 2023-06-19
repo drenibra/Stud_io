@@ -83,7 +83,7 @@ namespace Stud_io_Dormitory.Services.Implementations
 
             var uri = "http://localhost:5274/api/v1/User/get-dormitory-students";
 
-            var adminToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJjMGQwY2RjNC1kYTg1LTQ1NDAtYWNkZi1lMjlmNjQ2YWMwNzkiLCJ1bmlxdWVfbmFtZSI6ImJsZW9uYSIsImVtYWlsIjoiYmc1MjczMkB1YnQtdW5pLm5ldCIsInJvbGUiOiJBZG1pbiIsIm5iZiI6MTY4NzEyOTk3MSwiZXhwIjoxNjg3NzM0NzcxLCJpYXQiOjE2ODcxMjk5NzF9.-h8VjCHJk1XncBm3Mk9lxqDmv_1EQQEBZvYOcwNVeSw";
+            var adminToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJjMGQwY2RjNC1kYTg1LTQ1NDAtYWNkZi1lMjlmNjQ2YWMwNzkiLCJ1bmlxdWVfbmFtZSI6ImJsZW9uYSIsImVtYWlsIjoiYmc1MjczMkB1YnQtdW5pLm5ldCIsInJvbGUiOiJBZG1pbiIsIm5iZiI6MTY4NzIwOTI2NCwiZXhwIjoxNjg3ODE0MDY0LCJpYXQiOjE2ODcyMDkyNjR9.fGfx_KXn7cygkFU5MMKrEzrcyXsLVFPzBulFzBB7LFA";
 
 
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", adminToken);
@@ -118,7 +118,7 @@ namespace Stud_io_Dormitory.Services.Implementations
 
             var uri = $"http://localhost:5274/api/v1/User/add-dorm-number/{studentId}/{dormNo}";
 
-            var authentication = new AuthenticationHeaderValue("Bearer", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJjMGQwY2RjNC1kYTg1LTQ1NDAtYWNkZi1lMjlmNjQ2YWMwNzkiLCJ1bmlxdWVfbmFtZSI6ImJsZW9uYSIsImVtYWlsIjoiYmc1MjczMkB1YnQtdW5pLm5ldCIsInJvbGUiOiJBZG1pbiIsIm5iZiI6MTY4NzE0NjUwNywiZXhwIjoxNjg3NzUxMzA3LCJpYXQiOjE2ODcxNDY1MDd9.sGHS1HNmrJVjkTJEUEoCkhr3cg1u84bHrWtXYLNYdc8");
+            var authentication = new AuthenticationHeaderValue("Bearer", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJjMGQwY2RjNC1kYTg1LTQ1NDAtYWNkZi1lMjlmNjQ2YWMwNzkiLCJ1bmlxdWVfbmFtZSI6ImJsZW9uYSIsImVtYWlsIjoiYmc1MjczMkB1YnQtdW5pLm5ldCIsInJvbGUiOiJBZG1pbiIsIm5iZiI6MTY4NzIwOTI2NCwiZXhwIjoxNjg3ODE0MDY0LCJpYXQiOjE2ODcyMDkyNjR9.fGfx_KXn7cygkFU5MMKrEzrcyXsLVFPzBulFzBB7LFA");
             httpClient.DefaultRequestHeaders.Authorization = authentication;
 
             var content = new StringContent("",Encoding.UTF8, "application/json");
