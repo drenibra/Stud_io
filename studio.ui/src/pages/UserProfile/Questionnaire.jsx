@@ -45,7 +45,7 @@ export default function Questionnaire({ handleClose }) {
       <form className="questionnaire-form" onSubmit={handleSubmit}>
         <div className="question-group">
           <p className="question-group-label">
-            Do you share your belongings with others?
+            A i ndani sendet tuaja me të tjerët?
           </p>
           <label className="answer-option">
             <input
@@ -61,7 +61,7 @@ export default function Questionnaire({ handleClose }) {
                 )
               }
             />
-            Yes
+            Po
           </label>
           <label className="answer-option">
             <input
@@ -77,12 +77,14 @@ export default function Questionnaire({ handleClose }) {
                 )
               }
             />
-            No
+            Jo
           </label>
         </div>
 
         <div className="question-group">
-          <p className="question-group-label">Select your sleeping habits:</p>
+          <p className="question-group-label">
+            Zgjidhni zakonet tuaja gjatë gjumit:
+          </p>
           <label className="answer-option">
             <input
               type="radio"
@@ -94,7 +96,7 @@ export default function Questionnaire({ handleClose }) {
                 handleResponseChange("sleepingHabits", e.target.value)
               }
             />
-            Early Riser
+            Një person që zgjohet herët
           </label>
           <label className="answer-option">
             <input
@@ -107,14 +109,12 @@ export default function Questionnaire({ handleClose }) {
                 handleResponseChange("sleepingHabits", e.target.value)
               }
             />
-            Night Owl
+            Një person që zgjohet vonë
           </label>
         </div>
 
         <div className="question-group">
-          <p className="question-group-label">
-            Do you allow guests in your room?
-          </p>
+          <p className="question-group-label">A lejoni mysafirë në dhomën tuaj?</p>
           <label className="answer-option">
             <input
               type="radio"
@@ -126,7 +126,7 @@ export default function Questionnaire({ handleClose }) {
                 handleResponseChange("havingGuests", e.target.value === "true")
               }
             />
-            Yes
+            Po
           </label>
           <label className="answer-option">
             <input
@@ -139,13 +139,13 @@ export default function Questionnaire({ handleClose }) {
                 handleResponseChange("havingGuests", e.target.value === "true")
               }
             />
-            No
+            Jo
           </label>
         </div>
 
         <div className="question-group">
           <p className="question-group-label">
-            How would you rate your room cleanliness?
+            Si e vlerësoni pastrimin e dhomës suaj?
           </p>
           <label className="answer-option">
             <input
@@ -158,7 +158,7 @@ export default function Questionnaire({ handleClose }) {
                 handleResponseChange("roomCleanliness", e.target.value)
               }
             />
-            Clean at all times
+            E pastër gjithmonë
           </label>
           <label className="answer-option">
             <input
@@ -171,13 +171,13 @@ export default function Questionnaire({ handleClose }) {
                 handleResponseChange("roomCleanliness", e.target.value)
               }
             />
-            A little messy is okay
+            Pak rrëmujë është në rregull
           </label>
         </div>
 
         <div className="question-group">
           <p className="question-group-label">
-            How much time do you spend studying?
+            Sa kohë kaloni duke studiuar?
           </p>
           <label className="answer-option">
             <input
@@ -190,7 +190,7 @@ export default function Questionnaire({ handleClose }) {
                 handleResponseChange("studyTime", e.target.value)
               }
             />
-            All the time
+            Gjithë kohën
           </label>
           <label className="answer-option">
             <input
@@ -203,7 +203,7 @@ export default function Questionnaire({ handleClose }) {
                 handleResponseChange("studyTime", e.target.value)
               }
             />
-            Often
+            Shpesh
           </label>
           <label className="answer-option">
             <input
@@ -216,12 +216,14 @@ export default function Questionnaire({ handleClose }) {
                 handleResponseChange("studyTime", e.target.value)
               }
             />
-            Rarely
+            Rrallë
           </label>
         </div>
 
         <div className="question-group">
-          <p className="question-group-label">Where do you prefer to study?</p>
+          <p className="question-group-label">
+            Ku preferoni të studioni?
+          </p>
           <label className="answer-option">
             <input
               type="radio"
@@ -233,7 +235,7 @@ export default function Questionnaire({ handleClose }) {
                 handleResponseChange("studyPlace", e.target.value)
               }
             />
-            At Library
+            Në bibliotekë
           </label>
           <label className="answer-option">
             <input
@@ -246,7 +248,7 @@ export default function Questionnaire({ handleClose }) {
                 handleResponseChange("studyPlace", e.target.value)
               }
             />
-            In Room
+            Në dhomën time
           </label>
         </div>
 
@@ -257,7 +259,7 @@ export default function Questionnaire({ handleClose }) {
             color="primary"
             style={{ borderRadius: "30px", textTransform: "none" }}
           >
-            Submit
+            Dërgo
           </Button>
         </div>
       </form>

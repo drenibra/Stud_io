@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Stud_io.Application.Configurations;
 using Stud_io.Application.Models;
 using Stud_io.Application.Services.Interfaces;
-using System;
 
 namespace Stud_io.Application.Controllers
 {
@@ -10,18 +8,14 @@ namespace Stud_io.Application.Controllers
     [ApiController]
     public class ProfileMatchController : ControllerBase
     {
-
-        private readonly ApplicationDbContext _context;
         private readonly IProfileMatchService _profileMatchService;
 
-        public ProfileMatchController(ApplicationDbContext context, IProfileMatchService profileMatchService)
+        public ProfileMatchController(IProfileMatchService profileMatchService)
         {
-            _context = context;
             _profileMatchService = profileMatchService;
         }
 
         [HttpGet("getAverageGradePoints/{grade}")]
-
         public IActionResult CalculateAGPoints(float grade)
         {
             var points = _profileMatchService.CalculateAverageGradePoints(grade);
@@ -30,7 +24,6 @@ namespace Stud_io.Application.Controllers
         }
 
         [HttpGet("getExtraPoints/{category}")]
-
         public IActionResult CalculateExtraPoints(string category)
         {
             var points = _profileMatchService.CalculateExtraPoints(category);
@@ -44,11 +37,16 @@ namespace Stud_io.Application.Controllers
             return Ok(points);
         }
 
-        [HttpGet("profilematches")]
-        public async Task<ActionResult<IEnumerable<ProfileMatch>>> GetProfileMatches()
+        [HttpGet("get-matches")]
+        public async Task<ActionResult<IEnumerable<ProfileMatch>>> GetMatches()
+        {
+            return await _profileMatchService.GetMatches();
+        }
+
+        [HttpGet("calculate-total-points-for-all-students")]
+        public async Task<ActionResult<List<ProfileMatch>>> CalculateTotalPointsForAllStudents()
         {
            return await _profileMatchService.CalculateTotalPointsForAllStudents();
-
         }
 
         [HttpGet("sortByTotalPoints")]
@@ -68,6 +66,5 @@ namespace Stud_io.Application.Controllers
         {
             return await _profileMatchService.GetLastProfileMatches();
         }
-
     }
 }

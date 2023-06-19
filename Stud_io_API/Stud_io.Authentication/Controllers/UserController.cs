@@ -47,7 +47,18 @@ namespace Stud_io.Authentication.Controllers
             var user = await _userManager.FindByEmailAsync(User.FindFirstValue(ClaimTypes.Email)) as Student;
             
             return user == null
-                ? new NotFoundObjectResult("Type of payment doesn't exist!!")
+                ? new NotFoundObjectResult("Student is not registered!!")
+                : new OkObjectResult(user);
+        }
+
+        [HttpGet("GetStudentById/{id}")]
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult<Student>> GetStudentById(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+
+            return user == null
+                ? new NotFoundObjectResult("Student is not registered!!")
                 : new OkObjectResult(user);
         }
 
