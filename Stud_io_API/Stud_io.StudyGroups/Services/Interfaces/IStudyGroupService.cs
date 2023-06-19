@@ -9,5 +9,6 @@ namespace Stud_io.StudyGroups.Services.Interfaces
         Task<ActionResult<StudyGroupDto>> GetStudyGroupById(int id);
         Task<ActionResult> CreateStudyGroup(CreateStudyGroupDto dto);
         Task<ActionResult> AddMembers(int groupId, List<string> studentIds);
+        Task<ActionResult> StudioGPT(string query);
     }
 }

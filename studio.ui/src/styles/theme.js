@@ -7,7 +7,7 @@ export default createTheme({
       main: '#BF1A2F',
     },
     secondary: {
-      main: '#19857b',
+      main: '#BF1A2F',
     },
     error: {
       main: red.A400,
@@ -17,6 +17,14 @@ export default createTheme({
     },
     background: {
       default: '#fff',
+    },
+  },
+  overrides: {
+    MuiButton: {
+      containedPrimary: {
+        color: '#fff',
+        backgroundColor: '#BF1A2F',
+      },
     },
   },
 });
