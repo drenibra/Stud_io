@@ -26,49 +26,56 @@ namespace Stud_io.Application.Services.Implementations
             _httpClientFactory = httpClientFactory;
         }
 
+
+        public Task<ActionResult<ComplaintDetailsDto>> GetComplaintById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<ActionResult<List<ComplaintDto>>> GetComplaints() =>
             _mapper.Map<List<ComplaintDto>>(await _context.Complaints.ToListAsync());
 
-        public async Task<ActionResult<ComplaintDetailsDto>> GetComplaintById(int id)
-        {
-            var complaint = await _context.Complaints.FindAsync(id);
-            if(complaint == null)
-            {
-                return new NotFoundObjectResult("Complaint does not exist");
-            }
+   
+        //public async Task<ActionResult<ComplaintDetailsDto>> GetComplaintById(int id)
+        //{
+        //    var complaint = await _context.Complaints.FindAsync(id);
+        //    if(complaint == null)
+        //    {
+        //        return new NotFoundObjectResult("Complaint does not exist");
+        //    }
 
-            var complaintDto = new ComplaintDetailsDto()
-            {
-                Description = complaint.Description,
-                StudentsId = complaint.StudentsId
-            };
+        //    var complaintDto = new ComplaintDetailsDto()
+        //    {
+        //        Description = complaint.Description,
+        //        StudentsId = complaint.StudentsId
+        //    };
 
-            var httpClient = _httpClientFactory.CreateClient();
+        //    var httpClient = _httpClientFactory.CreateClient();
 
-            var uri = "http://localhost:5274/api/v1/User/get-complaint-students/" + complaintDto.StudentsId;
+        //    var uri = "http://localhost:5274/api/v1/User/get-complaint-students/" + complaintDto.StudentsId;
 
-            var adminToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI5MDI0ZmFhYy0zZDIyLTQ3MmUtYTljZC0yYjVhMTk0OTZmODEiLCJ1bmlxdWVfbmFtZSI6ImFsbWEiLCJlbWFpbCI6ImFuNTE3MThAdWJ0LXVuaS5uZXQiLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE2ODcxMzkyNzQsImV4cCI6MTY4Nzc0NDA3NCwiaWF0IjoxNjg3MTM5Mjc0fQ.KfkZmwdpArgaKIhgoUvzLkiFjNqZusNiT4em87SkSnY";
+        //    var adminToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI5MDI0ZmFhYy0zZDIyLTQ3MmUtYTljZC0yYjVhMTk0OTZmODEiLCJ1bmlxdWVfbmFtZSI6ImFsbWEiLCJlbWFpbCI6ImFuNTE3MThAdWJ0LXVuaS5uZXQiLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE2ODcxMzkyNzQsImV4cCI6MTY4Nzc0NDA3NCwiaWF0IjoxNjg3MTM5Mjc0fQ.KfkZmwdpArgaKIhgoUvzLkiFjNqZusNiT4em87SkSnY";
 
-            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", adminToken);
+        //    httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", adminToken);
 
-            var response = await httpClient.GetAsync(uri);
+        //    var response = await httpClient.GetAsync(uri);
 
-            if (response.IsSuccessStatusCode)
-            {
-                var responseAsString = await response.Content.ReadAsStringAsync();
+        //    if (response.IsSuccessStatusCode)
+        //    {
+        //        var responseAsString = await response.Content.ReadAsStringAsync();
 
-                var studentApi = JsonConvert.DeserializeObject<List<StudentDeserializer>>(responseAsString);
-               
-            }
+        //        var studentApi = JsonConvert.DeserializeObject<List<StudentDeserializer>>(responseAsString);
 
-           
+        //    }
 
 
-            //var mappedComplaint = _mapper.Map<ComplaintDto>(await _context.Complaints.FindAsync(id));
-            //return mappedComplaint == null
-            //    ? new NotFoundObjectResult("Complaint doesn't exist!!")
-            //    : new OkObjectResult(mappedComplaint);
-        }
+
+
+        //var mappedComplaint = _mapper.Map<ComplaintDto>(await _context.Complaints.FindAsync(id));
+        //return mappedComplaint == null
+        //    ? new NotFoundObjectResult("Complaint doesn't exist!!")
+        //    : new OkObjectResult(mappedComplaint);
+    //}
         
 
         public async Task<ActionResult> AddComplaint(ComplaintDto complaintDto)

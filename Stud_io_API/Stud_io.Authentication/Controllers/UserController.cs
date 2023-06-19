@@ -1,11 +1,14 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Stud_io.Authentication.DTOs;
 using Stud_io.Authentication.DTOs.ServiceCommunication.Complaint;
 using Stud_io.Authentication.DTOs.ServiceCommunication.Dormitory;
 using Stud_io.Authentication.DTOs.ServiceCommunication.StudyGroup;
 using Stud_io.Authentication.Interfaces;
 using Stud_io.Authentication.Models;
+using Stud_io.Configuration;
 using Stud_io.DTOs;
 using System.Security.Claims;
 
@@ -35,6 +38,17 @@ namespace Stud_io.Authentication.Controllers
         public async Task<ActionResult<AppUser>> GetUserById(string id)
         {
             return Ok(await _contract.GetUserById(id));
+        }
+
+        [HttpGet("GetStudentById")]
+        [Authorize(Roles = "Student")]
+        public async Task<ActionResult<Student>> GetStudentById()
+        {
+            var user = await _userManager.FindByEmailAsync(User.FindFirstValue(ClaimTypes.Email)) as Student;
+            
+            return user == null
+                ? new NotFoundObjectResult("Type of payment doesn't exist!!")
+                : new OkObjectResult(user);
         }
 
         [HttpPut("update-customer-id/{customerId}")]

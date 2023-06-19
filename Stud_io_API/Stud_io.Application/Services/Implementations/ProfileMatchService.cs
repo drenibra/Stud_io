@@ -133,8 +133,8 @@ namespace Stud_io.Application.Services.Implementations
         public async Task<List<ProfileMatch>> CalculateTotalPointsForAllStudents()
         {
             var applications = await _context.Applications
-                                         .Include(s => s.Student)
-                                         .Include(f => f.Student.Faculty)
+                                         //.Include(s => s.Student)
+                                         //.Include(f => f.Student.Faculty)
                                          .ToListAsync();
 
             foreach (var application in applications)
@@ -147,8 +147,8 @@ namespace Stud_io.Application.Services.Implementations
                     profileMatch = new ProfileMatch()
                     {
                         ApplicationId = application.Id,
-                        PointsForGPA = CalculateAverageGradePoints(application.Student.GPA),
-                        PointsForCity = CalculateCityPoints(application.Student.City),
+                        //PointsForGPA = CalculateAverageGradePoints(application.Student.GPA),
+                        //PointsForCity = CalculateCityPoints(application.Student.City),
                         ExtraPoints = CalculateExtraPoints(application.SpecialCategoryReason)
                     };
 
@@ -167,8 +167,8 @@ namespace Stud_io.Application.Services.Implementations
         {
             return await _context.ProfileMatches
                 .Include(a => a.Application)
-                .Include(s => s.Application.Student)
-                .Include(f => f.Application.Student.Faculty)
+                //.Include(s => s.Application.Student)
+                //.Include(f => f.Application.Student.Faculty)
                 .OrderByDescending(p => p.TotalPoints)
                 .ToListAsync();
         }
