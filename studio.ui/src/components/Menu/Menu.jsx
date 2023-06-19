@@ -74,6 +74,11 @@ const Menu = observer(function Menu() {
       icon: <AccountCircleIcon />,
     },
     {
+      name: 'Konviktet',
+      path: '/Dormitories',
+      icon: <HomeIcon />,
+    },
+    {
       name: 'Dhomat',
       path: '/dormitory',
       icon: <HotelIcon />,
