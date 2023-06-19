@@ -12,25 +12,27 @@ import LoginForm from './pages/Authentication/Loginform';
 import RegisterForm from './pages/Authentication/RegisterForm';
 import ProtectedRoute from './ProtectedRoute';
 
-import {
-  LandingPage,
-  Maintenance,
-  Payment,
-  Payments,
-  MyProfile,
-  RegisterCustomer,
-  Announcement,
-  Roommate,
-  Questionnaire,
-  Deadline,
-  Dormitory,
-  Statistics,
-  StudyGroup,
-  StudyGroups,
-  Apply,
-  Konkurset,
-  AnnouncementTable,
-} from './pages';
+import
+  {
+    LandingPage,
+    Maintenance,
+    Payment,
+    Payments,
+    MyProfile,
+    RegisterCustomer,
+    Announcement,
+    Roommate,
+    Questionnaire,
+    Deadline,
+    Dormitory,
+    Statistics,
+    StudyGroup,
+    StudyGroups,
+    Apply,
+    Konkurset,
+    AnnouncementTable,
+    Complaint
+  } from './pages';
 
 const routes = [
   { path: '/maintenance', element: Maintenance },
@@ -49,26 +51,35 @@ const routes = [
   { path: '/study-groups', element: StudyGroups },
   { path: '/Konkurset', element: Konkurset },
   { path: '/AnnouncementTable', element: AnnouncementTable },
+  { path: '/Complaint', element: Complaint }
 ];
 
-const App = observer(function App() {
+const App = observer(function App()
+{
   const { commonStore, userStore } = useStore();
   const [user, setUser] = useState({});
 
-  useEffect(() => {
-    if (commonStore.token) {
-      try {
-        const fetchData = async () => {
+  useEffect(() =>
+  {
+    if (commonStore.token)
+    {
+      try
+      {
+        const fetchData = async () =>
+        {
           const userData = await agent.Account.current();
           setUser(userData);
         };
         fetchData();
-      } catch (error) {
+      } catch (error)
+      {
         console.error(error);
-      } finally {
+      } finally
+      {
         commonStore.setAppLoaded();
       }
-    } else {
+    } else
+    {
       commonStore.setAppLoaded();
     }
   }, [commonStore, userStore]);

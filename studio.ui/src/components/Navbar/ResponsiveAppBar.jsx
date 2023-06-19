@@ -28,7 +28,7 @@ const pages = [
   },
   {
     name: 'Ankesa',
-    path: '/ankesa',
+    path: '/Complaint',
   },
 
   {
@@ -49,16 +49,19 @@ const pages = [
   },
 ];
 
-const ResponsiveAppBar = observer(function ResponsiveAppBar() {
+const ResponsiveAppBar = observer(function ResponsiveAppBar()
+{
   const navigate = useNavigate();
   const { userStore } = useStore();
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
-  const handleOpenUserMenu = (event) => {
+  const handleOpenUserMenu = (event) =>
+  {
     setAnchorElUser(event.currentTarget);
   };
 
-  const handleCloseUserMenu = () => {
+  const handleCloseUserMenu = () =>
+  {
     setAnchorElUser(null);
   };
 
@@ -127,7 +130,8 @@ const ResponsiveAppBar = observer(function ResponsiveAppBar() {
                   </Link>
                 </MenuItem>
                 <MenuItem
-                  onClick={() => {
+                  onClick={() =>
+                  {
                     handleCloseUserMenu();
                     userStore.logout();
                   }}

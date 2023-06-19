@@ -15,3 +15,4 @@ export { default as StudyGroups } from './StudyGroups/StudyGroups/StudyGroups.js
 export { default as StudyGroup } from './StudyGroups/StudyGroup/StudyGroup.jsx';
 export { default as Konkurset } from './Announcements/Konkurset';
 export { default as AnnouncementTable } from './Announcements/AnnouncementTable';
+export { default as Complaint } from './Complaints/Complaint';
