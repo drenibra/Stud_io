@@ -89,7 +89,7 @@ namespace Stud_io.Application.Services.Implementations
 
             //Dreni to handle the token
 
-            var authentication = new AuthenticationHeaderValue("Bearer", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI0YzU0YTNlZC0xN2MxLTQ4OTAtYTgzZi1hM2EzZDI3MWNmMjAiLCJ1bmlxdWVfbmFtZSI6IkJsb25hIiwiZW1haWwiOiJibGVvbmExMjNAZ21haWwuY29tIiwicm9sZSI6IlN0dWRlbnQiLCJuYmYiOjE2ODcyMDQyOTQsImV4cCI6MTY4NzgwOTA5NCwiaWF0IjoxNjg3MjA0Mjk0fQ.058qOsC_DfFkp9hJRBBIZQ8rUZz0_-3Yf4Gp6z00SAM");
+            var authentication = new AuthenticationHeaderValue("Bearer", applicationDto.Token);
             httpClient.DefaultRequestHeaders.Authorization = authentication;
 
             var response = await httpClient.GetAsync(uri);
@@ -136,7 +136,7 @@ namespace Stud_io.Application.Services.Implementations
                 FileUrl = imageUrl,
             };
 
-            //_mailService.SendEmail("rrezart.hetemi@outlook.com", "Email nga Studio - Qendra Studentore", "", "studio.qendrastudentore@gmail.com");
+            _mailService.SendEmail(student.email, "Email nga Studio - Qendra Studentore", "", "studio.qendrastudentore@gmail.com");
 
             await _context.Applications.AddAsync(application);
             await _context.SaveChangesAsync();

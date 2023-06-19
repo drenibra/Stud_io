@@ -3,6 +3,8 @@
     public class StudentDeserializer
     {
         public string? id { get; set; }
+        public string? email { get; set; }
+
     }
 
     public class StudentProfileDeserializer

@@ -12,13 +12,12 @@ import { observer } from 'mobx-react-lite';
 
 const Apply = observer(() => {
   const { userStore } = useStore();
-  let studentidd = userStore.user.id;
+  let token = userStore.user.token;
   const [formData, setFormData] = useState({
     isSpecialCategory: false,
     specialCategory: '',
-    personalNo: '',
-    studentId: studentidd,
     document: null,
+    token: token,
   });
 
   const handleChange = (e) => {
@@ -43,10 +42,9 @@ const Apply = observer(() => {
 
     const formDataa = new FormData();
     formDataa.append('isSpecialCategory', formData.isSpecialCategory);
-    formDataa.append('specialCategory', formData.specialCategory);
-    formDataa.append('personalNo', formData.personalNo);
-    formDataa.append('studentId', formData.studentId);
+    formDataa.append('specialCategoryReason', formData.specialCategory);
     formDataa.append('document', formData.document);
+    formDataa.append('token', token);
 
     const config = {
       headers: {
@@ -56,7 +54,7 @@ const Apply = observer(() => {
 
     agent.Apply.apply(formDataa, config)
       .then(() => {
-        toast.success('Pagesa u krye me sukses');
+        toast.success('Ju aplikuat me sukses!');
       })
       .catch(function (error) {
         toast.error(error.response.data);
@@ -67,7 +65,6 @@ const Apply = observer(() => {
     <div className="form-container">
       <h2>Form Example</h2>
       <form onSubmit={handleSubmit}>
-        <TextField label="Personal No" name="personalNo" value={formData.personalNo} onChange={handleChange} variant="outlined" fullWidth margin="normal" sx={{ marginBottom: '8px' }} />
         <FormControl fullWidth sx={{ marginBottom: '8px' }}>
           <InputLabel id="specialCategory-label">Special Category Reason</InputLabel>
           <Select
@@ -80,11 +77,15 @@ const Apply = observer(() => {
             disabled={!formData.isSpecialCategory}
           >
             <MenuItem value="">Select Special Category Reason</MenuItem>
-            <MenuItem value="Femije i deshmorit">Femije i deshmorit</MenuItem>
-            <MenuItem value="Femije jetim">Femije jetim</MenuItem>
-            <MenuItem value="Me shume se nje student nga nje familje">Me shume se nje student nga nje familje</MenuItem>
-            <MenuItem value="Femije i invalidit">Femije i invalidit</MenuItem>
-            <MenuItem value="Femije i te pagjeturi">Femije i te pagjeturi</MenuItem>
+            <MenuItem value="Student(femije) i deshmorit">Student(femije) i deshmorit</MenuItem>
+            <MenuItem value="Student me aftesi te kufizuara">Student me aftesi te kufizuara</MenuItem>
+            <MenuItem value="Student(femije) i prindit invalid te luftes">Student(femije) i prindit invalid te luftes</MenuItem>
+            <MenuItem value="Student invalid civil i luftes">Student invalid civil i luftes</MenuItem>
+            <MenuItem value="Student me asistence sociale">Student me asistence sociale</MenuItem>
+            <MenuItem value="Student i prindit martir nga lufta">Student i prindit martir nga lufta</MenuItem>
+            <MenuItem value="Student i te burgosurit politik">Student i te burgosurit politik</MenuItem>
+            <MenuItem value="Dy e me shume student nga nje familje aplikant ne QS">Dy e me shume student nga nje familje aplikant ne QS</MenuItem>
+            <MenuItem value="Student, prindi i te cilit eshte veteran i luftes">Student, prindi i te cilit eshte veteran i luftes</MenuItem>
           </Select>
         </FormControl>
         <FormControlLabel control={<Checkbox checked={formData.isSpecialCategory} onChange={handleChange} name="isSpecialCategory" color="primary" />} label="Is Special Category" />
