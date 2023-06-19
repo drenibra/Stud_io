@@ -22,7 +22,7 @@ namespace Stud_io.Application.Controllers
         }
 
         [HttpGet("GetComplaintById/{id}")]
-        public async Task<ActionResult<ComplaintDto>> GetComplaintById(int id)
+        public async Task<ActionResult<ComplaintDetailsDto>> GetComplaintById(int id)
         {
             return await _complaintService.GetComplaintById(id);
         }

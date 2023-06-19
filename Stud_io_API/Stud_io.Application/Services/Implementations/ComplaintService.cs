@@ -1,13 +1,15 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
+using System.Text.Json;
 using System.Net.Http.Headers;
 using Microsoft.EntityFrameworkCore;
 using Stud_io.Application.Configurations;
 using Stud_io.Application.DTOs;
 using Stud_io.Application.Models;
 using Stud_io.Application.Services.Interfaces;
+using Stud_io.Application.Models.ServiceCommunication.Authentication;
 using Stud_io.Application.DTOs.Deserializer;
+using Newtonsoft.Json;
 
 namespace Stud_io.Application.Services.Implementations
 {
@@ -27,7 +29,7 @@ namespace Stud_io.Application.Services.Implementations
         public async Task<ActionResult<List<ComplaintDto>>> GetComplaints() =>
             _mapper.Map<List<ComplaintDto>>(await _context.Complaints.ToListAsync());
 
-        public async Task<ActionResult<ComplaintDto>> GetComplaintById(int id)
+        public async Task<ActionResult<ComplaintDetailsDto>> GetComplaintById(int id)
         {
             var complaint = await _context.Complaints.FindAsync(id);
             if(complaint == null)
@@ -35,14 +37,15 @@ namespace Stud_io.Application.Services.Implementations
                 return new NotFoundObjectResult("Complaint does not exist");
             }
 
-            var complaintDto = new ComplaintDto()
+            var complaintDto = new ComplaintDetailsDto()
             {
-                Description = complaint.Description
+                Description = complaint.Description,
+                StudentsId = complaint.StudentsId
             };
 
             var httpClient = _httpClientFactory.CreateClient();
 
-            var uri = "http://localhost:5274/api/v1/User/get-complaint-students";
+            var uri = "http://localhost:5274/api/v1/User/get-complaint-students/" + complaintDto.StudentsId;
 
             var adminToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI5MDI0ZmFhYy0zZDIyLTQ3MmUtYTljZC0yYjVhMTk0OTZmODEiLCJ1bmlxdWVfbmFtZSI6ImFsbWEiLCJlbWFpbCI6ImFuNTE3MThAdWJ0LXVuaS5uZXQiLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE2ODcxMzkyNzQsImV4cCI6MTY4Nzc0NDA3NCwiaWF0IjoxNjg3MTM5Mjc0fQ.KfkZmwdpArgaKIhgoUvzLkiFjNqZusNiT4em87SkSnY";
 
@@ -50,12 +53,16 @@ namespace Stud_io.Application.Services.Implementations
 
             var response = await httpClient.GetAsync(uri);
 
-            var responseAsString = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode)
+            {
+                var responseAsString = await response.Content.ReadAsStringAsync();
 
-            var studentApi = JsonSerializer.Deserialize<StudentDeserializer>(responseAsString);
+                var studentApi = JsonConvert.DeserializeObject<List<StudentDeserializer>>(responseAsString);
+               
+            }
 
+           
 
-            // qetu kom met
 
             //var mappedComplaint = _mapper.Map<ComplaintDto>(await _context.Complaints.FindAsync(id));
             //return mappedComplaint == null
