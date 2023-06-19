@@ -121,12 +121,10 @@ namespace Stud_io_Dormitory.Services.Implementations
             var authentication = new AuthenticationHeaderValue("Bearer", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJjMGQwY2RjNC1kYTg1LTQ1NDAtYWNkZi1lMjlmNjQ2YWMwNzkiLCJ1bmlxdWVfbmFtZSI6ImJsZW9uYSIsImVtYWlsIjoiYmc1MjczMkB1YnQtdW5pLm5ldCIsInJvbGUiOiJBZG1pbiIsIm5iZiI6MTY4NzE0NjUwNywiZXhwIjoxNjg3NzUxMzA3LCJpYXQiOjE2ODcxNDY1MDd9.sGHS1HNmrJVjkTJEUEoCkhr3cg1u84bHrWtXYLNYdc8");
             httpClient.DefaultRequestHeaders.Authorization = authentication;
 
-            var data = new {StudentId = studentId, DormNumber = dormNo };
-            var jsonContent = JsonConvert.SerializeObject(data);
             var content = new StringContent("",Encoding.UTF8, "application/json");
 
 
-            var response = await httpClient.PutAsync(uri, content);
+            await httpClient.PutAsync(uri, content);
         }
 
 
@@ -143,7 +141,8 @@ namespace Stud_io_Dormitory.Services.Implementations
                 if (dormitory != null)
                 {
                     student.DormNumber = dormitory.DormNo;
-                    await AddDormNumber(student.StudentId, dormitory.DormNo);
+                    var id = student.Id;
+                    await AddDormNumber(id, dormitory.DormNo);
                     dormitory.CurrentStudents++;
 
                 }
