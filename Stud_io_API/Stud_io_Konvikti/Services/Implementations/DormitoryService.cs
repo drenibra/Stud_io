@@ -81,7 +81,7 @@ namespace Stud_io_Dormitory.Services.Implementations
 
             var httpClient = _httpClientFactory.CreateClient();
 
-            var uri = "http://localhost:5274/api/v1/User/get-dormitory-students";
+            var uri = "http://localhost:5274/api/v1/User/get-dormitory-students";  
 
             var adminToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJjMGQwY2RjNC1kYTg1LTQ1NDAtYWNkZi1lMjlmNjQ2YWMwNzkiLCJ1bmlxdWVfbmFtZSI6ImJsZW9uYSIsImVtYWlsIjoiYmc1MjczMkB1YnQtdW5pLm5ldCIsInJvbGUiOiJBZG1pbiIsIm5iZiI6MTY4NzEyOTk3MSwiZXhwIjoxNjg3NzM0NzcxLCJpYXQiOjE2ODcxMjk5NzF9.-h8VjCHJk1XncBm3Mk9lxqDmv_1EQQEBZvYOcwNVeSw";
 

@@ -1,10 +1,13 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using System.Net.Http.Headers;
 using Microsoft.EntityFrameworkCore;
 using Stud_io.Application.Configurations;
 using Stud_io.Application.DTOs;
 using Stud_io.Application.Models;
 using Stud_io.Application.Services.Interfaces;
+using Stud_io.Application.DTOs.Deserializer;
 
 namespace Stud_io.Application.Services.Implementations
 {
@@ -26,11 +29,40 @@ namespace Stud_io.Application.Services.Implementations
 
         public async Task<ActionResult<ComplaintDto>> GetComplaintById(int id)
         {
-            var mappedComplaint = _mapper.Map<ComplaintDto>(await _context.Complaints.FindAsync(id));
-            return mappedComplaint == null
-                ? new NotFoundObjectResult("Complaint doesn't exist!!")
-                : new OkObjectResult(mappedComplaint);
+            var complaint = await _context.Complaints.FindAsync(id);
+            if(complaint == null)
+            {
+                return new NotFoundObjectResult("Complaint does not exist");
+            }
+
+            var complaintDto = new ComplaintDto()
+            {
+                Description = complaint.Description
+            };
+
+            var httpClient = _httpClientFactory.CreateClient();
+
+            var uri = "http://localhost:5274/api/v1/User/get-complaint-students";
+
+            var adminToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI5MDI0ZmFhYy0zZDIyLTQ3MmUtYTljZC0yYjVhMTk0OTZmODEiLCJ1bmlxdWVfbmFtZSI6ImFsbWEiLCJlbWFpbCI6ImFuNTE3MThAdWJ0LXVuaS5uZXQiLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE2ODcxMzkyNzQsImV4cCI6MTY4Nzc0NDA3NCwiaWF0IjoxNjg3MTM5Mjc0fQ.KfkZmwdpArgaKIhgoUvzLkiFjNqZusNiT4em87SkSnY";
+
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", adminToken);
+
+            var response = await httpClient.GetAsync(uri);
+
+            var responseAsString = await response.Content.ReadAsStringAsync();
+
+            var studentApi = JsonSerializer.Deserialize<StudentDeserializer>(responseAsString);
+
+
+            // qetu kom met
+
+            //var mappedComplaint = _mapper.Map<ComplaintDto>(await _context.Complaints.FindAsync(id));
+            //return mappedComplaint == null
+            //    ? new NotFoundObjectResult("Complaint doesn't exist!!")
+            //    : new OkObjectResult(mappedComplaint);
         }
+        
 
         public async Task<ActionResult> AddComplaint(ComplaintDto complaintDto)
         {
