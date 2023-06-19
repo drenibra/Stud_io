@@ -2,7 +2,7 @@
 {
     public class StudentDeserializer
     {
-        public string? StudentId { get; set; }
+        public string? id { get; set; }
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
     }

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Stud_io.Authentication.DTOs;
 using Stud_io.Authentication.DTOs.ServiceCommunication.Complaint;
 using Stud_io.Authentication.DTOs.ServiceCommunication.Dormitory;
 using Stud_io.Authentication.DTOs.ServiceCommunication.StudyGroup;
@@ -68,16 +69,6 @@ namespace Stud_io.Authentication.Services
             }
             return NoContent();
         }
-
-        public async Task<Student> GetStudentById(string id)
-        {
-            var student = await _userManager.Users
-                .OfType<Student>()
-                .FirstOrDefaultAsync(user => user.Id.Equals(id));
-
-            return student;
-        }
-
 
         //gets all students from a certain study group that is on the study group microservice
         public async Task<ActionResult<List<MemberStudentDto>>> GetStudyGroupStudents(int id)

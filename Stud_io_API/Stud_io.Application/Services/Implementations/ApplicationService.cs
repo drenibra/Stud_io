@@ -5,11 +5,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Stud_io.Application.Configurations;
 using Stud_io.Application.DTOs;
+using Stud_io.Application.DTOs.Deserializer;
 using Stud_io.Application.Models;
 using Stud_io.Application.Models.ServiceCommunication.Authentication;
 using Stud_io.Application.Services.Interfaces;
 using System;
 using System.Net.Http.Headers;
+using System.Reflection.Metadata;
 using System.Text.Json;
 
 namespace Stud_io.Application.Services.Implementations
@@ -46,10 +48,10 @@ namespace Stud_io.Application.Services.Implementations
             var applicationDto = new ApplicationDetailsDto()
             {
                 SpecialCategoryReason = application.SpecialCategoryReason,
-                IsSpecialCategory = application.isSpecialCategory,
-                PersonalNo = application.PersonalNo,
+                IsSpecialCategory = application.IsSpecialCategory,
+                //PersonalNo = application.PersonalNo,
                 DocumentUrl = application.FileUrl,
-                StudentId = application.StudentsId
+                //StudentId = application.StudentsId
             };
 
             var httpClient = _httpClientFactory.CreateClient();
@@ -76,19 +78,27 @@ namespace Stud_io.Application.Services.Implementations
         }
 
         // check if the student has already applied
-        public async Task<bool> HasStudentAlreadyApplied(string personalNumber)
+        public async Task<bool> HasStudentAlreadyApplied(string id)
         {
-            var existingApplication = await _context.Applications.FirstOrDefaultAsync(a => a.PersonalNo == personalNumber);
+            var existingApplication = await _context.Applications.FirstOrDefaultAsync(a => a.Id.Equals(id));
             return existingApplication != null;
         }
 
         public async Task<ActionResult> AddApplication(ApplicationDto applicationDto)
         {
-            StudentService _studentService = new(_context, _mapper);
-            if (applicationDto == null)
-                return new BadRequestObjectResult("Application can not be null!!");
+            var httpClient = _httpClientFactory.CreateClient();
 
-            bool hasAlreadyApplied = await HasStudentAlreadyApplied(applicationDto.PersonalNo);
+            var uri = "http://localhost:5274/api/v1/User/GetStudentById";
+
+            var authentication = new AuthenticationHeaderValue("Bearer", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJmNjc0MDIyNS0wMGQ2LTQ2NmQtYTdmNC1hZDlhNWJmODQzZGQiLCJ1bmlxdWVfbmFtZSI6IkZhdGluam8iLCJlbWFpbCI6ImZhdHNpamFyaW5hMTJAZ21haWwuY29tIiwicm9sZSI6IlN0dWRlbnQiLCJuYmYiOjE2ODcxODQyMDIsImV4cCI6MTY4Nzc4OTAwMiwiaWF0IjoxNjg3MTg0MjAyfQ.f0HiPPeGPL1vcGF8-ty7MHPXIj-zJRLPM67QEU5LaTM");
+            httpClient.DefaultRequestHeaders.Authorization = authentication;
+
+            var response = await httpClient.GetAsync(uri);
+
+            var responseAsString = await response.Content.ReadAsStringAsync();
+
+            var student = JsonSerializer.Deserialize<StudentDeserializer>(responseAsString);
+            bool hasAlreadyApplied = await HasStudentAlreadyApplied(student.id);
             if (hasAlreadyApplied)
             {
                 return new BadRequestObjectResult("You have already applied!");
@@ -120,11 +130,10 @@ namespace Stud_io.Application.Services.Implementations
 
             var application = new ApplicationForm()
             {
+                StudentId = student.id,
                 ApplyDate = DateTime.Now,
-                PersonalNo = applicationDto.PersonalNo,
-                isSpecialCategory = applicationDto.IsSpecialCategory,
+                IsSpecialCategory = applicationDto.IsSpecialCategory,
                 SpecialCategoryReason = applicationDto.SpecialCategoryReason,
-                StudentsId = applicationDto.StudentId,
                 FileUrl = imageUrl,
             };
 
@@ -145,10 +154,10 @@ namespace Stud_io.Application.Services.Implementations
             if (dbApplication == null)
                 return new NotFoundObjectResult("Application doesn't exist!!");
 
-            dbApplication.isSpecialCategory = updateApplicationDto.isSpecialCategory ?? dbApplication.isSpecialCategory;
+            //dbApplication.isSpecialCategory = updateApplicationDto.isSpecialCategory ?? dbApplication.isSpecialCategory;
             dbApplication.SpecialCategoryReason = updateApplicationDto.SpecialCategoryReason ?? dbApplication.SpecialCategoryReason;
             dbApplication.ApplyDate = updateApplicationDto.ApplyDate ?? dbApplication.ApplyDate;
-            dbApplication.PersonalNo = updateApplicationDto.PersonalNo ?? dbApplication.PersonalNo;
+            //dbApplication.PersonalNo = updateApplicationDto.PersonalNo ?? dbApplication.PersonalNo;
             dbApplication.StudentId = updateApplicationDto.StudentId ?? dbApplication.StudentId;
             //dbApplication.FileUrl = updateApplicationDto.FileUrl ?? dbApplication.FileUrl;
 
