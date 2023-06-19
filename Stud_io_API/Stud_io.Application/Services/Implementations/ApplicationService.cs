@@ -9,9 +9,7 @@ using Stud_io.Application.DTOs.Deserializer;
 using Stud_io.Application.Models;
 using Stud_io.Application.Models.ServiceCommunication.Authentication;
 using Stud_io.Application.Services.Interfaces;
-using System;
 using System.Net.Http.Headers;
-using System.Reflection.Metadata;
 using System.Text.Json;
 
 namespace Stud_io.Application.Services.Implementations
@@ -49,9 +47,8 @@ namespace Stud_io.Application.Services.Implementations
             {
                 SpecialCategoryReason = application.SpecialCategoryReason,
                 IsSpecialCategory = application.IsSpecialCategory,
-                //PersonalNo = application.PersonalNo,
                 DocumentUrl = application.FileUrl,
-                //StudentId = application.StudentsId
+                StudentId = application.StudentId
             };
 
             var httpClient = _httpClientFactory.CreateClient();
@@ -66,13 +63,13 @@ namespace Stud_io.Application.Services.Implementations
 
             var studentApi = JsonSerializer.Deserialize<StudentByIdDto>(responseAsString);
 
-            var studentDto = new StudentDetailsDto()
+            /*var studentDto = new StudentDetailsDto()
             {
                 FirstName = studentApi.value.firstName,
                 LastName = studentApi.value.lastName
             };
 
-            applicationDto.StudentDetails = studentDto;
+            applicationDto.StudentDetails = studentDto;*/
 
             return new OkObjectResult(applicationDto);
         }
@@ -80,7 +77,7 @@ namespace Stud_io.Application.Services.Implementations
         // check if the student has already applied
         public async Task<bool> HasStudentAlreadyApplied(string id)
         {
-            var existingApplication = await _context.Applications.FirstOrDefaultAsync(a => a.Id.Equals(id));
+            var existingApplication = await _context.Applications.FirstOrDefaultAsync(a => a.StudentId.Equals(id));
             return existingApplication != null;
         }
 
@@ -90,7 +87,9 @@ namespace Stud_io.Application.Services.Implementations
 
             var uri = "http://localhost:5274/api/v1/User/GetStudentById";
 
-            var authentication = new AuthenticationHeaderValue("Bearer", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJmNjc0MDIyNS0wMGQ2LTQ2NmQtYTdmNC1hZDlhNWJmODQzZGQiLCJ1bmlxdWVfbmFtZSI6IkZhdGluam8iLCJlbWFpbCI6ImZhdHNpamFyaW5hMTJAZ21haWwuY29tIiwicm9sZSI6IlN0dWRlbnQiLCJuYmYiOjE2ODcxODQyMDIsImV4cCI6MTY4Nzc4OTAwMiwiaWF0IjoxNjg3MTg0MjAyfQ.f0HiPPeGPL1vcGF8-ty7MHPXIj-zJRLPM67QEU5LaTM");
+            //Dreni to handle the token
+
+            var authentication = new AuthenticationHeaderValue("Bearer", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI0YzU0YTNlZC0xN2MxLTQ4OTAtYTgzZi1hM2EzZDI3MWNmMjAiLCJ1bmlxdWVfbmFtZSI6IkJsb25hIiwiZW1haWwiOiJibGVvbmExMjNAZ21haWwuY29tIiwicm9sZSI6IlN0dWRlbnQiLCJuYmYiOjE2ODcyMDQyOTQsImV4cCI6MTY4NzgwOTA5NCwiaWF0IjoxNjg3MjA0Mjk0fQ.058qOsC_DfFkp9hJRBBIZQ8rUZz0_-3Yf4Gp6z00SAM");
             httpClient.DefaultRequestHeaders.Authorization = authentication;
 
             var response = await httpClient.GetAsync(uri);
@@ -154,12 +153,11 @@ namespace Stud_io.Application.Services.Implementations
             if (dbApplication == null)
                 return new NotFoundObjectResult("Application doesn't exist!!");
 
-            //dbApplication.isSpecialCategory = updateApplicationDto.isSpecialCategory ?? dbApplication.isSpecialCategory;
+            dbApplication.IsSpecialCategory = updateApplicationDto.IsSpecialCategory ?? dbApplication.IsSpecialCategory;
             dbApplication.SpecialCategoryReason = updateApplicationDto.SpecialCategoryReason ?? dbApplication.SpecialCategoryReason;
             dbApplication.ApplyDate = updateApplicationDto.ApplyDate ?? dbApplication.ApplyDate;
-            //dbApplication.PersonalNo = updateApplicationDto.PersonalNo ?? dbApplication.PersonalNo;
-            dbApplication.StudentId = updateApplicationDto.StudentId ?? dbApplication.StudentId;
-            //dbApplication.FileUrl = updateApplicationDto.FileUrl ?? dbApplication.FileUrl;
+            //dbApplication.StudentId = updateApplicationDto.StudentId ?? dbApplication.StudentId;
+            dbApplication.FileUrl = updateApplicationDto.FileUrl ?? dbApplication.FileUrl;
 
             await _context.SaveChangesAsync();
 
