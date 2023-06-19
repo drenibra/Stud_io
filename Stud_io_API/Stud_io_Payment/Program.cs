@@ -3,6 +3,7 @@ using Payment;
 using Payment.Application;
 using Payment.Contracts;
 using Stud_io.Payment.Services.Implementation;
+using Stud_io.Payment.Services.Implementations;
 using Stud_io.Payment.Services.Interfaces;
 using Stud_io_Payment.Configurations;
 
@@ -28,6 +29,7 @@ builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
 builder.Services.AddScoped<ITypeOfPaymentService, TypeOfPaymentService>();
 builder.Services.AddScoped<IStripeAppService, StripeAppService>();
+builder.Services.AddScoped<IMailKitEmailService, MailKitEmailService>();
 
 // Register IHttpClientFactory
 builder.Services.AddHttpClient();
