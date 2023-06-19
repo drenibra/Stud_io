@@ -49,7 +49,7 @@ namespace Stud_io.Authentication.Controllers
 
             var result = await _userManager.UpdateAsync(user);
 
-            if(result.Succeeded)
+            if (result.Succeeded)
                 return Ok("Customer ID added.");
             return BadRequest("Customer ID failed to be added!");
         }
@@ -141,7 +141,7 @@ namespace Stud_io.Authentication.Controllers
         }
 
         [HttpPost("group-event-student/{groupEventId}/{studentId}")]
-        public async Task<ActionResult> AddGroupEventStudent(int groupEventId,  string studentId)
+        public async Task<ActionResult> AddGroupEventStudent(int groupEventId, string studentId)
         {
             return await _contract.AddGroupEventStudent(groupEventId, studentId);
         }
@@ -152,5 +152,24 @@ namespace Stud_io.Authentication.Controllers
         {
             return await _contract.GetDormitoryStudents();
         }
+
+        [HttpPut("add-dorm-number/{studentId}/{dormNumber}")]
+        [Authorize(Roles = "Admin,Student")]
+        public async Task<ActionResult> AddDormNumber(string studentId,int dormNumber)
+        {
+            var user = await _userManager.FindByIdAsync(studentId) as Student;
+
+            if (user == null)
+                return BadRequest("Unauthorized");
+
+            user.DormNumber = dormNumber;
+
+            var result = await _userManager.UpdateAsync(user);
+
+            if (result.Succeeded)
+                return Ok("Dormitory ID added.");
+            return BadRequest("Dormitory ID failed to be added!");
+        }
+
     }
 }

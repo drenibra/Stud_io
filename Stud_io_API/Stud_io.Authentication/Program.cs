@@ -14,6 +14,8 @@ using AutoMapper;
 using Microsoft.Extensions.DependencyInjection;
 using Stud_io.Authentication.Photos;
 using System.Reflection;
+using Stud_io.Authentication.Extensions;
+using Stud_io.Authentication.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
 

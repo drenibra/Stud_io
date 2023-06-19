@@ -13,6 +13,7 @@ namespace Stud_io.Authentication.Extensions
             CreateMap<AppUser, UserDto>();
             CreateMap<AppUser, ProfileSpace.Profile>()
                 .ForMember(d => d.Image, o => o.MapFrom(s => s.Photos.FirstOrDefault(x => x.IsMain).Url));
+            CreateMap<Student, DormitoryStudentDto>();
         }
     }
 }
