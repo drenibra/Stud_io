@@ -16,3 +16,4 @@ export { default as StudyGroup } from './StudyGroups/StudyGroup/StudyGroup.jsx';
 export { default as Konkurset } from './Announcements/Konkurset';
 export { default as AnnouncementTable } from './Announcements/AnnouncementTable';
 export { default as Complaint } from './Complaints/Complaint';
+export { default as Dormitories } from './PrincipalDashboard/Dormitories';

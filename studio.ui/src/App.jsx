@@ -31,7 +31,8 @@ import
     Apply,
     Konkurset,
     AnnouncementTable,
-    Complaint
+    Complaint,
+    Dormitories,
   } from './pages';
 
 const routes = [
@@ -51,7 +52,8 @@ const routes = [
   { path: '/study-groups', element: StudyGroups },
   { path: '/Konkurset', element: Konkurset },
   { path: '/AnnouncementTable', element: AnnouncementTable },
-  { path: '/Complaint', element: Complaint }
+  { path: '/Complaint', element: Complaint },
+  { path: '/Dormitories', element: Dormitories }
 ];
 
 const App = observer(function App()
