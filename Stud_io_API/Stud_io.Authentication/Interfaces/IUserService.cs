@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Stud_io.Authentication.DTOs;
+using Stud_io.Authentication.DTOs.ServiceCommunication.Complaint;
 using Stud_io.Authentication.DTOs.ServiceCommunication.Dormitory;
 using Stud_io.Authentication.DTOs.ServiceCommunication.StudyGroup;
-using Stud_io.Authentication.Models;
 using Stud_io.DTOs;
 
 namespace Stud_io.Authentication.Interfaces
@@ -18,6 +17,6 @@ namespace Stud_io.Authentication.Interfaces
         Task<ActionResult<string>> GetStudentsCustomerId(string email);
         Task<ActionResult> AddStudyGroupMembers(int groupId, List<string> studentIds);
         Task<ActionResult> AddGroupEventStudent(int groupEventId, string studentId);
-        Task<ActionResult> AddComplaint(string studentId, string description);
+        Task<ActionResult<List<ComplaintStudentDto>>> GetComplaintStudents();
     }
 }

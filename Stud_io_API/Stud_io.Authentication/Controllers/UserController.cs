@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Stud_io.Authentication.DTOs.ServiceCommunication.Complaint;
 using Stud_io.Authentication.DTOs.ServiceCommunication.Dormitory;
 using Stud_io.Authentication.DTOs.ServiceCommunication.StudyGroup;
 using Stud_io.Authentication.Interfaces;
@@ -153,6 +154,14 @@ namespace Stud_io.Authentication.Controllers
             return await _contract.GetDormitoryStudents();
         }
 
+        [HttpGet("get-complaint-students")]
+        [Authorize(Roles = "Admin")]
+
+        public async Task<ActionResult<List<ComplaintStudentDto>>> GetComplaintStudents()
+        {
+            return await _contract.GetComplaintStudents();
+        }
+
         [HttpPut("add-dorm-number/{studentId}/{dormNumber}")]
         [Authorize(Roles = "Admin,Student")]
         public async Task<ActionResult> AddDormNumber(string studentId,int dormNumber)
@@ -171,11 +180,7 @@ namespace Stud_io.Authentication.Controllers
             return BadRequest("Dormitory ID failed to be added!");
         }
 
-       [HttpPost("add-complaint/{studentId}/{description}")]
-       public async Task<ActionResult> AddComplaint(string studentId, string description)
-       {
-            return await _contract.AddComplaint(studentId, description);
-       }
+      
 
     }
 }

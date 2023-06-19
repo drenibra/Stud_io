@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Stud_io.Authentication.DTOs;
+using Stud_io.Authentication.DTOs.ServiceCommunication.Complaint;
 using Stud_io.Authentication.DTOs.ServiceCommunication.Dormitory;
 using Stud_io.Authentication.DTOs.ServiceCommunication.StudyGroup;
 using Stud_io.Authentication.Interfaces;
@@ -156,6 +156,8 @@ namespace Stud_io.Authentication.Services
         public async Task<ActionResult<List<DormitoryStudentDto>>> GetDormitoryStudents() =>
             _mapper.Map<List<DormitoryStudentDto>>(await _context.Students.ToListAsync());
 
+        public async Task<ActionResult<List<ComplaintStudentDto>>> GetComplaintStudents() =>
+            _mapper.Map<List<ComplaintStudentDto>>(await _context.Students.ToListAsync());
 
     }
 }

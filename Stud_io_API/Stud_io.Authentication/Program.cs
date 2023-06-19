@@ -47,7 +47,6 @@ builder.Services.AddCors(opt =>
 });
 
 
-
 var mapperConfig = new MapperConfiguration(mc =>
 {
     mc.AddProfile(new MappingProfile());
