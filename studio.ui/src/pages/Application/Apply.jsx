@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import agent from '../../api/application_agents';
+import ApplyGraphic from '../../assets/application/812.jpg';
 import './Apply.scss';
-import { FormControlLabel, Checkbox, Button } from '@mui/material';
+import { FormControlLabel, Checkbox, Button, Box } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import Dropzone from '../../components/Dropzone/Dropzone';
@@ -62,38 +63,45 @@ const Apply = observer(() => {
   };
 
   return (
-    <div className="form-container">
-      <h2>Form Example</h2>
-      <form onSubmit={handleSubmit}>
-        <FormControl fullWidth sx={{ marginBottom: '8px' }}>
-          <InputLabel id="specialCategory-label">Special Category Reason</InputLabel>
-          <Select
-            labelId="specialCategory-label"
-            id="specialCategory"
-            name="specialCategory"
-            value={formData.specialCategory}
-            onChange={handleChange}
-            label="Special Category Reason"
-            disabled={!formData.isSpecialCategory}
-          >
-            <MenuItem value="">Select Special Category Reason</MenuItem>
-            <MenuItem value="Student(femije) i deshmorit">Student(femije) i deshmorit</MenuItem>
-            <MenuItem value="Student me aftesi te kufizuara">Student me aftesi te kufizuara</MenuItem>
-            <MenuItem value="Student(femije) i prindit invalid te luftes">Student(femije) i prindit invalid te luftes</MenuItem>
-            <MenuItem value="Student invalid civil i luftes">Student invalid civil i luftes</MenuItem>
-            <MenuItem value="Student me asistence sociale">Student me asistence sociale</MenuItem>
-            <MenuItem value="Student i prindit martir nga lufta">Student i prindit martir nga lufta</MenuItem>
-            <MenuItem value="Student i te burgosurit politik">Student i te burgosurit politik</MenuItem>
-            <MenuItem value="Dy e me shume student nga nje familje aplikant ne QS">Dy e me shume student nga nje familje aplikant ne QS</MenuItem>
-            <MenuItem value="Student, prindi i te cilit eshte veteran i luftes">Student, prindi i te cilit eshte veteran i luftes</MenuItem>
-          </Select>
-        </FormControl>
-        <FormControlLabel control={<Checkbox checked={formData.isSpecialCategory} onChange={handleChange} name="isSpecialCategory" color="primary" />} label="Is Special Category" />
-        <Dropzone marginBottom={4} onChange={(document) => setFormData((prevFormData) => ({ ...prevFormData, document }))} />
-        <Button variant="contained" color="primary" type="submit">
-          Submit
-        </Button>
-      </form>
+    <div className="apply-container">
+      <div className="form-container">
+        <Box>
+          <h2>Apliko për anëtarësi në konvikt</h2>
+          <form onSubmit={handleSubmit}>
+            <FormControl fullWidth sx={{ marginBottom: '8px' }}>
+              <InputLabel id="specialCategory-label">Kategoria e veçantë</InputLabel>
+              <Select
+                labelId="specialCategory-label"
+                id="specialCategory"
+                name="specialCategory"
+                value={formData.specialCategory}
+                onChange={handleChange}
+                label="Special Category Reason"
+                disabled={!formData.isSpecialCategory}
+              >
+                <MenuItem value="">Select Special Category Reason</MenuItem>
+                <MenuItem value="Student(femije) i deshmorit">Student(femije) i deshmorit</MenuItem>
+                <MenuItem value="Student me aftesi te kufizuara">Student me aftesi te kufizuara</MenuItem>
+                <MenuItem value="Student(femije) i prindit invalid te luftes">Student(femije) i prindit invalid te luftes</MenuItem>
+                <MenuItem value="Student invalid civil i luftes">Student invalid civil i luftes</MenuItem>
+                <MenuItem value="Student me asistence sociale">Student me asistence sociale</MenuItem>
+                <MenuItem value="Student i prindit martir nga lufta">Student i prindit martir nga lufta</MenuItem>
+                <MenuItem value="Student i te burgosurit politik">Student i te burgosurit politik</MenuItem>
+                <MenuItem value="Dy e me shume student nga nje familje aplikant ne QS">Dy e me shume student nga nje familje aplikant ne QS</MenuItem>
+                <MenuItem value="Student, prindi i te cilit eshte veteran i luftes">Student, prindi i te cilit eshte veteran i luftes</MenuItem>
+              </Select>
+            </FormControl>
+            <FormControlLabel control={<Checkbox checked={formData.isSpecialCategory} onChange={handleChange} name="isSpecialCategory" color="primary" />} label="Bëj pjesë në kategori të veçantë" />
+            <Dropzone marginBottom={4} onChange={(document) => setFormData((prevFormData) => ({ ...prevFormData, document }))} />
+            <Button variant="contained" color="primary" type="submit">
+              Apliko
+            </Button>
+          </form>
+        </Box>
+      </div>
+      <div className="background-image">
+        <img src={ApplyGraphic} alt="" />
+      </div>
       <ToastContainer />
     </div>
   );

@@ -17,51 +17,49 @@ import Logo from '../../assets/logo/icon-stud-io.svg';
 import { observer } from 'mobx-react-lite';
 import '../../styles/navbar.css';
 
-const pages = [
-  {
-    name: 'Home',
-    path: '/',
-  },
-  {
-    name: 'Mirembajtja',
-    path: '/mirembajtja',
-  },
-  {
-    name: 'Ankesa',
-    path: '/Complaint',
-  },
-
-  {
-    name: 'Konkurset',
-    path: '/Konkurset',
-  },
-  {
-    name: 'Apliko',
-    path: '/apliko',
-  },
-  {
-    name: 'StudyGroups',
-    path: '/study-groups',
-  },
-  {
-    name: 'About Us',
-    path: '/about',
-  },
-];
-
-const ResponsiveAppBar = observer(function ResponsiveAppBar()
-{
+const ResponsiveAppBar = observer(function ResponsiveAppBar() {
   const navigate = useNavigate();
   const { userStore } = useStore();
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
-  const handleOpenUserMenu = (event) =>
-  {
+  const pages = [
+    {
+      name: 'Home',
+      path: '/',
+    },
+    {
+      name: 'Mirembajtja',
+      path: '/mirembajtja',
+    },
+    {
+      name: 'Ankesa',
+      path: '/Complaint',
+    },
+    userStore.user && userStore.user.role === 'Student'
+      ? {
+          name: 'Apliko',
+          path: '/apliko',
+        }
+      : null,
+    {
+      name: 'Konkurset',
+      path: '/Konkurset',
+    },
+    {
+      name: 'StudyGroups',
+      path: '/study-groups',
+    },
+    {
+      name: 'About Us',
+      path: '/about',
+    },
+  ].filter(Boolean);
+
+  const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
 
-  const handleCloseUserMenu = () =>
-  {
+  const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
 
@@ -130,8 +128,7 @@ const ResponsiveAppBar = observer(function ResponsiveAppBar()
                   </Link>
                 </MenuItem>
                 <MenuItem
-                  onClick={() =>
-                  {
+                  onClick={() => {
                     handleCloseUserMenu();
                     userStore.logout();
                   }}
