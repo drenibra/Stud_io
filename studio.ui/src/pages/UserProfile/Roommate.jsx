@@ -15,6 +15,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 export default function Roommate() {
   const [open, setOpen] = useState(false);
+  
 
   const handleOpen = () => {
     setOpen(true);
