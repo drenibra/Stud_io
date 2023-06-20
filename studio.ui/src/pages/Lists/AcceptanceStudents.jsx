@@ -30,10 +30,10 @@ const AcceptanceStudents = () =>
     const rows = profileMatches.map((profileMatches) =>
     {
         return {
-           totalPoints studentId: profileMatches.application.studentId,
+            studentId: profileMatches.application.studentId,
             pointsForGPA: profileMatches.pointsForGPA,
             extraPoints: profileMatches.extraPoints,
-            : profileMatches.totalPoints,
+            totalPoints: profileMatches.totalPoints
         };
     });
 
