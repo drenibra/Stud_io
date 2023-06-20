@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Button from '@mui/material/Button';
+import { Button } from '@material-ui/core';
 import Typography from '@mui/material/Typography';
+import { CardActionArea, CardActions } from '@mui/material';
 import { useStore } from '../../stores/store';
 
 
@@ -21,8 +20,6 @@ export default function GetComplaints()
     let studentId = userStore.user.id;
 
 
-
-
     // get data from db
     useEffect(() =>
     {
@@ -33,31 +30,51 @@ export default function GetComplaints()
             })
     }, [refreshKey])
 
-    
+
+    //delete data from db
+    function RefuzoAnkesen(id)
+    {
+        const confirmBox = window.confirm(
+            "A jeni te sigurte qe deshironi te refuzoni ankesen me id " + id + "?  "
+        );
+        if (confirmBox === true)
+        {
+            axios.delete('https://localhost:7007/DeleteComplaint/' + id)
+                .then(() =>
+                {
+                    setRefreshKey(refreshKey => refreshKey + 1)
+                });
+        }
+        else
+        {
+            console.log("Process of deleting this complaint canceled!")
+        }
+    }
+
+
+
 
 
     return (
-
         <div className='get-ankesat'>
             {complaints.map((complaint) =>
             {
                 const studentsId = complaint.studentsId;
                 const description = complaint.description;
-
-
+                const id = complaint.id;
                 return (
-                    <Card sx={{ maxWidth: 345 }} className='card-container-ankesat'>
-                        <CardContent>
-                            <Typography gutterBottom variant="p" component="div">
-                                Name:
-                            </Typography>
-                            <Typography variant="body2" color="text.secondary">
-                                {description}
-                            </Typography>
-                        </CardContent>
+                    <Card key={id} sx={{ maxWidth: 345 }} className='card-container-ankesat'>
+                        <CardActionArea>
+                            <CardContent>
+                                <Typography variant="body2" color="text.secondary">
+                                    {description}
+                                </Typography>
+                            </CardContent>
+                        </CardActionArea>
+                        <br /> <br /> <br />
                         <CardActions>
-                            <Button size="small" className='btn-card'>Delete</Button>
-                            {/* <Button size="small">Learn More</Button> */}
+                            <Button size="small" onClick={() => RefuzoAnkesen(id)} className='btn-card' variant="contained" >Delete</Button>
+
                         </CardActions>
                     </Card>
 

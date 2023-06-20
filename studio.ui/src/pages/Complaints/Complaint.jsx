@@ -4,6 +4,7 @@ import { useStore } from '../../stores/store';
 import { ToastContainer, toast } from 'react-toastify';
 import './styles.scss';
 
+
 export default function Complaint()
 {
     const { userStore } = useStore();
@@ -36,7 +37,7 @@ export default function Complaint()
 
     return (
         <div>
-            <h2 className='h2-ankesat'>Paraqisni një ankesë</h2>
+            <h2 className='h2-ankesat'>Complaint Form</h2>
             <form className="form-container-ankesat" onSubmit={handleSubmit}>
                 <textarea
                     id="description"
@@ -50,6 +51,7 @@ export default function Complaint()
                     Submit
                 </button>
             </form>
+
             <ToastContainer />
         </div>
     )
