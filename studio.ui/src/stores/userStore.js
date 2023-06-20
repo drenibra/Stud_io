@@ -29,6 +29,7 @@ export default class UserStore {
       const user = await agent.Account.login(creds);
       store.commonStore.setToken(user.token);
       runInAction(() => (this.user = user));
+      this.updateUserImage(user.profileImage);
       this.removeError();
       this.getRoles();
       if (user.token) return true;
