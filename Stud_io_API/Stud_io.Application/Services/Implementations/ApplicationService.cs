@@ -87,8 +87,6 @@ namespace Stud_io.Application.Services.Implementations
 
             var uri = "http://localhost:5274/api/v1/User/GetStudentById";
 
-            //Dreni to handle the token
-
             var authentication = new AuthenticationHeaderValue("Bearer", applicationDto.Token);
             httpClient.DefaultRequestHeaders.Authorization = authentication;
 
@@ -124,7 +122,6 @@ namespace Stud_io.Application.Services.Implementations
                     return new BadRequestObjectResult(uploadResult.Error.Message);
 
                 imageUrl = uploadResult.SecureUrl.ToString();
-
             };
 
             var application = new ApplicationForm()
@@ -142,7 +139,6 @@ namespace Stud_io.Application.Services.Implementations
             await _context.SaveChangesAsync();
             return new OkObjectResult("Application added successfully!");
         }
-
 
         public async Task<ActionResult> UpdateApplication(int id, UpdateApplicationDto updateApplicationDto)
         {

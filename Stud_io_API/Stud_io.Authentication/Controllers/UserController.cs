@@ -206,7 +206,7 @@ namespace Stud_io.Authentication.Controllers
         }
 
         [HttpPut("add-dorm-number/{studentId}/{dormNumber}")]
-        [Authorize(Roles = "Admin,Student")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> AddDormNumber(string studentId,int dormNumber)
         {
             var user = await _userManager.FindByIdAsync(studentId) as Student;
@@ -222,8 +222,5 @@ namespace Stud_io.Authentication.Controllers
                 return Ok("Dormitory ID added.");
             return BadRequest("Dormitory ID failed to be added!");
         }
-
-      
-
     }
 }

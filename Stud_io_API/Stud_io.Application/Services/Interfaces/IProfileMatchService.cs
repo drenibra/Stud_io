@@ -11,7 +11,7 @@ namespace Stud_io.Application.Services.Interfaces
         public int CalculateExtraPoints(string category);
         public int CalculateCityPoints(string city);
         public Task<List<ProfileMatch>> GetMatches();
-        public Task<ActionResult<List<ProfileMatch>>> CalculateTotalPointsForAllStudents();
+        public Task<ActionResult<List<ProfileMatch>>> CalculateTotalPointsForAllStudents(string token);
         public Task<List<ProfileMatch>> SortByTotalPoints();
         public Task<List<ProfileMatch>> GetTopProfileMatches();
         public Task<List<ProfileMatch>> GetLastProfileMatches();
