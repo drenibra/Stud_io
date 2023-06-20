@@ -8,6 +8,10 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import axios from 'axios';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from 'react-toastify';
+import Slide from '@material-ui/core/Slide';
+import Grow from '@material-ui/core/Grow';
 
 export default function Dormitories() {
   const [dormitories, setDormitories] = useState([]);
@@ -16,14 +20,16 @@ export default function Dormitories() {
   const updateDormitoryData = async () => {
     try {
       await axios.post('https://localhost:7023/AssignStudentsToDormitories');
-     
       const updatedDormitories = dormitories.map((dormitory) => {
         return { ...dormitory, currentStudents: dormitory.currentStudents };
       });
       setDormitories(updatedDormitories);
       setRefreshKey((prevKey) => prevKey + 1);
+
+      toast.success('Studentët u caktuan me sukses në konvikte!');
     } catch (error) {
       console.error(error);
+      toast.error('Ndodhi një gabim gjatë caktimit të studentëve në konvikte!');
     }
   };
 
@@ -38,7 +44,7 @@ export default function Dormitories() {
     };
 
     fetchDormitories();
-  }, [refreshKey]); 
+  }, [refreshKey]);
 
   return (
     <div>
@@ -61,54 +67,59 @@ export default function Dormitories() {
             <Grid container spacing={2}>
               {dormitories.map((dormitory, index) => (
                 <Grid item key={index} xs={12} sm={6} md={3}>
-                  <Card
-                    style={{
-                      backgroundColor: '#f3f3f3',
-                      boxShadow: '0px 0px 10px rgba(148, 9, 9, 0.479)',
-                      borderRadius: '10px',
-                      transition: 'width 250ms ease-in-out, transform 150ms ease',
-                      '&:hover': {
-                        cursor: 'pointer',
-                      },
-                    }}
-                  >
-                    <CardContent>
-                      <Container
-                        style={{
-                          backgroundColor: '#bf1a2f',
-                          padding: '8px',
-                          marginBottom: '8px',
-                          borderRadius: '10px',
-                        }}
-                      >
-                        <Typography
-                          variant="h6"
-                          gutterBottom
-                          style={{ fontWeight: 'bold', color: '#ffffff' }}
-                        >
-                          Konvikti {dormitory.dormNo}
-                        </Typography>
-                      </Container>
-                      <Typography variant="body2" color="textSecondary">
-                        Gjinia: {dormitory.gender}
-                      </Typography>
-                      <Typography variant="body2" color="textSecondary">
-                        Numri i dhomave: {dormitory.noOfRooms}
-                      </Typography>
-                      <Typography variant="body2" color="textSecondary">
-                        Kapaciteti: {dormitory.capacity}
-                      </Typography>
-                      <Typography variant="body2" color="textSecondary">
-                        Studentët aktual: {dormitory.currentStudents}
-                      </Typography>
-                    </CardContent>
-                  </Card>
+                  <Slide direction="up" in timeout={300}>
+                    <Card
+                      style={{
+                        backgroundColor: '#f3f3f3',
+                        boxShadow: '0px 0px 10px rgba(148, 9, 9, 0.479)',
+                        borderRadius: '10px',
+                        transition: 'width 250ms ease-in-out, transform 150ms ease',
+                        '&:hover': {
+                          cursor: 'pointer',
+                        },
+                      }}
+                    >
+                      <Grow in timeout={300}>
+                        <CardContent>
+                          <Container
+                            style={{
+                              backgroundColor: '#bf1a2f',
+                              padding: '8px',
+                              marginBottom: '8px',
+                              borderRadius: '10px',
+                            }}
+                          >
+                            <Typography
+                              variant="h6"
+                              gutterBottom
+                              style={{ fontWeight: 'bold', color: '#ffffff' }}
+                            >
+                              Konvikti {dormitory.dormNo}
+                            </Typography>
+                          </Container>
+                          <Typography variant="body2" color="textSecondary">
+                            Gjinia: {dormitory.gender}
+                          </Typography>
+                          <Typography variant="body2" color="textSecondary">
+                            Numri i dhomave: {dormitory.noOfRooms}
+                          </Typography>
+                          <Typography variant="body2" color="textSecondary">
+                            Kapaciteti: {dormitory.capacity}
+                          </Typography>
+                          <Typography variant="body2" color="textSecondary">
+                            Studentët aktual: {dormitory.currentStudents}
+                          </Typography>
+                        </CardContent>
+                      </Grow>
+                    </Card>
+                  </Slide>
                 </Grid>
               ))}
             </Grid>
           </Container>
         </Grid>
       </Grid>
+      <ToastContainer />
     </div>
   );
 }
