@@ -9,6 +9,6 @@
         public string roomCleanliness { get; set; } = null!;
         public string studyTime { get; set; } = null!;
         public string studyPlace { get; set; } = null!;
-
+        public string studentId { get; set; } = null!;
     }
 }

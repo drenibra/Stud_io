@@ -90,7 +90,7 @@ namespace Stud_io.Application.Services.Implementations
 
             var uri = "http://localhost:5274/api/v1/User/GetStudentById";
 
-            var authentication = new AuthenticationHeaderValue("Bearer", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJmNjc0MDIyNS0wMGQ2LTQ2NmQtYTdmNC1hZDlhNWJmODQzZGQiLCJ1bmlxdWVfbmFtZSI6IkZhdGluam8iLCJlbWFpbCI6ImZhdHNpamFyaW5hMTJAZ21haWwuY29tIiwicm9sZSI6IlN0dWRlbnQiLCJuYmYiOjE2ODcxODQyMDIsImV4cCI6MTY4Nzc4OTAwMiwiaWF0IjoxNjg3MTg0MjAyfQ.f0HiPPeGPL1vcGF8-ty7MHPXIj-zJRLPM67QEU5LaTM");
+            var authentication = new AuthenticationHeaderValue("Bearer", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJlNjZiZDg2ZS1lMmQ0LTRkMGMtYWYwMC04NjkzZjgxMzA1ZmIiLCJ1bmlxdWVfbmFtZSI6InN1bWVqYSIsImVtYWlsIjoic3VtZWphQGdtYWlsLmNvbSIsInJvbGUiOiJTdHVkZW50IiwibmJmIjoxNjg3MjM3NTAwLCJleHAiOjE2ODc4NDIzMDAsImlhdCI6MTY4NzIzNzUwMH0.QNdRVPnro4fLJJG-a2kX0QRDmdV6n_oiq3MffIijDF4");
             httpClient.DefaultRequestHeaders.Authorization = authentication;
 
             var response = await httpClient.GetAsync(uri);

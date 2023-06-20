@@ -83,6 +83,8 @@ namespace Stud_io_Dormitory.Services.Implementations
 
             var uri = "http://localhost:5274/api/v1/User/get-dormitory-students";
 
+            //Dreni to handle the token
+
             var adminToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJjMGQwY2RjNC1kYTg1LTQ1NDAtYWNkZi1lMjlmNjQ2YWMwNzkiLCJ1bmlxdWVfbmFtZSI6ImJsZW9uYSIsImVtYWlsIjoiYmc1MjczMkB1YnQtdW5pLm5ldCIsInJvbGUiOiJBZG1pbiIsIm5iZiI6MTY4NzIwOTI2NCwiZXhwIjoxNjg3ODE0MDY0LCJpYXQiOjE2ODcyMDkyNjR9.fGfx_KXn7cygkFU5MMKrEzrcyXsLVFPzBulFzBB7LFA";
 
 
@@ -118,6 +120,7 @@ namespace Stud_io_Dormitory.Services.Implementations
 
             var uri = $"http://localhost:5274/api/v1/User/add-dorm-number/{studentId}/{dormNo}";
 
+            //Dreni to handle the token
             var authentication = new AuthenticationHeaderValue("Bearer", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJjMGQwY2RjNC1kYTg1LTQ1NDAtYWNkZi1lMjlmNjQ2YWMwNzkiLCJ1bmlxdWVfbmFtZSI6ImJsZW9uYSIsImVtYWlsIjoiYmc1MjczMkB1YnQtdW5pLm5ldCIsInJvbGUiOiJBZG1pbiIsIm5iZiI6MTY4NzIwOTI2NCwiZXhwIjoxNjg3ODE0MDY0LCJpYXQiOjE2ODcyMDkyNjR9.fGfx_KXn7cygkFU5MMKrEzrcyXsLVFPzBulFzBB7LFA");
             httpClient.DefaultRequestHeaders.Authorization = authentication;
 
