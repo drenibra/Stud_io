@@ -11,6 +11,8 @@ using static System.Net.Mime.MediaTypeNames;
 using System.Reflection;
 using Stud_io.Authentication.Interfaces;
 using Stud_io.Authentication.ProfileSpace;
+using AutoMapper;
+using Stud_io.Configuration;
 
 namespace Stud_io.Controllers
 {
@@ -22,16 +24,19 @@ namespace Stud_io.Controllers
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly TokenService _tokenService;
-        private readonly IProfilesController _profilesController;
+        private readonly ApplicationDbContext _context;
         public AccountController(
             UserManager<AppUser> userManager,
             SignInManager<AppUser> signInManager,
-            TokenService tokenService
+            TokenService tokenService,
+            IMapper maper,
+            ApplicationDbContext context
          )
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _tokenService = tokenService;
+            _context = context;
         }
         [HttpPost("login")]
         public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
@@ -93,7 +98,11 @@ namespace Stud_io.Controllers
         [HttpGet("student")]
         public async Task<ActionResult<StudentDto>> GetCurrentStudent()
         {
-            var student = await _userManager.Users.Include(p => p.Photos).FirstOrDefaultAsync(x => x.Email == User.FindFirstValue(ClaimTypes.Email)) as Student;
+            var student = await _context.Students
+            .Include(s => s.Major)
+            .Include(p => p.Photos)
+            .FirstOrDefaultAsync(s => s.Email == User.FindFirstValue(ClaimTypes.Email));
+
             return new StudentDto
             {
                 FirstName = student.FirstName,

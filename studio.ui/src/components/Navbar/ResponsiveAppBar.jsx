@@ -12,14 +12,12 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { useStore } from '../../stores/store';
-import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import Logo from '../../assets/logo/icon-stud-io.svg';
 import { observer } from 'mobx-react-lite';
 import '../../styles/navbar.css';
 
-const ResponsiveAppBar = observer(function ResponsiveAppBar()
-{
-  const navigate = useNavigate();
+const ResponsiveAppBar = observer(function ResponsiveAppBar() {
   const { userStore } = useStore();
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -33,23 +31,22 @@ const ResponsiveAppBar = observer(function ResponsiveAppBar()
       path: '/mirembajtja',
     },
     userStore.user && userStore.user.role === 'Student'
-      ?
-      {
-        name: 'Ankesa',
-        path: '/Complaint',
-      }
+      ? {
+          name: 'Ankesa',
+          path: '/Complaint',
+        }
       : null,
     userStore.user && userStore.user.role === 'Student'
       ? {
-        name: 'Apliko',
-        path: '/apliko',
-      }
+          name: 'Apliko',
+          path: '/apliko',
+        }
       : null,
     userStore.user && userStore.user.role === 'Student'
       ? {
-        name: 'Listat',
-        path: '/Lists',
-      }
+          name: 'Listat',
+          path: '/Lists',
+        }
       : null,
 
     {
@@ -66,17 +63,13 @@ const ResponsiveAppBar = observer(function ResponsiveAppBar()
     },
   ].filter(Boolean);
 
-  const handleOpenUserMenu = (event) =>
-  {
+  const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
 
-  const handleCloseUserMenu = () =>
-  {
+  const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-
-  console.log(userStore.user);
 
   return (
     <AppBar position="static">
@@ -115,7 +108,7 @@ const ResponsiveAppBar = observer(function ResponsiveAppBar()
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton id="openSettings" onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src={userStore.user.profileImage} />
+                  <Avatar alt="Remy Sharp" src={userStore.getProfileImage()} />
                 </IconButton>
               </Tooltip>
               <Menu
@@ -143,8 +136,7 @@ const ResponsiveAppBar = observer(function ResponsiveAppBar()
                   </Link>
                 </MenuItem>
                 <MenuItem
-                  onClick={() =>
-                  {
+                  onClick={() => {
                     handleCloseUserMenu();
                     userStore.logout();
                   }}

@@ -62,6 +62,18 @@ export default class UserStore {
     window.location.replace('/login');
   };
 
+  getProfileImage() {
+    return this.user.image;
+  }
+
+  updateUserImage(response) {
+    this.user.image = response;
+  }
+
+  deleteUserImage() {
+    this.user.image = null;
+  }
+
   getUser = async () => {
     try {
       const user = await agent.Account.current();

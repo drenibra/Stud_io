@@ -30,16 +30,9 @@ const UserForm = observer(function UserForm(props) {
   const [target, setTarget] = useState('');
 
   const [userImage, setUserImage] = useState({
-    image: props.user.image,
+    image: props.user.profileImage,
     imageId: props.user.imageId,
   });
-
-  useEffect(() => {
-    setUserImage({
-      image: props.user.image,
-      imageId: props.user.imageId,
-    });
-  }, [props.user.image, props.user.imageId]);
 
   const initialProfile =
     props.roles[0] === 'Student'
@@ -92,12 +85,11 @@ const UserForm = observer(function UserForm(props) {
     agent.Profiles.uploadPhoto(selectedImage)
       .then((response) => {
         setAddPhotoMode(false);
-        userStore.user.image = response;
+        userStore.updateUserImage(response.data.url);
         setUserImage({ image: response.data.url, imageId: response.data.id });
         console.log(response);
       })
       .catch((error) => {
-        // Handle any errors that occur during the upload process
         console.error('Error uploading photo:', error);
       });
 
@@ -108,6 +100,7 @@ const UserForm = observer(function UserForm(props) {
   const handleDeletePhoto = async () => {
     try {
       agent.Profiles.deletePhoto(props.user.imageId);
+      userStore.deleteUserImage();
       setUserImage({});
     } catch (error) {
       console.log(error);
@@ -159,6 +152,17 @@ const UserForm = observer(function UserForm(props) {
                       </Select>
                     </Grid>
                   );
+                if (attribute === 'major') {
+                  var majorTitle = props.user.major.title;
+                  return (
+                    <Grid item xs={6} key={props.user.major.key}>
+                      <Select id="major" name="major" defaultValue={majorTitle} label="Major" sx={{ mb: 2 }} fullWidth onChange={handleTextFieldChange}>
+                        <MenuItem value="M">M</MenuItem>
+                        <MenuItem value="F">F</MenuItem>
+                      </Select>
+                    </Grid>
+                  );
+                }
                 return (
                   <Grid item xs={6}>
                     <TextField key={attribute} label={label} name={attribute} defaultValue={props.user[attribute]} id={attribute} fullWidth sx={{ mb: 2 }} onChange={handleTextFieldChange} />
