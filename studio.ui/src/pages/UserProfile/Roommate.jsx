@@ -142,7 +142,7 @@ export default function Roommate() {
                 style={{
                   backgroundColor: "#f3f3f3",
                   color: "#999",
-                  marginLeft: "1010px",
+                  marginLeft: "1210px",
                   marginTop: "40px",
                   padding: "4px",
                   border: "none",
