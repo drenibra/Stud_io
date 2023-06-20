@@ -26,57 +26,40 @@ namespace Stud_io.Application.Services.Implementations
             _httpClientFactory = httpClientFactory;
         }
 
-
-        public Task<ActionResult<ComplaintDto>> GetComplaintById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<ActionResult<List<ComplaintDto>>> GetComplaints() =>
             _mapper.Map<List<ComplaintDto>>(await _context.Complaints.ToListAsync());
 
-   
-        //public async Task<ActionResult<ComplaintDetailsDto>> GetComplaintById(int id)
-        //{
-        //    var complaint = await _context.Complaints.FindAsync(id);
-        //    if(complaint == null)
-        //    {
-        //        return new NotFoundObjectResult("Complaint does not exist");
-        //    }
 
-        //    var complaintDto = new ComplaintDetailsDto()
-        //    {
-        //        Description = complaint.Description,
-        //        StudentsId = complaint.StudentsId
-        //    };
+        public async Task<ActionResult<ComplaintDto>> GetComplaintById(int id)
+        {
+            var complaint = await _context.Complaints.FindAsync(id);
+            if (complaint == null)
+            {
+                return new NotFoundObjectResult("Complaint does not exist");
+            }
 
-        //    var httpClient = _httpClientFactory.CreateClient();
+            var complaintDto = new ComplaintDto()
+            {
+                Description = complaint.Description,
 
-        //    var uri = "http://localhost:5274/api/v1/User/get-complaint-students/" + complaintDto.StudentsId;
+            };
 
-        //    var adminToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI5MDI0ZmFhYy0zZDIyLTQ3MmUtYTljZC0yYjVhMTk0OTZmODEiLCJ1bmlxdWVfbmFtZSI6ImFsbWEiLCJlbWFpbCI6ImFuNTE3MThAdWJ0LXVuaS5uZXQiLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE2ODcxMzkyNzQsImV4cCI6MTY4Nzc0NDA3NCwiaWF0IjoxNjg3MTM5Mjc0fQ.KfkZmwdpArgaKIhgoUvzLkiFjNqZusNiT4em87SkSnY";
+            var httpClient = _httpClientFactory.CreateClient();
 
-        //    httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", adminToken);
+            var authentication = new AuthenticationHeaderValue("Bearer", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIxZWIzMTJiMS01MzIyLTQ3M2ItYTFjOC02YmViMDg3OWU4ZDYiLCJ1bmlxdWVfbmFtZSI6ImFsbWEiLCJlbWFpbCI6ImFuNTE3MThAdWJ0LXVuaS5uZXQiLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE2ODcyMTk4MzMsImV4cCI6MTY4NzgyNDYzMywiaWF0IjoxNjg3MjE5ODMzfQ.3Cq2evwMGSBO6cIu53_X4RSIluYDm7RaO9ryLWpBm50");
+            httpClient.DefaultRequestHeaders.Authorization = authentication;
 
-        //    var response = await httpClient.GetAsync(uri);
+            var uri = "http://localhost:5274/api/v1/User/1eb312b1-5322-473b-a1c8-6beb0879e8d6";
 
-        //    if (response.IsSuccessStatusCode)
-        //    {
-        //        var responseAsString = await response.Content.ReadAsStringAsync();
+            var response = await httpClient.GetAsync(uri);
+            var responseAsString = await response.Content.ReadAsStringAsync();
 
-        //        var studentApi = JsonConvert.DeserializeObject<List<StudentDeserializer>>(responseAsString);
+            var studentApi = JsonSerializer.Deserialize<StudentComplaintDeserializer>(responseAsString);
 
-        //    }
+            return new OkObjectResult(complaintDto);
 
+        }
 
-
-
-        //var mappedComplaint = _mapper.Map<ComplaintDto>(await _context.Complaints.FindAsync(id));
-        //return mappedComplaint == null
-        //    ? new NotFoundObjectResult("Complaint doesn't exist!!")
-        //    : new OkObjectResult(mappedComplaint);
-    //}
-        
 
         public async Task<ActionResult> AddComplaint(ComplaintDto complaintDto)
         {
@@ -95,7 +78,7 @@ namespace Stud_io.Application.Services.Implementations
 
             var complaint = new Complaint()
             {
-               
+
                 Description = complaintDto.Description,
                 StudentsId = student.id,
 
@@ -103,7 +86,7 @@ namespace Stud_io.Application.Services.Implementations
 
             await _context.Complaints.AddAsync(complaint);
             await _context.SaveChangesAsync();
-            return new OkObjectResult("Complaint added successfully!");     
+            return new OkObjectResult("Complaint added successfully!");
         }
 
         public async Task<ActionResult> UpdateComplaint(int id, UpdateComplaintDto updateComplaintDto)

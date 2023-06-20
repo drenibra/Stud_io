@@ -36,7 +36,7 @@
     margin-top: 60px;
     margin-left: 80px;
     width: 300px;
-    height: 370px;
+    height: 390px;
 }
 
 .img-card {
@@ -65,6 +65,18 @@
 
 .announcement-data-table {
     margin-top: 50px;
-    margin-left: 180px;
-    width: 70vw;
+    margin-left: 100px;
+    width: 67vw;
+}
+
+.gjenero-konkurset {
+    width: 120px;
+    font-size: smaller;
+    margin-left: 120px;
+}
+
+.butonat {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }

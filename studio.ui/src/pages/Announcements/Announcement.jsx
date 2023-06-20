@@ -7,34 +7,42 @@ import { TextField, Box } from '@mui/material';
 import { Link } from 'react-router-dom';
 import Menu from '../../components/Menu/Menu';
 
-export default function Announcement() {
+export default function Announcement()
+{
   const [announcement, setAnnouncement] = useState({
     title: '',
     description: '',
     deadlineId: '',
   });
 
-  const handleChange = (e) => {
+  const handleChange = (e) =>
+  {
     const newData = { ...announcement };
     newData[e.target.id] = e.target.value;
     setAnnouncement(newData);
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e) =>
+  {
     e.preventDefault();
-    try {
+    try
+    {
       const response = await axios.post('https://localhost:7137/api/Announcement/add-announcement', announcement);
       console.log(response.data);
       toast.success('Shpallja u shtua me sukses!');
-    } catch (error) {
-      if (error.response) {
+    } catch (error)
+    {
+      if (error.response)
+      {
         // The request was made and the server responded with a status code
         console.error('Server Error:', error.response.status);
         console.error('Response Data:', error.response.data);
-      } else if (error.request) {
+      } else if (error.request)
+      {
         // The request was made but no response was received
         console.error('No response received:', error.request);
-      } else {
+      } else
+      {
         // Something happened in setting up the request that triggered an error
         console.error('Request Error:', error.message);
       }
@@ -81,13 +89,15 @@ export default function Announcement() {
                 Submit
               </Button>{' '}
               <br />
-              <div>
-                <Link to="/deadline" className="link-anouncement">
+              <div className='butonat'>
+
+                <Button href="/deadline" variant="contained" color="primary" type="submit" className="link-anouncement">
                   Back
-                </Link>
-                <Link to="/AnnouncementTable" className="link-aplikimet">
-                  Gjenero konkurset
-                </Link>
+                </Button>
+
+                <Button href="/AnnouncementTable" variant="contained" color="primary" type="submit" className="gjenero-konkurset">
+                  Konkurset
+                </Button>
               </div>
             </form>
             <ToastContainer />
