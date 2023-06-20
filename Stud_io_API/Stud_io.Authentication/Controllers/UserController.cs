@@ -80,6 +80,24 @@ namespace Stud_io.Authentication.Controllers
             return BadRequest("Customer ID failed to be added!");
         }
 
+        [HttpPut("set-is-accepted/{id}/{accepted}")]
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult> SetIsAccepted(string id, bool accepted)
+        {
+            var user = await _userManager.FindByIdAsync(id) as Student;
+
+            if (user == null)
+                return BadRequest("Unauthorized");
+
+            user.isAccepted = accepted;
+
+            var result = await _userManager.UpdateAsync(user);
+
+            if (result.Succeeded)
+                return Ok("Customer ID added.");
+            return BadRequest("Customer ID failed to be added!");
+        }
+
         [HttpPut]
         [Authorize(Roles = "Admin,Student")]
         public async Task<ActionResult<Student>> UpdateStudent(Student updatedStudent)

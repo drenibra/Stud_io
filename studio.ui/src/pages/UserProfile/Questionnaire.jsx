@@ -4,8 +4,11 @@ import axios from "axios";
 import Button from "@mui/material/Button";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useStore } from '../../stores/store';
 
 export default function Questionnaire({ handleClose }) {
+  const { userStore } = useStore();
+  let token = userStore.user.token;
   const [responses, setResponses] = useState({
     shareBelongings: null,
     sleepingHabits: null,
@@ -13,6 +16,7 @@ export default function Questionnaire({ handleClose }) {
     roomCleanliness: null,
     studyTime: null,
     studyPlace: null,
+    token: token,
   });
 
   const handleResponseChange = (question, value) => {
@@ -83,7 +87,7 @@ export default function Questionnaire({ handleClose }) {
 
         <div className="question-group">
           <p className="question-group-label">
-            Zgjidhni zakonet tuaja gjatë gjumit:
+            Ju jeni:
           </p>
           <label className="answer-option">
             <input
