@@ -63,30 +63,37 @@ namespace Stud_io.Application.Services.Implementations
 
         public async Task<ActionResult> AddComplaint(ComplaintDto complaintDto)
         {
-            var httpClient = _httpClientFactory.CreateClient();
-
-            var uri = "http://localhost:5274/api/v1/User/GetStudentById";
-
-            var authentication = new AuthenticationHeaderValue("Bearer", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI3NzgzNGMxMC0wMjRlLTQwNmMtODU2Ny03NGQzZGMwYTM1NmYiLCJ1bmlxdWVfbmFtZSI6Im1hbGlzYSIsImVtYWlsIjoibXNhZGlrdUBnbWFpbC5jb20iLCJyb2xlIjoiU3R1ZGVudCIsIm5iZiI6MTY4NzIxODY2MCwiZXhwIjoxNjg3ODIzNDYwLCJpYXQiOjE2ODcyMTg2NjB9.Jz8e7luLq5Gf5JqAkhHfoVpDRtU5FGEhRJqpif3J0V8");
-            httpClient.DefaultRequestHeaders.Authorization = authentication;
-
-            var response = await httpClient.GetAsync(uri);
-
-            var responseAsString = await response.Content.ReadAsStringAsync();
-
-            var student = JsonSerializer.Deserialize<StudentComplaintDeserializer>(responseAsString);
-
-            var complaint = new Complaint()
+            try
             {
+                var httpClient = _httpClientFactory.CreateClient();
 
-                Description = complaintDto.Description,
-                StudentsId = student.id,
+                var uri = "http://localhost:5274/api/v1/User/GetStudentById";
 
-            };
+                var authentication = new AuthenticationHeaderValue("Bearer", complaintDto.Token);
+                httpClient.DefaultRequestHeaders.Authorization = authentication;
 
-            await _context.Complaints.AddAsync(complaint);
-            await _context.SaveChangesAsync();
-            return new OkObjectResult("Complaint added successfully!");
+                var response = await httpClient.GetAsync(uri);
+
+                var responseAsString = await response.Content.ReadAsStringAsync();
+
+                var student = JsonSerializer.Deserialize<StudentComplaintDeserializer>(responseAsString);
+
+                var complaint = new Complaint()
+                {
+
+                    Description = complaintDto.Description,
+                    StudentsId = student.id,
+
+                };
+
+                await _context.Complaints.AddAsync(complaint);
+                await _context.SaveChangesAsync();
+                return new OkObjectResult("Complaint added successfully!");
+            }
+            catch (Exception ex)
+            {
+                return new BadRequestObjectResult(ex);
+            }
         }
 
         public async Task<ActionResult> UpdateComplaint(int id, UpdateComplaintDto updateComplaintDto)

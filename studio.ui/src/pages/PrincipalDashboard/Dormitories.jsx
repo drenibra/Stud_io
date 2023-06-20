@@ -14,15 +14,17 @@ import { ToastContainer, toast } from 'react-toastify';
 import Slide from '@material-ui/core/Slide';
 import Grow from '@material-ui/core/Grow';
 import { Link } from 'react-router-dom';
+import { useStore } from '../../stores/store';
 
 export default function Dormitories() {
   const [dormitories, setDormitories] = useState([]);
   const [refreshKey, setRefreshKey] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
+  const { userStore } = useStore();
 
   const updateDormitoryData = async () => {
     try {
-      await axios.post('https://localhost:7023/AssignStudentsToDormitories', userStore.user.token);
+      await axios.post('https://localhost:7023/AssignStudentsToDormitories/' + userStore.user.token);
       const updatedDormitories = dormitories.map((dormitory) => {
         return { ...dormitory, currentStudents: dormitory.currentStudents };
       });
