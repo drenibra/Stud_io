@@ -130,7 +130,7 @@ namespace Payment.Application
                 await _context.StripePayments.AddAsync(mappedPayment, ct);
                 await _context.SaveChangesAsync(ct);
 
-                _mailKitservice.SendEmail(payment.ReceiptEmail, "Email nga Studio - Qendra Studentore", "", "studio.qendrastudentore@gmail.com");
+                _mailKitservice.SendEmail(payment.Email, "Email nga Studio - Qendra Studentore", "", "studio.qendrastudentore@gmail.com");
 
 
                 // Return the payment to requesting method

@@ -22,11 +22,13 @@ const Payment = observer(function Payment() {
     currency: 'eur',
     amount: '',
     month: '',
+    email: userStore.user.email,
   });
 
   const [latestPayment, setLatestPayment] = useState(null);
 
   useEffect(() => {
+    console.log(userStore.user.email);
     const fetchUser = async () => {
       const student = await userStore.getStudent();
       if (student) {
