@@ -27,6 +27,7 @@ const Posts = observer(() => {
   const { userStore } = useStore();
 
   useEffect(() => {
+    console.log(userStore.user);
     setIsLoading(true);
     agent.Posts.getAll('?StudyGroupId=3').then((response) => {
       setPosts(response);

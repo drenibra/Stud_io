@@ -76,6 +76,8 @@ const ResponsiveAppBar = observer(function ResponsiveAppBar()
     setAnchorElUser(null);
   };
 
+  console.log(userStore.user);
+
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
@@ -113,7 +115,7 @@ const ResponsiveAppBar = observer(function ResponsiveAppBar()
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton id="openSettings" onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src={userStore.user.image} />
+                  <Avatar alt="Remy Sharp" src={userStore.user.profileImage} />
                 </IconButton>
               </Tooltip>
               <Menu

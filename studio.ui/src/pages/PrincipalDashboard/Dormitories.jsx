@@ -14,6 +14,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import Slide from '@material-ui/core/Slide';
 import Grow from '@material-ui/core/Grow';
 import { Link } from 'react-router-dom';
+import { useStore } from '../../stores/store';
 
 export default function Dormitories()
 {

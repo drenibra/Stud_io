@@ -3,6 +3,7 @@
     public class ComplaintDto
     {
         public string Description { get; set; }
+        public string Token { get; set; }
     }
 
     public class UpdateComplaintDto

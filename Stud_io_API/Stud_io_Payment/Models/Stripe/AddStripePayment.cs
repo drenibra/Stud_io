@@ -6,5 +6,7 @@
         string Description,
         string Currency,
         long Amount,
-        string Month);
+        string Month,
+        string Email
+        );
 }
