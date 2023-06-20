@@ -50,7 +50,7 @@ namespace Stud_io.Authentication.Services
                 Username = user.UserName,
                 Email = user.Email,
                 Gender = user.Gender,
-                ProfileImage = user.Photos.FirstOrDefault(p => p.IsMain).Url
+                //ProfileImage = user.Photos.FirstOrDefault(p => p.IsMain).Url
             };
         }
 
@@ -149,6 +149,26 @@ namespace Stud_io.Authentication.Services
 
         public async Task<ActionResult<List<ComplaintStudentDto>>> GetComplaintStudents() =>
             _mapper.Map<List<ComplaintStudentDto>>(await _context.Students.ToListAsync());
+
+        public async Task<ActionResult<List<StudentDto>>> GetIsAccepted(bool isAccepted)
+        {
+
+            var student = await _context.Students.Where(x => x.isAccepted == isAccepted)
+                                                 .Select(x => new StudentDto { 
+                                                    DormNumber= x.DormNumber,
+                                                    City= x.City,
+                                                    Email= x.Email,
+                                                    FirstName = x.FirstName,
+                                                    LastName = x.LastName,
+                                                    Gender= x.Gender,
+                                                    GPA = x.GPA,
+                                                    Major = x.Major                                              
+                                                 }).ToListAsync();
+
+            return student;
+
+        }
+
 
     }
 }

@@ -146,7 +146,7 @@ const UserForm = observer(function UserForm(props) {
                 if (attribute === 'gender')
                   return (
                     <Grid item xs={6}>
-                      <Select id="gender" name="gender" defaultValue={props.user[attribute]} label="Gender" sx={{ mb: 2 }} fullWidth onChange={handleTextFieldChange}>
+                      <Select id="gender" name="gender" defaultValue={props.user[attribute]} label="Gender" sx={{ mb: 2 }} fullWidth disabled={true} onChange={handleTextFieldChange}>
                         <MenuItem value="M">M</MenuItem>
                         <MenuItem value="F">F</MenuItem>
                       </Select>
@@ -165,13 +165,13 @@ const UserForm = observer(function UserForm(props) {
                 }
                 return (
                   <Grid item xs={6}>
-                    <TextField key={attribute} label={label} name={attribute} defaultValue={props.user[attribute]} id={attribute} fullWidth sx={{ mb: 2 }} onChange={handleTextFieldChange} />
+                    <TextField key={attribute} label={label} name={attribute} defaultValue={props.user[attribute]} id={attribute} disabled={true} fullWidth sx={{ mb: 2 }} onChange={handleTextFieldChange} />
                   </Grid>
                 );
               })}
-              <Button variant="contained" sx={{ width: '100%', marginLeft: '16px' }} onClick={handleSubmit}>
+              {/* <Button variant="contained" sx={{ width: '100%', marginLeft: '16px' }} onClick={handleSubmit}>
                 Save
-              </Button>
+              </Button> */}
               {success && (
                 <Fade in={success} out={success} timeout={500}>
                   <Alert className={`alert success ${success ? 'show' : ''}`} severity="success">

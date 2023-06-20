@@ -140,6 +140,7 @@ namespace Stud_io.Application.Services.Implementations
                 .ToListAsync();
         }
 
+
         public async Task<List<ProfileMatch>> GetTopProfileMatches()
         {
             var sortedProfileMatches = await SortByTotalPoints();

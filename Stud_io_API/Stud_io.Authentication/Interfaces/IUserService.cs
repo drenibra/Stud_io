@@ -19,5 +19,6 @@ namespace Stud_io.Authentication.Interfaces
         Task<ActionResult> AddStudyGroupMembers(int groupId, List<string> studentIds);
         Task<ActionResult> AddGroupEventStudent(int groupEventId, string studentId);
         Task<ActionResult<List<ComplaintStudentDto>>> GetComplaintStudents();
+        Task<ActionResult<List<StudentDto>>> GetIsAccepted(bool isAccepted);
     }
 }

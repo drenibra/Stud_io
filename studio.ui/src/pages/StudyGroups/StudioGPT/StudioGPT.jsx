@@ -32,7 +32,7 @@ const ChatComponent = () => {
   };
 
   return (
-    <div style={{ display: 'flex', backgroundColor: '#d7d7d7', padding: '16px', flexDirection: 'column', height: '50vh', marginBottom: '30px' }}>
+    <div style={{ display: 'flex', backgroundColor: '#d7d7d7', padding: '16px', flexDirection: 'column', height: '50vh', marginBottom: '30px', borderRadius: '8px' }}>
       <div style={{ overflow: 'hidden', display: 'flex', flexDirection: 'column', flexGrow: 1, overflow: 'hidden', marginBottom: '16px' }}>
         <div style={{ display: 'flex', flexDirection: 'column', position: 'relative', right: '-25px', overflowY: 'scroll', flex: 1 }}>
           {messages.map((message, index) => (
