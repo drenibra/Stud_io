@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import './styles.scss';
 import { useStore } from '../../stores/store';
+import complaining from './complaining.svg';
 
 export default function Complaint() {
   const { userStore } = useStore();
@@ -30,15 +31,17 @@ export default function Complaint() {
   };
 
   return (
-    <div>
-      <h2 className="h2-ankesat">Complaint Form</h2>
-      <form className="form-container-ankesat" onSubmit={handleSubmit}>
-        <textarea id="description" className="textarea-field-ankesat" value={complaintForm.description} onChange={handleChange} placeholder="Shkruani ankesen tuaj këtu..." required />
-        <button type="submit" className="submit-button-ankesat">
-          Submit
-        </button>
-      </form>
-
+    <div className='complaint-form'>
+        <img src={complaining} width={'450px'}/>
+        <div className='complaint-area'>
+            <h2 className="h2-ankesat">Paraqitni ankesën tuaj</h2>
+            <form className="form-container-ankesat" onSubmit={handleSubmit}>
+                <textarea id="description" className="textarea-field-ankesat" value={complaintForm.description} onChange={handleChange} placeholder="Shkruani ankesen tuaj këtu..." required />
+                <button type="submit" className="submit-button-ankesat">
+                Submit
+                </button>
+            </form>
+        </div>
       <ToastContainer />
     </div>
   );
