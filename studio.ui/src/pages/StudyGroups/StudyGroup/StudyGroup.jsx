@@ -3,7 +3,7 @@ import Headline from '../../../assets/study-groups/headline.jpg';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import './StudyGroup.scss';
-import { Posts, GroupEvents, Info, Resources } from '..';
+import { Posts, GroupEvents, Info, Resources, StudioGPT } from '..';
 import { useParams } from 'react-router';
 import agent from '../../../api/study-group-agents';
 import LoadingComponent from '../../LoadingComponent/LoadingComponent';
@@ -40,6 +40,8 @@ const StudyGroup = () => {
         case 3:
           return <GroupEvents />;
         case 4:
+          return <StudioGPT />;
+        case 5:
           return <Info setRefreshKey={setRefreshKey} studyGroup={studyGroup} />;
         default:
           return <Info />;
@@ -67,6 +69,9 @@ const StudyGroup = () => {
               Group Events
             </Button>
             <Button variant={activeButton === 4 ? 'contained' : 'outlined'} style={{ flex: 1 }} onClick={() => handleNavButtonClick(4)}>
+              Studio GPT
+            </Button>
+            <Button variant={activeButton === 5 ? 'contained' : 'outlined'} style={{ flex: 1 }} onClick={() => handleNavButtonClick(5)}>
               Info
             </Button>
           </Stack>

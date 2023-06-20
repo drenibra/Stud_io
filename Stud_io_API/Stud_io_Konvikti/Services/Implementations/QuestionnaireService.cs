@@ -2,9 +2,13 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Stud_io.Dormitory.DTOs;
+using Stud_io.Dormitory.DTOs.Deserializer;
 using Stud_io.Dormitory.Models;
 using Stud_io.Dormitory.Services.Interfaces;
 using Stud_io_Dormitory.Configurations;
+using System.Net.Http.Headers;
+using System.Text;
+using System.Text.Json;
 
 namespace Stud_io.Dormitory.Services.Implementations
 {
@@ -12,11 +16,13 @@ namespace Stud_io.Dormitory.Services.Implementations
     {
         private readonly DormitoryDbContext _context;
         private readonly IMapper _mapper;
+        private readonly IHttpClientFactory _httpClientFactory;
 
-        public QuestionnaireService(DormitoryDbContext context, IMapper mapper)
+        public QuestionnaireService(DormitoryDbContext context, IMapper mapper, IHttpClientFactory httpClientFactory)
         {
             _context = context;
             _mapper = mapper;
+            _httpClientFactory = httpClientFactory;
         }
 
         public async Task<ActionResult<List<QuestionnaireDto>>> GetQuestionnaires() =>
@@ -29,15 +35,45 @@ namespace Stud_io.Dormitory.Services.Implementations
                 ? new NotFoundObjectResult("Questionnaire doesn't exist!!")
                 : new OkObjectResult(mappedQuestionnaire);
         }
+
+        
         public async Task<ActionResult> AddQuestionnaire(QuestionnaireDto questionnaireDTO)
         {
-            if (questionnaireDTO == null)
-                return new BadRequestObjectResult("Questionnaire can not be null!!");
-            var mappedQuestionnaire = _mapper.Map<Questionnaire>(questionnaireDTO);
-            await _context.Questionnaires.AddAsync(mappedQuestionnaire);
-            await _context.SaveChangesAsync();
-            return new OkObjectResult("Questionnaire added successfully!");
+                   var httpClient = _httpClientFactory.CreateClient();
+
+                   var uri = "http://localhost:5274/api/v1/User/GetStudentById";
+
+                   //Dreni to handle the token
+
+                   var authentication = new AuthenticationHeaderValue("Bearer", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJlNjZiZDg2ZS1lMmQ0LTRkMGMtYWYwMC04NjkzZjgxMzA1ZmIiLCJ1bmlxdWVfbmFtZSI6InN1bWVqYSIsImVtYWlsIjoic3VtZWphQGdtYWlsLmNvbSIsInJvbGUiOiJTdHVkZW50IiwibmJmIjoxNjg3MjM3NTAwLCJleHAiOjE2ODc4NDIzMDAsImlhdCI6MTY4NzIzNzUwMH0.QNdRVPnro4fLJJG-a2kX0QRDmdV6n_oiq3MffIijDF4");
+                   httpClient.DefaultRequestHeaders.Authorization = authentication;
+
+                   var response = await httpClient.GetAsync(uri);
+
+                   var responseAsString = await response.Content.ReadAsStringAsync();
+
+                   var student = JsonSerializer.Deserialize<QuestionnaireStudentDto>(responseAsString);
+
+                   if (questionnaireDTO == null)
+                       return new BadRequestObjectResult("Questionnaire can not be null!!");
+
+                    var questionnaire = new Questionnaire()
+                    {
+                        shareBelongings = questionnaireDTO.shareBelongings,
+                        sleepingHabits = questionnaireDTO.sleepingHabits,
+                        havingGuests = questionnaireDTO.havingGuests,
+                        roomCleanliness = questionnaireDTO.roomCleanliness,
+                        studyTime = questionnaireDTO.studyTime,
+                        studyPlace = questionnaireDTO.studyPlace,
+                        studentId = student.id
+                    };
+
+
+                   await _context.Questionnaires.AddAsync(questionnaire);
+                   await _context.SaveChangesAsync();
+                   return new OkObjectResult("Questionnaire added successfully!");
         }
+        
 
         public async Task<ActionResult> UpdateQuestionnaire(int id, UpdateQuestionnaireDto updateQuestionnaireDTO)
         {

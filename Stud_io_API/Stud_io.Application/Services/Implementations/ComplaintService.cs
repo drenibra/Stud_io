@@ -9,7 +9,7 @@ using Stud_io.Application.Models;
 using Stud_io.Application.Services.Interfaces;
 using Stud_io.Application.Models.ServiceCommunication.Authentication;
 using Stud_io.Application.DTOs.Deserializer;
-using System.Text.Json;
+
 
 namespace Stud_io.Application.Services.Implementations
 {
@@ -27,7 +27,7 @@ namespace Stud_io.Application.Services.Implementations
         }
 
 
-        public Task<ActionResult<ComplaintDetailsDto>> GetComplaintById(int id)
+        public Task<ActionResult<ComplaintDto>> GetComplaintById(int id)
         {
             throw new NotImplementedException();
         }
@@ -84,7 +84,7 @@ namespace Stud_io.Application.Services.Implementations
 
             var uri = "http://localhost:5274/api/v1/User/GetStudentById";
 
-            var authentication = new AuthenticationHeaderValue("Bearer", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI5MDI0ZmFhYy0zZDIyLTQ3MmUtYTljZC0yYjVhMTk0OTZmODEiLCJ1bmlxdWVfbmFtZSI6ImFsbWEiLCJlbWFpbCI6ImFuNTE3MThAdWJ0LXVuaS5uZXQiLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE2ODcyMDQ5MDUsImV4cCI6MTY4NzgwOTcwNSwiaWF0IjoxNjg3MjA0OTA1fQ.TebDpiKEO-u0EKIztYsFgAPHcQ-XsbfDu5GDB8su1dY");
+            var authentication = new AuthenticationHeaderValue("Bearer", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI3NzgzNGMxMC0wMjRlLTQwNmMtODU2Ny03NGQzZGMwYTM1NmYiLCJ1bmlxdWVfbmFtZSI6Im1hbGlzYSIsImVtYWlsIjoibXNhZGlrdUBnbWFpbC5jb20iLCJyb2xlIjoiU3R1ZGVudCIsIm5iZiI6MTY4NzIxODY2MCwiZXhwIjoxNjg3ODIzNDYwLCJpYXQiOjE2ODcyMTg2NjB9.Jz8e7luLq5Gf5JqAkhHfoVpDRtU5FGEhRJqpif3J0V8");
             httpClient.DefaultRequestHeaders.Authorization = authentication;
 
             var response = await httpClient.GetAsync(uri);
@@ -127,7 +127,7 @@ namespace Stud_io.Application.Services.Implementations
         {
             var dbComplaint = await _context.Complaints.FindAsync(id);
             if (dbComplaint == null)
-                return new NotFoundObjectResult("Comllaint doesn't exist!!");
+                return new NotFoundObjectResult("Complaint doesn't exist!!");
 
             _context.Complaints.Remove(dbComplaint);
             await _context.SaveChangesAsync();

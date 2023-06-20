@@ -1,22 +1,25 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Stud_io.Application.Configurations;
+using Stud_io.Application.DTOs.Deserializer;
 using Stud_io.Application.Models;
 using Stud_io.Application.Services.Interfaces;
+using System.Net.Http.Headers;
+using System.Text.Json;
 
 namespace Stud_io.Application.Services.Implementations
 {
     public class ProfileMatchService : IProfileMatchService
     {
         private readonly ApplicationDbContext _context;
-        private readonly IMapper _mapper;
+        private readonly IHttpClientFactory _httpClientFactory;
 
-        public ProfileMatchService(ApplicationDbContext context, IMapper mapper)
+        public ProfileMatchService(ApplicationDbContext context, IHttpClientFactory httpClientFactory)
         {
             _context = context;
-            _mapper = mapper;
+            _httpClientFactory = httpClientFactory;
         }
+
         public int CalculateAverageGradePoints(double averageGrade)
         {
             int averageGradePoints;
@@ -40,7 +43,6 @@ namespace Stud_io.Application.Services.Implementations
             {
                 averageGradePoints = 1;
             }
-
             return averageGradePoints;
         }
 
@@ -49,33 +51,15 @@ namespace Stud_io.Application.Services.Implementations
             int extraPoints = 0;
             if (!string.IsNullOrEmpty(category))
             {
-                switch (category)
+                extraPoints = category switch
                 {
-                    case "Student(femije) i deshmorit":
-                        extraPoints = 10;
-                        break;
-                    case "Student me aftesi te kufizuara":
-                        extraPoints = 6;
-                        break;
-                    case "Student(femije) i prindit invalid te luftes":
-                    case "Student i te pagjeturit":
-                    case "Student invalid civil i luftes":
-                        extraPoints = 5;
-                        break;
-                    case "Student me asistence sociale":
-                    case "Student i prindit martir nga lufta":
-                    case "Student i te burgosurit politik":
-                        extraPoints = 4;
-                        break;
-                    case "Dy e me shume student nga nje familje aplikant ne QS":
-                    case "Student, prindi i te cilit eshte veteran i luftes":
-                        extraPoints = 3;
-                        break;
-                    default:
-                        extraPoints = 0;
-                        break;
-
-                }
+                    "Student(femije) i deshmorit" => 10,
+                    "Student me aftesi te kufizuara" => 6,
+                    "Student(femije) i prindit invalid te luftes" or "Student i te pagjeturit" or "Student invalid civil i luftes" => 5,
+                    "Student me asistence sociale" or "Student i prindit martir nga lufta" or "Student i te burgosurit politik" => 4,
+                    "Dy e me shume student nga nje familje aplikant ne QS" or "Student, prindi i te cilit eshte veteran i luftes" => 3,
+                    _ => 0,
+                };
             }
             return extraPoints;
         }
@@ -86,80 +70,66 @@ namespace Stud_io.Application.Services.Implementations
 
             if (!string.IsNullOrEmpty(city))
             {
-                switch (city)
+                cityPoints = city switch
                 {
-                    case "Gjilan":
-                    case "Viti":
-                        cityPoints = 4;
-                        break;
-                    case "Gjakove":
-                    case "Decan":
-                        cityPoints = 9;
-                        break;
-                    case "Peje":
-                    case "Istog":
-                        cityPoints = 8;
-                        break;
-                    case "Kamenice":
-                    case "Prizren":
-                        cityPoints = 7;
-                        break;
-                    case "Kline":
-                    case "Suhareke":
-                        cityPoints = 6;
-                        break;
-                    case "Rahovec":
-                    case "Skenderaj":
-                        cityPoints = 5;
-                        break;
-                    case "Podujeve":
-                    case "Ferizaj":
-                    case "Mitrovice":
-                        cityPoints = 3;
-                        break;
-                    case "Lipjan":
-                    case "Vushtrri":
-                        cityPoints = 2;
-                        break;
-                    default:
-                        cityPoints = 0;
-                        break;
-                }
+                    "Gjilan" or "Viti" => 4,
+                    "Gjakove" or "Decan" => 9,
+                    "Peje" or "Istog" => 8,
+                    "Kamenice" or "Prizren" => 7,
+                    "Kline" or "Suhareke" => 6,
+                    "Rahovec" or "Skenderaj" => 5,
+                    "Podujeve" or "Ferizaj" or "Mitrovice" => 3,
+                    "Lipjan" or "Vushtrri" => 2,
+                    _ => 0,
+                };
             }
-
             return cityPoints;
         }
 
-        public async Task<List<ProfileMatch>> CalculateTotalPointsForAllStudents()
+        public async Task<List<ProfileMatch>> GetMatches()
         {
-            var applications = await _context.Applications
-                                         //.Include(s => s.Student)
-                                         //.Include(f => f.Student.Faculty)
-                                         .ToListAsync();
+            var matches = await _context.ProfileMatches.Include(a => a.Application).ToListAsync();
+            return matches;
+        }
+
+        public async Task<ActionResult<List<ProfileMatch>>> CalculateTotalPointsForAllStudents()
+        {
+            var httpClient = _httpClientFactory.CreateClient();
+
+            var applications = await _context.Applications.ToListAsync();
 
             foreach (var application in applications)
             {
                 var profileMatch = await _context.ProfileMatches
                     .FirstOrDefaultAsync(p => p.ApplicationId == application.Id);
 
+                var uri = "http://localhost:5274/api/v1/User/GetStudentById/" + application.StudentId;
+
+                //Dreni to handle the token
+
+                var authentication = new AuthenticationHeaderValue("Bearer", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI1OWEyNGUxNS1iNTIyLTRmNTItYTQ1ZS1kNTRiMGEyMmY5NDMiLCJ1bmlxdWVfbmFtZSI6ImZhdGkiLCJlbWFpbCI6ImZzNTE3MDFAdWJ0LXVuaS5uZXQiLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE2ODcxOTk5NDIsImV4cCI6MTY4NzgwNDc0MiwiaWF0IjoxNjg3MTk5OTQyfQ.T9ePhTE_81cEoFrUVAkFQrGz_2yGf3q-W8NsXD2a2qM");
+                httpClient.DefaultRequestHeaders.Authorization = authentication;
+
+                var response = await httpClient.GetAsync(uri);
+                var responseAsString = await response.Content.ReadAsStringAsync();
+
+                var student = JsonSerializer.Deserialize<StudentProfileDeserializer>(responseAsString);
+
                 if (profileMatch == null)
                 {
                     profileMatch = new ProfileMatch()
                     {
                         ApplicationId = application.Id,
-                        //PointsForGPA = CalculateAverageGradePoints(application.Student.GPA),
-                        //PointsForCity = CalculateCityPoints(application.Student.City),
+                        PointsForGPA = CalculateAverageGradePoints((double)student.gpa),
+                        PointsForCity = CalculateCityPoints(student.city),
                         ExtraPoints = CalculateExtraPoints(application.SpecialCategoryReason)
                     };
-
                     profileMatch.TotalPoints = profileMatch.PointsForCity + profileMatch.PointsForGPA + profileMatch.ExtraPoints;
 
                     _context.ProfileMatches.Add(profileMatch);
                 }
-
                 await _context.SaveChangesAsync();
             }
-
             return await _context.ProfileMatches.ToListAsync();
         }
 
@@ -167,8 +137,6 @@ namespace Stud_io.Application.Services.Implementations
         {
             return await _context.ProfileMatches
                 .Include(a => a.Application)
-                //.Include(s => s.Application.Student)
-                //.Include(f => f.Application.Student.Faculty)
                 .OrderByDescending(p => p.TotalPoints)
                 .ToListAsync();
         }
@@ -184,6 +152,5 @@ namespace Stud_io.Application.Services.Implementations
             var sortedProfileMatches = await SortByTotalPoints();
             return sortedProfileMatches.Skip(10).ToList();
         }
-
     }
 }

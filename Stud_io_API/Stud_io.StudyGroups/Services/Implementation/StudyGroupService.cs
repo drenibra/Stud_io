@@ -2,6 +2,8 @@
 using CloudinaryDotNet.Actions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using OpenAI_API.Completions;
+using OpenAI_API;
 using Stud_io.Configuration;
 using Stud_io.StudyGroups.DTOs;
 using Stud_io.StudyGroups.DTOs.ServiceCommunication;
@@ -21,12 +23,15 @@ namespace Stud_io.StudyGroups.Services.Implementation
         private readonly ApplicationDbContext _context;
         private readonly ICloudinaryService _cloudinaryService;
         private readonly IMicroservicesRequestService _requestService;
+        private readonly IConfiguration _configuration;
 
-        public StudyGroupService(ApplicationDbContext context, ICloudinaryService cloudinaryService, IMicroservicesRequestService requestService)
+
+        public StudyGroupService(ApplicationDbContext context, ICloudinaryService cloudinaryService, IMicroservicesRequestService requestService, IConfiguration configuration)
         {
             _context = context;
             _cloudinaryService = cloudinaryService;
             _requestService = requestService;
+            _configuration = configuration;
         }
 
         public async Task<ActionResult<StudyGroupDto>> GetStudyGroupById(int id)
@@ -162,8 +167,28 @@ namespace Stud_io.StudyGroups.Services.Implementation
                 return new OkObjectResult("Members added succesfully!");
 
             return new BadRequestObjectResult("Something went wrong.");
-
         }
 
+        public async Task<ActionResult> StudioGPT(string query)
+        {
+            string outputResult = "";
+            var openai = new OpenAIAPI(_configuration["OpenAI:APIKEY"]);
+
+            CompletionRequest completionRequest = new CompletionRequest();
+            completionRequest.Prompt = query;
+            completionRequest.Model = OpenAI_API.Models.Model.DavinciText;
+
+            int maxCompletionTokens = 4096;
+            completionRequest.MaxTokens = maxCompletionTokens - 100;
+
+            var completions = await openai.Completions.CreateCompletionAsync(completionRequest);
+
+            foreach (var completion in completions.Completions)
+            {
+                outputResult += completion.Text;
+            }
+
+            return new OkObjectResult(outputResult);
+        }
     }
 }

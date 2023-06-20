@@ -11,5 +11,6 @@
         public char Gender { get; set; }
         public string ProfileImage { get; set; }
         public string ImageId { get; set; }
+        public string Role { get; set; }
     }
 }

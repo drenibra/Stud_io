@@ -22,7 +22,6 @@ const PostModal = observer(({ open, handleClose, post }) => {
   useEffect(() => {
     agent.Posts.getById(post.id).then((response) => {
       setCurrentPost(response);
-      console.log(response);
     });
   }, [refreshKey]);
 

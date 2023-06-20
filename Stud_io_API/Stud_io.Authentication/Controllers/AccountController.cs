@@ -44,7 +44,7 @@ namespace Stud_io.Controllers
 
             if (result.Succeeded)
             {
-                return CreateUserObject(user);
+                return await CreateUserObject(user);
             };
 
             return Unauthorized();
@@ -76,7 +76,7 @@ namespace Stud_io.Controllers
             if (result.Succeeded)
             {
                 await _userManager.AddToRoleAsync(user, "Student");
-                return CreateUserObject(user);
+                return await CreateUserObject(user);
             }
 
             return BadRequest("Problem registering user!");
@@ -87,7 +87,7 @@ namespace Stud_io.Controllers
         {
             var user = await _userManager.Users.Include(p => p.Photos).FirstOrDefaultAsync(x => x.Email == User.FindFirstValue(ClaimTypes.Email));
 
-            return CreateUserObject(user);
+            return await CreateUserObject(user);
         }
         [Authorize]
         [HttpGet("student")]
@@ -129,8 +129,10 @@ namespace Stud_io.Controllers
 
             return roles;
         }
-        private UserDto CreateUserObject(AppUser user)
+        private async Task<UserDto> CreateUserObject(AppUser user)
         {
+            var roles = await _userManager.GetRolesAsync(user);
+
             return new UserDto
             {
                 Id = user.Id,
@@ -142,6 +144,7 @@ namespace Stud_io.Controllers
                 Gender = user.Gender,
                 ProfileImage = user?.Photos?.FirstOrDefault(x => x.IsMain)?.Url,
                 ImageId = user?.Photos?.FirstOrDefault(x => x.IsMain)?.Id,
+                Role = roles.FirstOrDefault()
             };
         }
     }

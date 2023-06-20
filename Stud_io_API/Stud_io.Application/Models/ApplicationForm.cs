@@ -10,10 +10,5 @@ namespace Stud_io.Application.Models
         public string? SpecialCategoryReason { get; set; }
         public DateTime ApplyDate { get; set; }
         public string? FileUrl { get; set; }
-
-        /*[ForeignKey("Student")]
-        public int StudentId { get; set; }
-        public string StudentsId { get; set; }
-        public Student Student { get; set; }*/
     }
 }

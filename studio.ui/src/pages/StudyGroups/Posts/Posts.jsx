@@ -30,7 +30,6 @@ const Posts = observer(() => {
     setIsLoading(true);
     agent.Posts.getAll('?StudyGroupId=3').then((response) => {
       setPosts(response);
-      console.log(response);
     });
     setIsLoading(false);
   }, [refreshKey]);

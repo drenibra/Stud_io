@@ -8,8 +8,6 @@ namespace Stud_io.Application.Configurations
     {
         public AutoMapperProfiles()
         {
-            CreateMap<Student, StudentDto>().ReverseMap();
-            CreateMap<Faculty, FacultyDto>().ReverseMap();
             CreateMap<ApplicationForm, ApplicationDto>().ReverseMap();
             CreateMap<ProfileMatch, ProfileMatchDto>().ReverseMap();
             CreateMap<Complaint, ComplaintDto>().ReverseMap();

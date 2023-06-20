@@ -3,7 +3,13 @@
     public class StudentDeserializer
     {
         public string? id { get; set; }
-        public string? FirstName { get; set; }
-        public string? LastName { get; set; }
+        public string? email { get; set; }
+
+    }
+
+    public class StudentProfileDeserializer
+    {
+        public double? gpa { get; set; }
+        public string? city { get; set; }
     }
 }

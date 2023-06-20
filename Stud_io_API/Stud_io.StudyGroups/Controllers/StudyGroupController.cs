@@ -1,5 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using OpenAI_API;
+using OpenAI_API.Completions;
 using Stud_io.StudyGroups.DTOs;
 using Stud_io.StudyGroups.Services.Interfaces;
 
@@ -23,7 +24,7 @@ namespace Stud_io.StudyGroups.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<StudyGroupsDto>>> GetStudyGroups([FromQuery]FilterStudyGroupDto filter)
+        public async Task<ActionResult<List<StudyGroupsDto>>> GetStudyGroups([FromQuery] FilterStudyGroupDto filter)
         {
             return await _studyGroupService.GetStudyGroups(filter);
         }
@@ -39,6 +40,13 @@ namespace Stud_io.StudyGroups.Controllers
         {
             return await _studyGroupService.AddMembers(groupId, studentIds);
         }
+
+        [HttpGet("studio-gpt/{query}")]
+        public async Task<IActionResult> StudioGPT(string query)
+        {
+            return await _studyGroupService.StudioGPT(query);
+        }
+
 
     }
 }
