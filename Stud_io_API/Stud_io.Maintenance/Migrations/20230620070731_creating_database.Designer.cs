@@ -12,8 +12,8 @@ using Stud_io.Maintenance.Configurations;
 namespace Stud_io.Maintenance.Migrations
 {
     [DbContext(typeof(MaintenanceDbContext))]
-    [Migration("20230423173119_AddedTypeOnDormComplaint")]
-    partial class AddedTypeOnDormComplaint
+    [Migration("20230620070731_creating_database")]
+    partial class creating_database
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

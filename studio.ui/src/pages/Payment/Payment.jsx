@@ -222,7 +222,9 @@ const Payment = observer(function Payment() {
                 marginTop: '15px',
               }}
             >
-              <Link to="/RegisterCustomer" style={{ color: '#FFFFFF'}}>Regjistro Kartelën</Link>
+              <Link to="/RegisterCustomer" style={{ color: '#FFFFFF' }}>
+                Regjistro Kartelën
+              </Link>
             </Button>
           </Grid>
         </Box>
