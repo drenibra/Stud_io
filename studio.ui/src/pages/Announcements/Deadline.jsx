@@ -6,7 +6,8 @@ import axios from 'axios';
 import './DeadlineStyles.scss';
 import Menu from '../../components/Menu/Menu';
 
-export default function Deadline({ handleClose }) {
+export default function Deadline({ handleClose })
+{
   const [error, setError] = useState(false);
   const [error2, setError2] = useState(false);
 
@@ -18,28 +19,35 @@ export default function Deadline({ handleClose }) {
   const [selectedOpenDate, setSelectedOpenDate] = useState(new Date().toISOString().slice(0, 10));
   const [selectedClosedDate, setSelectedClosedDate] = useState('');
 
-  const formatDate = (date) => {
+  const formatDate = (date) =>
+  {
     const offset = date.getTimezoneOffset() * 60000; // Convert offset to milliseconds
     const adjustedDate = new Date(date.getTime() - offset); // Adjust date based on offset
     return adjustedDate.toISOString().slice(0, 10); // Format the adjusted date to YYYY-MM-DD
   };
 
-  const handleOpenDateChange = (e) => {
+  const handleOpenDateChange = (e) =>
+  {
     const selected = e.target.value;
     const today = new Date().toISOString().slice(0, 10);
 
-    if (selected >= today) {
+    if (selected >= today)
+    {
       setSelectedOpenDate(formatDate(new Date(selected)));
-    } else {
+    } else
+    {
       setError(true);
     }
   };
 
-  const handleClosedDate = (e) => {
+  const handleClosedDate = (e) =>
+  {
     const selected = e.target.value;
-    if (selected > selectedOpenDate) {
+    if (selected > selectedOpenDate)
+    {
       setSelectedClosedDate(formatDate(new Date(selected)));
-    } else {
+    } else
+    {
       setError2(true);
     }
   };
@@ -82,14 +90,17 @@ export default function Deadline({ handleClose }) {
   //     setSecondDate(e.target.value);
   // }
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e) =>
+  {
     e.preventDefault();
     const deadline = { name, selectedOpenDate, selectedClosedDate };
-    try {
+    try
+    {
       const response = await axios.post('https://localhost:7137/api/Deadline/add-deadline', deadline);
       console.log(response.data);
       toast.success('Deadline u shtua me sukses!');
-    } catch (error) {
+    } catch (error)
+    {
       console.log(error);
       toast.error(error.response.data);
     }
@@ -155,9 +166,9 @@ export default function Deadline({ handleClose }) {
 
           <br />
 
-          <Link href="/announcement" underline="none" className="link-deadline">
+          <Button href="/announcement" variant="contained" color="primary" type="submit" className="butoni-deadline">
             Next
-          </Link>
+          </Button>
         </form>
         <ToastContainer />
       </div>
