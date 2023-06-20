@@ -25,8 +25,6 @@ builder.Services.AddCors(opt =>
 
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
-builder.Services.AddScoped<IStudentService, StudentService>();
-builder.Services.AddScoped<IFacultyService, FacultyService>();
 builder.Services.AddScoped<IFileService, FileService>();
 builder.Services.AddScoped<IApplicationService, ApplicationService>();
 builder.Services.AddScoped<IProfileMatchService, ProfileMatchService>();
