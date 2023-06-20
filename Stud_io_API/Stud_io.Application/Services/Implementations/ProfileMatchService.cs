@@ -93,7 +93,7 @@ namespace Stud_io.Application.Services.Implementations
             return matches;
         }
 
-        public async Task<ActionResult<List<ProfileMatch>>> CalculateTotalPointsForAllStudents()
+        public async Task<ActionResult<List<ProfileMatch>>> CalculateTotalPointsForAllStudents(string token)
         {
             var httpClient = _httpClientFactory.CreateClient();
 
@@ -106,9 +106,7 @@ namespace Stud_io.Application.Services.Implementations
 
                 var uri = "http://localhost:5274/api/v1/User/GetStudentById/" + application.StudentId;
 
-                //Dreni to handle the token
-
-                var authentication = new AuthenticationHeaderValue("Bearer", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI1OWEyNGUxNS1iNTIyLTRmNTItYTQ1ZS1kNTRiMGEyMmY5NDMiLCJ1bmlxdWVfbmFtZSI6ImZhdGkiLCJlbWFpbCI6ImZzNTE3MDFAdWJ0LXVuaS5uZXQiLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE2ODcxOTk5NDIsImV4cCI6MTY4NzgwNDc0MiwiaWF0IjoxNjg3MTk5OTQyfQ.T9ePhTE_81cEoFrUVAkFQrGz_2yGf3q-W8NsXD2a2qM");
+                var authentication = new AuthenticationHeaderValue("Bearer", token);
                 httpClient.DefaultRequestHeaders.Authorization = authentication;
 
                 var response = await httpClient.GetAsync(uri);

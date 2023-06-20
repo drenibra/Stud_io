@@ -43,8 +43,8 @@ namespace Stud_io.Application.Controllers
             return await _profileMatchService.GetMatches();
         }
 
-        [HttpGet("calculate-total-points-for-all-students")]
-        public async Task<ActionResult<List<ProfileMatch>>> CalculateTotalPointsForAllStudents()
+        [HttpGet("calculate-total-points-for-all-students/{token}")]
+        public async Task<ActionResult<List<ProfileMatch>>> CalculateTotalPointsForAllStudents(string token)
         {
            return await _profileMatchService.CalculateTotalPointsForAllStudents();
         }

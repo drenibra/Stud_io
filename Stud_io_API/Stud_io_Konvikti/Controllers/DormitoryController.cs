@@ -47,13 +47,13 @@ namespace Stud_io_Dormitory.Controllers
             return await _dormitoryService.DeleteDormitory(id);
         }
 
-        [HttpPost("AssignStudentsToDormitories")]
+        [HttpPost("AssignStudentsToDormitories/{token}")]
         
-        public async Task<ActionResult> AssignStudentsToDormitories()
+        public async Task<ActionResult> AssignStudentsToDormitories(string token)
         {
             try
             {
-                await _dormitoryService.AssignStudentsToDormitories();
+                await _dormitoryService.AssignStudentsToDormitories(token);
                 return Ok("Students assigned to dormitories successfully!");
             }
             catch (Exception ex)

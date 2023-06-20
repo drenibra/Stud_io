@@ -76,19 +76,14 @@ namespace Stud_io_Dormitory.Services.Implementations
             return new OkObjectResult("Dormitory deleted successfully!");
         }
 
-        public async Task AssignStudentsToDormitories()
+        public async Task AssignStudentsToDormitories(string token)
         {
 
             var httpClient = _httpClientFactory.CreateClient();
 
             var uri = "http://localhost:5274/api/v1/User/get-dormitory-students";  
 
-            //Dreni to handle the token
-
-            var adminToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJjMGQwY2RjNC1kYTg1LTQ1NDAtYWNkZi1lMjlmNjQ2YWMwNzkiLCJ1bmlxdWVfbmFtZSI6ImJsZW9uYSIsImVtYWlsIjoiYmc1MjczMkB1YnQtdW5pLm5ldCIsInJvbGUiOiJBZG1pbiIsIm5iZiI6MTY4NzIwOTI2NCwiZXhwIjoxNjg3ODE0MDY0LCJpYXQiOjE2ODcyMDkyNjR9.fGfx_KXn7cygkFU5MMKrEzrcyXsLVFPzBulFzBB7LFA";
-
-
-            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", adminToken);
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
             var response = await httpClient.GetAsync(uri);
 
@@ -103,25 +98,21 @@ namespace Stud_io_Dormitory.Services.Implementations
                 var femaleStudents = acceptedStudents.Where(s => s.Gender == 'F').ToList();
                 var maleStudents = acceptedStudents.Where(s => s.Gender == 'M').ToList();
 
-                await AssignStudentsToDormitory(femaleStudents, 'F');
-                await AssignStudentsToDormitory(maleStudents, 'M');
+                await AssignStudentsToDormitory(femaleStudents, 'F', token);
+                await AssignStudentsToDormitory(maleStudents, 'M', token);
 
                 await _context.SaveChangesAsync();
             }
-            else
-            {
-
-            }
         }
 
-        private async Task AddDormNumber(string studentId, int dormNo)
+        private async Task AddDormNumber(string studentId, int dormNo, string token)
         {
             var httpClient = _httpClientFactory.CreateClient();
 
             var uri = $"http://localhost:5274/api/v1/User/add-dorm-number/{studentId}/{dormNo}";
 
             //Dreni to handle the token
-            var authentication = new AuthenticationHeaderValue("Bearer", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJjMGQwY2RjNC1kYTg1LTQ1NDAtYWNkZi1lMjlmNjQ2YWMwNzkiLCJ1bmlxdWVfbmFtZSI6ImJsZW9uYSIsImVtYWlsIjoiYmc1MjczMkB1YnQtdW5pLm5ldCIsInJvbGUiOiJBZG1pbiIsIm5iZiI6MTY4NzIwOTI2NCwiZXhwIjoxNjg3ODE0MDY0LCJpYXQiOjE2ODcyMDkyNjR9.fGfx_KXn7cygkFU5MMKrEzrcyXsLVFPzBulFzBB7LFA");
+            var authentication = new AuthenticationHeaderValue("Bearer", token);
             httpClient.DefaultRequestHeaders.Authorization = authentication;
 
             var content = new StringContent("",Encoding.UTF8, "application/json");
@@ -131,7 +122,7 @@ namespace Stud_io_Dormitory.Services.Implementations
         }
 
 
-        private async Task AssignStudentsToDormitory(List<StudentDeserializer> students, char gender)
+        private async Task AssignStudentsToDormitory(List<StudentDeserializer> students, char gender, string token)
         {
             var dormitories = await _context.Dormitories
                 .Where(d => d.Gender == gender && d.CurrentStudents < d.Capacity)
@@ -145,9 +136,8 @@ namespace Stud_io_Dormitory.Services.Implementations
                 {
                     student.DormNumber = dormitory.DormNo;
                     var id = student.Id;
-                    await AddDormNumber(id, dormitory.DormNo);
+                    await AddDormNumber(id, dormitory.DormNo, token);
                     dormitory.CurrentStudents++;
-
                 }
                 else
                 {
