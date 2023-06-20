@@ -36,16 +36,20 @@ namespace Stud_io.Dormitory.Services.Implementations
                 : new OkObjectResult(mappedQuestionnaire);
         }
 
-        
+        // check if the student has already filled a questionnaire
+        public async Task<bool> HasFilledQuestionnaire(string id)
+        {
+            var existingQuestionnaire = await _context.Questionnaires.FirstOrDefaultAsync(q => q.studentId.Equals(id));
+            return existingQuestionnaire != null;
+        }
+
         public async Task<ActionResult> AddQuestionnaire(QuestionnaireDto questionnaireDTO)
         {
                    var httpClient = _httpClientFactory.CreateClient();
 
                    var uri = "http://localhost:5274/api/v1/User/GetStudentById";
 
-                   //Dreni to handle the token
-
-                   var authentication = new AuthenticationHeaderValue("Bearer", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJlNjZiZDg2ZS1lMmQ0LTRkMGMtYWYwMC04NjkzZjgxMzA1ZmIiLCJ1bmlxdWVfbmFtZSI6InN1bWVqYSIsImVtYWlsIjoic3VtZWphQGdtYWlsLmNvbSIsInJvbGUiOiJTdHVkZW50IiwibmJmIjoxNjg3MjM3NTAwLCJleHAiOjE2ODc4NDIzMDAsImlhdCI6MTY4NzIzNzUwMH0.QNdRVPnro4fLJJG-a2kX0QRDmdV6n_oiq3MffIijDF4");
+                   var authentication = new AuthenticationHeaderValue("Bearer", questionnaireDTO.Token);
                    httpClient.DefaultRequestHeaders.Authorization = authentication;
 
                    var response = await httpClient.GetAsync(uri);
@@ -54,7 +58,13 @@ namespace Stud_io.Dormitory.Services.Implementations
 
                    var student = JsonSerializer.Deserialize<QuestionnaireStudentDto>(responseAsString);
 
-                   if (questionnaireDTO == null)
+                    bool hasFilledQuestionnaire = await HasFilledQuestionnaire(student.id);
+                    if (hasFilledQuestionnaire)
+                    {
+                        return new BadRequestObjectResult("You have already filled your questionnaire!");
+                    }
+
+            if (questionnaireDTO == null)
                        return new BadRequestObjectResult("Questionnaire can not be null!!");
 
                     var questionnaire = new Questionnaire()
