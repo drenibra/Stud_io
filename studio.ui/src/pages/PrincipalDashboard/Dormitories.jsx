@@ -7,15 +7,18 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import axios from 'axios';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
 import Slide from '@material-ui/core/Slide';
 import Grow from '@material-ui/core/Grow';
+import { Link } from 'react-router-dom';
 
 export default function Dormitories() {
   const [dormitories, setDormitories] = useState([]);
   const [refreshKey, setRefreshKey] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
 
   const updateDormitoryData = async () => {
     try {
@@ -38,20 +41,29 @@ export default function Dormitories() {
       try {
         const response = await axios.get('https://localhost:7023/GetDormitories');
         setDormitories(response.data);
+        setIsLoading(false);
       } catch (error) {
         console.error(error);
+        setIsLoading(false);
       }
     };
 
     fetchDormitories();
   }, [refreshKey]);
 
+
   return (
     <div>
+    {!isLoading && (
       <Box maxWidth="250px" marginRight="16px">
         <Menu />
       </Box>
-      <Grid container justifyContent="center" marginTop={4}>
+    )}
+
+    <Grid container justifyContent="center" marginTop={4}>
+      {isLoading ? (
+        <CircularProgress color="secondary" />
+      ) : (
         <Button
           variant="contained"
           color="secondary"
@@ -60,7 +72,8 @@ export default function Dormitories() {
         >
           Cakto studentët në konvikte
         </Button>
-      </Grid>
+      )}
+    </Grid>
       <Grid container justifyContent="center">
         <Grid item xs={12} md={10} lg={8}>
           <Container style={{ padding: '30px' }}>
@@ -68,6 +81,7 @@ export default function Dormitories() {
               {dormitories.map((dormitory, index) => (
                 <Grid item key={index} xs={12} sm={6} md={3}>
                   <Slide direction="up" in timeout={300}>
+                  <Link to="/dormitory" style={{ textDecoration: 'none' }}>
                     <Card
                       style={{
                         backgroundColor: '#f3f3f3',
@@ -112,6 +126,7 @@ export default function Dormitories() {
                         </CardContent>
                       </Grow>
                     </Card>
+                    </Link>
                   </Slide>
                 </Grid>
               ))}

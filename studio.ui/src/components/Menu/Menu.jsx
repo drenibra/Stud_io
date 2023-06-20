@@ -3,7 +3,6 @@ import { List, ListItem, ListItemIcon, ListItemText, ThemeProvider } from '@mui/
 import { styled } from '@mui/system';
 import HomeIcon from '@mui/icons-material/Home';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import HotelIcon from '@mui/icons-material/Hotel';
 import PeopleIcon from '@mui/icons-material/People';
 import PaymentIcon from '@mui/icons-material/Payment';
 import { createTheme } from '@mui/material/styles';
@@ -79,11 +78,6 @@ const Menu = observer(function Menu()
       name: 'Konviktet',
       path: '/Dormitories',
       icon: <HomeIcon />,
-    },
-    {
-      name: 'Dhomat',
-      path: '/dormitory',
-      icon: <HotelIcon />,
     },
     {
       name: 'Pagesat',
