@@ -35,6 +35,7 @@ import
   Dormitories,
   GetComplaints,
 } from './pages';
+import Lists from './pages/Lists/Lists';
 
 const routes = [
   { path: '/maintenance', element: Maintenance },
@@ -55,7 +56,8 @@ const routes = [
   { path: '/AnnouncementTable', element: AnnouncementTable },
   { path: '/Complaint', element: Complaint },
   { path: '/Dormitories', element: Dormitories },
-  { path: '/GetComplaints', element: GetComplaints }
+  { path: '/GetComplaints', element: GetComplaints },
+  { path: '/Lists', element: Lists }
 ];
 
 const App = observer(function App()

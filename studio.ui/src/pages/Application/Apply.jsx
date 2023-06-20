@@ -10,8 +10,10 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useStore } from '../../stores/store';
 import { observer } from 'mobx-react-lite';
+import Footer from '../../components/Footer/footer';
 
-const Apply = observer(() => {
+const Apply = observer(() =>
+{
   const { userStore } = useStore();
   let token = userStore.user.token;
   const [formData, setFormData] = useState({
@@ -21,16 +23,19 @@ const Apply = observer(() => {
     token: token,
   });
 
-  const handleChange = (e) => {
+  const handleChange = (e) =>
+  {
     const { name, value, type, checked } = e.target;
 
-    if (type === 'file') {
+    if (type === 'file')
+    {
       const file = e.target.files[0];
       setFormData((prevFormData) => ({
         ...prevFormData,
         [name]: file,
       }));
-    } else {
+    } else
+    {
       setFormData((prevFormData) => ({
         ...prevFormData,
         [name]: type === 'checkbox' ? checked : value,
@@ -38,7 +43,8 @@ const Apply = observer(() => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e) =>
+  {
     e.preventDefault();
 
     const formDataa = new FormData();
@@ -54,10 +60,12 @@ const Apply = observer(() => {
     };
 
     agent.Apply.apply(formDataa, config)
-      .then(() => {
+      .then(() =>
+      {
         toast.success('Ju aplikuat me sukses!');
       })
-      .catch(function (error) {
+      .catch(function (error)
+      {
         toast.error(error.response.data);
       });
   };

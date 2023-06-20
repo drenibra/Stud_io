@@ -17,7 +17,8 @@ import Logo from '../../assets/logo/icon-stud-io.svg';
 import { observer } from 'mobx-react-lite';
 import '../../styles/navbar.css';
 
-const ResponsiveAppBar = observer(function ResponsiveAppBar() {
+const ResponsiveAppBar = observer(function ResponsiveAppBar()
+{
   const navigate = useNavigate();
   const { userStore } = useStore();
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -31,16 +32,26 @@ const ResponsiveAppBar = observer(function ResponsiveAppBar() {
       name: 'Mirembajtja',
       path: '/mirembajtja',
     },
-    {
-      name: 'Ankesa',
-      path: '/Complaint',
-    },
+    userStore.user && userStore.user.role === 'Student'
+      ?
+      {
+        name: 'Ankesa',
+        path: '/Complaint',
+      }
+      : null,
     userStore.user && userStore.user.role === 'Student'
       ? {
-          name: 'Apliko',
-          path: '/apliko',
-        }
+        name: 'Apliko',
+        path: '/apliko',
+      }
       : null,
+    userStore.user && userStore.user.role === 'Student'
+      ? {
+        name: 'Listat',
+        path: '/Lists',
+      }
+      : null,
+
     {
       name: 'Konkurset',
       path: '/Konkurset',
@@ -55,11 +66,13 @@ const ResponsiveAppBar = observer(function ResponsiveAppBar() {
     },
   ].filter(Boolean);
 
-  const handleOpenUserMenu = (event) => {
+  const handleOpenUserMenu = (event) =>
+  {
     setAnchorElUser(event.currentTarget);
   };
 
-  const handleCloseUserMenu = () => {
+  const handleCloseUserMenu = () =>
+  {
     setAnchorElUser(null);
   };
 
@@ -130,7 +143,8 @@ const ResponsiveAppBar = observer(function ResponsiveAppBar() {
                   </Link>
                 </MenuItem>
                 <MenuItem
-                  onClick={() => {
+                  onClick={() =>
+                  {
                     handleCloseUserMenu();
                     userStore.logout();
                   }}

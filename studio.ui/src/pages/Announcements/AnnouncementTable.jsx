@@ -5,53 +5,39 @@ import './styles.scss';
 import { Button, Box } from '@mui/material';
 import Menu from '../../components/Menu/Menu';
 
-export default function AnnouncementTable() {
+export default function AnnouncementTable()
+{
   const [announcements, setAnnouncements] = useState([]);
   const [deadlines, setDeadlines] = useState([]);
   const [refreshKey, setRefreshKey] = useState('0');
 
   // announcements
-  useEffect(() => {
+  useEffect(() =>
+  {
     axios
       .get('https://localhost:7137/api/Announcement/get-all-announcements')
-      .then((response) => {
+      .then((response) =>
+      {
         setAnnouncements(response.data);
       })
-      .catch(function (error) {
+      .catch(function (error)
+      {
         console.log(error);
       });
   }, []);
 
-  function DeleteAnnouncement(id) {
-    const confirmBox = window.confirm('A jeni te sigurte qe deshironi te fshini konkursin me id ' + id + '?  ');
-    if (confirmBox === true) {
-      axios.delete('https://localhost:7137/api/Announcement/delete-announcement/' + id).then(() => {
-        setRefreshKey((refreshKey) => refreshKey + 1);
-      });
-    } else {
-      console.log('Process of deleting an announcement canceled !!');
-    }
-  }
-
-  function UpdateAnnouncement(id) {
-    const confirmBox = window.confirm('A jeni te sigurte qe deshironi te fshini konkursin me id ' + id + '?  ');
-    if (confirmBox === true) {
-      axios.delete('https://localhost:7137/api/Announcement/update-announcement-by-id/' + id).then(() => {
-        setRefreshKey((refreshKey) => refreshKey + 1);
-      });
-    } else {
-      console.log('Process of deleting an announcement canceled !!');
-    }
-  }
 
   // deadlines
-  useEffect(() => {
+  useEffect(() =>
+  {
     axios
       .get('https://localhost:7137/api/Deadline/get-all-deadlines')
-      .then((response) => {
+      .then((response) =>
+      {
         setDeadlines(response.data);
       })
-      .catch(function (error) {
+      .catch(function (error)
+      {
         console.log(error);
       });
   }, []);
@@ -64,7 +50,8 @@ export default function AnnouncementTable() {
     { field: 'closedDate', headerName: 'Closed Date', width: 120 },
   ];
 
-  const rows = announcements.map((announcement, index) => {
+  const rows = announcements.map((announcement, index) =>
+  {
     return {
       id: announcement.id || index + 1,
       title: announcement.title,
