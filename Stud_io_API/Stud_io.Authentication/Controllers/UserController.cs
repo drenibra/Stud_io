@@ -222,5 +222,13 @@ namespace Stud_io.Authentication.Controllers
                 return Ok("Dormitory ID added.");
             return BadRequest("Dormitory ID failed to be added!");
         }
+
+        [HttpGet("get-isAccepted")]
+        [AllowAnonymous]
+        public async Task<ActionResult<List<StudentDto>>> GetIsAccepted(bool isAccepted)
+        {
+            return await _contract.GetIsAccepted(isAccepted);
+        }
+
     }
 }

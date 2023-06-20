@@ -15,34 +15,61 @@ import Slide from '@material-ui/core/Slide';
 import Grow from '@material-ui/core/Grow';
 import { Link } from 'react-router-dom';
 
-export default function Dormitories() {
+export default function Dormitories()
+{
   const [dormitories, setDormitories] = useState([]);
   const [refreshKey, setRefreshKey] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
+  const [profileMatches, setProfileMatches] = useState([]);
 
-  const updateDormitoryData = async () => {
-    try {
+  const updateDormitoryData = async () =>
+  {
+    try
+    {
       await axios.post('https://localhost:7023/AssignStudentsToDormitories', userStore.user.token);
-      const updatedDormitories = dormitories.map((dormitory) => {
+      const updatedDormitories = dormitories.map((dormitory) =>
+      {
         return { ...dormitory, currentStudents: dormitory.currentStudents };
       });
       setDormitories(updatedDormitories);
       setRefreshKey((prevKey) => prevKey + 1);
 
       toast.success('Studentët u caktuan me sukses në konvikte!');
-    } catch (error) {
+    } catch (error)
+    {
       console.error(error);
       toast.error('Ndodhi një gabim gjatë caktimit të studentëve në konvikte!');
     }
   };
 
-  useEffect(() => {
-    const fetchDormitories = async () => {
-      try {
+
+  const lists = async () =>
+  {
+    await axios.get('https://localhost:7007/api/ProfileMatch/topMatches')
+      .then((response) =>
+      {
+        setProfileMatches(response.data);
+        console.log(response.data);
+      })
+      .catch(function (error)
+      {
+        console.log(error);
+      });
+  }
+
+
+
+  useEffect(() =>
+  {
+    const fetchDormitories = async () =>
+    {
+      try
+      {
         const response = await axios.get('https://localhost:7023/GetDormitories', userStore.user.token);
         setDormitories(response.data);
         setIsLoading(false);
-      } catch (error) {
+      } catch (error)
+      {
         console.error(error);
         setIsLoading(false);
       }
@@ -59,13 +86,20 @@ export default function Dormitories() {
         </Box>
       )}
 
+
       <Grid container justifyContent="center" marginTop={4}>
         {isLoading ? (
           <CircularProgress color="secondary" />
         ) : (
-          <Button variant="contained" color="secondary" onClick={updateDormitoryData} style={{ backgroundColor: '#bf1a2f', borderRadius: '10px' }}>
-            Cakto studentët në konvikte
-          </Button>
+          <>
+            <Button variant="contained" color="secondary" onClick={updateDormitoryData} style={{ backgroundColor: '#bf1a2f', borderRadius: '10px' }}>
+              Cakto studentët në konvikte
+            </Button>
+
+            <Button variant="contained" color="secondary" onClick={lists} style={{ backgroundColor: '#bf1a2f', borderRadius: '10px' }}>
+              Cakto listat
+            </Button>
+          </>
         )}
       </Grid>
       <Grid container justifyContent="center">
@@ -127,4 +161,7 @@ export default function Dormitories() {
       <ToastContainer />
     </div>
   );
+
 }
+
+

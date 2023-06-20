@@ -34,6 +34,7 @@ import
   Complaint,
   Dormitories,
   GetComplaints,
+  AcceptedStudents,
 } from './pages';
 import Lists from './pages/Lists/Lists';
 
@@ -57,7 +58,8 @@ const routes = [
   { path: '/Complaint', element: Complaint },
   { path: '/Dormitories', element: Dormitories },
   { path: '/GetComplaints', element: GetComplaints },
-  { path: '/Lists', element: Lists }
+  { path: '/Lists', element: Lists },
+  { path: '/AcceptedStudents', element: AcceptedStudents },
 ];
 
 const App = observer(function App()

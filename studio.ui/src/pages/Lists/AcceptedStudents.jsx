@@ -3,18 +3,27 @@ import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import ListsTable from './ListsTable';
+import { Button } from '@mui/material';
 
-const AcceptanceStudents = () =>
+
+const AcceptedStudents = () =>
 {
-    // const [applications, setApplications] = useState([]);
     const [profileMatches, setProfileMatches] = useState([]);
     const [refreshKey, setRefreshKey] = useState(0);
+    const [isAccepted, setIsAccepted] = useState(true);
+
+    // Function to toggle the value of isAccepted and recall the API
+    const toggleIsAccepted = () =>
+    {
+        setIsAccepted(!isAccepted);
+        setRefreshKey(refreshKey + 1);
+    };
 
     // get Top matches
     useEffect(() =>
     {
         axios
-            .get('https://localhost:7007/api/ProfileMatch/topMatches')
+            .get('http://localhost:5274/api/v1/User/get-isAccepted?isAccepted=' + isAccepted)
             .then((response) =>
             {
                 setProfileMatches(response.data);
@@ -24,7 +33,7 @@ const AcceptanceStudents = () =>
             {
                 console.log(error);
             });
-    }, [refreshKey]);
+    }, [refreshKey, isAccepted]);
 
     const rows = profileMatches.map((profileMatches, index) =>
     {
@@ -38,11 +47,12 @@ const AcceptanceStudents = () =>
     });
 
     return (
-        <div>
+        <div className='main-container'>
             <h3>Lista e te pranuarve</h3>
+            <Button variant='contained' onClick={toggleIsAccepted} marginTop={'60px'} >Toggle Accepted</Button>
             <ListsTable profileMatches={rows} setProfileMatches={setProfileMatches} />
         </div>
     );
 };
 
-export default AcceptanceStudents;
+export default AcceptedStudents;
