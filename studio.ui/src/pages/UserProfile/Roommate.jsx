@@ -80,14 +80,14 @@ export default function Roommate() {
                 label="Emri"
                 value=""
                 size="small"
-                sx={{ mb: 2, mt: 3.5 }}
+                sx={{ mb: 2, mt: 3.5, ml: '50px' }}
               />
-              <TextField label="Mbiemri" value="" size="small" sx={{ mb: 2 }} />
+              <TextField label="Mbiemri" value="" size="small" sx={{ mb: 2 , ml: '50px'}} />
             </div>
             <Button
               variant="contained"
               color="primary"
-              style={{ borderRadius: "30px", textTransform: "none" }}
+              style={{ borderRadius: "30px", textTransform: "none", marginLeft: '120px' }}
             >
               Kërko
             </Button>
