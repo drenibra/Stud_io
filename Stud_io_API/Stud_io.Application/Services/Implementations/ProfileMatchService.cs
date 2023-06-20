@@ -5,6 +5,7 @@ using Stud_io.Application.DTOs.Deserializer;
 using Stud_io.Application.Models;
 using Stud_io.Application.Services.Interfaces;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Text.Json;
 
 namespace Stud_io.Application.Services.Implementations
@@ -144,13 +145,40 @@ namespace Stud_io.Application.Services.Implementations
         public async Task<List<ProfileMatch>> GetTopProfileMatches()
         {
             var sortedProfileMatches = await SortByTotalPoints();
-            return sortedProfileMatches.Take(10).ToList();
+            foreach(var profileMatch in sortedProfileMatches)
+            {
+                var student = profileMatch.Application.StudentId;
+
+                await SetIsAcceptedById(student, true);
+            }
+            return sortedProfileMatches.Take(4).ToList();
+        }
+
+        private async Task SetIsAcceptedById(string id, bool isAccepted)
+        {
+            var httpClient = _httpClientFactory.CreateClient();
+
+            var uri = "http://localhost:5274/api/v1/User/set-is-accepted/" + id + "/" + isAccepted;
+
+            var authentication = new AuthenticationHeaderValue("Bearer", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI1OWEyNGUxNS1iNTIyLTRmNTItYTQ1ZS1kNTRiMGEyMmY5NDMiLCJ1bmlxdWVfbmFtZSI6ImZhdGkiLCJlbWFpbCI6ImZzNTE3MDFAdWJ0LXVuaS5uZXQiLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE2ODcyNjEzMzksImV4cCI6MTY4Nzg2NjEzOSwiaWF0IjoxNjg3MjYxMzM5fQ.0M33QBcyJEskjvU44EP8AGr8gfwSP4JiTbKtcGPS0QE");
+            httpClient.DefaultRequestHeaders.Authorization = authentication;
+
+            var content = new StringContent("", Encoding.UTF8, "application/json");
+
+            await httpClient.PutAsync(uri, content);
         }
 
         public async Task<List<ProfileMatch>> GetLastProfileMatches()
         {
             var sortedProfileMatches = await SortByTotalPoints();
-            return sortedProfileMatches.Skip(10).ToList();
+            var lastMatches = sortedProfileMatches.Skip(4).ToList();
+            foreach (var profileMatch in lastMatches)
+            {
+                var student = profileMatch.Application.StudentId;
+
+                await SetIsAcceptedById(student, false);
+            }
+            return lastMatches;
         }
     }
 }

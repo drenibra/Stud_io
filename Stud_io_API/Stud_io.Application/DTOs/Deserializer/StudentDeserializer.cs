@@ -9,6 +9,7 @@
 
     public class StudentProfileDeserializer
     {
+        public string? id { get; set; }
         public double? gpa { get; set; }
         public string? city { get; set; }
     }
