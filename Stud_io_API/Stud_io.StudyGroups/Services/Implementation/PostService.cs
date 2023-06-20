@@ -85,7 +85,7 @@ namespace Stud_io.StudyGroups.Services.Implementation
                     Comments = x.Comments.Select(z => new CommentDto
                     {
                         Id = z.Id,
-                        Author = z.StudentId,
+                        Author = z.StudentName,
                         DateTime = z.DateTime.ToShortDateString(),
                         LikesAmount = z.LikesAmount,
                         Text = z.Text,

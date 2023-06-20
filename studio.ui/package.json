@@ -19,6 +19,7 @@
     "@material-ui/icons": "^4.11.3",
     "@mui/icons-material": "^5.11.16",
     "@mui/joy": "^5.0.0-alpha.83",
+    "@mui/lab": "^5.0.0-alpha.134",
     "@mui/material": "^5.12.3",
     "@mui/styles": "^5.12.3",
     "@mui/x-data-grid": "^6.8.0",
