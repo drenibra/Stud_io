@@ -50,7 +50,7 @@ namespace Stud_io.Authentication.Services
                 Username = user.UserName,
                 Email = user.Email,
                 Gender = user.Gender,
-                ProfileImage = user.Photos.FirstOrDefault(p => p.IsMain).Url
+                //ProfileImage = user.Photos.FirstOrDefault(p => p.IsMain).Url
             };
         }
 
