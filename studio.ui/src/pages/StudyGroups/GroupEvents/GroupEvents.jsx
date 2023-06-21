@@ -21,7 +21,7 @@ const GroupEvents = () => {
   const { userStore } = useStore();
 
   useEffect(() => {
-    agent.GroupEvents.getAll('?StudyGroupId=1').then((response) => {
+    agent.GroupEvents.getAll('?StudyGroupId=3').then((response) => {
       setGroupEvents(response);
       console.log(response);
     });
