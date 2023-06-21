@@ -20,3 +20,5 @@ export { default as Dormitories } from './PrincipalDashboard/Dormitories';
 export { default as GetComplaints } from './Complaints/GetComplaints';
 export { default as Lists } from './Lists/Lists';
 export { default as AcceptedStudents } from './Lists/AcceptedStudents';
+export { default as Specializim } from './MBROJTJE/SpecializimetCRUD';
+export { default as Semundje } from './MBROJTJE/SemundjetCRUD';

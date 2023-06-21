@@ -30,6 +30,14 @@ const ResponsiveAppBar = observer(function ResponsiveAppBar() {
       name: 'Mirembajtja',
       path: '/mirembajtja',
     },
+    {
+      name: 'Specializimi',
+      path: '/Specializim',
+    },
+    {
+      name: 'Semundje',
+      path: '/Semundje',
+    },
     userStore.user && userStore.user.role === 'Student'
       ? {
           name: 'Ankesa',

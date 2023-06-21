@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Stud_io.Maintenance.Configurations;
 
@@ -11,9 +12,11 @@ using Stud_io.Maintenance.Configurations;
 namespace Stud_io.Maintenance.Migrations
 {
     [DbContext(typeof(MaintenanceDbContext))]
-    partial class MaintenanceDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230621153210_added-tables")]
+    partial class addedtables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -13,6 +13,12 @@ builder.Services.AddDbContext<MaintenanceDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
+builder.Services.AddCors(opt => {
+    opt.AddPolicy("CorsPolicy", policy => {
+        policy.AllowAnyMethod().AllowCredentials().AllowAnyHeader().WithOrigins("http://localhost:5173");
+    });
+});
+
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
 builder.Services.AddScoped<ITaskService, TaskService>();
@@ -32,6 +38,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors("CorsPolicy");
 
 app.UseHttpsRedirection();
 

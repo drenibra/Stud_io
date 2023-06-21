@@ -15,5 +15,7 @@ namespace Stud_io.Maintenance.Configurations
         public DbSet<DiscontentComplaint> DiscontentComplaints { get; set; }
         public DbSet<SocialComplaint> SocialComplaints { get; set; }
         public DbSet<DormComplaint> DormComplaints { get; set; }
+        public DbSet<Specializimi> Specializimet { get; set; }
+        public DbSet<Semundja> Semundjet { get; set; }
     }
 }

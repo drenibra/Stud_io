@@ -171,7 +171,7 @@ const Payment = observer(function Payment() {
                         <MenuItem disabled={isMonthDisabled(5)} value="Qershor">
                           Qershor
                         </MenuItem>
-                        <MenuItem disabled={isMonthDisabled(6)} value="Korrik">
+                        <MenuItem value="Korrik">
                           Korrik
                         </MenuItem>
                         <MenuItem disabled={isMonthDisabled(7)} value="Gusht">
