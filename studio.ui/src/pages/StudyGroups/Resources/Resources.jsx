@@ -20,7 +20,7 @@ const Resources = () => {
 
   useEffect(() => {
     console.log(fileType);
-    agent.Resources.getAll(`?StudyGroupId=1${fileType}`).then((response) => {
+    agent.Resources.getAll(`?StudyGroupId=3${fileType}`).then((response) => {
       setResources(response);
     });
   }, [fileType, isTable, refreshKey]);
