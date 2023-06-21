@@ -44,9 +44,6 @@ namespace Stud_io.Authentication.Services
                 })
                 .ToListAsync();
 
-
-
-
             //var userDtos = _mapper.Map<IEnumerable<UserDto>>(users);
 
             return Ok(users);

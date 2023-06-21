@@ -30,8 +30,8 @@ const UserForm = observer(function UserForm(props) {
   const [target, setTarget] = useState('');
 
   const [userImage, setUserImage] = useState({
-    image: props.user.profileImage,
-    imageId: props.user.imageId,
+    image: userStore.user.profileImage,
+    imageId: userStore.user.imageId,
   });
 
   const initialProfile =
@@ -79,6 +79,7 @@ const UserForm = observer(function UserForm(props) {
   const handleImageChange = (event) => {
     const file = event.target.files[0];
     setSelectedImage(file);
+    userStore.getUser();
   };
 
   const handleImageUpload = () => {
@@ -165,7 +166,17 @@ const UserForm = observer(function UserForm(props) {
                 }
                 return (
                   <Grid item xs={6}>
-                    <TextField key={attribute} label={label} name={attribute} defaultValue={props.user[attribute]} id={attribute} disabled={true} fullWidth sx={{ mb: 2 }} onChange={handleTextFieldChange} />
+                    <TextField
+                      key={attribute}
+                      label={label}
+                      name={attribute}
+                      defaultValue={props.user[attribute]}
+                      id={attribute}
+                      disabled={true}
+                      fullWidth
+                      sx={{ mb: 2 }}
+                      onChange={handleTextFieldChange}
+                    />
                   </Grid>
                 );
               })}

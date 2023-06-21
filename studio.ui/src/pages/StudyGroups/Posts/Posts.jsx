@@ -17,7 +17,7 @@ import UserStore from '../../../stores/userStore';
 import { observe } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../../stores/store';
-import { Pagination } from '@mui/lab';
+import { Pagination } from '@mui/material';
 
 const Posts = observer(() => {
   const [posts, setPosts] = useState([]);
