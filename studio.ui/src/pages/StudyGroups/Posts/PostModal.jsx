@@ -18,6 +18,7 @@ const PostModal = observer(({ open, handleClose, post }) => {
   const { userStore } = useStore();
 
   const studentId = userStore.user.id;
+  const studentName = userStore.user.firstName + ' ' + userStore.user.lastName;
 
   useEffect(() => {
     agent.Posts.getById(post.id).then((response) => {
@@ -68,7 +69,7 @@ const PostModal = observer(({ open, handleClose, post }) => {
             <Button variant="text">Comments ({currentPost.commentCount})</Button>
           </Box>
           <Box dividers marginTop={'20px'}>
-            <Comments setRefreshKey={setRefreshKey} studentId={studentId} postId={currentPost.id} comments={currentPost.comments} />
+            <Comments setRefreshKey={setRefreshKey} studentName={studentName} studentId={studentId} postId={currentPost.id} comments={currentPost.comments} />
           </Box>
         </DialogContent>
       </Dialog>

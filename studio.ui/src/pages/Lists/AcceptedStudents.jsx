@@ -5,7 +5,6 @@ import { useState } from 'react';
 import ListsTable from './ListsTable';
 import { Button } from '@mui/material';
 import { Box } from '@mui/material';
-import '../StudyGroups/Resources/Resources.scss';
 
 const AcceptedStudents = () => {
   const [profileMatches, setProfileMatches] = useState([]);
@@ -31,21 +30,23 @@ const AcceptedStudents = () => {
       });
   }, [refreshKey, isAccepted]);
 
-  const rows = profileMatches.map((profileMatches, index) => {
+  const rows = profileMatches.map((profileMatch, index) => {
     return {
-      id: profileMatches.id || index + 1,
-      studentId: profileMatches.application.studentId,
-      pointsForGPA: profileMatches.pointsForGPA,
-      extraPoints: profileMatches.extraPoints,
-      totalPoints: profileMatches.totalPoints,
+      id: profileMatch.id || index + 1,
+      firstName: profileMatch.firstName,
+      lastName: profileMatch.lastName,
+      city: profileMatch.city,
+      email: profileMatch.email,
+      pointsForGPA: profileMatch.gpa,
+      major: profileMatch.major?.title,
     };
   });
 
   return (
     <div className="main-container">
-      <Box marginTop={'32px'} display={'flex'} flexDirection={'column'} alignItems={'center'} justifyContent={'center'} width={'80vw'}>
+      <Box marginTop={'50px'}>
         <h3>Lista e te pranuarve</h3>
-        <Button variant="contained" onClick={toggleIsAccepted}>
+        <Button variant="contained" onClick={toggleIsAccepted} marginTop={'60px'}>
           {isAccepted ? 'Shiko te papranuarit' : 'Shiko te pranuarit'}
         </Button>
         <ListsTable profileMatches={rows} setProfileMatches={setProfileMatches} />

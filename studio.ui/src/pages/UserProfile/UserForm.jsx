@@ -30,8 +30,8 @@ const UserForm = observer(function UserForm(props) {
   const [target, setTarget] = useState('');
 
   const [userImage, setUserImage] = useState({
-    image: props.user.profileImage,
-    imageId: props.user.imageId,
+    image: userStore.user.profileImage,
+    imageId: userStore.user.imageId,
   });
 
   const initialProfile =
@@ -79,6 +79,7 @@ const UserForm = observer(function UserForm(props) {
   const handleImageChange = (event) => {
     const file = event.target.files[0];
     setSelectedImage(file);
+    userStore.getUser();
   };
 
   const handleImageUpload = () => {

@@ -11,6 +11,7 @@ using Stud_io.Authentication.Models;
 using Stud_io.Authentication.Models.ServiceCommunications.StudyGroup;
 using Stud_io.Configuration;
 using Stud_io.DTOs;
+using System.Security.Claims;
 
 namespace Stud_io.Authentication.Services
 {
@@ -28,16 +29,30 @@ namespace Stud_io.Authentication.Services
 
         public async Task<ActionResult<IEnumerable<UserDto>>> GetUsers()
         {
-            var users = await _userManager.Users.ToListAsync();
+            //var users = await _userManager.Users.ToListAsync();
+            var users = await _userManager.Users.Include(p => p.Photos)
+                .Select(x => new UserDto
+                {
+                    Email = x.Email,
+                    FirstName = x.FirstName,
+                    Gender = x.Gender,
+                    Id = x.Id,
+                    LastName = x.LastName,
+                    Username = x.UserName,
+                    ProfileImage = x.Photos.FirstOrDefault(x => x.IsMain).Url,
+                    ImageId = x.Photos.FirstOrDefault(x => x.IsMain).Id,
+                })
+                .ToListAsync();
 
-            var userDtos = _mapper.Map<IEnumerable<UserDto>>(users);
+            //var userDtos = _mapper.Map<IEnumerable<UserDto>>(users);
 
-            return Ok(userDtos);
+            return Ok(users);
         }
 
         public async Task<ActionResult<UserDto>> GetUserById(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
+
             if (user == null)
             {
                 return NotFound();
@@ -75,13 +90,14 @@ namespace Stud_io.Authentication.Services
         {
             var studyGroupStudents = await _context.StudyGroupStudents
                                                     .Include(x => x.Student)
+                                                    .ThenInclude(x => x.Photos)
                                                     .Where(x => x.StudyGroupId == id)
                                                     .Select(x => new MemberStudentDto
                                                     {
                                                         Id = x.StudentId,
                                                         FirstName = x.Student.FirstName,
                                                         LastName = x.Student.LastName,
-                                                        ProfileImage = x.Student.Photos.FirstOrDefault(p => p.IsMain).Url
+                                                        ProfileImage = x.Student.Photos.FirstOrDefault(x => x.IsMain).Url
                                                     }).ToListAsync();
 
             return new OkObjectResult(studyGroupStudents);
