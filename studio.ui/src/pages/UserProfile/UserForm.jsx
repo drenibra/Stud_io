@@ -125,7 +125,7 @@ const UserForm = observer(function UserForm(props) {
                 maxWidth: { xs: 350, md: 250 },
                 objectFit: 'contain',
               }}
-              src={userImage.image}
+              src={userStore.getProfileImage()}
             />
             <div>
               <Input type="file" accept="image/*" onChange={handleImageChange} />
@@ -165,7 +165,17 @@ const UserForm = observer(function UserForm(props) {
                 }
                 return (
                   <Grid item xs={6}>
-                    <TextField key={attribute} label={label} name={attribute} defaultValue={props.user[attribute]} id={attribute} disabled={true} fullWidth sx={{ mb: 2 }} onChange={handleTextFieldChange} />
+                    <TextField
+                      key={attribute}
+                      label={label}
+                      name={attribute}
+                      defaultValue={props.user[attribute]}
+                      id={attribute}
+                      disabled={true}
+                      fullWidth
+                      sx={{ mb: 2 }}
+                      onChange={handleTextFieldChange}
+                    />
                   </Grid>
                 );
               })}
