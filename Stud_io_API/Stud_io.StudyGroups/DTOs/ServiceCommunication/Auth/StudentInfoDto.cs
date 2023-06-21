@@ -9,7 +9,7 @@
         public string LastName { get; set; }
         public string Username { get; set; }
         public object Email { get; set; }
-        public object ProfileImage { get; set; }
+        public string Image { get; set; }
         public string Gender { get; set; }
     }
 }

@@ -3,12 +3,13 @@ import agent from '../../../api/study-group-agents';
 import { TextField, Box, Button, Card, CardContent, CardActions, Typography, IconButton, Avatar } from '@mui/material';
 import { Delete } from '@mui/icons-material';
 
-const Comments = ({ comments, postId, studentId, setRefreshKey, studentName }) => {
+const Comments = ({ comments, postId, studentId, setRefreshKey, studentName, profileImage }) => {
   const [addComment, setAddComment] = useState({
     postId: postId,
     studentId: studentId,
     text: '',
     studentName: studentName,
+    profileImage,
   });
 
   const handleAddComment = () => {
@@ -23,6 +24,8 @@ const Comments = ({ comments, postId, studentId, setRefreshKey, studentName }) =
       setRefreshKey((prev) => prev + 1);
     });
   };
+
+  console.log(comments);
 
   return (
     <div>
@@ -45,7 +48,7 @@ const Comments = ({ comments, postId, studentId, setRefreshKey, studentName }) =
         >
           <CardContent>
             <Box display="flex" alignItems="center" mb={1}>
-              <Avatar src={comment.authorImage} alt={comment.author} />
+              <Avatar src={profileImage} alt={comment.author} />
               <Box ml={1}>
                 <Typography variant="subtitle1">{comment.author}</Typography>
                 <Typography variant="caption">{comment.datePosted}</Typography>

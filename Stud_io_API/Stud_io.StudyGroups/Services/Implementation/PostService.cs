@@ -102,7 +102,7 @@ namespace Stud_io.StudyGroups.Services.Implementation
                 LastName = student.value.lastName,
                 Email = student.value.email,
                 Gender = student.value.gender,
-                ProfileImage = student.value.profileImage,
+                Image = student.value.profileImage,
                 Username = student.value.username
             };
 

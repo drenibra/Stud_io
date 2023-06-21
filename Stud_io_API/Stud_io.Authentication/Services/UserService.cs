@@ -51,7 +51,7 @@ namespace Stud_io.Authentication.Services
 
         public async Task<ActionResult<UserDto>> GetUserById(string id)
         {
-            var user = await _userManager.FindByIdAsync(id);
+            var user = await _userManager.Users.Include(u => u.Photos).FirstOrDefaultAsync(u => u.Id == id);
 
             if (user == null)
             {
@@ -65,7 +65,7 @@ namespace Stud_io.Authentication.Services
                 Username = user.UserName,
                 Email = user.Email,
                 Gender = user.Gender,
-                //ProfileImage = user.Photos.FirstOrDefault(p => p.IsMain).Url
+                ProfileImage = user.Photos.FirstOrDefault(p => p.IsMain).Url
             };
         }
 

@@ -154,9 +154,9 @@ const UserForm = observer(function UserForm(props) {
                     </Grid>
                   );
                 if (attribute === 'major') {
-                  var majorTitle = props.user.major.title;
+                  var majorTitle = props.user.major?.title;
                   return (
-                    <Grid item xs={6} key={props.user.major.key}>
+                    <Grid item xs={6} key={props.user.major?.key}>
                       <Select id="major" name="major" defaultValue={majorTitle} label="Major" sx={{ mb: 2 }} fullWidth onChange={handleTextFieldChange}>
                         <MenuItem value="M">M</MenuItem>
                         <MenuItem value="F">F</MenuItem>

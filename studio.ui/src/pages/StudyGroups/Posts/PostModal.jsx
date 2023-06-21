@@ -43,11 +43,13 @@ const PostModal = observer(({ open, handleClose, post }) => {
     });
   };
 
+  console.log(currentPost);
+
   return (
     currentPost && (
       <Dialog className="postModal" open={open} onClose={handleClose} maxWidth="md" fullWidth>
         <DialogTitle className="postModal__header">
-          <Avatar src={currentPost.author.profileImage} />
+          <Avatar src={currentPost.author.image} />
           <Box lineHeight={'0px'} flexDirection={'row'}>
             <Typography fontWeight={'600'} variant="subtitle1">
               {currentPost.author.firstName + ' ' + currentPost.author.lastName}
@@ -69,7 +71,7 @@ const PostModal = observer(({ open, handleClose, post }) => {
             <Button variant="text">Comments ({currentPost.commentCount})</Button>
           </Box>
           <Box dividers marginTop={'20px'}>
-            <Comments setRefreshKey={setRefreshKey} studentName={studentName} studentId={studentId} postId={currentPost.id} comments={currentPost.comments} />
+            <Comments setRefreshKey={setRefreshKey} studentName={studentName} studentId={studentId} postId={currentPost.id} comments={currentPost.comments} profileImage={currentPost.author.image} />
           </Box>
         </DialogContent>
       </Dialog>
